@@ -1,6 +1,6 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm run build"
+buildCommand = "echo 'Usando build pre-compilado'"
 
 [deploy]
 startCommand = "npx -y serve -s browser -l $PORT"

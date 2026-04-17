@@ -26,7 +26,7 @@
 
 /* Título del listado */
 .header-lista h2 {
-  color: #1e3c72;
+  color: #0a7c4a;
   font-size: 1.6rem;
   margin: 0;
   font-weight: 600;
@@ -53,7 +53,7 @@
 /* Efecto focus elegante */
 .header-lista .buscador input:focus {
   outline: none;
-  border-color: #1e3c72;
+  border-color: #0a7c4a;
   background-color: #fff;
   box-shadow: 0 0 6px rgba(30,60,114,0.3);
 }
@@ -105,7 +105,7 @@
 }
 
 .tabla-usuarios th {
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background: linear-gradient(135deg, #0a7c4a, #2a5298);
   color: white;
   font-weight: 500;
 }
@@ -128,7 +128,7 @@
 
 .paginacion button {
   padding: 8px 14px;
-  background-color: #1e3c72;
+  background-color: #0a7c4a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -193,7 +193,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #1e3c72;
+  color: #0a7c4a;
   padding: 6px;
   border-radius: 50%;
   transition: background 0.3s, transform 0.2s;
@@ -340,12 +340,12 @@
 }
 
 .estado-select:hover {
-  border-color: #1e3c72;
+  border-color: #0a7c4a;
 }
 
 .estado-select:focus {
   outline: none;
-  border-color: #1e3c72;
+  border-color: #0a7c4a;
   box-shadow: 0 0 6px rgba(30,60,114,0.3);
 }
 
@@ -374,12 +374,12 @@
 }
 
 .rol-select:hover {
-  border-color: #1e3c72;
+  border-color: #0a7c4a;
 }
 
 .rol-select:focus {
   outline: none;
-  border-color: #1e3c72;
+  border-color: #0a7c4a;
   box-shadow: 0 0 6px rgba(30,60,114,0.3);
 }
 
@@ -407,3 +407,4 @@
   color: #f9a825; /* Amarillo */
   font-weight: 600;
 }
+

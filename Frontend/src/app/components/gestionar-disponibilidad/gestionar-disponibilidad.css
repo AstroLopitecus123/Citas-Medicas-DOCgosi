@@ -35,7 +35,7 @@
 
 .agenda-disponibilidad th {
   font-weight: 600;
-  background-color: #1e40af;
+  background-color: #08663c;
   color: white;
   text-align: center;
 }
@@ -91,7 +91,7 @@
 .btn-guardar, .botones-semana button {
   padding: 6px 16px;
   font-size: 0.85rem;
-  background-color: #2563eb;
+  background-color: #0fbf6a;
   color: white;
   font-weight: 600;
   border: none;
@@ -110,3 +110,4 @@
   cursor: not-allowed;
   transform: none;
 }
+

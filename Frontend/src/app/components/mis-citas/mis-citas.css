@@ -20,7 +20,7 @@
   min-width: 300px;
   max-width: 350px;
   transition: all 0.3s ease-in-out;
-  border-left: 5px solid #004080;
+  border-left: 5px solid #0a7c4a;
 }
 
 .perfil-usuario:hover {
@@ -29,10 +29,10 @@
 }
 
 .perfil-usuario h2 {
-  color: #004080;
+  color: #0a7c4a;
   margin-bottom: 18px;
   font-size: 1.5rem;
-  border-bottom: 2px solid #004080;
+  border-bottom: 2px solid #0a7c4a;
   padding-bottom: 6px;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .btn-editar, .btn-gestionar, .btn-citas {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -66,7 +66,7 @@
 }
 
 .btn-editar:hover {
-  background-color: #0056b3;
+  background-color: #08663c;
   transform: scale(1.03);
 }
 
@@ -86,7 +86,7 @@
 }
 
 h2, h3 {
-  color: #004080;
+  color: #0a7c4a;
   margin-bottom: 12px;
   font-weight: 600;
 }
@@ -106,7 +106,7 @@ h3 {
 }
 
 .tabla-citas th {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   text-transform: uppercase;
   font-size: 12px;
@@ -131,7 +131,7 @@ h3 {
 }
 
 .btn-citas:hover {
-  background-color: #003b8a;
+  background-color: #08663c;
   transform: scale(1.03);
 }
 
@@ -212,11 +212,11 @@ h3 {
 }
 
 .modal-contenedor h2 {
-  color: #004080;
+  color: #0a7c4a;
   margin-bottom: 20px;
   font-size: 1.4rem;
   text-align: center;
-  border-bottom: 2px solid #004080;
+  border-bottom: 2px solid #0a7c4a;
   padding-bottom: 8px;
 }
 
@@ -244,8 +244,8 @@ h3 {
 .modal-contenedor input:focus,
 .modal-contenedor select:focus {
   outline: none;
-  border-color: #004080;
-  box-shadow: 0 0 6px rgba(0, 64, 128, 0.2);
+  border-color: #0a7c4a;
+  box-shadow: 0 0 6px rgba(0, 128, 64, 0.2);
 }
 
 /* --- TABLA DE DISPONIBILIDAD MODAL --- */
@@ -268,7 +268,7 @@ h3 {
 }
 
 .tabla-disponibilidad-modal th {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: #fff;
   font-weight: 600;
 }
@@ -296,7 +296,7 @@ h3 {
 }
 
 .botones-semana button {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -307,7 +307,7 @@ h3 {
 }
 
 .botones-semana button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #08663c;
 }
 
 .botones-semana button:disabled {
@@ -334,12 +334,12 @@ h3 {
 }
 
 .btn-guardar {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
 }
 
 .btn-guardar:hover {
-  background-color: #0056b3;
+  background-color: #08663c;
   transform: scale(1.03);
 }
 
@@ -400,7 +400,7 @@ h3 {
 }
 
 .btn-disponibilidad {
-  background-color: #2563eb;
+  background-color: #0fbf6a;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -413,7 +413,7 @@ h3 {
 }
 
 .btn-disponibilidad:hover {
-  background-color: #1e40af;
+  background-color: #08663c;
 }
 
 .menu-acciones button[disabled] {
@@ -431,3 +431,4 @@ h3 {
   padding: 8px;
   font-family: 'Segoe UI', sans-serif;
 }
+

@@ -38,7 +38,7 @@ input {
 }
 
 .btn-enviar {
-  background-color: #007bff;
+  background-color: #0fbf6a;
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -48,7 +48,7 @@ input {
 }
 
 .btn-enviar:hover {
-  background-color: #0056b3;
+  background-color: #08663c;
 }
 
 .msg-exito {
@@ -60,3 +60,4 @@ input {
   color: red;
   margin-top: 1rem;
 }
+

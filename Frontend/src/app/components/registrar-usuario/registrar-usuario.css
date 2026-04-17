@@ -1,16 +1,5 @@
 /* Fondo azul de toda la página */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  background-attachment: fixed;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-}
+
 
 /* Contenedor centrado */
 .registrar-container {
@@ -35,7 +24,7 @@ body {
 h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #003f80;
+  color: #0a7c4a;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
@@ -48,11 +37,11 @@ h2 {
 /* Etiquetas */
 label {
   font-size: 14px;
-  color: #003f80;
+  color: #0a7c4a;
   margin-bottom: 5px;
   display: block;
   font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0, 64, 128, 0.2);
+  text-shadow: 1px 1px 3px rgba(0, 128, 64, 0.2);
 }
 
 /* Inputs y Select mejorados */
@@ -68,14 +57,14 @@ input, select {
 
 /* Efecto al escribir */
 input:focus, select:focus {
-  border-color: #2b89ff;
-  box-shadow: 0 0 6px rgba(0, 137, 255, 0.5);
+  border-color: #0fbf6a;
+  box-shadow: 0 0 6px rgba(15, 191, 106, 0.5);
 }
 
 /* Botón */
 .btn-submit {
   width: 102%;
-  background: #007bff;
+  background: #0fbf6a;
   color: #fff;
   padding: 12px;
   border: none;
@@ -87,7 +76,7 @@ input:focus, select:focus {
 }
 
 .btn-submit:hover {
-  background: #0056b3;
+  background: #08663c;
 }
 
 /* Mensajes de error */
@@ -126,13 +115,13 @@ input:focus, select:focus {
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 18px;
-  color: #003f80;
+  color: #0a7c4a;
   transition: 0.2s;
 }
 
 .toggle-password:hover {
   transform: translateY(-50%) scale(1.1);
-  color: #0056b3;
+  color: #08663c;
 }
 
 /* Distribución de filas y columnas */
@@ -209,6 +198,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: absolute;
   right: 12px;
   pointer-events: none; /* para que no bloquee clics */
-  color: #003f80;
+  color: #0a7c4a;
   font-weight: bold;
 }
+

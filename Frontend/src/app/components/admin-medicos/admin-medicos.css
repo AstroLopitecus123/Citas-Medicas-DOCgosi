@@ -17,14 +17,14 @@
   padding: 30px;
   flex: 1;
   min-width: 300px;
-  border-left: 5px solid #004080;
+  border-left: 5px solid #0a7c4a;
 }
 
 .admin-medicos-container h2 {
-  color: #004080;
+  color: #0a7c4a;
   margin-bottom: 18px;
   font-size: 1.5rem;
-  border-bottom: 2px solid #004080;
+  border-bottom: 2px solid #0a7c4a;
   padding-bottom: 6px;
 }
 
@@ -45,7 +45,7 @@
 
 .admin-medicos-container button {
   margin-top: 10px;
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   border: none;
   padding: 12px 18px;
@@ -56,7 +56,7 @@
 }
 
 .admin-medicos-container button:hover {
-  background-color: #0056b3;
+  background-color: #08663c;
   transform: scale(1.03);
 }
 
@@ -71,10 +71,10 @@
 }
 
 .tabla-medicos-container h2 {
-  color: #004080;
+  color: #0a7c4a;
   margin-bottom: 18px;
   font-size: 1.5rem;
-  border-bottom: 2px solid #004080;
+  border-bottom: 2px solid #0a7c4a;
   padding-bottom: 6px;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .tabla-medicos th {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   text-transform: uppercase;
   font-size: 13px;
@@ -104,7 +104,7 @@
 }
 
 .btn-modificar {
-  background-color: #004080;
+  background-color: #0a7c4a;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -115,7 +115,7 @@
 }
 
 .btn-modificar:hover {
-  background-color: #0056b3;
+  background-color: #08663c;
   transform: scale(1.03);
 }
 
@@ -140,3 +140,4 @@
     margin-bottom: 20px;
   }
 }
+

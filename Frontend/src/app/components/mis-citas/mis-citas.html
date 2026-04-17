@@ -129,14 +129,19 @@
           <option *ngFor="let esp of ctrl.especialidades" [ngValue]="esp">{{ esp.nombre }}</option>
         </select>
 
-        <label *ngIf="ctrl.medicosDisponibles.length">Médico</label>
-        <select *ngIf="ctrl.medicosDisponibles.length" [(ngModel)]="ctrl.medicoSeleccionado"
+        <label *ngIf="ctrl.especialidadSeleccionada">Médico</label>
+        <select *ngIf="ctrl.especialidadSeleccionada" [(ngModel)]="ctrl.medicoSeleccionado"
           (change)="ctrl.cargarHorariosDisponibles()">
           <option [ngValue]="null">Selecciona un médico</option>
+          <option *ngIf="ctrl.medicosDisponibles.length === 0" disabled>No hay médicos disponibles para esta especialidad</option>
           <option *ngFor="let med of ctrl.medicosDisponibles" [ngValue]="med">
             {{ med.usuario.nombre }} {{ med.usuario.apellido }}
           </option>
         </select>
+
+        <div *ngIf="ctrl.mostrarTablaDisponibilidad && ctrl.horariosDisponibles.length === 0" style="color: red; margin-top: 10px;">
+          Actualmente este médico no tiene horarios configurados.
+        </div>
 
         <div *ngIf="ctrl.mostrarTablaDisponibilidad && ctrl.horariosDisponibles.length">
           <div class="botones-semana">

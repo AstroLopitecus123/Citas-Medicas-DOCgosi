@@ -1,120 +1,202 @@
-/* Estilo general del header */
+/* ===== Estilo del Layout Base ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7fafc; /* Gris azulado muy tenue */
+}
+
+/* ===== HEADER PRINCIPAL ===== */
 .header {
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(90deg, #ffffff, #f4fdf7);
+  box-shadow: 0 2px 10px rgba(0, 80, 40, 0.1);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
-  height: 60px; /* Menú siempre expandido */
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  padding: 0 20px; /* Espaciado adicional si lo necesitas */
+  padding: 0 25px;
+  border-bottom: 2px solid #d4af37; /* Dorado elegante */
+  box-sizing: border-box;
 }
 
-/* Contenedor interno siempre visible */
+/* DETALLE TECNOLÓGICO (LÍNEA SUTIL) */
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Posicionado sobre el borde dorado */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0fbf6a, transparent);
+  animation: brillarLinea 3s infinite alternate;
+}
+
+@keyframes brillarLinea {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; box-shadow: 0 0 8px #0fbf6a; }
+}
+
+/* CONTENEDOR */
 .header-container {
-  display: flex; /* Siempre visible */
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
   width: 100%;
+  max-width: 1200px;
 }
 
-/* Estilo del título */
+/* ===== TÍTULO ===== */
 .titulo {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #0069d9;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0a7c4a; /* Verde médico */
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Nav modernizado */
-.nav-links a {
-  margin-left: 20px;
-  text-decoration: none;
-  font-size: 1rem;
-  color: #495057;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: inline-block;
-}
-
-.nav-links a:hover {
-  background-color: #e7f1ff;
-  color: #0056b3;
-  transform: scale(1.08);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* FLECHA SOLO EN MODO MINIMIZADO (oculta siempre) */
-.arrow-indicator {
-  margin-right: 8px;
-  font-size: 1.4rem;
-  color: #007bff;
-  display: none; /* Oculta la flecha siempre */
-}
-
-/* Contenedor que centra el contenido dentro de la página */
-.contenido-centrado {
+  letter-spacing: 0.5px;
   display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;     /* vertical */
-  height: calc(100vh - 80px); /* altura total menos la altura del header si es fijo */
+  align-items: center;
+  text-shadow: 0 1px 2px rgba(0, 128, 64, 0.1);
 }
 
+/* ===== NAV LINKS MODERNO ===== */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  margin-left: 15px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2f4f4f; /* Gris profesional */
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Espacio entre icono y texto */
+}
+
+/* EFECTO HOVER */
+.nav-links a:hover {
+  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 124, 74, 0.3);
+}
+
+/* ===== BOTÓN CERRAR SESIÓN ===== */
 .cerrar-sesion {
   cursor: pointer;
-  color: #e74c3c;
-  font-weight: bold;
-  margin-left: 10px;
+  color: #c0392b !important;
+  font-weight: 600;
+  margin-left: 20px !important;
+  background-color: rgba(192, 57, 43, 0.05);
 }
 
+.cerrar-sesion:hover {
+  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3) !important;
+}
+
+/* ===== CONTENIDO CENTRADO ===== */
+.contenido-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Para evitar estirar en pantallas altas */
+  padding-top: 100px; /* Compensa la altura del fixed header */
+  min-height: calc(100vh - 65px);
+  box-sizing: border-box;
+}
+
+/* ===== MODAL ====== */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 50, 30, 0.6); /* Verde oscuro glassmorphism */
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(4px); }
 }
 
 .modal {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 10px;
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border-top: 5px solid #0a7c4a;
+  transform: translateY(20px);
+  animation: slideUpModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+@keyframes slideUpModal {
+  to { transform: translateY(0); }
+}
+
+.modal h3 {
+  color: #2f4f4f;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+/* BOTONES DEL MODAL */
 .modal-buttons {
-  margin-top: 15px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 15px;
 }
 
 .modal-buttons button {
-  padding: 8px 14px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
 }
 
+/* BOTÓN CONFIRMAR CERRAR SESIÓN */
 .modal-buttons button:first-child {
-  background-color: #e74c3c;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
 }
 
+.modal-buttons button:first-child:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+  transform: translateY(-2px);
+}
+
+/* BOTÓN CANCELAR */
 .modal-buttons button:last-child {
-  background-color: #bdc3c7;
+  background-color: #ecf0f1;
   color: #333;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #d5dbdb;
+  transform: translateY(-2px);
 }

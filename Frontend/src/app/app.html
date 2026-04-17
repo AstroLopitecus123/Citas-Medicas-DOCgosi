@@ -1,27 +1,37 @@
 <header class="header">
   <div class="header-container">
-    <h1 class="titulo">Clínica Real Madrid</h1>
+    <h1 class="titulo">
+      <i class="fa-solid fa-hospital-user" style="margin-right: 8px;"></i>Clínica Real Madrid
+    </h1>
 
     <nav class="nav-links">
 
       <!-- SOLO ADMIN -->
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/especialidades">Especialidades</a>
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/medicos">Medicos</a>
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/usuarios">Usuarios</a>
+      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/especialidades">
+        <i class="fa-solid fa-notes-medical"></i> Especialidades
+      </a>
+      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/medicos">
+        <i class="fa-solid fa-user-doctor"></i> Médicos
+      </a>
+      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/usuarios">
+        <i class="fa-solid fa-users"></i> Usuarios
+      </a>
 
       <!-- SOLO USUARIOS NO LOGUEADOS -->
-      <a *ngIf="!isLoggedIn" routerLink="/registrar">Registrar</a>
-      <a *ngIf="!isLoggedIn" routerLink="/">Inicio de Sesión</a>
+      <a *ngIf="!isLoggedIn" routerLink="/registrar">
+        <i class="fa-solid fa-user-plus"></i> Registrar
+      </a>
+      <a *ngIf="!isLoggedIn" routerLink="/">
+        <i class="fa-solid fa-right-to-bracket"></i> Inicio de Sesión
+      </a>
 
       <!-- CERRAR SESIÓN PARA CUALQUIER USUARIO LOGUEADO -->
-      <a *ngIf="isLoggedIn" (click)="abrirModalCerrarSesion()" class="cerrar-sesion">Cerrar sesión</a>
+      <a *ngIf="isLoggedIn" (click)="abrirModalCerrarSesion()" class="cerrar-sesion">
+        <i class="fa-solid fa-power-off"></i> Cerrar sesión
+      </a>
     </nav>
   </div>
-
-  <div class="arrow-indicator">MÁS OPCIONES DE NAVEGACIÓN</div>
 </header>
-
-<hr />
 
 <!-- Contenedor para centrar el contenido del router -->
 <div class="contenido-centrado">
@@ -32,10 +42,14 @@
 <!-- Modal de confirmación -->
 <div class="modal-overlay" *ngIf="mostrarModal">
   <div class="modal">
-    <h3>¿Seguro que desea cerrar sesión?</h3>
+    <h3><i class="fa-solid fa-circle-exclamation" style="color: #c0392b; margin-right: 8px;"></i>¿Seguro que desea cerrar sesión?</h3>
     <div class="modal-buttons">
-      <button (click)="cerrarSesion()">Sí, cerrar sesión</button>
-      <button (click)="cancelarCerrarSesion()">Cancelar</button>
+      <button (click)="cerrarSesion()">
+        <i class="fa-solid fa-check"></i> Sí, cerrar sesión
+      </button>
+      <button (click)="cancelarCerrarSesion()">
+        <i class="fa-solid fa-xmark"></i> Cancelar
+      </button>
     </div>
   </div>
 </div>

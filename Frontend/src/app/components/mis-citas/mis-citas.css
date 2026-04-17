@@ -1,0 +1,433 @@
+/* --- LAYOUT PRINCIPAL --- */
+.mis-citas-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin: 40px auto;
+  max-width: 1400px; /* más ancho para la agenda */
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #2c3e50;
+}
+
+/* PANEL PERFIL */
+.perfil-usuario {
+  background: linear-gradient(145deg, #ffffff, #f4f6f8);
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 350px;
+  transition: all 0.3s ease-in-out;
+  border-left: 5px solid #004080;
+}
+
+.perfil-usuario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.perfil-usuario h2 {
+  color: #004080;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #004080;
+  padding-bottom: 6px;
+}
+
+.perfil-usuario p {
+  margin: 6px 0; /* más compacto */
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+/* BOTONES */
+.btn-editar, .btn-gestionar, .btn-citas, .btn-guardar, .btn-cancelar {
+  transition: all 0.2s ease;
+}
+
+.btn-editar, .btn-gestionar, .btn-citas {
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.btn-editar {
+  padding: 10px 16px;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 15px;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+/* PANEL CITAS */
+.citas-container {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  padding: 25px; /* más compacto verticalmente */
+  flex: 2;
+  min-width: 450px;
+  transition: all 0.3s ease-in-out;
+}
+
+.citas-container:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+h2, h3 {
+  color: #004080;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid #dce1e6;
+  padding-bottom: 4px;
+}
+
+/* TABLA DE CITAS */
+.tabla-citas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.tabla-citas th {
+  background-color: #004080;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 8px;
+}
+
+.tabla-citas td {
+  border-bottom: 1px solid #e6eaf0;
+  padding: 8px;
+}
+
+.tabla-citas tr:hover {
+  background-color: #f4f8fc;
+}
+
+/* BOTONES CITAS */
+.btn-citas {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+.btn-citas:hover {
+  background-color: #003b8a;
+  transform: scale(1.03);
+}
+
+/* MENU ACCIONES */
+.acciones {
+  position: relative;
+}
+
+.btn-acciones {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.menu-acciones {
+  position: absolute;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-acciones button {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.menu-acciones button:hover {
+  background: #f3f3f3;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .mis-citas-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .perfil-usuario, .citas-container {
+    width: 90%;
+    max-width: none;
+  }
+}
+
+/* --- MODAL EMERGENTE --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-contenedor {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  padding: 25px 30px;
+  width: 100%;
+  max-width: 650px; /* más ancho */
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.modal-contenedor h2 {
+  color: #004080;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  text-align: center;
+  border-bottom: 2px solid #004080;
+  padding-bottom: 8px;
+}
+
+.modal-contenedor label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.modal-contenedor input,
+.modal-contenedor select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cbd3de;
+  border-radius: 8px;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-contenedor input:focus,
+.modal-contenedor select:focus {
+  outline: none;
+  border-color: #004080;
+  box-shadow: 0 0 6px rgba(0, 64, 128, 0.2);
+}
+
+/* --- TABLA DE DISPONIBILIDAD MODAL --- */
+.tabla-disponibilidad-modal-wrapper {
+  overflow-x: auto;
+}
+
+.tabla-disponibilidad-modal {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px; /* más compacto */
+}
+
+.tabla-disponibilidad-modal th,
+.tabla-disponibilidad-modal td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 4px 6px; /* celdas más bajas */
+}
+
+.tabla-disponibilidad-modal th {
+  background-color: #004080;
+  color: #fff;
+  font-weight: 600;
+}
+
+.tabla-disponibilidad-modal tr:nth-child(even) {
+  background-color: #f4f6f8;
+}
+
+.tabla-disponibilidad-modal tr:hover {
+  background-color: #e6f0ff;
+}
+
+.tabla-disponibilidad-modal input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* --- BOTONES DE SEMANA --- */
+.botones-semana {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.botones-semana button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.botones-semana button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.botones-semana button:disabled {
+  background-color: #cbd3de;
+  cursor: not-allowed;
+}
+
+/* --- BOTONES DE CONFIRMAR / CANCELAR --- */
+.acciones-edicion {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.btn-guardar, .btn-cancelar {
+  flex: 1;
+  padding: 10px 0;
+  margin: 0 5px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-guardar {
+  background-color: #004080;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+.btn-cancelar {
+  background-color: #e0e0e0;
+  color: #2c3e50;
+}
+
+.btn-cancelar:hover {
+  background-color: #d5d5d5;
+  transform: scale(1.03);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .mis-citas-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .perfil-usuario, .citas-container {
+    width: 90%;
+    max-width: none;
+  }
+
+  .modal-contenedor {
+    max-width: 90%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .tabla-disponibilidad-modal th,
+  .tabla-disponibilidad-modal td {
+    padding: 3px 4px;
+    font-size: 11px;
+  }
+
+  .tabla-disponibilidad-modal td input[type="radio"] {
+    width: 12px;
+    height: 12px;
+  }
+
+  .botones-semana span {
+    font-size: 12px;
+  }
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.btn-disponibilidad {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 8px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.btn-disponibilidad:hover {
+  background-color: #1e40af;
+}
+
+.menu-acciones button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-contenedor textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}

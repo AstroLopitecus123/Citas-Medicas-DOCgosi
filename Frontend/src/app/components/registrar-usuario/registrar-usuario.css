@@ -1,0 +1,214 @@
+/* Fondo azul de toda la página */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor centrado */
+.registrar-container {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Tarjeta del formulario */
+.card {
+  background: #ffffff;
+  padding: 30px;
+  width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  margin-top: 90px;
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #003f80;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Grupo de formulario */
+.form-group {
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+/* Etiquetas */
+label {
+  font-size: 14px;
+  color: #003f80;
+  margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 64, 128, 0.2);
+}
+
+/* Inputs y Select mejorados */
+input, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd6e2;
+  border-radius: 6px;
+  outline: none;
+  background-color: #f8fbff;
+  transition: 0.25s;
+}
+
+/* Efecto al escribir */
+input:focus, select:focus {
+  border-color: #2b89ff;
+  box-shadow: 0 0 6px rgba(0, 137, 255, 0.5);
+}
+
+/* Botón */
+.btn-submit {
+  width: 102%;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+}
+
+/* Mensajes de error */
+.msg-error {
+  color: #d60000; 
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.2;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* Mensajes de éxito */
+.msg-success {
+  color: green;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.2;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+
+/* Contenedores de inputs especiales */
+.password-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0px;
+  top: 65%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #003f80;
+  transition: 0.2s;
+}
+
+.toggle-password:hover {
+  transform: translateY(-50%) scale(1.1);
+  color: #0056b3;
+}
+
+/* Distribución de filas y columnas */
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.half {
+  flex: 1;
+}
+
+/* En pantallas pequeñas, que se ponga en una sola columna */
+@media (max-width: 480px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+/* Tamaño reducido para campos pequeños */
+.campo-chico input,
+.campo-chico select {
+  width: 220px;  
+  display: block;
+}
+
+select[name="pais"] {
+  width: 245px !important;
+}
+
+/* Campos de ancho completo */
+.campo-full input {
+  width: calc(100% - 15px);
+}
+
+/* Validaciones de contraseña */
+.password-validations span {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Mensajes de error/éxito generales centrados */
+.msg-general {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Quitar los spinners de los inputs type=number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.correo-wrapper {
+  position: relative;
+}
+
+.correo-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.correo-input-container input {
+  flex: 1;
+  padding-right: 90px; /* espacio para el dominio */
+}
+
+.correo-dominio {
+  position: absolute;
+  right: 12px;
+  pointer-events: none; /* para que no bloquee clics */
+  color: #003f80;
+  font-weight: bold;
+}

@@ -1,0 +1,112 @@
+/* contenedor general */
+.contenedor {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* títulos */
+.contenedor h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* mensajes */
+.mensaje {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* formulario */
+.formulario {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.formulario input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  flex: 1;
+  min-width: 180px;
+}
+
+.formulario button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #1976d2;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.formulario button:hover {
+  background-color: #1565c0;
+}
+
+/* tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+table th {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* botones dentro de tabla */
+table button {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 4px;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+table button:hover {
+  opacity: 0.8;
+}
+
+/* botones específicos */
+table button:nth-child(1) {
+  background-color: #ffc107; /* editar */
+  color: #fff;
+}
+
+table button:nth-child(2) {
+  background-color: #e53935; /* eliminar */
+  color: #fff;
+}
+
+table button:nth-child(3) {
+  background-color: #1976d2; /* cambiar estado */
+  color: #fff;
+}

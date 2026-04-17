@@ -1,0 +1,48 @@
+<div class="contenedor-disponibilidad">
+
+  <h2 *ngIf="medico; else cargando">
+    Disponibilidad de {{ nombreMedico }}
+  </h2>
+
+  <div class="botones-semana" style="text-align:center; margin-bottom:10px;">
+    <button (click)="anteriorSemana()" [disabled]="semanaIndice === 0">Semana anterior</button>
+    <span style="margin:0 10px;">Semana {{ semanaIndice + 1 }} de 3</span>
+    <button (click)="siguienteSemana()" [disabled]="semanaIndice === 2">Semana siguiente</button>
+  </div>
+
+  <div *ngIf="horasFaltantes() > 0" style="text-align:center; margin-bottom:10px; color:#b91c1c; font-weight:600;">
+    Te faltan {{ horasFaltantes() }} hora(s) para completar el mínimo de {{ minimoHorasSemana }} horas esta semana.
+  </div>
+
+
+  <table class="agenda-disponibilidad" *ngIf="medico; else cargando">
+    <thead>
+      <tr>
+        <th>Hora</th>
+        <th *ngFor="let dia of dias">{{ dia.nombre }} {{ dia.fecha }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let h of horas">
+        <td class="hora">{{ h }}:00 - {{ h + 1 }}:00</td>
+        <td *ngFor="let dia of dias"
+          [ngClass]="{'disponible': isDisponible(dia.fecha, h), 'no-editable': !esEditable(dia.fecha)}">
+          <input type="checkbox" [checked]="isDisponible(dia.fecha, h)" [disabled]="!esEditable(dia.fecha)"
+            (change)="toggleHorario(dia.fecha, h, $event.target.checked)">
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="boton-guardar">
+    <button class="btn-guardar" (click)="guardar()">
+      Guardar cambios
+    </button>
+  </div>
+
+</div>
+
+<ng-template #cargando>
+  <p>Cargando información del médico...</p>
+</ng-template>

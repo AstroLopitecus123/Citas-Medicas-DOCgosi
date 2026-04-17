@@ -1,0 +1,146 @@
+<div class="registrar-container">
+  <div class="card">
+    <h2>Crear Cuenta</h2>
+
+    <form (ngSubmit)="ctrl.registrar()">
+
+      <!-- Nombre -->
+      <div class="form-group campo-full">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" [(ngModel)]="ctrl.usuario.nombre" name="nombre"
+          (input)="ctrl.setTouched('nombre')">
+        <span *ngIf="ctrl.touched.nombre && !ctrl.usuario.nombre" class="msg-error">
+          El nombre es obligatorio
+        </span>
+      </div>
+
+      <!-- Apellido -->
+      <div class="form-group campo-full">
+        <label for="apellido">Apellido</label>
+        <input id="apellido" type="text" [(ngModel)]="ctrl.usuario.apellido" name="apellido"
+          (input)="ctrl.setTouched('apellido')">
+        <span *ngIf="ctrl.touched.apellido && !ctrl.usuario.apellido" class="msg-error">
+          El apellido es obligatorio
+        </span>
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group campo-full correo-wrapper">
+        <label for="correo">Correo</label>
+        <div class="correo-input-container">
+          <input id="correo" type="text" [(ngModel)]="ctrl.usuario.correoUsuario" name="correoUsuario"
+            (input)="ctrl.setTouched('correo')">
+          <span class="correo-dominio">@gmail.com</span>
+        </div>
+        <span *ngIf="ctrl.touched.correo && !ctrl.usuario.correoUsuario" class="msg-error">
+          El correo es obligatorio
+        </span>
+        <span *ngIf="ctrl.touched.correo && ctrl.usuario.correoUsuario && !ctrl.emailValido" class="msg-error">
+          Solo se permiten caracteres válidos antes de @gmail.com
+        </span>
+        <!-- Error de correo duplicado -->
+        <span *ngIf="ctrl.correoError" class="msg-error">{{ ctrl.correoError }}</span>
+      </div>
+
+
+      <!-- Contraseña -->
+      <div class="form-group campo-full password-wrapper">
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
+          [(ngModel)]="ctrl.usuario.contrasena" name="contrasena"
+          (input)="ctrl.setTouched('contrasena'); ctrl.setTouched('confirmarContrasena')">
+        <span class="toggle-password" (click)="ctrl.togglePassword()">
+          {{ ctrl.mostrarContrasena ? '🔓' : '🔒' }}
+        </span>
+      </div>
+
+      <!-- Confirmar Contraseña -->
+      <div class="form-group campo-full">
+        <label for="confirmarContrasena">Confirmar Contraseña</label>
+        <input id="confirmarContrasena" type="password" [(ngModel)]="ctrl.confirmarContrasena"
+          name="confirmarContrasena" (input)="ctrl.setTouched('confirmarContrasena')">
+      </div>
+
+      <!-- Validaciones de contraseña -->
+      <div class="password-validations">
+        <span [ngClass]="ctrl.passwordChecks.length ? 'msg-success' : 'msg-error'" *ngIf="ctrl.touched.contrasena">
+          Contiene al menos 8 caracteres
+        </span>
+        <span [ngClass]="ctrl.passwordChecks.uppercase ? 'msg-success' : 'msg-error'" *ngIf="ctrl.touched.contrasena">
+          Contiene al menos una mayúscula
+        </span>
+        <span [ngClass]="ctrl.passwordChecks.number ? 'msg-success' : 'msg-error'" *ngIf="ctrl.touched.contrasena">
+          Contiene al menos un número
+        </span>
+        <span class="msg-error" *ngIf="ctrl.touched.contrasena && ctrl.passwordChecks.empty">
+          Las contraseñas no pueden estar vacías
+        </span>
+        <span [ngClass]="ctrl.passwordChecks.match ? 'msg-success' : 'msg-error'"
+          *ngIf="ctrl.touched.confirmarContrasena && !ctrl.passwordChecks.empty">
+          {{ ctrl.passwordChecks.match ? 'Las contraseñas coinciden' : 'Las contraseñas no coinciden' }}
+        </span>
+      </div>
+
+      <!-- DNI y Teléfono -->
+      <div class="row">
+        <div class="form-group campo-chico">
+          <label for="dni">DNI</label>
+          <input id="dni" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" (input)="ctrl.setTouched('dni')"
+            min="0" />
+          <span *ngIf="ctrl.touched.dni && !ctrl.dniValido" class="msg-error">
+            DNI debe tener al menos 8 caracteres
+          </span>
+          <!-- Error de DNI duplicado -->
+          <span *ngIf="ctrl.dniError" class="msg-error">{{ ctrl.dniError }}</span>
+        </div>
+        <div class="form-group campo-chico">
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono"
+            (input)="ctrl.setTouched('telefono')" min="0" />
+          <span *ngIf="ctrl.touched.telefono && !ctrl.telefonoValido" class="msg-error">
+            Teléfono debe tener al menos 9 dígitos
+          </span>
+          <!-- Error de teléfono duplicado -->
+          <span *ngIf="ctrl.telefonoError" class="msg-error">{{ ctrl.telefonoError }}</span>
+        </div>
+      </div>
+
+      <!-- Fecha y País -->
+      <div class="row">
+        <div class="form-group campo-chico">
+          <label for="fechaNacimiento">Fecha de nacimiento</label>
+          <input id="fechaNacimiento" type="date" [(ngModel)]="ctrl.usuario.fechaNacimiento" name="fechaNacimiento"
+            (input)="ctrl.setTouched('fechaNacimiento')">
+          <span *ngIf="ctrl.touched.fechaNacimiento && !ctrl.usuario.fechaNacimiento" class="msg-error">
+            Fecha de nacimiento obligatoria
+          </span>
+          <span *ngIf="ctrl.fechaFutura && ctrl.touched.fechaNacimiento" class="msg-error">
+            La fecha no puede ser futura
+          </span>
+        </div>
+        <div class="form-group campo-chico">
+          <label for="pais">País</label>
+          <select id="pais" [(ngModel)]="ctrl.usuario.paisId" name="pais" (change)="ctrl.setTouched('paisId')">
+            <option value="" disabled>Selecciona un país</option>
+            <option *ngFor="let p of ctrl.paises; trackBy: ctrl.trackByPaisId" [value]="p.id">
+              {{ p.nombre }}
+            </option>
+
+          </select>
+          <span *ngIf="ctrl.touched.paisId && !ctrl.usuario.paisId" class="msg-error">
+            Selecciona un país
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Registrar</button>
+
+    </form>
+
+    <!-- Mensajes globales -->
+    <p *ngIf="ctrl.error && !ctrl.formularioValido" class="msg-error msg-general">
+      {{ ctrl.error }}
+    </p>
+    <p *ngIf="ctrl.mensaje" class="msg-success msg-general">{{ ctrl.mensaje }}</p>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="restablecer-container">
+  <div class="card">
+    <h2>Restablecer Contraseña</h2>
+
+    <form (ngSubmit)="ctrl.restablecer()">
+      <div class="form-group">
+        <label for="nueva">Nueva contraseña:</label>
+        <input type="password" id="nueva" [(ngModel)]="ctrl.nuevaContrasena" name="nueva" placeholder="********" required>
+      </div>
+
+      <button type="submit" class="btn-guardar">Guardar contraseña</button>
+    </form>
+
+    <p *ngIf="ctrl.mensaje" class="msg-exito">{{ ctrl.mensaje }}</p>
+    <p *ngIf="ctrl.error" class="msg-error">{{ ctrl.error }}</p>
+  </div>
+</div>

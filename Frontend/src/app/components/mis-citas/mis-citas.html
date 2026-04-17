@@ -1,0 +1,233 @@
+<!-- MENSAJE CUANDO NO HAY USUARIO LOGUEADO -->
+<ng-template #sinUsuario>
+  <p>No hay usuario logueado.</p>
+</ng-template>
+
+<div class="mis-citas-layout" *ngIf="ctrl.usuario; else sinUsuario">
+
+  <!-- PANEL IZQUIERDO: PERFIL -->
+  <aside class="perfil-usuario">
+    <h2>Perfil del Usuario</h2>
+
+    <p><strong>Nombre:</strong> {{ ctrl.usuario.nombre || '-' }} {{ ctrl.usuario.apellido || '-' }}</p>
+    <p><strong>Correo:</strong> {{ ctrl.usuario.correo || '-' }}</p>
+    <p><strong>Rol:</strong> {{ ctrl.usuario.rol || '-' }}</p>
+    <p><strong>DNI:</strong> {{ ctrl.usuario.dni || '-' }}</p>
+    <p><strong>País:</strong> {{ ctrl.usuario.pais.nombre || '-' }}</p>
+    <p><strong>Teléfono:</strong> {{ ctrl.usuario.telefono || '-' }}</p>
+    <p><strong>Estado:</strong> {{ ctrl.usuario.estado || '-' }}</p>
+    <p><strong>Fecha de nacimiento:</strong>
+      {{ ctrl.usuario.fechaNacimiento ? (ctrl.usuario.fechaNacimiento | date:'dd/MM/yyyy') : '-' }}
+    </p>
+    <p><strong>Fecha de registro:</strong>
+      {{ ctrl.usuario.fechaRegistro ? (ctrl.usuario.fechaRegistro | date:'short') : '-' }}
+    </p>
+
+    <div *ngIf="ctrl.usuario.rol === 'MEDICO'; else noMedico">
+      <p><strong>Rol Médico:</strong> Puedes gestionar tus horarios y disponibilidades.</p>
+      <button class="btn-disponibilidad" (click)="ctrl.irAGestionarDisponibilidad()">🗓️ Gestionar Disponibilidad</button>
+    </div>
+
+    <ng-template #noMedico>
+      <p><strong>Tipo de usuario:</strong> Paciente registrado en la clínica.</p>
+    </ng-template>
+
+    <button class="btn-editar" (click)="ctrl.activarEdicion()">Editar perfil</button>
+  </aside>
+
+  <!-- PANEL DERECHO: CITAS -->
+  <section class="citas-container">
+    <h2>Bienvenido, {{ ctrl.usuario.nombre || '-' }} {{ ctrl.usuario.apellido || '-' }}</h2>
+
+    <div class="contenedor-mis-citas" *ngIf="ctrl.citas.length">
+      <h2>Mis Citas</h2>
+
+      <table class="tabla-citas">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th *ngIf="ctrl.usuario.rol !== 'MEDICO'">Médico</th>
+            <th *ngIf="ctrl.usuario.rol === 'MEDICO'">Paciente</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let cita of ctrl.citas">
+            <td>{{ cita?.fecha ? (cita?.fecha | date:'short') : '-' }}</td>
+
+            <td *ngIf="ctrl.usuario.rol !== 'MEDICO'">
+              {{ cita?.medico?.usuario?.nombre || '-' }} {{ cita?.medico?.usuario?.apellido || '' }}
+            </td>
+
+            <td *ngIf="ctrl.usuario.rol === 'MEDICO'">
+              {{ cita?.paciente?.nombre || '-' }} {{ cita?.paciente?.apellido || '' }}
+            </td>
+
+            <td>{{ cita?.medico?.especialidad?.nombre || '-' }}</td>
+            <td>{{ cita?.estado || '-' }}</td>
+            <td>{{ cita?.motivo || '-' }}</td>
+
+            <!-- ACCIONES -->
+            <td class="acciones">
+              <button class="btn-acciones" (click)="ctrl.toggleMenu(cita)">⋮</button>
+
+              <div class="menu-acciones" *ngIf="cita.menuAbierto">
+
+                <!-- Confirmar -->
+                <button (click)="ctrl.confirmarCita(cita)"
+                  [disabled]="cita.estado === 'CANCELADA' || cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA'">
+                  ✅ Confirmar
+                </button>
+
+                <!-- Reprogramar -->
+                <button (click)="ctrl.reprogramarCita(cita)"
+                  [disabled]="cita.estado === 'CANCELADA' || cita.estado === 'REPROGRAMADA'">
+                  🔁 Reprogramar
+                </button>
+
+                <!-- Cancelar -->
+                <button (click)="ctrl.cancelarCita(cita)"
+                  [disabled]="cita.estado === 'CANCELADA' || cita.estado === 'REPROGRAMADA'">
+                  ❌ Cancelar
+                </button>
+
+                <!-- Diagnóstico Médico -->
+                <button *ngIf="ctrl.usuario.rol === 'MEDICO'" (click)="ctrl.abrirModalHistorial(cita)">
+                  {{ cita.tieneHistorial ? '👁️ Visualizar diagnóstico' : '🩺 Registrar diagnóstico' }}
+                </button>
+
+                <!-- Visualizar diagnóstico paciente -->
+                <button *ngIf="ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial"
+                  (click)="ctrl.abrirModalHistorial(cita)">
+                  👁️ Ver diagnóstico
+                </button>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Registrar nueva cita -->
+    <button class="btn-citas" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
+      Registrar nueva cita
+    </button>
+
+    <!-- MODAL: Registrar nueva cita -->
+    <div class="modal-backdrop" *ngIf="ctrl.mostrandoModalCita">
+      <div class="modal-contenedor modal-cita">
+        <h2>Registrar Nueva Cita</h2>
+
+        <label>Especialidad</label>
+        <select [(ngModel)]="ctrl.especialidadSeleccionada" (change)="ctrl.cargarMedicosPorEspecialidad()">
+          <option [ngValue]="null">Selecciona una especialidad</option>
+          <option *ngFor="let esp of ctrl.especialidades" [ngValue]="esp">{{ esp.nombre }}</option>
+        </select>
+
+        <label *ngIf="ctrl.medicosDisponibles.length">Médico</label>
+        <select *ngIf="ctrl.medicosDisponibles.length" [(ngModel)]="ctrl.medicoSeleccionado"
+          (change)="ctrl.cargarHorariosDisponibles()">
+          <option [ngValue]="null">Selecciona un médico</option>
+          <option *ngFor="let med of ctrl.medicosDisponibles" [ngValue]="med">
+            {{ med.usuario.nombre }} {{ med.usuario.apellido }}
+          </option>
+        </select>
+
+        <div *ngIf="ctrl.mostrarTablaDisponibilidad && ctrl.horariosDisponibles.length">
+          <div class="botones-semana">
+            <button (click)="ctrl.anteriorSemana()" [disabled]="ctrl.semanaIndice === 0">Semana anterior</button>
+            <span>Semana {{ ctrl.semanaIndice + 1 }} de 3</span>
+            <button (click)="ctrl.siguienteSemana()" [disabled]="ctrl.semanaIndice === 2">Semana siguiente</button>
+          </div>
+
+          <div class="tabla-disponibilidad-modal-wrapper">
+            <table class="tabla-disponibilidad-modal">
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th *ngFor="let dia of ctrl.dias">{{ dia.nombre }} {{ dia.fecha }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let h of ctrl.horas">
+                  <td>{{ h }}:00 - {{ h + 1 }}:00</td>
+                  <td *ngFor="let dia of ctrl.dias">
+                    <input type="radio" name="horarioSeleccionado"
+                      [checked]="ctrl.horarioSeleccionado === ctrl.getHorario(dia.fecha, h)"
+                      [disabled]="!ctrl.isDisponible(dia.fecha, h)"
+                      (change)="ctrl.horarioSeleccionado = ctrl.getHorario(dia.fecha, h)">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <label>Motivo (opcional)</label>
+        <input type="text" [(ngModel)]="ctrl.motivoCita" placeholder="Motivo de la cita" />
+
+        <div class="acciones-edicion">
+          <button class="btn-guardar" (click)="ctrl.registrarCita()">Confirmar cita</button>
+          <button class="btn-cancelar" (click)="ctrl.cerrarModalCita()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Editar perfil -->
+    <div class="modal-backdrop" *ngIf="ctrl.editando">
+      <div class="modal-contenedor">
+        <h2>Editar Perfil</h2>
+        <label>Nombre</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.nombre" type="text" />
+        <label>Apellido</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.apellido" type="text" />
+        <label>Correo</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.correo" type="email" />
+        <label>DNI</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.dni" type="text" />
+        <label>Teléfono</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.telefono" type="text" />
+        <label for="paisSelect">País</label>
+        <select id="paisSelect" [(ngModel)]="ctrl.usuarioEditado.pais" [compareWith]="ctrl.comparePais">
+          <option [ngValue]="null">Selecciona un país</option>
+          <option *ngFor="let pais of ctrl.listaPaises" [ngValue]="pais">{{ pais?.nombre }}</option>
+        </select>
+        <label>Fecha de nacimiento</label>
+        <input [(ngModel)]="ctrl.usuarioEditado.fechaNacimiento" type="date" />
+        <div class="acciones-edicion">
+          <button class="btn-guardar" (click)="ctrl.guardarCambios()">Guardar</button>
+          <button class="btn-cancelar" (click)="ctrl.cancelarEdicion()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Registrar / Visualizar Historial -->
+    <div class="modal-backdrop" *ngIf="ctrl.mostrandoModalHistorial">
+      <div class="modal-contenedor">
+        <h2 *ngIf="!ctrl.historialActual.id">Registrar Diagnóstico</h2>
+        <h2 *ngIf="ctrl.historialActual.id">Historial de la Cita</h2>
+
+        <label>Diagnóstico</label>
+        <textarea [(ngModel)]="ctrl.historialActual.diagnostico" [readonly]="ctrl.vistaSoloLectura"></textarea>
+
+        <label>Receta</label>
+        <textarea [(ngModel)]="ctrl.historialActual.receta" [readonly]="ctrl.vistaSoloLectura"></textarea>
+
+        <label>Notas</label>
+        <textarea [(ngModel)]="ctrl.historialActual.notas" [readonly]="ctrl.vistaSoloLectura"></textarea>
+
+        <div class="acciones-edicion">
+          <button class="btn-guardar" *ngIf="!ctrl.vistaSoloLectura && ctrl.usuario.rol === 'MEDICO'"
+            (click)="ctrl.guardarHistorial()">Guardar</button>
+          <button class="btn-cancelar" (click)="ctrl.cerrarModalHistorial()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

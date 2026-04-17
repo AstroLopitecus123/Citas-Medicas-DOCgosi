@@ -1,0 +1,110 @@
+<div class="usuarios-container">
+
+  <!-- 🔍 Barra de búsqueda -->
+  <div class="header-lista">
+    <h2>Lista de Usuarios</h2>
+    <div class="buscador">
+      <input type="text" placeholder="Buscar por nombre, correo, rol o país..." [(ngModel)]="ctrl.filtro"
+        (input)="ctrl.filtrarUsuarios()" />
+    </div>
+  </div>
+
+  <!-- 🧾 Tabla de usuarios -->
+  <table class="tabla-usuarios">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Prefijo</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>País</th>
+        <th>DNI</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Fecha de Registro</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- 🧍 Mostrar usuarios -->
+      <tr *ngFor="let usuario of ctrl.usuariosPaginados; let i = index" [class.fila-vacia]="!usuario">
+
+        <ng-container *ngIf="usuario; else filaVacia">
+          <td>{{ usuario!.id }}</td>
+          <td>{{ usuario!.nombre || '-' }}</td>
+          <td>{{ usuario!.apellido || '-' }}</td>
+          <td>{{ usuario!.correo || '-' }}</td>
+          <td>{{ usuario!.telefono || '-' }}</td>
+          <td>{{ usuario!.pais!.prefijoTelefono || '' }}</td>
+          <td>
+            <select [ngModel]="usuario!.rol" (ngModelChange)="ctrl.actualizarRol(usuario!, $event)" class="rol-select">
+              <option value="ADMIN">Admin</option>
+              <option value="MEDICO">Medico</option>
+              <option value="PACIENTE">Paciente</option>
+              <option value="RECEPCION">Recepción</option>
+            </select>
+          </td>
+
+          <!-- ✅ Selector de estado -->
+          <td>
+            <select [ngModel]="usuario!.estado" (ngModelChange)="ctrl.actualizarEstado(usuario!, $event)" [ngClass]="{
+                      'estado-activado': usuario!.estado === 'ACTIVADO',
+                      'estado-desactivado': usuario!.estado === 'DESACTIVADO'
+                    }" class="estado-select">
+              <option value="ACTIVADO">Activado</option>
+              <option value="DESACTIVADO">Desactivado</option>
+            </select>
+          </td>
+
+          <td>{{ usuario!.pais!.nombre || '-' }}</td>
+          <td>{{ usuario!.dni || '-' }}</td>
+          <td>{{ usuario!.fechaNacimiento || '-' }}</td>
+          <td>{{ usuario!.fechaRegistro ? (usuario!.fechaRegistro | date:'dd/MM/yyyy') : '-' }}</td>
+
+          <!-- ✅ Acciones -->
+          <td class="acciones">
+            <div class="acciones-wrapper">
+              <button (click)="ctrl.toggleMenu(usuario!)" class="btn-menu" title="Acciones">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+
+              <div class="menu-acciones" *ngIf="ctrl.menuAbierto === usuario!.id">
+                <button class="accion editar" (click)="ctrl.editarUsuario(usuario!)">
+                  <i class="fa-solid fa-pen-to-square"></i> Editar
+                </button>
+
+                <button class="accion eliminar" (click)="ctrl.eliminarUsuario(usuario!)">
+                  <i class="fa-solid fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </td>
+
+        </ng-container>
+
+        <!-- Fila vacía (mantiene altura visual) -->
+        <ng-template #filaVacia>
+          <td colspan="13"></td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ✅ Paginación -->
+  <div class="paginacion">
+    <button (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1">◀</button>
+
+    <ng-container *ngFor="let i of [].constructor(ctrl.totalPaginas); let idx = index">
+      <button (click)="ctrl.paginaActual = idx + 1; ctrl.actualizarPagina()"
+        [class.pagina-activa]="ctrl.paginaActual === idx + 1">
+        {{ idx + 1 }}
+      </button>
+    </ng-container>
+
+    <button (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas">▶</button>
+  </div>
+</div>

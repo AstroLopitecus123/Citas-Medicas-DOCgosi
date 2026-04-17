@@ -1,0 +1,112 @@
+/* Contenedor principal */
+.contenedor-disponibilidad {
+  max-width: 650px;
+  margin: 10px auto;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+}
+
+/* Título */
+.contenedor-disponibilidad h2 {
+  text-align: center;
+  margin: 5px 0 15px 0;
+  font-size: 1rem;
+  color: #1e3a8a;
+}
+
+/* Tabla de disponibilidad */
+.agenda-disponibilidad {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.agenda-disponibilidad th,
+.agenda-disponibilidad td {
+  padding: 6px 8px;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.agenda-disponibilidad th {
+  font-weight: 600;
+  background-color: #1e40af;
+  color: white;
+  text-align: center;
+}
+
+.agenda-disponibilidad td.hora {
+  font-weight: bold;
+  background-color: #e0e7ff;
+}
+
+/* Casillas */
+.agenda-disponibilidad td {
+  background-color: #f87171; /* rojo para no disponible */
+  border-radius: 4px;
+  transition: background-color 0.2s, transform 0.1s;
+  height: 32px;
+}
+
+.agenda-disponibilidad td.disponible {
+  background-color: #a7f3d0; /* verde suave */
+}
+
+/* Casillas fuera del rango editable */
+.agenda-disponibilidad td.no-editable {
+  background-color: #e5e7eb; /* gris claro */
+  cursor: not-allowed;
+}
+
+/* Checkbox */
+.agenda-disponibilidad td input[type="checkbox"] {
+  transform: scale(0.8);
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.agenda-disponibilidad td.no-editable input[disabled] {
+  cursor: not-allowed;
+}
+
+/* Hover */
+.agenda-disponibilidad td:hover {
+  background-color: #f0f9ff;
+  transform: scale(1.02);
+}
+
+/* Botones guardar y navegar semanas */
+.boton-guardar, .botones-semana {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.btn-guardar, .botones-semana button {
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-guardar:hover, .botones-semana button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.botones-semana button:disabled {
+  background-color: #a1a1aa;
+  cursor: not-allowed;
+  transform: none;
+}

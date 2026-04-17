@@ -1,0 +1,14 @@
+<div class="contenedor-pago">
+
+    <h2>Procesando pago...</h2>
+
+    <div *ngIf="cargando">
+        <p>Registrando pago en efectivo, por favor espere.</p>
+    </div>
+
+    <div *ngIf="!cargando">
+        <p>{{ mensaje }}</p>
+        <button (click)="volver()">Volver</button>
+
+    </div>
+</div>

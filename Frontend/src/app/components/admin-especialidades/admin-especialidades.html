@@ -1,0 +1,85 @@
+<div class="contenedor">
+  <h2>Administrar Especialidades Médicas</h2>
+
+  <!-- ✅ Mensajes -->
+  <p *ngIf="ctrl.mensaje" class="mensaje">{{ ctrl.mensaje }}</p>
+  <p *ngIf="ctrl.error" class="error">{{ ctrl.error }}</p>
+
+  <!-- ✅ Formulario -->
+  <div class="formulario">
+    <!-- Si está editando -->
+    <div *ngIf="ctrl.editando; else crearForm">
+      <input
+        type="text"
+        placeholder="Nombre"
+        [(ngModel)]="ctrl.editando.nombre"
+        name="nombreEditar"
+      />
+
+      <input
+        type="text"
+        placeholder="Descripción"
+        [(ngModel)]="ctrl.editando.descripcion"
+        name="descEditar"
+      />
+
+      <button (click)="ctrl.guardar()">Actualizar</button>
+      <button (click)="ctrl.cancelarEdicion()">Cancelar</button>
+    </div>
+
+    <!-- Si está creando una nueva -->
+    <ng-template #crearForm>
+      <input
+        type="text"
+        placeholder="Nombre"
+        [(ngModel)]="ctrl.nueva.nombre"
+        name="nombreNueva"
+      />
+
+      <input
+        type="text"
+        placeholder="Descripción"
+        [(ngModel)]="ctrl.nueva.descripcion"
+        name="descNueva"
+      />
+
+      <button (click)="ctrl.guardar()">Agregar</button>
+    </ng-template>
+  </div>
+
+  <!-- ✅ Tabla de especialidades -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Fecha Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let esp of ctrl.especialidades">
+        <td>{{ esp.id }}</td>
+        <td>{{ esp.nombre }}</td>
+        <td>{{ esp.descripcion || '-' }}</td>
+        <td>{{ esp.estado }}</td>
+        <td>{{ esp.fechaCreacion ? (esp.fechaCreacion | date:'short') : '-' }}</td>
+        <td>
+          <!-- Editar -->
+          <button (click)="ctrl.editar(esp)">✏️</button>
+
+          <!-- Eliminar -->
+          <button (click)="ctrl.eliminar(esp.id)">🗑️</button>
+
+          <!-- Cambiar estado -->
+          <button (click)="ctrl.cambiarEstado(esp)">
+            {{ esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

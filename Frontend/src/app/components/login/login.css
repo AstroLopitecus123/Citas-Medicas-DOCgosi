@@ -1,0 +1,143 @@
+/* Fondo azul de toda la página */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor centrado */
+.form-container {
+  background: #ffffff;
+  padding: 40px;
+  width: 400px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Título */
+h2 {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  color: #003f80;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  flex: 1;
+  display: flex; /* Usamos flexbox para alinear el label y el input en la misma fila */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si es necesario */
+  align-items: center; /* Alinea los elementos en el centro */
+}
+
+
+/* Etiquetas */
+label {
+  font-size: 14px;
+  color: #003f80;
+  margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 64, 128, 0.2);
+  width: 100%; 
+}
+
+/* Inputs mejorados */
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd6e2;
+  border-radius: 6px;
+  outline: none;
+  background-color: #f8fbff;
+  transition: 0.25s;
+}
+
+/* Efecto al escribir */
+input:focus {
+  border-color: #2b89ff;
+  box-shadow: 0 0 6px rgba(0, 137, 255, 0.5);
+}
+
+/* Enlace para registrar */
+.registrar {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.registrar a {
+  color: #007bff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Botón */
+.btn-submit {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+}
+
+/* Mensajes generales */
+.msg-general {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Responsividad */
+@media (max-width: 480px) {
+  .form-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .form-group input {
+    font-size: 14px;
+  }
+
+  .btn-submit {
+    font-size: 14px;
+  }
+}
+
+.recuperar {
+  text-align: right;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.recuperar a {
+  font-size: 0.85rem;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.recuperar a:hover {
+  text-decoration: underline;
+}

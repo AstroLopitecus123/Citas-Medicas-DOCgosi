@@ -1,0 +1,50 @@
+<div class="form-container">
+  <div class="card">
+    <h2>Iniciar Sesión</h2>
+
+    <form (ngSubmit)="ctrl.iniciarSesion()">
+      <!-- Campo Correo Electrónico -->
+      <div class="form-group">
+        <label for="correo">Correo electrónico:</label>
+        <input
+          type="email"
+          id="correo"
+          [(ngModel)]="ctrl.correo"
+          name="correo"
+          placeholder="ejemplo@correo.com"
+          required
+        />
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="form-group">
+        <label for="contrasena">Contraseña:</label>
+        <input
+          type="password"
+          id="contrasena"
+          [(ngModel)]="ctrl.contrasena"
+          name="contrasena"
+          placeholder="********"
+          required
+        />
+      </div>
+
+      <!-- Enlace recuperar contraseña -->
+      <p class="recuperar">
+        <a routerLink="/recuperar">¿Olvidaste tu contraseña?</a>
+      </p>
+
+      <!-- Enlace para crear cuenta -->
+      <p class="registrar">
+        ¿No tienes cuenta? <a routerLink="/registrar">Regístrate aquí</a>
+      </p>
+
+      <!-- Botón de submit -->
+      <button type="submit" class="btn-submit">Ingresar</button>
+    </form>
+
+    <p *ngIf="ctrl.mensaje || ctrl.error" class="msg-general">
+      {{ ctrl.mensaje || ctrl.error }}
+    </p>
+  </div>
+</div>

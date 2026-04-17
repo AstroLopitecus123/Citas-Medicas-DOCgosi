@@ -1,0 +1,69 @@
+<div class="admin-medicos-layout">
+
+  <!-- Panel izquierdo: formulario -->
+  <div class="admin-medicos-container">
+    <h2>Configuración Médico</h2>
+
+    <!-- Selección de médico -->
+    <div class="form-group">
+      <label for="medicoSelect">Selecciona un médico:</label>
+      <select 
+        id="medicoSelect" 
+        [(ngModel)]="ctrl.medicoSeleccionado"
+        (ngModelChange)="ctrl.onMedicoChange()">
+        <option *ngFor="let medico of ctrl.medicosConIndice" [ngValue]="medico">
+          {{ medico.fila }} - {{ medico.nombre }} {{ medico.apellido }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Selección de especialidad -->
+    <div class="form-group">
+      <label for="especialidadSelect">Especialidad</label>
+      <select 
+        id="especialidadSelect" 
+        [(ngModel)]="ctrl.especialidadSeleccionada">
+        <option *ngFor="let esp of ctrl.listaEspecialidades" [ngValue]="esp">
+          {{ esp.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <button type="button" (click)="ctrl.asignarEspecialidades()">
+      Guardar Especialidad
+    </button>
+  </div>
+
+  <!-- Panel derecho: tabla de médicos -->
+  <div class="tabla-medicos-container">
+    <h2>Administrar Médicos</h2>
+
+    <div *ngIf="ctrl.error" class="error">{{ ctrl.error }}</div>
+
+    <table class="tabla-medicos">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Especialidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medico of ctrl.medicosConIndice">
+          <td>{{ medico.fila }}</td>
+          <td>{{ medico.nombre }}</td>
+          <td>{{ medico.apellido }}</td>
+          <td>{{ medico.especialidad?.nombre || '-' }}</td>
+          <td>
+            <button class="btn-modificar" (click)="ctrl.modificarHorario(medico)">
+              Modificar horario
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

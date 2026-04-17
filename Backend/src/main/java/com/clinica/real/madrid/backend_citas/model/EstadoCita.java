@@ -1,0 +1,8 @@
+package com.clinica.real.madrid.backend_citas.model;
+
+public enum EstadoCita {
+    PENDIENTE,
+    CONFIRMADA,
+    REPROGRAMADA,
+    CANCELADA;
+}

@@ -132,12 +132,146 @@ html, body {
 
 /* ===== CONTENIDO CENTRADO ===== */
 .contenido-centrado {
-  display: block; /* Cambiamos a block para que el hijo ocupe todo el ancho natural */
-  padding-top: 65px; /* Altura exacta del header */
+  display: block;
+  padding-top: 65px;
   min-height: 100vh;
   width: 100%;
   box-sizing: border-box;
   background: none;
+}
+
+.contenido-centrado.no-padding {
+  padding-top: 0 !important;
+  margin-left: 260px; /* Ancho del sidebar */
+}
+
+@media (max-width: 900px) {
+  .contenido-centrado.no-padding {
+    margin-left: 0 !important;
+  }
+}
+
+/* ════ SIDEBAR DASHBOARD ════ */
+.dashboard-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a3d24 0%, #095a34 50%, #0a7c4a 100%);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.nav-item i { width: 20px; text-align: center; font-size: 1rem; }
+.nav-item:hover { background: rgba(255,255,255,0.12); color: white; transform: translateX(4px); }
+.nav-item.active { background: rgba(255,255,255,0.18); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.admin-avatar {
+  width: 42px;
+  height: 42px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.admin-info { display: flex; flex-direction: column; }
+.admin-name { font-weight: 700; color: white; font-size: 0.9rem; }
+.admin-role { font-size: 0.72rem; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+
+.btn-logout-sidebar {
+  width: 100%;
+  padding: 10px;
+  background: rgba(192, 57, 43, 0.1);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  border-radius: 8px;
+  color: #ff9999;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-logout-sidebar:hover {
+  background: #c0392b;
+  color: white;
 }
 
 /* ===== MODAL ====== */
@@ -271,29 +405,30 @@ html, body {
 
 /* CONTENEDOR PRINCIPAL */
 .admin-layout {
-  padding: 40px 20px;
-  max-width: 1300px;
-  margin: 0 auto;
-  animation: slideUp 0.6s ease-out;
+  padding: 32px;
+  min-height: 100vh;
+  animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-/* CABECERA DE SECCIÓN */
+/* CABECERA DE SECCIÓN (UNIFICADA) */
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .section-header h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #1a2a3a;
+  color: #0c4d2d;
   margin: 0;
   display: flex;
   align-items: center;

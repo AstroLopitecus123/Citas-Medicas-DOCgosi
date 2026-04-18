@@ -23,6 +23,7 @@ export class AppComponent {
   loading = false;
   isMenuOpen = false;
   loginActualizado$ = new Subject<void>();
+  isAdminRoute = false;
 
 
   constructor(private router: Router, private http: HttpClient) {
@@ -32,8 +33,16 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.loading = true;
+      } else if (event instanceof NavigationEnd) {
+        this.loading = false;
+        // 🛡️ Detectar si estamos en una ruta administrativa
+        const url = event.urlAfterRedirects;
+        this.isAdminRoute = url.startsWith('/admin') || 
+                           url.startsWith('/usuarios') || 
+                           url.startsWith('/medicos') || 
+                           url.startsWith('/especialidades') ||
+                           url.startsWith('/gestionar-disponibilidad');
       } else if (
-        event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {

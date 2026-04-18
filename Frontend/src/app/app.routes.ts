@@ -10,9 +10,11 @@ import { AdminEspecialidadesComponent } from './components/admin-especialidades/
 import { GestionarDisponibilidadComponent } from './components/gestionar-disponibilidad/gestionar-disponibilidad';
 import { PagarEfectivoComponent } from './components/pagar-efectivo/pagar-efectivo';
 import { HomeComponent } from './components/home/home';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'admin', component: AdminDashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },
   { path: 'usuarios', component: ListaUsuariosComponent },

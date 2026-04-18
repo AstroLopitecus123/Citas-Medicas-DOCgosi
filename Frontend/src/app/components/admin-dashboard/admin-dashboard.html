@@ -1,0 +1,110 @@
+<!-- ━━━ MAIN CONTENT DASHBOARD (Estadísticas y Módulos) ━━━ -->
+<main class="dashboard-main-content">
+
+  <!-- TOP BAR -->
+  <div class="topbar-modern">
+    <div class="topbar-left">
+      <h1 class="topbar-title">
+        {{ getHora() }}, {{ usuario?.nombre || 'Admin' }}
+        <span class="wave">👋</span>
+      </h1>
+      <p class="topbar-sub">Vista general del sistema — R.E.T.O Salud</p>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-date">
+        <i class="fa-regular fa-calendar"></i>
+        {{ 'today' | date:'EEEE, d MMMM yyyy' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-green">
+      <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+      <div class="kpi-body">
+        <p class="kpi-label">Total Usuarios</p>
+        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalUsuarios }}</h2>
+      </div>
+      <div class="kpi-trend"><i class="fa-solid fa-arrow-trend-up"></i> activos</div>
+    </div>
+
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-icon"><i class="fa-solid fa-user-doctor"></i></div>
+      <div class="kpi-body">
+        <p class="kpi-label">Médicos</p>
+        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalMedicos }}</h2>
+      </div>
+      <div class="kpi-trend"><i class="fa-solid fa-stethoscope"></i> registrados</div>
+    </div>
+
+    <div class="kpi-card kpi-teal">
+      <div class="kpi-icon"><i class="fa-solid fa-notes-medical"></i></div>
+      <div class="kpi-body">
+        <p class="kpi-label">Especialidades</p>
+        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalEspecialidades }}</h2>
+      </div>
+      <div class="kpi-trend"><i class="fa-solid fa-check-circle"></i> activas</div>
+    </div>
+
+    <div class="kpi-card kpi-purple">
+      <div class="kpi-icon"><i class="fa-solid fa-calendar-check"></i></div>
+      <div class="kpi-body">
+        <p class="kpi-label">Citas Totales</p>
+        <h2 class="kpi-value"><i class="fa-solid fa-chart-line"></i></h2>
+      </div>
+      <div class="kpi-trend"><i class="fa-solid fa-bolt"></i> ver módulo</div>
+    </div>
+  </div>
+
+  <!-- MODULE CARDS -->
+  <div class="section-title-dash">
+    <i class="fa-solid fa-grip"></i>
+    <h2>Módulos de Administración</h2>
+  </div>
+
+  <div class="module-grid">
+    <div class="module-card" *ngFor="let item of menuItems" [routerLink]="item.ruta" [class]="item.color">
+      <div class="module-icon-wrap">
+        <i class="fa-solid" [class]="item.icono"></i>
+      </div>
+      <div class="module-body">
+        <h3>{{ item.titulo }}</h3>
+        <p>{{ item.descripcion }}</p>
+      </div>
+      <div class="module-stat">
+        <span class="stat-number">{{ getStat(item.stat) }}</span>
+        <span class="stat-label">{{ item.label }}</span>
+      </div>
+      <div class="module-arrow">
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="section-title-dash">
+    <i class="fa-solid fa-bolt"></i>
+    <h2>Acciones Rápidas</h2>
+  </div>
+
+  <div class="quick-grid">
+    <button class="quick-btn" routerLink="/especialidades">
+      <i class="fa-solid fa-plus"></i>
+      Nueva Especialidad
+    </button>
+    <button class="quick-btn" routerLink="/medicos">
+      <i class="fa-solid fa-user-plus"></i>
+      Asignar Médico
+    </button>
+    <button class="quick-btn" routerLink="/usuarios">
+      <i class="fa-solid fa-user-gear"></i>
+      Gestionar Usuarios
+    </button>
+    <button class="quick-btn" routerLink="/mis-citas">
+      <i class="fa-solid fa-calendar-plus"></i>
+      Ver Citas
+    </button>
+  </div>
+
+</main>

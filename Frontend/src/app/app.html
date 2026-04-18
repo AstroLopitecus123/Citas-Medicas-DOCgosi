@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<header class="header">
+<header class="header" *ngIf="!isAdminRoute">
   <div class="header-container">
     <h1 class="titulo" routerLink="/">
       <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo">
@@ -21,15 +21,8 @@
 
     <nav class="nav-links" [ngClass]="{'open': isMenuOpen}" (click)="isMenuOpen = false">
 
-      <!-- SOLO ADMIN -->
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/especialidades">
-        <i class="fa-solid fa-notes-medical"></i> Especialidades
-      </a>
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/medicos">
-        <i class="fa-solid fa-user-doctor"></i> Médicos
-      </a>
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/usuarios">
-        <i class="fa-solid fa-users"></i> Usuarios
+      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/admin">
+        <i class="fa-solid fa-gauge-high"></i> Dashboard
       </a>
 
       <!-- SOLO USUARIOS NO LOGUEADOS -->
@@ -48,8 +41,61 @@
   </div>
 </header>
 
+<!-- ━━━ SIDEBAR PERSISTENTE (SOLO ADMIN) ━━━ -->
+<aside class="dashboard-sidebar" *ngIf="isAdminRoute">
+  <div class="sidebar-brand">
+    <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" />
+    <div class="brand-text">
+      <span class="brand-name">R.E.T.O</span>
+      <span class="brand-sub">Panel Admin</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item" routerLink="/admin" routerLinkActive="active">
+      <i class="fa-solid fa-house-chimney-medical"></i>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" routerLink="/especialidades" routerLinkActive="active">
+      <i class="fa-solid fa-stethoscope"></i>
+      <span>Especialidades</span>
+    </a>
+    <a class="nav-item" routerLink="/medicos" routerLinkActive="active">
+      <i class="fa-solid fa-user-doctor"></i>
+      <span>Médicos</span>
+    </a>
+    <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
+      <i class="fa-solid fa-users"></i>
+      <span>Usuarios</span>
+    </a>
+    <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span>Citas</span>
+    </a>
+    <a class="nav-item" routerLink="/" routerLinkActive="active">
+      <i class="fa-solid fa-home"></i>
+      <span>Ver Web</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-profile">
+      <div class="admin-avatar">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div class="admin-info">
+        <span class="admin-name">{{ usuario?.nombre || 'Admin' }}</span>
+        <span class="admin-role">Administrador</span>
+      </div>
+    </div>
+    <button class="btn-logout-sidebar" (click)="abrirModalCerrarSesion()">
+      <i class="fa-solid fa-power-off"></i> Salir
+    </button>
+  </div>
+</aside>
+
 <!-- Contenedor para centrar el contenido del router -->
-<div class="contenido-centrado">
+<div class="contenido-centrado" [class.no-padding]="isAdminRoute">
   <!-- 🔥 Detecta login sin recargar la página -->
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
 </div>

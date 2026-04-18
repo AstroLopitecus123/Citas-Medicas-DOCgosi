@@ -23,7 +23,12 @@ export class LoginController {
           const usuario = new UsuarioFull(res);
           localStorage.setItem('usuario', JSON.stringify(usuario));
           if (this.loginExitoso) this.loginExitoso.emit();
-          this.router.navigate(['/mis-citas']);
+          
+          if (usuario.rol === 'ADMIN') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/mis-citas']);
+          }
         } else if ('message' in res) {
           this.error = `❌ ${res.message}`;
         } else {

@@ -252,23 +252,29 @@
 
 .slot-taken {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #cf1322; /* Rojo fuerte para el icono */
-  font-size: 0.65rem;
-  gap: 2px;
+  height: 100%;
 }
 
-.slot-taken i {
-  font-size: 1.1rem;
-  margin-bottom: 2px;
+.red-radio-mock {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.taken-txt {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.red-radio-mock::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #c53030; /* Rojo central */
 }
 
 .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 25px; border-top: 1px solid #f1f5f9; padding-top: 20px; }

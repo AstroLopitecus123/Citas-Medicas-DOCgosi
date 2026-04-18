@@ -40,16 +40,16 @@ export class LoginController {
             this.router.navigate(['/paciente/dashboard']);
           }
         } else if ('message' in res) {
-          this.error = `❌ ${res.message}`;
+          this.error = `${res.message}`;
           if (this.ns) this.ns.error(String(res.message));
         } else {
-          this.error = '❌ Error inesperado al iniciar sesión.';
+          this.error = 'Error inesperado al iniciar sesión.';
           if (this.ns) this.ns.error('Error inesperado');
         }
       },
       error: (err) => {
         console.error('Error en login:', err);
-        this.error = '❌ Correo o contraseña incorrectos.';
+        this.error = 'Correo o contraseña incorrectos.';
         if (this.ns) this.ns.error('Correo o contraseña incorrectos');
       }
     });

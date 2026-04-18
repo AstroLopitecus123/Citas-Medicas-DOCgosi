@@ -22,7 +22,7 @@ export class RecuperarController {
         this.error = '';
       },
       error: (err) => {
-        this.error = '❌ No se pudo enviar el correo. Verifique que el correo esté registrado.';
+        this.error = 'No se pudo enviar el correo. Verifique que el correo esté registrado.';
         console.error(err);
       }
     });

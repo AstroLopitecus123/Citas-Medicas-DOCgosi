@@ -26,11 +26,11 @@ export class RestablecerController {
 
     this.usuarioService.restablecerContrasena(this.token, this.nuevaContrasena).subscribe({
       next: (res) => {
-        this.mensaje = '✅ Contraseña restablecida correctamente. Redirigiendo al login...';
+        this.mensaje = 'Contraseña restablecida correctamente. Redirigiendo al login...';
         setTimeout(() => this.router.navigate(['/login']), 2500);
       },
       error: (err) => {
-        this.error = '❌ El enlace de recuperación no es válido o ha expirado.';
+        this.error = 'El enlace de recuperación no es válido o ha expirado.';
         console.error(err);
       }
     });

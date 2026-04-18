@@ -149,12 +149,12 @@ export class MisCitasController {
         const usuarioLocal = JSON.parse(localStorage.getItem('usuario') || '{}');
         if (usuarioLocal.id === this.usuario.id) localStorage.setItem('usuario', JSON.stringify(this.usuario));
         
-        if (this.ns) this.ns.success('✅ Perfil actualizado correctamente');
+        if (this.ns) this.ns.success('Perfil actualizado correctamente');
       },
       error: err => { 
         console.error(err); 
         this.error = 'No se pudo actualizar el perfil.'; 
-        if (this.ns) this.ns.error('❌ Error al actualizar el perfil');
+        if (this.ns) this.ns.error('Error al actualizar el perfil');
       }
     });
   }
@@ -268,12 +268,12 @@ export class MisCitasController {
     this.citaService.cancelarCita(cita.id).subscribe({
       next: (response) => {
         console.log('Respuesta:', response);
-        if (this.ns) this.ns.success('✅ Cita cancelada exitosamente');
+        if (this.ns) this.ns.success('Cita cancelada exitosamente');
         this.cargarCitas();
       },
       error: (err) => {
         console.error('Error al cancelar cita:', err);
-        if (this.ns) this.ns.error('❌ No se pudo cancelar la cita');
+        if (this.ns) this.ns.error('No se pudo cancelar la cita');
       }
     });
   }
@@ -367,13 +367,13 @@ export class MisCitasController {
 
       this.citaService.reprogramarCita(citaActualizada.id, citaActualizada).subscribe({
         next: () => {
-          if (this.ns) this.ns.success('✅ Cita reprogramada correctamente');
+          if (this.ns) this.ns.success('Cita reprogramada correctamente');
           this.cargarCitas();
           this.cerrarModalCita();
         },
         error: (err) => {
           console.error('Error al reprogramar cita:', err);
-          if (this.ns) this.ns.error('❌ Error al reprogramar la cita');
+          if (this.ns) this.ns.error('Error al reprogramar la cita');
         }
       });
 
@@ -388,7 +388,7 @@ export class MisCitasController {
 
       this.citaService.crear(nuevaCita).subscribe({
         next: (citaCreada) => {
-          if (this.ns) this.ns.success('✅ Reserva realizada. Redirigiendo al pago...');
+          if (this.ns) this.ns.success('Reserva realizada. Redirigiendo al pago...');
           
           this.cargarCitas();
           this.cerrarModalCita();
@@ -403,7 +403,7 @@ export class MisCitasController {
         error: (err) => {
           console.error('Error al registrar cita:', err);
           const msg = err.error?.message || 'Ocurrió un error al registrar la cita';
-          if (this.ns) this.ns.error(`❌ ${msg}`);
+          if (this.ns) this.ns.error(`${msg}`);
         }
       });
     }

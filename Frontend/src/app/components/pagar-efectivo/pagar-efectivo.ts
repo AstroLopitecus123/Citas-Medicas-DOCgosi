@@ -62,13 +62,13 @@ export class PagarEfectivoComponent implements OnInit {
     setTimeout(() => {
       this.pagoService.pagarEfectivo(body).subscribe({
         next: () => {
-          this.ns.success('✅ Voucher generado y Cita Confirmada correctamente');
+          this.ns.success('Voucher generado y Cita Confirmada correctamente');
           this.procesandoPago = false;
           setTimeout(() => this.router.navigate(['/paciente/dashboard']), 1500);
         },
         error: (err) => {
           console.error(err);
-          this.ns.error('❌ Error al procesar el pago. Intente nuevamente.');
+          this.ns.error('Error al procesar el pago. Intente nuevamente.');
           this.procesandoPago = false;
         }
       });

@@ -143,13 +143,13 @@ export class PagarTarjetaComponent implements OnInit {
       next: () => {
         this.cargando = false;
         this.pagoExitoso = true;
-        this.ns.success('✅ Pago procesado exitosamente por S/. ' + this.monto);
+        this.ns.success('Pago procesado exitosamente por S/. ' + this.monto);
       },
       error: (err: any) => {
         console.error('Error al registrar pago:', err);
         this.cargando = false;
         const msg = err?.error?.message || 'Error al procesar el pago. Intente nuevamente.';
-        this.ns.error('❌ ' + msg);
+        this.ns.error(msg);
         this.errorMensaje = msg;
       }
     });

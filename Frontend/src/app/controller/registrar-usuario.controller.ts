@@ -192,7 +192,7 @@ export class RegistrarUsuarioController {
     delete payload.correoUsuario;
     this.usuarioService.crearUsuario(payload).subscribe({
       next: () => {
-        if (this.ns) this.ns.success('✅ ¡Cuenta creada con éxito! Bienvenido a R.E.T.O Salud.');
+        if (this.ns) this.ns.success('¡Cuenta creada con éxito! Bienvenido a R.E.T.O Salud.');
         this.inicializarFormulario();
 
         // 🚀 Redirección automática al Login para que el usuario inicie sesión
@@ -210,11 +210,11 @@ export class RegistrarUsuarioController {
           else if (field === 'dni') this.dniError = msg;
           else if (field === 'telefono') this.telefonoError = msg;
           
-          if (this.ns) this.ns.error(`❌ ${msg}`);
+          if (this.ns) this.ns.error(`${msg}`);
         } else {
           const errMsg = err.error?.message || err.message;
           this.error = 'Error al registrar: ' + errMsg;
-          if (this.ns) this.ns.error('❌ Error al procesar el registro');
+          if (this.ns) this.ns.error('Error al procesar el registro');
         }
       }
     });

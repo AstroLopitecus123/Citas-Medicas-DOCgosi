@@ -33,24 +33,22 @@ public class PagoService {
 
     @Transactional
     public PaymentIntentResponse crearPaymentIntent(PaymentIntentRequest request) throws StripeException {
-        System.out.println("💳 Iniciando PaymentIntent para Cita ID: " + request.getCitaId() + " por S/. " + request.getMonto());
-        // Convertir monto a centavos para Stripe
+        System.out.println("\uD83D\uDCB3 Creando PaymentIntent para Cita ID: " + request.getCitaId() + " - Monto: S/. " + request.getMonto());
+        
+        // Convertir monto a centavos para Stripe (100 soles = 10000 centavos)
         long montoCentavos = (long) (request.getMonto() * 100);
 
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(montoCentavos)
                 .setCurrency(request.getMoneda() != null ? request.getMoneda().toLowerCase() : "pen")
-                .setAutomaticPaymentMethods(
-                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                                .setEnabled(true)
-                                .build()
-                )
+                // ✅ CLAVE: especificar 'card' explicitamente para que funcione con confirmCardPayment() en el frontend
+                .addPaymentMethodType("card")
                 .putMetadata("citaId", request.getCitaId().toString())
                 .putMetadata("usuarioId", request.getUsuarioId().toString())
                 .build();
 
         PaymentIntent intent = PaymentIntent.create(params);
-        System.out.println("✅ PaymentIntent creado: " + intent.getId() + " - Status: " + intent.getStatus());
+        System.out.println("\u2705 PaymentIntent creado correctamente: " + intent.getId() + " - Status: " + intent.getStatus());
 
         return new PaymentIntentResponse(
                 intent.getClientSecret(),

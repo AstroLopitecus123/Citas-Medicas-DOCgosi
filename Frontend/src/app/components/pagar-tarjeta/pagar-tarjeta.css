@@ -362,3 +362,51 @@
   transition: 0.3s;
 }
 .btn-outline-green:hover { border-color: #0fbf6a; color: #0a7c4a; }
+
+/* ========== STRIPE CARD ELEMENT ========== */
+.stripe-element-container {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  min-height: 46px;
+  display: none; /* oculto hasta que esté montado */
+}
+
+.stripe-element-container.element-visible {
+  display: block;
+  border-color: #0fbf6a;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.08);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Spinner mientras Stripe carga */
+.stripe-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.stripe-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #0fbf6a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}

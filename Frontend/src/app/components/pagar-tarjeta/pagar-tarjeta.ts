@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CitaService } from '../../services/cita.service';
 import { PagoService } from '../../services/pago.service';
 import { NotificationService } from '../../services/notification.service';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { STRIPE_CONFIG } from '../../config/stripe.config';
 
 @Component({
   selector: 'app-pagar-tarjeta',
@@ -15,44 +13,19 @@ import { STRIPE_CONFIG } from '../../config/stripe.config';
   templateUrl: './pagar-tarjeta.html',
   styleUrls: ['./pagar-tarjeta.css']
 })
-export class PagarTarjetaComponent implements OnInit {
+export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
   citaId: number | null = null;
   cita: any = null;
   usuario: any = null;
 
-  // Form fields
-  nombreTitular = '';
-  numeroTarjeta = '';
-  fechaExpiracion = '';
-  cvv = '';
-  tipoTarjeta: 'visa' | 'mastercard' | 'amex' | '' = '';
-
   // UI State
   cargando = false;
   pagoExitoso = false;
-  errorMensaje: string | null = null; // Mantenemos por si acaso pero daremos prioridad a NotificationService
+  cardElementMontado = false;
+  nombreTitular = '';
 
   // Monto fijo por consulta
   monto = 100.00;
-
-  private stripe: Stripe | null = null;
-
-  // Validaciones
-  get tarjetaValida(): boolean {
-    return this.numeroTarjeta.replace(/\s/g, '').length === 16;
-  }
-
-  get fechaValida(): boolean {
-    return /^\d{2}\/\d{2}$/.test(this.fechaExpiracion);
-  }
-
-  get cvvValido(): boolean {
-    return this.cvv.length >= 3;
-  }
-
-  get formularioValido(): boolean {
-    return this.nombreTitular.trim().length > 2 && this.tarjetaValida && this.fechaValida && this.cvvValido;
-  }
 
   constructor(
     private route: ActivatedRoute,
@@ -63,8 +36,6 @@ export class PagarTarjetaComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.stripe = await loadStripe(STRIPE_CONFIG.publishableKey);
-    
     this.citaId = Number(this.route.snapshot.paramMap.get('id'));
     const usrStr = localStorage.getItem('usuario');
     if (usrStr) {
@@ -82,51 +53,34 @@ export class PagarTarjetaComponent implements OnInit {
     }
   }
 
-  // Detectar tipo de tarjeta por los primeros dígitos
-  detectarTipoTarjeta(): void {
-    const num = this.numeroTarjeta.replace(/\s/g, '');
-    if (num.startsWith('4')) {
-      this.tipoTarjeta = 'visa';
-    } else if (num.startsWith('5') || num.startsWith('2')) {
-      this.tipoTarjeta = 'mastercard';
-    } else if (num.startsWith('3')) {
-      this.tipoTarjeta = 'amex';
-    } else {
-      this.tipoTarjeta = '';
-    }
+  async ngAfterViewInit(): Promise<void> {
+    // Montar el Card Element de Stripe en el contenedor del DOM
+    setTimeout(async () => {
+      console.log('💳 Iniciando Stripe Card Element...');
+      const element = await this.pagoService.createCardElement('stripe-card-element');
+      if (element) {
+        this.cardElementMontado = true;
+        console.log('✅ Stripe Card Element listo para recibir datos de tarjeta.');
+      } else {
+        console.error('❌ No se pudo montar el formulario de Stripe.');
+        this.ns.error('Error al cargar el formulario seguro de pago. Recarga la página.');
+      }
+    }, 400);
   }
 
-  // Formatear número de tarjeta en grupos de 4
-  formatNumerotarjeta(event: any): void {
-    let value = event.target.value.replace(/\D/g, '').substring(0, 16);
-    value = value.replace(/(.{4})/g, '$1 ').trim();
-    this.numeroTarjeta = value;
-    event.target.value = value;
-    this.detectarTipoTarjeta();
-  }
-
-  // Formatear fecha MM/YY
-  formatFecha(event: any): void {
-    let value = event.target.value.replace(/\D/g, '').substring(0, 4);
-    if (value.length >= 2) {
-      value = value.substring(0, 2) + '/' + value.substring(2);
-    }
-    this.fechaExpiracion = value;
-    event.target.value = value;
-  }
-
-  // Solo números en CVV
-  formatCvv(event: any): void {
-    let value = event.target.value.replace(/\D/g, '').substring(0, 4);
-    this.cvv = value;
-    event.target.value = value;
+  ngOnDestroy(): void {
+    this.pagoService.destroyCardElement();
   }
 
   async procesarPago(): Promise<void> {
-    if (!this.formularioValido || this.cargando || !this.stripe) return;
+    if (this.cargando || !this.cardElementMontado) return;
+    if (!this.nombreTitular.trim()) {
+      this.ns.error('Por favor escribe tu nombre completo.');
+      return;
+    }
 
-    this.errorMensaje = null;
     this.cargando = true;
+    console.log('💳 Iniciando proceso de pago real con Stripe...');
 
     if (!this.citaId) {
       this.ns.error('ID de cita no encontrado.');
@@ -134,10 +88,7 @@ export class PagarTarjetaComponent implements OnInit {
       return;
     }
 
-    console.log('💳 Iniciando proceso de pago real con Stripe...');
-    console.log('🛠️ Llamando al backend para crear PaymentIntent...');
-
-    // 1. Crear Intent en el Backend
+    // PASO 1: Crear PaymentIntent en el backend
     this.pagoService.crearPaymentIntent({
       citaId: this.citaId,
       usuarioId: this.usuario?.id,
@@ -145,67 +96,58 @@ export class PagarTarjetaComponent implements OnInit {
       moneda: 'pen'
     }).subscribe({
       next: async (res: any) => {
-        console.log('✅ Backend respondió: PaymentIntent creado exitosamente.');
         const clientSecret = res.clientSecret;
-        console.log('🔗 ClientSecret recibido. Contactando a Stripe JS para confirmación...');
-
-        // 2. Confirmar Pago con Stripe usando datos del formulario
-        const [expMonth, expYear] = this.fechaExpiracion.split('/');
-        
-        const { error, paymentIntent } = await this.stripe!.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: {
-              // @ts-ignore - Stripe prefiere Elements pero permite datos manuales en tokens si no se usan iframes
-              // Aunque lo ideal es Elements, para mantener el diseño premium usamos esta vía:
-              number: this.numeroTarjeta.replace(/\s/g, ''),
-              exp_month: parseInt(expMonth),
-              exp_year: parseInt('20' + expYear),
-              cvc: this.cvv
-            },
-            billing_details: {
-              name: this.nombreTitular,
-              email: this.usuario?.correo
-            }
-          }
-        });
-
-        if (error) {
-          console.error('❌ Error de Stripe JS:', error);
+        if (!clientSecret) {
+          this.ns.error('Error: No se recibió el token de pago del servidor.');
           this.cargando = false;
-          this.ns.error(error.message || 'Error en el procesamiento de la tarjeta');
           return;
         }
 
-        if (paymentIntent && paymentIntent.status === 'succeeded') {
-          console.log('🎉 ¡Stripe confirmó el pago con éxito! ID:', paymentIntent.id);
-          console.log('📡 Informando al sistema de la clínica para confirmar la cita...');
-          // 3. Confirmar en nuestro backend para actualizar cita y generar comprobante
-          const body = {
-            citaId: this.citaId as number,
-            usuarioId: this.usuario?.id as number,
-            monto: this.monto,
-            referencia: paymentIntent.id,
-            exito: true
-          };
+        console.log('✅ PaymentIntent creado. Confirmando con Stripe...');
 
-          this.pagoService.pagarTarjeta(body).subscribe({
-            next: () => {
-              this.cargando = false;
-              this.pagoExitoso = true;
-              this.ns.success('¡Pago real procesado exitosamente!');
-            },
-            error: (err: any) => {
-              this.cargando = false;
-              this.ns.error('El pago se realizó en Stripe pero hubo un error al actualizar tu cita. Contacta a soporte.');
-              console.error('Error post-pago backend:', err);
-            }
-          });
+        // PASO 2: Confirmar con Stripe Elements (SEGURO - sin datos en texto plano)
+        const resultado = await this.pagoService.confirmarPagoConTarjeta(
+          clientSecret,
+          this.usuario?.correo || '',
+          this.nombreTitular
+        );
+
+        if (!resultado.success) {
+          this.cargando = false;
+          this.ns.error(resultado.error || 'Error al procesar el pago con la tarjeta.');
+          return;
         }
+
+        console.log('🎉 ¡Stripe confirmó el pago! Notificando al sistema...');
+
+        // PASO 3: Confirmar en nuestro backend
+        const body = {
+          citaId: this.citaId as number,
+          usuarioId: this.usuario?.id,
+          monto: this.monto,
+          referencia: resultado.paymentIntentId || 'confirmed',
+          exito: true
+        };
+
+        this.pagoService.pagarTarjeta(body).subscribe({
+          next: () => {
+            this.cargando = false;
+            this.pagoExitoso = true;
+            this.ns.success('¡Pago procesado exitosamente con Stripe!');
+          },
+          error: (err: any) => {
+            this.cargando = false;
+            // El pago YA se realizó en Stripe, aunque el backend falle al confirmar
+            this.pagoExitoso = true;
+            this.ns.success('Pago confirmado. Contacta soporte si hay dudas.');
+            console.error('Error al notificar backend post-pago:', err);
+          }
+        });
       },
       error: (err: any) => {
         this.cargando = false;
-        this.ns.error('Error al inicializar la pasarela de pago. Intente nuevamente.');
-        console.error('Error Intent:', err);
+        this.ns.error('Error al conectar con el servidor de pagos.');
+        console.error('Error al crear PaymentIntent:', err);
       }
     });
   }

@@ -60,6 +60,15 @@ export class AdminDashboardComponent implements OnInit {
       color: 'card-green',
       stat: 'citasHoy',
       label: 'citas pendientes'
+    },
+    {
+      titulo: 'Control de Pagos',
+      descripcion: 'Historial financiero y gestión de transacciones',
+      icono: 'fa-file-invoice-dollar',
+      ruta: '/admin/pagos',
+      color: 'card-purple',
+      stat: 'totalUsuarios',
+      label: 'transacciones'
     }
   ];
 

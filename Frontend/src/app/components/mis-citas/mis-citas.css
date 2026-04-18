@@ -236,7 +236,40 @@
 .slot-check { display: flex; justify-content: center; }
 .slot-check input { width: 18px; height: 18px; cursor: pointer; accent-color: #0fbf6a; }
 
-.not-available { background: #f1f5f9; opacity: 0.3; }
+.not-available { background: #f1f5f9; opacity: 0.3; cursor: not-allowed; }
+
+.slot-occupied {
+  background: #fff1f0; /* Rojo muy suave (estilo Ant Design) */
+  border: 1px solid #ffa39e !important;
+  cursor: not-allowed;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.slot-occupied:hover {
+  background: #ffccc7;
+}
+
+.slot-taken {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #cf1322; /* Rojo fuerte para el icono */
+  font-size: 0.65rem;
+  gap: 2px;
+}
+
+.slot-taken i {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.taken-txt {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
 .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 25px; border-top: 1px solid #f1f5f9; padding-top: 20px; }
 

@@ -459,13 +459,20 @@ export class MisCitasController {
 
   isDisponible(fecha: string, hora: number): boolean {
     const fechaISO = this.fechaToISO(fecha);
-
-    return this.horariosDisponibles.some(d => {
+    const h = this.horariosDisponibles.find(d => {
       const dHora = parseInt(d.horaInicio.split(':')[0], 10);
-      const mismaFecha = d.fecha === fechaISO;
-      const mismaHora = dHora === hora;
-      return mismaFecha && mismaHora; // si coincide fecha y hora, está disponible
+      return d.fecha === fechaISO && dHora === hora;
     });
+    return !!h && h.estado === 'DISPONIBLE';
+  }
+
+  isOcupado(fecha: string, hora: number): boolean {
+    const fechaISO = this.fechaToISO(fecha);
+    const h = this.horariosDisponibles.find(d => {
+      const dHora = parseInt(d.horaInicio.split(':')[0], 10);
+      return d.fecha === fechaISO && dHora === hora;
+    });
+    return !!h && h.estado === 'NO_DISPONIBLE';
   }
 
 

@@ -202,11 +202,21 @@
                             <tbody>
                                 <tr *ngFor="let h of ctrl.horas">
                                     <td class="time-col">{{ h }}:00</td>
-                                    <td *ngFor="let dia of ctrl.dias" [class.not-available]="!ctrl.isDisponible(dia.fecha, h)">
+                                    <td *ngFor="let dia of ctrl.dias" 
+                                        [class.not-available]="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)"
+                                        [class.slot-occupied]="ctrl.isOcupado(dia.fecha, h)">
+                                        
+                                        <!-- Slot Disponible -->
                                         <div class="slot-check" *ngIf="ctrl.isDisponible(dia.fecha, h)">
                                             <input type="radio" name="horarioSeleccionado"
                                                 [checked]="ctrl.horarioSeleccionado === ctrl.getHorario(dia.fecha, h)"
                                                 (change)="ctrl.horarioSeleccionado = ctrl.getHorario(dia.fecha, h)">
+                                        </div>
+
+                                        <!-- Slot Ocupado (Visual Rojo) -->
+                                        <div class="slot-taken" *ngIf="ctrl.isOcupado(dia.fecha, h)">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                            <span class="taken-txt">Ocupado</span>
                                         </div>
                                     </td>
                                 </tr>

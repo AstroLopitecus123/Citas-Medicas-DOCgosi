@@ -70,25 +70,24 @@ public class CitaService {
     }
     
     public Cita crearCita(Cita cita) {
+        if (cita == null || cita.getMedico() == null || cita.getMedico().getId() == null) {
+            throw new RuntimeException("Datos de médico inválidos para crear la cita");
+        }
+        if (cita.getFecha() == null) {
+            throw new RuntimeException("La fecha de la cita es obligatoria");
+        }
+
         // Validar disponibilidad
         List<Disponibilidad> disponibles = disponibilidadRepository
             .findByMedicoIdAndEstado(cita.getMedico().getId(), Disponibilidad.EstadoDisponibilidad.DISPONIBLE);
-
-        boolean horarioDisponible = disponibles.stream()
-            .anyMatch(d -> d.getFecha().equals(cita.getFecha().toLocalDate())
-                        && !cita.getFecha().toLocalTime().isBefore(d.getHoraInicio())
-                        && !cita.getFecha().toLocalTime().isAfter(d.getHoraFin()));
-
-        if (!horarioDisponible) {
-            throw new RuntimeException("Horario no disponible");
-        }
 
         // Marcar disponibilidad como NO_DISPONIBLE
         Disponibilidad disp = disponibles.stream()
             .filter(d -> d.getFecha().equals(cita.getFecha().toLocalDate())
                       && !cita.getFecha().toLocalTime().isBefore(d.getHoraInicio())
                       && !cita.getFecha().toLocalTime().isAfter(d.getHoraFin()))
-            .findFirst().get();
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("El horario seleccionado ya no está disponible o no existe"));
 
         disp.setEstado(Disponibilidad.EstadoDisponibilidad.NO_DISPONIBLE);
         disponibilidadRepository.save(disp);

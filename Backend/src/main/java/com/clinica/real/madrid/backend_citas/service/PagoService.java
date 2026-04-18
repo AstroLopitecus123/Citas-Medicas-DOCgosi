@@ -145,8 +145,8 @@ public class PagoService {
             if (pago.getCita().getMedico().getEspecialidad() != null) {
                 response.setEspecialidad(pago.getCita().getMedico().getEspecialidad().getNombre());
             }
-            if (pago.getCita().getFechaHora() != null) {
-                response.setCitaFechaResumen(pago.getCita().getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+            if (pago.getCita().getFecha() != null) {
+                response.setCitaFechaResumen(pago.getCita().getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
             }
         }
         

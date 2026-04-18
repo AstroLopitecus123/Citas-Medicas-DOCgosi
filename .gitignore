@@ -1,4 +1,18 @@
-
 # Archivos de entorno locales
 .env
 *.env
+
+# Visual Studio Code / IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Archivos Locales a ignorar por petición
+/WEB CALIDAD/
+/docx_extracted2/
+DIAGRAMAS_FINAL_2*.docx
+DIAGRAMAS_FINAL_2*.zip
+scratch_*.json

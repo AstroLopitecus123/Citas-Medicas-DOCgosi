@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CitaService } from '../../services/cita.service';
 import { PagoService } from '../../services/pago.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-pagar-tarjeta',
@@ -27,7 +28,7 @@ export class PagarTarjetaComponent implements OnInit {
   // UI State
   cargando = false;
   pagoExitoso = false;
-  errorMensaje: string | null = null;
+  errorMensaje: string | null = null; // Mantenemos por si acaso pero daremos prioridad a NotificationService
 
   // Monto fijo por consulta
   monto = 100.00;
@@ -53,7 +54,8 @@ export class PagarTarjetaComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private citaService: CitaService,
-    private pagoService: PagoService
+    private pagoService: PagoService,
+    private ns: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -141,11 +143,14 @@ export class PagarTarjetaComponent implements OnInit {
       next: () => {
         this.cargando = false;
         this.pagoExitoso = true;
+        this.ns.success('✅ Pago procesado exitosamente por S/. ' + this.monto);
       },
       error: (err: any) => {
         console.error('Error al registrar pago:', err);
         this.cargando = false;
-        this.errorMensaje = err?.error?.message || 'Error al procesar el pago. Intente nuevamente.';
+        const msg = err?.error?.message || 'Error al procesar el pago. Intente nuevamente.';
+        this.ns.error('❌ ' + msg);
+        this.errorMensaje = msg;
       }
     });
   }

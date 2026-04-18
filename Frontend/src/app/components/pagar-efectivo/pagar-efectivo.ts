@@ -4,6 +4,7 @@ import { PagoService } from '../../services/pago.service';
 import { CitaService } from '../../services/cita.service';
 import { CommonModule } from '@angular/common';
 import { Cita } from '../../models/cita.model';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-pagar-efectivo',
@@ -24,7 +25,8 @@ export class PagarEfectivoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private pagoService: PagoService,
-    private citaService: CitaService
+    private citaService: CitaService,
+    private ns: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -60,12 +62,13 @@ export class PagarEfectivoComponent implements OnInit {
     setTimeout(() => {
       this.pagoService.pagarEfectivo(body).subscribe({
         next: () => {
-          this.mensaje = '¡Voucher generado y Cita Confirmada!';
+          this.ns.success('✅ Voucher generado y Cita Confirmada correctamente');
           this.procesandoPago = false;
           setTimeout(() => this.router.navigate(['/paciente/dashboard']), 1500);
         },
-        error: () => {
-          this.mensaje = 'Error al procesar el pago.';
+        error: (err) => {
+          console.error(err);
+          this.ns.error('❌ Error al procesar el pago. Intente nuevamente.');
           this.procesandoPago = false;
         }
       });

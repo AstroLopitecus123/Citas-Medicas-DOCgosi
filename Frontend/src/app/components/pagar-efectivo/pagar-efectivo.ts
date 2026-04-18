@@ -28,8 +28,6 @@ export class PagarEfectivoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("🔵 Iniciando pago en efectivo...");
-
     this.citaId = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.citaId) { this.mensaje = 'ID de cita inválido'; this.cargando = false; return; }
 
@@ -40,7 +38,7 @@ export class PagarEfectivoComponent implements OnInit {
         this.cargando = false;
       },
       error: () => {
-        this.nsError('No se pudo cargar la información de la cita.');
+        this.mensaje = 'No se pudo cargar la información de la cita.';
         this.cargando = false;
       }
     });
@@ -55,29 +53,23 @@ export class PagarEfectivoComponent implements OnInit {
     const body = {
       citaId: this.citaId,
       usuarioId: usuario.id,
-      monto: 20.00 // Precio fijo por ahora
+      monto: 20.00
     };
 
-    // Simular procesamiento para feedback visual (Estilo WEB CALIDAD)
+    // Simular procesamiento para feedback visual
     setTimeout(() => {
       this.pagoService.pagarEfectivo(body).subscribe({
-        next: (resp) => {
+        next: () => {
           this.mensaje = '¡Voucher generado y Cita Confirmada!';
           this.procesandoPago = false;
-          // Redirección después de mostrar éxito
           setTimeout(() => this.router.navigate(['/paciente/dashboard']), 1500);
         },
-        error: (error) => {
+        error: () => {
           this.mensaje = 'Error al procesar el pago.';
           this.procesandoPago = false;
         }
       });
     }, 2000);
-  }
-
-  private nsError(msg: string) {
-     this.mensaje = msg;
-  }
   }
 
   volver() {

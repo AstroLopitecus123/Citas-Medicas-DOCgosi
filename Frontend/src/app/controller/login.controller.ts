@@ -41,7 +41,7 @@ export class LoginController {
           }
         } else if ('message' in res) {
           this.error = `❌ ${res.message}`;
-          if (this.ns) this.ns.error(res.message);
+          if (this.ns) this.ns.error(String(res.message));
         } else {
           this.error = '❌ Error inesperado al iniciar sesión.';
           if (this.ns) this.ns.error('Error inesperado');

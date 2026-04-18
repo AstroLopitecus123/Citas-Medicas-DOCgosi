@@ -495,17 +495,9 @@ html, body {
   font-weight: 700;
   color: #4a5568;
   font-size: 0.85rem;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 50, 30, 0.6); /* Verde oscuro glassmorphism */
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #edf2f7;
 }
 
 @keyframes fadeIn {

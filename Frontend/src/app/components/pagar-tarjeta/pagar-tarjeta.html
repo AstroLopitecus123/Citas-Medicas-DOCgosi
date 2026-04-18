@@ -1,15 +1,15 @@
 <div class="pago-container">
-  
-  <!-- LOADING -->
+
+  <!-- LOADING OVERLAY -->
   <div class="loading-overlay" *ngIf="cargando">
     <div class="loader-card">
       <div class="spinner"></div>
-      <p>Procesando tu pago de forma segura...</p>
+      <p>Procesando tu pago...</p>
       <small>Por favor no cierres esta ventana</small>
     </div>
   </div>
 
-  <!-- PAGO EXITOSO -->
+  <!-- SUCCESS SCREEN -->
   <div class="success-screen" *ngIf="pagoExitoso">
     <div class="success-card">
       <div class="success-icon">
@@ -18,85 +18,178 @@
       <h2>¡Pago Confirmado!</h2>
       <p>Tu cita ha sido reservada y pagada exitosamente.</p>
       <div class="success-detail" *ngIf="cita">
-        <span>Especialidad: <strong>{{ cita.medico?.especialidad?.nombre }}</strong></span>
-        <span>Médico: <strong>Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</strong></span>
-        <span>Fecha: <strong>{{ cita.fecha | date:'dd/MM/yyyy h:mm a' }}</strong></span>
+        <div class="detail-row">
+          <i class="fa-solid fa-stethoscope"></i>
+          <span>Especialidad: <strong>{{ cita.medico?.especialidad?.nombre }}</strong></span>
+        </div>
+        <div class="detail-row">
+          <i class="fa-solid fa-user-doctor"></i>
+          <span>Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
+        </div>
+        <div class="detail-row">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>{{ cita.fecha | date:'dd/MM/yyyy h:mm a' }}</span>
+        </div>
+        <div class="detail-row amount-row">
+          <i class="fa-solid fa-receipt"></i>
+          <span>Total pagado: <strong class="txt-green">S/. {{ monto | number:'1.2-2' }}</strong></span>
+        </div>
       </div>
       <div class="success-actions">
-        <button class="btn-primary" routerLink="/mis-citas">Ver Mis Citas</button>
-        <button class="btn-outline" routerLink="/paciente/dashboard">Ir al Dashboard</button>
+        <button class="btn-primary" routerLink="/mis-citas">
+          <i class="fa-solid fa-calendar-days"></i> Ver Mis Citas
+        </button>
+        <button class="btn-outline-green" routerLink="/paciente/dashboard">
+          Ir al Dashboard
+        </button>
       </div>
     </div>
   </div>
 
   <!-- FORMULARIO DE PAGO -->
-  <div class="pago-card" *ngIf="!pagoExitoso && !cargando">
+  <div class="pago-card" *ngIf="!pagoExitoso">
 
     <!-- Header -->
     <div class="pago-header">
       <button class="btn-back" (click)="volver()">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
-      <div class="stripe-branding">
-        <i class="fa-brands fa-stripe" style="font-size: 2.2rem; color: #635bff;"></i>
+      <div class="header-brand">
+        <i class="fa-brands fa-stripe stripe-icon"></i>
       </div>
       <h2>Pago Seguro con Tarjeta</h2>
-      <p>Tus datos están protegidos con cifrado SSL de 256 bits</p>
+      <p>Cifrado SSL 256-bit — Tus datos nunca se almacenan</p>
     </div>
 
-    <!-- Resumen -->
-    <div class="resumen-mini" *ngIf="cita">
-      <div class="resumen-row">
-        <span>Consulta Médica — {{ cita.medico?.especialidad?.nombre || 'Especialidad' }}</span>
-        <strong class="txt-green">S/. {{ monto | number:'1.2-2' }}</strong>
+    <!-- Resumen Cita -->
+    <div class="resumen-cita" *ngIf="cita">
+      <div class="resumen-left">
+        <i class="fa-solid fa-notes-medical"></i>
+        <div>
+          <span class="resumen-label">Consulta Médica</span>
+          <span class="resumen-especialidad">{{ cita.medico?.especialidad?.nombre || 'Especialidad' }}</span>
+        </div>
+      </div>
+      <div class="resumen-monto">S/. {{ monto | number:'1.2-2' }}</div>
+    </div>
+
+    <!-- Tarjeta Animada Preview -->
+    <div class="card-preview" [ngClass]="{'is-visa': tipoTarjeta === 'visa', 'is-mc': tipoTarjeta === 'mastercard', 'is-amex': tipoTarjeta === 'amex'}">
+      <div class="card-preview-top">
+        <div class="card-chip"><i class="fa-solid fa-microchip"></i></div>
+        <div class="card-type-icon">
+          <i class="fa-brands fa-cc-visa" *ngIf="tipoTarjeta === 'visa'"></i>
+          <i class="fa-brands fa-cc-mastercard" *ngIf="tipoTarjeta === 'mastercard'"></i>
+          <i class="fa-brands fa-cc-amex" *ngIf="tipoTarjeta === 'amex'"></i>
+          <i class="fa-solid fa-credit-card" *ngIf="!tipoTarjeta"></i>
+        </div>
+      </div>
+      <div class="card-number-preview">
+        {{ numeroTarjeta || '•••• •••• •••• ••••' }}
+      </div>
+      <div class="card-preview-bottom">
+        <div>
+          <div class="card-label">Titular</div>
+          <div class="card-name">{{ nombreTitular || 'NOMBRE DEL TITULAR' }}</div>
+        </div>
+        <div>
+          <div class="card-label">Expira</div>
+          <div class="card-exp">{{ fechaExpiracion || 'MM/AA' }}</div>
+        </div>
       </div>
     </div>
-    
+
     <!-- Formulario -->
     <div class="form-section">
       
+      <!-- Error -->
+      <div class="error-banner" *ngIf="errorMensaje">
+        <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMensaje }}
+      </div>
+
       <div class="form-group">
         <label>Nombre del Titular</label>
         <input 
           type="text" 
           class="form-input" 
           [(ngModel)]="nombreTitular" 
-          placeholder="Nombre completo como aparece en la tarjeta"
+          placeholder="Nombre como aparece en la tarjeta"
+          autocomplete="cc-name"
         />
       </div>
 
       <div class="form-group">
         <label>
-          <i class="fa-brands fa-stripe" style="color: #635bff; margin-right: 6px;"></i>
-          Datos de Tarjeta
+          Número de Tarjeta
+          <span class="card-icons">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+          </span>
         </label>
-        <!-- Stripe Elements monta aquí automáticamente -->
-        <div id="stripe-card-element" class="stripe-inputbox"></div>
-        <div class="stripe-error" *ngIf="errorMensaje">
-          <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMensaje }}
+        <div class="card-input-wrapper">
+          <i class="fa-solid fa-credit-card card-input-icon" [ngClass]="{'txt-visa': tipoTarjeta === 'visa', 'txt-mc': tipoTarjeta === 'mastercard'}"></i>
+          <input 
+            type="text" 
+            class="form-input with-icon"
+            [value]="numeroTarjeta"
+            (input)="formatNumerotarjeta($event)"
+            placeholder="0000 0000 0000 0000"
+            maxlength="19"
+            autocomplete="cc-number"
+            inputmode="numeric"
+          />
         </div>
       </div>
 
-      <!-- Tarjetas de prueba (modo test de Stripe) -->
-      <div class="test-cards-hint">
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Fecha de Expiración</label>
+          <input 
+            type="text"
+            class="form-input"
+            [value]="fechaExpiracion"
+            (input)="formatFecha($event)"
+            placeholder="MM/AA"
+            maxlength="5"
+            autocomplete="cc-exp"
+            inputmode="numeric"
+          />
+        </div>
+        <div class="form-group">
+          <label>CVC / CVV <i class="fa-solid fa-circle-question txt-muted" title="3 o 4 dígitos al reverso"></i></label>
+          <input 
+            type="password"
+            class="form-input"
+            [value]="cvv"
+            (input)="formatCvv($event)"
+            placeholder="•••"
+            maxlength="4"
+            autocomplete="cc-csc"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+
+      <!-- Tarjeta de prueba hint -->
+      <div class="test-hint">
         <i class="fa-solid fa-flask"></i>
-        <span>Modo pruebas — usa <code>4242 4242 4242 4242</code>, cualquier fecha futura y CVC</span>
+        <span>Modo pruebas: usa <code>4242 4242 4242 4242</code>, cualquier fecha futura y CVC</span>
       </div>
 
       <button 
         class="btn-pagar" 
-        [disabled]="cargando || !stripeReady" 
+        [disabled]="!formularioValido || cargando" 
         (click)="procesarPago()"
       >
-        <i class="fa-solid fa-lock" *ngIf="!cargando"></i>
-        <i class="fa-solid fa-circle-notch fa-spin" *ngIf="cargando"></i>
-        {{ cargando ? 'Procesando...' : 'Pagar S/. ' + monto.toFixed(2) + ' de forma segura' }}
+        <i class="fa-solid fa-lock"></i>
+        Pagar S/. {{ monto | number:'1.2-2' }} de forma segura
       </button>
 
-      <div class="security-row">
-        <span><i class="fa-solid fa-shield-halved"></i> PCI DSS Compliant</span>
+      <div class="security-badges">
+        <span><i class="fa-solid fa-shield-halved"></i> PCI DSS</span>
         <span><i class="fa-solid fa-lock"></i> SSL 256-bit</span>
-        <span><i class="fa-brands fa-stripe"></i> Powered by Stripe</span>
+        <span><i class="fa-brands fa-stripe"></i> Stripe</span>
       </div>
 
     </div>

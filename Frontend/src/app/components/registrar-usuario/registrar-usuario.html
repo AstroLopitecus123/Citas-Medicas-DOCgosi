@@ -46,24 +46,26 @@
         </div>
       </div>
 
-      <div class="form-row-modern">
-        <!-- Contraseña -->
-        <div class="form-group-modern pos-rel">
-          <label for="contrasena">Contraseña</label>
-          <input id="contrasena" class="form-control" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
-            [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••"
-            (input)="ctrl.setTouched('contrasena'); ctrl.setTouched('confirmarContrasena')">
-          <span class="password-toggle-icon" (click)="ctrl.togglePassword()">
-            <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
-          </span>
-        </div>
+      <!-- Contraseña -->
+      <div class="form-group-modern pos-rel">
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" class="form-control" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
+          [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••"
+          (input)="ctrl.setTouched('contrasena'); ctrl.setTouched('confirmarContrasena')">
+        <span class="password-toggle-icon" (click)="ctrl.togglePassword()">
+          <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
+        </span>
+      </div>
 
-        <!-- Confirmar Contraseña -->
-        <div class="form-group-modern">
-          <label for="confirmarContrasena">Confirmación</label>
-          <input id="confirmarContrasena" class="form-control" type="password" [(ngModel)]="ctrl.confirmarContrasena"
-            name="confirmarContrasena" placeholder="Repite contraseña" (input)="ctrl.setTouched('confirmarContrasena')">
-        </div>
+      <!-- Confirmar Contraseña -->
+      <div class="form-group-modern pos-rel mt-15">
+        <label for="confirmarContrasena">Confirmación de Contraseña</label>
+        <input id="confirmarContrasena" class="form-control" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
+          [(ngModel)]="ctrl.confirmarContrasena" name="confirmarContrasena" placeholder="Repite tu contraseña" 
+          (input)="ctrl.setTouched('confirmarContrasena')">
+        <span class="password-toggle-icon" (click)="ctrl.toggleConfirmarPassword()">
+          <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarConfirmarContrasena" [class.fa-eye-slash]="ctrl.mostrarConfirmarContrasena"></i>
+        </span>
       </div>
 
       <!-- Validaciones visuales de contraseña -->
@@ -87,6 +89,9 @@
           <label for="telefono">Teléfono</label>
           <input id="telefono" class="form-control" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono"
             (input)="ctrl.setTouched('telefono')">
+          <span *ngIf="ctrl.touched.telefono && !ctrl.telefonoValido" class="msg-error-mini">
+            9 dígitos requeridos
+          </span>
         </div>
       </div>
 

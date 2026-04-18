@@ -42,6 +42,7 @@ export class RegistrarUsuarioController {
   // Estado reactivo
   usuario: Usuario = new Usuario(this.defaultUsuario);
   mostrarContrasena = false;
+  mostrarConfirmarContrasena = false;
 
   touched: typeof this.defaultTouched = { ...this.defaultTouched };
 
@@ -145,6 +146,10 @@ export class RegistrarUsuarioController {
 
   togglePassword() {
     this.mostrarContrasena = !this.mostrarContrasena;
+  }
+
+  toggleConfirmarPassword() {
+    this.mostrarConfirmarContrasena = !this.mostrarConfirmarContrasena;
   }
 
   setTouched(field: keyof typeof this.touched) {

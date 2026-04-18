@@ -134,6 +134,9 @@ export class PagarTarjetaComponent implements OnInit {
       return;
     }
 
+    console.log('💳 Iniciando proceso de pago real con Stripe...');
+    console.log('🛠️ Llamando al backend para crear PaymentIntent...');
+
     // 1. Crear Intent en el Backend
     this.pagoService.crearPaymentIntent({
       citaId: this.citaId,
@@ -142,7 +145,9 @@ export class PagarTarjetaComponent implements OnInit {
       moneda: 'pen'
     }).subscribe({
       next: async (res: any) => {
+        console.log('✅ Backend respondió: PaymentIntent creado exitosamente.');
         const clientSecret = res.clientSecret;
+        console.log('🔗 ClientSecret recibido. Contactando a Stripe JS para confirmación...');
 
         // 2. Confirmar Pago con Stripe usando datos del formulario
         const [expMonth, expYear] = this.fechaExpiracion.split('/');
@@ -165,12 +170,15 @@ export class PagarTarjetaComponent implements OnInit {
         });
 
         if (error) {
+          console.error('❌ Error de Stripe JS:', error);
           this.cargando = false;
           this.ns.error(error.message || 'Error en el procesamiento de la tarjeta');
           return;
         }
 
         if (paymentIntent && paymentIntent.status === 'succeeded') {
+          console.log('🎉 ¡Stripe confirmó el pago con éxito! ID:', paymentIntent.id);
+          console.log('📡 Informando al sistema de la clínica para confirmar la cita...');
           // 3. Confirmar en nuestro backend para actualizar cita y generar comprobante
           const body = {
             citaId: this.citaId as number,

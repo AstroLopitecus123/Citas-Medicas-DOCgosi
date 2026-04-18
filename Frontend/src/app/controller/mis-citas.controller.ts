@@ -72,6 +72,7 @@ export class MisCitasController {
     const usuarioId = idRuta || idLocal;
 
     if (usuarioId) {
+      console.log('🚀 DOCgosi v2.1.2 - Cargando datos de usuario y disponibilidad...');
       this.cargarUsuario(usuarioId);
       this.cargarEspecialidades();
     } else {
@@ -463,7 +464,8 @@ export class MisCitasController {
       const dHora = parseInt(d.horaInicio.split(':')[0], 10);
       return d.fecha === fechaISO && dHora === hora;
     });
-    return !!h && h.estado === 'DISPONIBLE';
+    // ✅ Comparamos el estado en mayúsculas por seguridad
+    return !!h && h.estado?.toUpperCase() === 'DISPONIBLE';
   }
 
   isOcupado(fecha: string, hora: number): boolean {
@@ -472,22 +474,23 @@ export class MisCitasController {
       const dHora = parseInt(d.horaInicio.split(':')[0], 10);
       return d.fecha === fechaISO && dHora === hora;
     });
-    return !!h && h.estado === 'NO_DISPONIBLE';
+    // ✅ Comparamos el estado en mayúsculas por seguridad
+    return !!h && h.estado?.toUpperCase() === 'NO_DISPONIBLE';
   }
 
 
   private fechaToISO(fecha: string): string {
+    // fecha viene como "DD/MM/YY" o "D/M/YY"
     const [dia, mes, anio] = fecha.split('/').map(p => parseInt(p, 10));
-    const f = new Date(2000 + anio, mes - 1, dia);
-    return f.toISOString().split('T')[0];
+    const fullAnio = anio < 100 ? 2000 + anio : anio;
+    // Construimos el string manualmente para evitar desvíos por zona horaria de Date.toISOString()
+    return `${fullAnio}-${mes.toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
   }
 
   getHorario(diaFecha: string, hora: number) {
     if (!this.horariosDisponibles) return null;
 
-    // diaFecha viene en formato 'D/M/YY', necesitamos 'YYYY-MM-DD' para comparar
-    const [dia, mes, anio] = diaFecha.split('/').map(n => parseInt(n, 10));
-    const fechaISO = `20${anio}-${mes.toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
+    const fechaISO = this.fechaToISO(diaFecha);
 
     return this.horariosDisponibles.find(h => {
       if (!h?.horaInicio) return false;

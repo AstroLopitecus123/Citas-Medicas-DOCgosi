@@ -1,48 +1,85 @@
-<div class="contenedor-disponibilidad">
-
-  <h2 *ngIf="medico; else cargando">
-    Disponibilidad de {{ nombreMedico }}
-  </h2>
-
-  <div class="botones-semana" style="text-align:center; margin-bottom:10px;">
-    <button (click)="anteriorSemana()" [disabled]="semanaIndice === 0">Semana anterior</button>
-    <span style="margin:0 10px;">Semana {{ semanaIndice + 1 }} de 3</span>
-    <button (click)="siguienteSemana()" [disabled]="semanaIndice === 2">Semana siguiente</button>
+<div class="admin-layout">
+  
+  <!-- 🔍 Cabecera de Sección -->
+  <div class="section-header" *ngIf="medico; else cargando">
+    <h2><i class="fa-solid fa-calendar-check"></i> Agenda de Disponibilidad: {{ nombreMedico }}</h2>
+    
+    <!-- Navegación de Semanas -->
+    <div class="semana-nav-premium">
+      <button class="btn-icon" (click)="anteriorSemana()" [disabled]="semanaIndice === 0">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="semana-indicator">
+        <strong>Semana {{ semanaIndice + 1 }}</strong>
+        <span>de 3</span>
+      </div>
+      <button class="btn-icon" (click)="siguienteSemana()" [disabled]="semanaIndice === 2">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="horasFaltantes() > 0" style="text-align:center; margin-bottom:10px; color:#b91c1c; font-weight:600;">
-    Te faltan {{ horasFaltantes() }} hora(s) para completar el mínimo de {{ minimoHorasSemana }} horas esta semana.
+  <!-- ⚠️ Alerta de horas faltantes -->
+  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <span>Atención: Le faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para completar el mínimo semanal de {{ minimoHorasSemana }} horas.</span>
   </div>
 
+  <!-- 🧾 Tarjeta de la Agenda -->
+  <div class="premium-card">
+    <div class="modern-table-container scroll-x" *ngIf="medico; else cargando">
+      <table class="modern-table agenda-table">
+        <thead>
+          <tr>
+            <th class="sticky-col">Bloque Horario</th>
+            <th *ngFor="let dia of dias" class="dia-header">
+              <div class="dia-stack">
+                 <span class="dia-nombre">{{ dia.nombre }}</span>
+                 <span class="dia-fecha">{{ dia.fecha }}</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of horas">
+            <td class="sticky-col time-label">
+              <i class="fa-regular fa-clock"></i> {{ h }}:00 - {{ h + 1 }}:00
+            </td>
+            <td *ngFor="let dia of dias" 
+                class="slot-cell"
+                [class.disponible]="isDisponible(dia.fecha, h)" 
+                [class.fixed]="!esEditable(dia.fecha)">
+              
+              <label class="modern-checkbox" *ngIf="esEditable(dia.fecha); else noEditable">
+                <input #chk type="checkbox" [checked]="isDisponible(dia.fecha, h)"
+                  (change)="toggleHorario(dia.fecha, h, chk.checked)">
+                <span class="checkmark"></span>
+              </label>
 
-  <table class="agenda-disponibilidad" *ngIf="medico; else cargando">
-    <thead>
-      <tr>
-        <th>Hora</th>
-        <th *ngFor="let dia of dias">{{ dia.nombre }} {{ dia.fecha }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let h of horas">
-        <td class="hora">{{ h }}:00 - {{ h + 1 }}:00</td>
-        <td *ngFor="let dia of dias"
-          [ngClass]="{'disponible': isDisponible(dia.fecha, h), 'no-editable': !esEditable(dia.fecha)}">
-          <input type="checkbox" [checked]="isDisponible(dia.fecha, h)" [disabled]="!esEditable(dia.fecha)"
-            (change)="toggleHorario(dia.fecha, h, $event.target.checked)">
-        </td>
+              <ng-template #noEditable>
+                <div class="status-marker" [class.marked]="isDisponible(dia.fecha, h)">
+                   <i class="fa-solid" [class.fa-check-double]="isDisponible(dia.fecha, h)" [class.fa-lock]="!isDisponible(dia.fecha, h)"></i>
+                </div>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="boton-guardar">
-    <button class="btn-guardar" (click)="guardar()">
-      Guardar cambios
-    </button>
+    <!-- 💾 Acciones -->
+    <div class="footer-actions">
+      <button class="btn-action btn-add" (click)="guardar()">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Cambios en la Agenda
+      </button>
+    </div>
   </div>
 
 </div>
 
 <ng-template #cargando>
-  <p>Cargando información del médico...</p>
+  <div class="loading-state">
+    <i class="fa-solid fa-spinner fa-spin"></i>
+    <p>Cargando información del médico...</p>
+  </div>
 </ng-template>

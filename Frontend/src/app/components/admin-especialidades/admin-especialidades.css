@@ -1,113 +1,98 @@
-/* contenedor general */
-.contenedor {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fdfdfd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
+/* ==========================================================================
+   ADMIN ESPECIALIDADES (MODERN DASHBOARD)
+   ========================================================================== */
+
+.admin-especialidades-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 30px;
+  align-items: start;
 }
 
-/* títulos */
-.contenedor h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* mensajes */
-.mensaje {
-  color: green;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-/* formulario */
-.formulario {
+.card-title-flex {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card-title-flex h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1a2a3a;
+  display: flex;
+  align-items: center;
   gap: 10px;
+}
+
+.card-title-flex h3 i {
+  color: #0fbf6a;
+}
+
+.inline-msg {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.inline-msg.success { background: rgba(15, 191, 106, 0.1); color: #0a7c4a; }
+.inline-msg.error { background: rgba(245, 101, 101, 0.1); color: #c53030; }
+
+.form-group-modern {
   margin-bottom: 20px;
-  flex-wrap: wrap;
 }
 
-.formulario input {
-  padding: 8px 12px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  flex: 1;
-  min-width: 180px;
+.form-group-modern label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.formulario button {
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  background-color: #1976d2;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.tall-area {
+  min-height: 120px;
+  resize: vertical;
 }
 
-.formulario button:hover {
-  background-color: #1565c0;
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-/* tabla */
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* TABLA REFINADA */
+.id-cell {
+  font-weight: 700;
+  color: #94a3b8;
+  width: 50px;
 }
 
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
-  text-align: left;
+.title-cell {
+  display: flex;
+  flex-direction: column;
 }
 
-table th {
-  background-color: #1976d2;
-  color: #fff;
-}
-
-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* botones dentro de tabla */
-table button {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 4px;
+.desc-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #64748b;
   font-size: 0.9rem;
-  transition: opacity 0.2s ease;
 }
 
-table button:hover {
-  opacity: 0.8;
+.sub-txt {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
-/* botones específicos */
-table button:nth-child(1) {
-  background-color: #ffc107; /* editar */
-  color: #fff;
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .admin-especialidades-grid {
+    grid-template-columns: 1fr;
+  }
 }
-
-table button:nth-child(2) {
-  background-color: #e53935; /* eliminar */
-  color: #fff;
-}
-
-table button:nth-child(3) {
-  background-color: #1976d2; /* cambiar estado */
-  color: #fff;
-}
-

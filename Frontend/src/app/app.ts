@@ -1,44 +1,67 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Usuario, LoginResponse, RolUsuario } from './models/tipos';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { ChatbotComponent } from './components/chatbot/chatbot';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class AppComponent {
-  title = 'Frontend Citas';
+  title = 'RETO Salud';
   usuario: Usuario | null = null;
   isLoggedIn = false;
   mostrarModal = false;
+  loading = false;
+  isMenuOpen = false;
   loginActualizado$ = new Subject<void>();
 
 
   constructor(private router: Router, private http: HttpClient) {
-  this.verificarLogin();
-
-  // 🔥 Escuchar el evento de login y refrescar datos
-  this.loginActualizado$.subscribe(() => {
-    console.log("🔥 Login detectado — actualizando header sin recargar");
     this.verificarLogin();
-  });
-}
+
+    // ⏱️ Control de Animación de Transición de Página
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        // Pequeño timeout para asegurar que la animación se vea fluida
+        setTimeout(() => {
+          this.loading = false;
+        }, 600);
+      }
+    });
+
+    // 🔥 Escuchar el evento de login y refrescar datos
+    this.loginActualizado$.subscribe(() => {
+      console.log("🔥 Login detectado — actualizando header sin recargar");
+      this.verificarLogin();
+    });
+  }
 
 
   abrirModalCerrarSesion() {
     this.mostrarModal = true;
+    this.isMenuOpen = false; // Cierra el menú en móvil si estaba abierto
   }
 
   cancelarCerrarSesion() {
     this.mostrarModal = false;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   cerrarSesion() {

@@ -1,0 +1,79 @@
+<!-- BOTÓN FLOTANTE -->
+<div class="chatbot-fab" (click)="toggleChat()" [class.hidden]="isOpen">
+  <i class="fa-solid fa-comment-medical"></i>
+</div>
+
+<!-- VENTANA DEL CHAT -->
+<div class="chatbot-window" [class.open]="isOpen">
+  
+  <!-- Cabecera -->
+  <div class="chatbot-header">
+    <div class="header-info">
+      <h3>¿En qué puedo ayudarte?</h3>
+      <p>Con unas pocas palabras, indícame en qué te puedo ayudar.</p>
+    </div>
+    <button class="btn-close" (click)="toggleChat()">
+      <i class="fa-solid fa-minus"></i>
+    </button>
+  </div>
+
+  <div class="lang-selector">
+    <i class="fa-solid fa-globe"></i> Español <i class="fa-solid fa-chevron-down ml-5"></i>
+  </div>
+
+  <!-- Contenedor de Mensajes -->
+  <div class="chatbot-messages" #chatScroll>
+    
+    <div class="message-wrapper" *ngFor="let msg of messages" [ngClass]="msg.role">
+      <div class="avatar" *ngIf="msg.role === 'bot'">
+        <i class="fa-solid fa-notes-medical"></i>
+      </div>
+      
+      <div class="bubble">
+        {{ msg.text }}
+      </div>
+    </div>
+
+    <!-- Indicador de Carga -->
+    <div class="message-wrapper bot" *ngIf="isLoading">
+      <div class="avatar"><i class="fa-solid fa-notes-medical"></i></div>
+      <div class="bubble typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Opciones Rápidas (solo se muestran al principio) -->
+    <div class="quick-actions" *ngIf="messages.length === 1">
+      <p class="qa-title">R.E.T.O Salud</p>
+      <div class="qa-grid">
+        <button (click)="sendQuickAction('Quiero encontrar un médico')">Encontrar un médico</button>
+        <button (click)="sendQuickAction('Ver mis citas')">Nuestras especialidades</button>
+        <button (click)="sendQuickAction('¿Cuáles son sus horarios de atención?')">Horarios de atención</button>
+        <button (click)="sendQuickAction('Comenzar una cita virtual')">Comienza una cita virtual</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="chatbot-disclaimer">
+    Si crees que tienes una emergencia médica, llama al 911 de inmediato o dirígete a la sala de emergencias más cercana.
+  </div>
+
+  <!-- Input de chat -->
+  <div class="chatbot-input">
+    <input 
+      type="text" 
+      placeholder="Pregúntame lo que desees..." 
+      [(ngModel)]="userInput" 
+      (keyup.enter)="sendMessage()"
+      [disabled]="isLoading"
+    />
+    <button (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </div>
+
+  <div class="chatbot-footer">
+    <button (click)="messages = [messages[0]]"><i class="fa-solid fa-rotate-right"></i> Restablecer</button>
+  </div>
+</div>

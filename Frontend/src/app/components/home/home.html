@@ -1,0 +1,118 @@
+<div class="home-container">
+  <!-- 1. HERO SECTION (RETO) -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h2 class="mnemonic-title">R.E.T.O Salud</h2>
+        <ul class="mnemonic-list">
+          <li><span class="letter">R</span>apidez y experiencia</li>
+          <li><span class="letter">E</span>quipo médico dedicado</li>
+          <li><span class="letter">T</span>ransformando tu salud</li>
+          <li><span class="letter">O</span>rientación integral</li>
+        </ul>
+        <p class="hero-description">
+          Brindamos atención médica de alta calidad en la comodidad de su hogar, 
+          con tecnología avanzada y trato humano de excelencia.
+        </p>
+        <div class="hero-actions">
+          <a routerLink="/login" class="btn-primary">Iniciar Sesión</a>
+          <a routerLink="/registrar" class="btn-secondary">Registrarse</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/images/LogoFull2.png" alt="Logo R.E.T.O Salud">
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. QUIÉNES SOMOS -->
+  <section class="about">
+    <div class="section-container about-flex">
+      <div class="about-images">
+        <div class="img-collage">
+          <img src="assets/images/ServiceNurse.png" class="img-1" alt="Enfermera">
+          <img src="assets/images/HomeDoctor.png" class="img-2" alt="Equipo Medico">
+          <div class="experience-badge">
+            <span class="years">20+</span>
+            <span class="txt">Años de Calidad</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="sub-title">Conoce nuestro propósito</span>
+        <h2 class="main-title">Quiénes Somos</h2>
+        <div class="section-underline left"></div>
+        <p>
+          Somos una institución líder en salud domiciliaria en el Perú, 
+          comprometida con la recuperación rápida y segura de nuestros pacientes. 
+          Contamos con un equipo multidisciplinario altamente capacitado.
+        </p>
+        <p>
+          Nuestra misión es llevar la clínica a su hogar, asegurando el confort 
+          de su familia mediante protocolos estrictos y monitoreo constante.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ESPECIALIDADES -->
+  <section class="services">
+    <div class="section-container">
+      <h2 class="section-title">Nuestras Especialidades</h2>
+      <div class="section-underline"></div>
+      
+      <div class="services-grid">
+        <div class="service-card" *ngFor="let e of especialidades">
+          <div class="service-img-wrapper">
+            <img [src]="e.imagen" [alt]="e.titulo">
+          </div>
+          <div class="service-info">
+            <h3>{{ e.titulo }}</h3>
+            <p>{{ e.descripcion }}</p>
+            <a href="#" class="view-more">VER MÁS <i class="fa-solid fa-angles-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DOCTORES -->
+  <section class="doctors">
+    <div class="section-container">
+      <h2 class="section-title">Nuestros Doctores</h2>
+      <div class="section-underline"></div>
+      
+      <div class="doctors-grid">
+        <div class="doctor-card" *ngFor="let doc of doctores">
+          <div class="doc-pic">
+            <img [src]="doc.foto" [alt]="doc.nombre">
+          </div>
+          <div class="doc-info">
+            <h4>{{ doc.nombre }}</h4>
+            <span class="cargo">{{ doc.cargo }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SEDES -->
+  <section class="sedes">
+    <div class="section-container">
+      <h2 class="section-title">Nuestras Sedes</h2>
+      <div class="section-underline"></div>
+      
+      <div class="sedes-flex">
+        <div class="sede-item" *ngFor="let s of sedes">
+          <div class="sede-icon">
+            <i class="fa-solid" [ngClass]="s.icono"></i>
+          </div>
+          <div class="sede-info">
+            <h5>{{ s.nombre }}</h5>
+            <p>{{ s.direccion }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -46,19 +46,45 @@ html, body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  /* Eliminamos el max-width para usar todo el espacio */
 }
 
-/* ===== TÍTULO ===== */
+/* ===== TÍTULO CON LOGO ===== */
 .titulo {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #0a7c4a; /* Verde médico */
-  margin: 0;
-  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  text-shadow: 0 1px 2px rgba(0, 128, 64, 0.1);
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 0.9; /* Pegamos un poco más las líneas */
+}
+
+.reto-text {
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.salud-text {
+  color: #0a7c4a;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 1px;
 }
 
 /* ===== NAV LINKS MODERNO ===== */
@@ -106,12 +132,12 @@ html, body {
 
 /* ===== CONTENIDO CENTRADO ===== */
 .contenido-centrado {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Para evitar estirar en pantallas altas */
-  padding-top: 100px; /* Compensa la altura del fixed header */
-  min-height: calc(100vh - 65px);
+  display: block; /* Cambiamos a block para que el hijo ocupe todo el ancho natural */
+  padding-top: 65px; /* Altura exacta del header */
+  min-height: 100vh;
+  width: 100%;
   box-sizing: border-box;
+  background: none;
 }
 
 /* ===== MODAL ====== */
@@ -199,4 +225,279 @@ html, body {
 .modal-buttons button:last-child:hover {
   background-color: #d5dbdb;
   transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   PAGE LOADER (TRANSICIÓN)
+   ========================================================================== */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #095a34 0%, #0a7c4a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999; /* Máxima prioridad visual */
+  transition: opacity 0.5s ease-out;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-logo {
+  width: 15vw; /* Tamaño responsivo */
+  max-width: 180px;
+  height: auto;
+  animation: pulseLogo 1.8s ease-in-out infinite;
+  filter: brightness(0) invert(1); /* Logo en blanco para fondo oscuro */
+}
+
+@keyframes pulseLogo {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* ==========================================================================
+   SISTEMA DE DISEÑO DASHBOARD (MODERN)
+   ========================================================================== */
+
+/* CONTENEDOR PRINCIPAL */
+.admin-layout {
+  padding: 40px 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CABECERA DE SECCIÓN */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a2a3a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.section-header h2 i {
+  color: #0fbf6a;
+  background: rgba(15, 191, 106, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* TARJETA PREMIUM */
+.premium-card {
+  background: white;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
+  margin-bottom: 30px;
+}
+
+/* TABLA MODERNA */
+.modern-table-container {
+  overflow-x: auto;
+  border-radius: 20px;
+  background: white;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.modern-table th {
+  background: #f8fafc;
+  padding: 18px 15px;
+  text-align: left;
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.modern-table td {
+  padding: 16px 15px;
+  border-bottom: 1px solid #edf2f7;
+  color: #2d3748;
+  vertical-align: middle;
+}
+
+.modern-table tr:last-child td {
+  border-bottom: none;
+}
+
+.modern-table tr:hover td {
+  background-color: #f4fdf7;
+}
+
+/* BADGES DE ESTADO */
+.badge {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.badge-success { background: rgba(15, 191, 106, 0.15); color: #0a7c4a; }
+.badge-danger { background: rgba(245, 101, 101, 0.15); color: #c53030; }
+.badge-info { background: rgba(66, 153, 225, 0.15); color: #2b6cb0; }
+
+/* CONTROLES DE FORMULARIO (INPUTS/SELECTS) */
+.form-control {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: #f8fafc;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0fbf6a;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
+}
+
+/* BOTONES PREMIUM (REUTILIZABLES) */
+.btn-action {
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-add { background: #0fbf6a; color: white; }
+.btn-add:hover { background: #0a7c4a; transform: translateY(-2px); }
+
+.btn-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #f1f5f9;
+  color: #4a5568;
+  transition: 0.2s;
+}
+
+.btn-icon:hover { background: #e2e8f0; color: #1a2a3a; }
+.btn-icon.delete:hover { background: #fff5f5; color: #c53030; }
+
+
+/* ==========================================================================
+   RESPONSIVE (MÓVIL Y TABLET)
+   ========================================================================== */
+
+/* Botón Hamburguesa Oculto por Defecto en Escritorio */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #0a7c4a;
+  cursor: pointer;
+  z-index: 101;
+}
+
+@media (max-width: 768px) {
+  /* Cabecera Móvil */
+  .header {
+    padding: 0 15px;
+  }
+  
+  .menu-toggle {
+    display: block; /* Muestra hamburguesa */
+  }
+
+  /* Menú desplegable lateral */
+  .nav-links {
+    position: fixed;
+    top: 65px;
+    right: -100%; /* Oculto fuera de pantalla */
+    width: 250px;
+    height: calc(100vh - 65px);
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 20px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99;
+  }
+
+  .nav-links.open {
+    right: 0; /* Aparece en pantalla */
+  }
+
+  .nav-links a {
+    margin: 0 0 15px 0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  /* Modificar Grid general para celular */
+  .admin-layout {
+    padding: 20px 10px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  /* Ajustar tamaño Modales */
+  .modal {
+    width: 90%;
+    padding: 25px 20px;
+  }
+}
+
+/* Permitir scroll horizontal en tablas (Swipe) en móviles */
+@media (max-width: 900px) {
+  .modern-table-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 12px;
+  }
 }

@@ -34,6 +34,9 @@ public class CitaService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private TwilioService twilioService;
+
     public List<Cita> listar() {
         return citaRepository.findAll();
     }
@@ -262,6 +265,19 @@ public class CitaService {
                 hora
         ));
         mailSender.send(mailPaciente);
+
+        // 📱 WhatsApp
+        String mensajeWssp = String.format(
+            "Cita %s ✅\nHola %s, tu cita con el Dr. %s ha sido %s para el %s a las %s en R.E.T.O Salud.",
+            accion.toUpperCase(),
+            cita.getPaciente().getNombre(),
+            cita.getMedico().getUsuario().getNombre(),
+            accion, fecha, hora
+        );
+        // Validar si el paciente tiene un teléfono ingresado
+        if(cita.getPaciente().getTelefono() != null && !cita.getPaciente().getTelefono().isEmpty()) {
+            twilioService.enviarNotificacionWhatsApp(cita.getPaciente().getTelefono(), mensajeWssp);
+        }
 
         // 📧 Médico
         SimpleMailMessage mailMedico = new SimpleMailMessage();

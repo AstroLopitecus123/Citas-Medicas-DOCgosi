@@ -1,133 +1,313 @@
-/* Fondo azul de toda la página */
-
-
-/* Contenedor centrado */
-.form-container {
-  background: #ffffff;
-  padding: 40px;
-  width: 400px;
-  border-radius: 15px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  text-align: center;
+/* Layout base: Fondo de hospital */
+.login-layout {
+  display: flex;
+  min-height: calc(100vh - 65px);
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: url('/assets/images/FondoLogin.png') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: hidden;
 }
 
-/* Título */
-h2 {
-  margin-top: -10px;
+/* Efecto lavado blanco (Velo translúcido) */
+.login-layout::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+/* ===== CONTENEDOR DEL DOCTOR (Foreground) ===== */
+.doctor-container {
+  position: absolute;
+  bottom: 0;
+  left: -40px;
+  height: 95%;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.doctor-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(15px 0 30px rgba(0,0,0,0.15));
+}
+
+/* ===== COLUMNAS DE CONTENIDO ===== */
+.login-hero, 
+.login-form-wrapper {
+  position: relative;
+  z-index: 3;
+}
+
+.login-hero {
+  flex: 1.4;
+  display: flex;
+  justify-content: center; /* Centramos el contenido del hero horizontalmente en su columna */
+  align-items: center;
+  padding: 60px 4%;
+}
+
+.hero-content {
+  max-width: 600px;
+  /* Empujamos el texto más a la derecha para que no tape al doctor */
+  margin-left: 380px; 
+  text-align: left;
+}
+
+.hero-content h1 {
+  font-size: 3.6rem;
+  font-weight: 800;
+  color: #1a2a3a;
+  line-height: 1.1;
   margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255,255,255,1);
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  color: #4a5568;
+  font-weight: 500;
+  margin-bottom: 35px;
+  line-height: 1.5;
+}
+
+.hero-disclaimer {
+  font-size: 0.95rem;
+  color: #2f4f4f;
+  font-weight: 700;
+  background: rgba(255,255,255,0.7);
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: inline-block;
+  border-left: 5px solid #0fbf6a;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.hero-disclaimer a {
   color: #0a7c4a;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.form-group {
-  margin-bottom: 18px;
-  flex: 1;
-  display: flex; /* Usamos flexbox para alinear el label y el input en la misma fila */
-  flex-wrap: wrap; /* Permite que los elementos se ajusten si es necesario */
-  align-items: center; /* Alinea los elementos en el centro */
-}
-
-
-/* Etiquetas */
-label {
-  font-size: 14px;
-  color: #0a7c4a;
-  margin-bottom: 5px;
-  display: block;
-  font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0, 128, 64, 0.2);
-  width: 100%; 
-}
-
-/* Inputs mejorados */
-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd6e2;
-  border-radius: 6px;
-  outline: none;
-  background-color: #f8fbff;
-  transition: 0.25s;
-}
-
-/* Efecto al escribir */
-input:focus {
-  border-color: #0fbf6a;
-  box-shadow: 0 0 6px rgba(15, 191, 106, 0.5);
-}
-
-/* Enlace para registrar */
-.registrar {
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.registrar a {
-  color: #0fbf6a;
   text-decoration: underline;
-  font-weight: bold;
+  margin-left: 5px;
 }
 
-/* Botón */
-.btn-submit {
+/* ===== FORMULARIO (Derecha) ===== */
+.login-form-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-card {
+  background: #ffffff;
   width: 100%;
-  background: #0fbf6a;
-  color: #fff;
-  padding: 12px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: 0.3s;
+  max-width: 440px;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  padding: 50px 40px;
+  border: 1px solid rgba(255,255,255,1);
 }
 
-.btn-submit:hover {
-  background: #08663c;
-}
-
-/* Mensajes generales */
-.msg-general {
+.card-title {
   text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
+  font-size: 2.22rem;
+  font-weight: 800;
+  color: #1a2a3a;
+  margin-bottom: 35px;
+  display: block; /* Asegura centrado */
 }
 
-/* Responsividad */
-@media (max-width: 480px) {
-  .form-container {
-    width: 90%;
-    padding: 20px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  .form-group input {
-    font-size: 14px;
-  }
-
-  .btn-submit {
-    font-size: 14px;
-  }
+/* TABS */
+.login-tabs {
+  display: flex;
+  background: #f1f4f8;
+  border-radius: 30px;
+  padding: 5px;
+  margin-bottom: 35px;
 }
 
-.recuperar {
-  text-align: right;
-  margin-top: -5px;
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #718096;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background: #0fbf6a;
+  color: white;
+  box-shadow: 0 4px 12px rgba(15, 191, 106, 0.4);
+}
+
+/* INPUTS */
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2d3748;
   margin-bottom: 10px;
 }
 
-.recuperar a {
-  font-size: 0.85rem;
-  color: #3498db;
+.input-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: #0fbf6a;
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
+}
+
+/* BOTON PRINCIPAL PREMIUM */
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #0a7c4a 0%, #0fbf6a 100%);
+  color: white;
+  font-weight: 700;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(10, 124, 74, 0.25);
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(10, 124, 74, 0.35);
+  background: linear-gradient(135deg, #0d8c54 0%, #12d376 100%);
+}
+
+.btn-submit:active {
+  transform: translateY(-1px);
+}
+
+.divider {
+  border: none;
+  border-top: 1px dashed #e2e8f0;
+  margin: 35px 0 25px;
+}
+
+/* BOTONES DE AYUDA PREMIUM */
+.ayuda-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.necesita-ayuda {
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.ayuda-botones {
+  display: flex;
+  gap: 15px;
+}
+
+.pill-btn {
+  flex: 1;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  color: #4a5568;
+  padding: 10px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pill-btn:hover {
+  border-color: #0fbf6a;
+  color: #0a7c4a;
+  background: #f0fff4;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(15, 191, 106, 0.1);
+}
+
+.crear-cuenta-wrapper {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.crear-cuenta-link {
+  font-weight: 800;
+  color: #1a2a3a;
   text-decoration: none;
+  margin-left: 5px;
 }
 
-.recuperar a:hover {
+.crear-cuenta-link:hover {
   text-decoration: underline;
+  color: #0fbf6a;
 }
 
+/* BOTON OJO */
+.eye-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.eye-btn:hover {
+  color: #0fbf6a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1400px) {
+  .hero-content { margin-left: 120px; }
+}
+
+@media (max-width: 1150px) {
+  .doctor-container { opacity: 0.1; left: -150px; }
+  .hero-content { margin-left: 0; text-align: center; }
+  .login-hero { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+  .login-layout { flex-direction: column; }
+  .doctor-container { display: none; }
+  .hero-content h1 { font-size: 2.8rem; }
+}

@@ -1,113 +1,133 @@
-/* Contenedor principal */
-.contenedor-disponibilidad {
-  max-width: 650px;
-  margin: 10px auto;
-  padding: 10px;
-  background: #f9fafb;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 0.85rem;
+/* ==========================================================================
+   GESTIÓN DE DISPONIBILIDAD (MODERN DASHBOARD)
+   ========================================================================== */
+
+.semana-nav-premium {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* Título */
-.contenedor-disponibilidad h2 {
+.semana-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.semana-indicator strong { color: #1a293b; font-size: 1rem; }
+.semana-indicator span { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; }
+
+/* ALERTAS */
+.premium-alert-danger {
+  background: #fff5f5;
+  border-left: 5px solid #f56565;
+  padding: 15px 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  color: #c53030;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.1);
+}
+
+.premium-alert-danger i { font-size: 1.2rem; }
+
+/* AGENDA TABLE SPECIFICS */
+.dia-header { padding: 15px !important; text-align: center !important; }
+
+.dia-stack { display: flex; flex-direction: column; }
+.dia-nombre { color: #1a293b; font-weight: 800; font-size: 0.9rem; }
+.dia-fecha { color: #94a3b8; font-size: 0.75rem; font-weight: 600; }
+
+.time-label {
+  font-weight: 800;
+  color: #0fbf6a;
+  background: #f8fafc !important;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.slot-cell {
+  background: white;
   text-align: center;
-  margin: 5px 0 15px 0;
-  font-size: 1rem;
-  color: #1e3a8a;
+  height: 50px;
+  transition: 0.2s;
 }
 
-/* Tabla de disponibilidad */
-.agenda-disponibilidad {
-  width: 100%;
-  border-collapse: collapse;
-}
+.slot-cell.disponible { background-color: #f0fff4; }
+.slot-cell.fixed { background-color: #f7fafc; opacity: 0.6; }
 
-.agenda-disponibilidad th,
-.agenda-disponibilidad td {
-  padding: 6px 8px;
-  text-align: center;
-  border: 1px solid #d1d5db;
-  font-size: 0.9rem;
-  line-height: 1.3;
-}
-
-.agenda-disponibilidad th {
-  font-weight: 600;
-  background-color: #08663c;
-  color: white;
-  text-align: center;
-}
-
-.agenda-disponibilidad td.hora {
-  font-weight: bold;
-  background-color: #e0e7ff;
-}
-
-/* Casillas */
-.agenda-disponibilidad td {
-  background-color: #f87171; /* rojo para no disponible */
-  border-radius: 4px;
-  transition: background-color 0.2s, transform 0.1s;
-  height: 32px;
-}
-
-.agenda-disponibilidad td.disponible {
-  background-color: #a7f3d0; /* verde suave */
-}
-
-/* Casillas fuera del rango editable */
-.agenda-disponibilidad td.no-editable {
-  background-color: #e5e7eb; /* gris claro */
-  cursor: not-allowed;
-}
-
-/* Checkbox */
-.agenda-disponibilidad td input[type="checkbox"] {
-  transform: scale(0.8);
-  margin: 0;
-  padding: 0;
-  vertical-align: middle;
+/* CHECKBOX MODERNO */
+.modern-checkbox {
+  display: block;
+  position: relative;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
 }
 
-.agenda-disponibilidad td.no-editable input[disabled] {
-  cursor: not-allowed;
-}
+.modern-checkbox input { opacity: 0; width: 0; height: 0; }
 
-/* Hover */
-.agenda-disponibilidad td:hover {
-  background-color: #f0f9ff;
-  transform: scale(1.02);
-}
-
-/* Botones guardar y navegar semanas */
-.boton-guardar, .botones-semana {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.btn-guardar, .botones-semana button {
-  padding: 6px 16px;
-  font-size: 0.85rem;
-  background-color: #0fbf6a;
-  color: white;
-  font-weight: 600;
-  border: none;
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  background-color: #edf2f7;
   border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: 0.3s;
 }
 
-.btn-guardar:hover, .botones-semana button:hover {
-  background-color: #1d4ed8;
-  transform: scale(1.05);
+.modern-checkbox:hover input ~ .checkmark { background-color: #e2e8f0; }
+.modern-checkbox input:checked ~ .checkmark { background-color: #0fbf6a; }
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
-.botones-semana button:disabled {
-  background-color: #a1a1aa;
-  cursor: not-allowed;
-  transform: none;
+.modern-checkbox input:checked ~ .checkmark:after { display: block; }
+
+/* STATUS MARKER (PARA BLOQUEADOS) */
+.status-marker { color: #cbd3de; font-size: 0.9rem; }
+.status-marker.marked { color: #0a7c4a; }
+
+.footer-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
 }
 
+.scroll-x { overflow-x: auto; }
+
+/* LOADING STATE */
+.loading-state {
+  text-align: center;
+  padding: 100px;
+  color: #94a3b8;
+}
+
+.loading-state i { font-size: 3rem; margin-bottom: 20px; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .section-header { flex-direction: column; gap: 20px; text-align: center; }
+  .semana-nav-premium { width: 100%; justify-content: space-between; }
+}

@@ -1,110 +1,120 @@
-<div class="usuarios-container">
-
-  <!-- 🔍 Barra de búsqueda -->
-  <div class="header-lista">
-    <h2>Lista de Usuarios</h2>
-    <div class="buscador">
-      <input type="text" placeholder="Buscar por nombre, correo, rol o país..." [(ngModel)]="ctrl.filtro"
+<div class="admin-layout">
+  
+  <!-- 🔍 Cabecera de Sección -->
+  <div class="section-header">
+    <h2><i class="fa-solid fa-users"></i> Gestión de Usuarios</h2>
+    <div class="buscador-wrapper">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" class="form-control" placeholder="Buscar usuarios..." [(ngModel)]="ctrl.filtro"
         (input)="ctrl.filtrarUsuarios()" />
     </div>
   </div>
 
-  <!-- 🧾 Tabla de usuarios -->
-  <table class="tabla-usuarios">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Correo</th>
-        <th>Teléfono</th>
-        <th>Prefijo</th>
-        <th>Rol</th>
-        <th>Estado</th>
-        <th>País</th>
-        <th>DNI</th>
-        <th>Fecha de Nacimiento</th>
-        <th>Fecha de Registro</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <!-- 🧾 Tarjeta Principal con Tabla -->
+  <div class="premium-card">
+    <div class="modern-table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Contacto</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>País / DNI</th>
+            <th>Registro</th>
+            <th style="text-align: center;">Acciones</th>
+          </tr>
+        </thead>
 
-    <tbody>
-      <!-- 🧍 Mostrar usuarios -->
-      <tr *ngFor="let usuario of ctrl.usuariosPaginados; let i = index" [class.fila-vacia]="!usuario">
+        <tbody>
+          <!-- 🧍 Mostrar usuarios -->
+          <tr *ngFor="let usuario of ctrl.usuariosPaginados; let i = index" [class.fila-vacia]="!usuario">
 
-        <ng-container *ngIf="usuario; else filaVacia">
-          <td>{{ usuario!.id }}</td>
-          <td>{{ usuario!.nombre || '-' }}</td>
-          <td>{{ usuario!.apellido || '-' }}</td>
-          <td>{{ usuario!.correo || '-' }}</td>
-          <td>{{ usuario!.telefono || '-' }}</td>
-          <td>{{ usuario!.pais!.prefijoTelefono || '' }}</td>
-          <td>
-            <select [ngModel]="usuario!.rol" (ngModelChange)="ctrl.actualizarRol(usuario!, $event)" class="rol-select">
-              <option value="ADMIN">Admin</option>
-              <option value="MEDICO">Medico</option>
-              <option value="PACIENTE">Paciente</option>
-              <option value="RECEPCION">Recepción</option>
-            </select>
-          </td>
+            <ng-container *ngIf="usuario; else filaVacia">
+              <td class="id-cell">#{{ usuario!.id }}</td>
+              <td>
+                <div class="user-info">
+                  <span class="user-name">{{ usuario!.nombre }} {{ usuario!.apellido }}</span>
+                  <span class="user-email">{{ usuario!.correo }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="contact-info">
+                  <span><i class="fa-solid fa-phone"></i> {{ usuario!.telefono || '-' }}</span>
+                </div>
+              </td>
+              <td>
+                <select [ngModel]="usuario!.rol" (ngModelChange)="ctrl.actualizarRol(usuario!, $event)" class="form-control rol-select-mini">
+                  <option value="ADMIN">Admin</option>
+                  <option value="MEDICO">Medico</option>
+                  <option value="PACIENTE">Paciente</option>
+                  <option value="RECEPCION">Recepción</option>
+                </select>
+              </td>
 
-          <!-- ✅ Selector de estado -->
-          <td>
-            <select [ngModel]="usuario!.estado" (ngModelChange)="ctrl.actualizarEstado(usuario!, $event)" [ngClass]="{
-                      'estado-activado': usuario!.estado === 'ACTIVADO',
-                      'estado-desactivado': usuario!.estado === 'DESACTIVADO'
-                    }" class="estado-select">
-              <option value="ACTIVADO">Activado</option>
-              <option value="DESACTIVADO">Desactivado</option>
-            </select>
-          </td>
+              <!-- ✅ Selector de estado -->
+              <td>
+                <div class="status-pill-container">
+                    <select [ngModel]="usuario!.estado" (ngModelChange)="ctrl.actualizarEstado(usuario!, $event)" 
+                        [class]="usuario!.estado === 'ACTIVADO' ? 'badge badge-success' : 'badge badge-danger'">
+                        <option value="ACTIVADO">Activado</option>
+                        <option value="DESACTIVADO">Desactivado</option>
+                    </select>
+                </div>
+              </td>
 
-          <td>{{ usuario!.pais!.nombre || '-' }}</td>
-          <td>{{ usuario!.dni || '-' }}</td>
-          <td>{{ usuario!.fechaNacimiento || '-' }}</td>
-          <td>{{ usuario!.fechaRegistro ? (usuario!.fechaRegistro | date:'dd/MM/yyyy') : '-' }}</td>
+              <td>
+                <div class="meta-info">
+                  <span>{{ usuario!.pais!.nombre }}</span>
+                  <span class="dni-text">DNI: {{ usuario!.dni || '-' }}</span>
+                </div>
+              </td>
+              
+              <td class="date-cell">
+                {{ usuario!.fechaRegistro ? (usuario!.fechaRegistro | date:'dd MMM yyyy') : '-' }}
+              </td>
 
-          <!-- ✅ Acciones -->
-          <td class="acciones">
-            <div class="acciones-wrapper">
-              <button (click)="ctrl.toggleMenu(usuario!)" class="btn-menu" title="Acciones">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-              </button>
+              <!-- ✅ Acciones Modernizadas -->
+              <td>
+                <div class="actions-flex">
+                  <button class="btn-icon" (click)="ctrl.editarUsuario(usuario!)" title="Editar">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <button class="btn-icon delete" (click)="ctrl.eliminarUsuario(usuario!)" title="Eliminar">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>
 
-              <div class="menu-acciones" *ngIf="ctrl.menuAbierto === usuario!.id">
-                <button class="accion editar" (click)="ctrl.editarUsuario(usuario!)">
-                  <i class="fa-solid fa-pen-to-square"></i> Editar
-                </button>
+            </ng-container>
 
-                <button class="accion eliminar" (click)="ctrl.eliminarUsuario(usuario!)">
-                  <i class="fa-solid fa-trash"></i> Eliminar
-                </button>
-              </div>
-            </div>
-          </td>
+            <ng-template #filaVacia>
+              <td colspan="8" class="empty-td"></td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        </ng-container>
-
-        <!-- Fila vacía (mantiene altura visual) -->
-        <ng-template #filaVacia>
-          <td colspan="13"></td>
-        </ng-template>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- ✅ Paginación -->
-  <div class="paginacion">
-    <button (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1">◀</button>
-
-    <ng-container *ngFor="let i of [].constructor(ctrl.totalPaginas); let idx = index">
-      <button (click)="ctrl.paginaActual = idx + 1; ctrl.actualizarPagina()"
-        [class.pagina-activa]="ctrl.paginaActual === idx + 1">
-        {{ idx + 1 }}
+    <!-- ✅ Paginación Modernizada -->
+    <div class="modern-pagination">
+      <button class="btn-page prev" (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1">
+        <i class="fa-solid fa-chevron-left"></i>
       </button>
-    </ng-container>
 
-    <button (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas">▶</button>
+      <div class="page-numbers">
+        <ng-container *ngFor="let i of [].constructor(ctrl.totalPaginas); let idx = index">
+          <button (click)="ctrl.paginaActual = idx + 1; ctrl.actualizarPagina()"
+            [class.active]="ctrl.paginaActual === idx + 1" class="btn-num">
+            {{ idx + 1 }}
+          </button>
+        </ng-container>
+      </div>
+
+      <button class="btn-page next" (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
 </div>

@@ -1,14 +1,32 @@
-<div class="contenedor-pago">
+<div class="admin-layout">
+    <div class="premium-card center-card">
+        
+        <div class="payment-icon" [class.loading]="cargando">
+            <i class="fa-solid" [class.fa-spinner]="cargando" [class.fa-spin]="cargando" [class.fa-circle-check]="!cargando"></i>
+        </div>
 
-    <h2>Procesando pago...</h2>
+        <div class="payment-details">
+            <h2 *ngIf="cargando">Procesando pago en efectivo...</h2>
+            <h2 *ngIf="!cargando">¡Pago Registrado!</h2>
 
-    <div *ngIf="cargando">
-        <p>Registrando pago en efectivo, por favor espere.</p>
-    </div>
+            <div class="status-box" *ngIf="cargando">
+                <p>Estamos validando la transacción con el sistema de caja central. Por favor, no cierre esta ventana.</p>
+            </div>
 
-    <div *ngIf="!cargando">
-        <p>{{ mensaje }}</p>
-        <button (click)="volver()">Volver</button>
+            <div class="status-box success" *ngIf="!cargando">
+                <p>{{ mensaje }}</p>
+                <div class="receipt-tip">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Puede ver su comprobante en la sección de 'Mis Citas'.</span>
+                </div>
+            </div>
+
+            <div class="footer-actions center" *ngIf="!cargando">
+                <button class="btn-action btn-add" (click)="volver()">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+                </button>
+            </div>
+        </div>
 
     </div>
 </div>

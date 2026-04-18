@@ -1,50 +1,83 @@
-<div class="form-container">
-  <div class="card">
-    <h2>Iniciar Sesión</h2>
+<div class="login-layout">
+  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+  <div class="doctor-container">
+    <img src="/assets/images/DoctorLogin.png" alt="Doctor" class="doctor-img">
+  </div>
 
-    <form (ngSubmit)="ctrl.iniciarSesion()">
-      <!-- Campo Correo Electrónico -->
-      <div class="form-group">
-        <label for="correo">Correo electrónico:</label>
-        <input
-          type="email"
-          id="correo"
-          [(ngModel)]="ctrl.correo"
-          name="correo"
-          placeholder="ejemplo@correo.com"
-          required
-        />
-      </div>
-
-      <!-- Campo Contraseña -->
-      <div class="form-group">
-        <label for="contrasena">Contraseña:</label>
-        <input
-          type="password"
-          id="contrasena"
-          [(ngModel)]="ctrl.contrasena"
-          name="contrasena"
-          placeholder="********"
-          required
-        />
-      </div>
-
-      <!-- Enlace recuperar contraseña -->
-      <p class="recuperar">
-        <a routerLink="/recuperar">¿Olvidaste tu contraseña?</a>
+  <!-- COLUMNA IZQUIERDA (Texto) -->
+  <div class="login-hero">
+    <div class="hero-content">
+      <h1>Iniciar sesión en tu cuenta</h1>
+      <p class="hero-subtitle">Tu cuenta de R.E.T.O Salud te da acceso a tu información médica y a tu historia clínica.</p>
+      <p class="hero-disclaimer">
+        *Si has visitado un consultorio médico en nuestra sede de Lima Metropolitana, consulta las <a href="#">opciones adicionales de acceso al portal aquí</a>.
       </p>
+    </div>
+  </div>
+
+  <!-- COLUMNA DERECHA (Formulario) -->
+  <div class="login-form-wrapper">
+    <div class="login-card">
+      <h2 class="card-title">Iniciar Sesión</h2>
+
+      <div class="login-tabs">
+        <button class="tab active">Inicio de sesión estándar</button>
+        <button class="tab">Inicio de sesión alternativo</button>
+      </div>
+
+      <form (ngSubmit)="ctrl.iniciarSesion()">
+        <!-- Campo Correo Electrónico -->
+        <div class="input-group">
+          <label for="correo">Usuario (Correo electrónico)</label>
+          <input
+            type="email"
+            id="correo"
+            [(ngModel)]="ctrl.correo"
+            name="correo"
+            required
+          />
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="input-group pass-group">
+          <label for="contrasena">Contraseña</label>
+          <div class="input-icon-wrapper">
+            <input
+              type="password"
+              id="contrasena"
+              [(ngModel)]="ctrl.contrasena"
+              name="contrasena"
+              required
+            />
+            <button type="button" class="eye-btn">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón de submit -->
+        <button type="submit" class="btn-submit">Iniciar sesión</button>
+      </form>
+
+      <p *ngIf="ctrl.mensaje || ctrl.error" class="msg-general" [ngClass]="{'has-error': ctrl.error}">
+        {{ ctrl.mensaje || ctrl.error }}
+      </p>
+
+      <hr class="divider">
+
+      <div class="ayuda-section">
+        <p class="necesita-ayuda">¿Necesita ayuda?<i class="fa-solid fa-chevron-right help-icon"></i></p>
+        <div class="ayuda-botones">
+          <button class="pill-btn">Olvidé el nombre de usuario</button>
+          <button class="pill-btn" routerLink="/recuperar">Olvidé la contraseña</button>
+        </div>
+      </div>
 
       <!-- Enlace para crear cuenta -->
-      <p class="registrar">
-        ¿No tienes cuenta? <a routerLink="/registrar">Regístrate aquí</a>
-      </p>
-
-      <!-- Botón de submit -->
-      <button type="submit" class="btn-submit">Ingresar</button>
-    </form>
-
-    <p *ngIf="ctrl.mensaje || ctrl.error" class="msg-general">
-      {{ ctrl.mensaje || ctrl.error }}
-    </p>
+      <div class="crear-cuenta-wrapper">
+        <span>¿No tiene una cuenta?</span>
+        <a routerLink="/registrar" class="crear-cuenta-link">Crear una cuenta <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+    </div>
   </div>
 </div>

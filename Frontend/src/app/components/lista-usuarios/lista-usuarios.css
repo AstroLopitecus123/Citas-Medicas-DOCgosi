@@ -1,410 +1,181 @@
-.usuarios-container {
-  margin-top: 100px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  padding: 20px;
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+/* ==========================================================================
+   LISTA DE USUARIOS (MODERN DASHBOARD)
+   ========================================================================== */
 
-/* =========================================
-   HEADER + BUSCADOR PROFESIONAL
-   ========================================= */
-.header-lista {
-  display: flex;
-  justify-content: flex-start; /* separa título y buscador */
-  align-items: center;
-  margin-bottom: 20px;
-  gap: 1020px;
-}
-
-/* Título del listado */
-.header-lista h2 {
-  color: #0a7c4a;
-  font-size: 1.6rem;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* Contenedor del buscador */
-.header-lista .buscador {
+/* BARRA DE BÚSQUEDA */
+.buscador-wrapper {
   position: relative;
-  width: 300px;
+  width: 350px;
 }
 
-/* Input del buscador */
-.header-lista .buscador input {
-  width: 100%;
-  padding: 10px 40px 10px 15px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Efecto focus elegante */
-.header-lista .buscador input:focus {
-  outline: none;
-  border-color: #0a7c4a;
-  background-color: #fff;
-  box-shadow: 0 0 6px rgba(30,60,114,0.3);
-}
-
-/* Ícono dentro del buscador (opcional, si lo agregas) */
-.header-lista .buscador::before {
-  content: "🔍";
+.buscador-wrapper i {
   position: absolute;
-  right: 14px;
+  left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666;
-  font-size: 16px;
+  color: #94a3b8;
+  pointer-events: none;
 }
 
-/* Responsive Header */
-@media (max-width: 768px) {
-  .header-lista {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .header-lista .buscador {
-    width: 100%;
-  }
+.buscador-wrapper .form-control {
+  padding-left: 45px;
+  border-radius: 30px;
 }
 
-
-/* =========================================
-   TABLA
-   ========================================= */
-.tabla-wrapper {
-  flex-grow: 1;
+/* CELDAS PERSONALIZADAS */
+.id-cell {
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
-.tabla-usuarios {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+.user-info {
+  display: flex;
+  flex-direction: column;
 }
 
-.tabla-usuarios th, .tabla-usuarios td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  height: 45px;
-  vertical-align: middle;
+.user-name {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1rem;
 }
 
-.tabla-usuarios th {
-  background: linear-gradient(135deg, #0a7c4a, #2a5298);
-  color: white;
+.user-email {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.contact-info i {
+  color: #0fbf6a;
+}
+
+.meta-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dni-text {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.date-cell {
+  font-size: 0.9rem;
+  color: #475569;
   font-weight: 500;
 }
 
-.fila-vacia td {
-  background-color: #fafafa;
+/* SELECTS MINI EN TABLA */
+.rol-select-mini {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: white;
+  width: auto;
 }
 
-/* =========================================
-   PAGINACIÓN PROFESIONAL
-   ========================================= */
-.paginacion {
+.status-pill-container select {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align: center;
+}
+
+/* ACCIONES */
+.actions-flex {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* PAGINACIÓN MODERNA */
+.modern-pagination {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.paginacion button {
-  padding: 8px 14px;
-  background-color: #0a7c4a;
-  color: white;
-  border: none;
-  border-radius: 8px;
+.btn-page {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  transition: 0.2s;
 }
 
-.paginacion button:hover:not(:disabled) {
-  background-color: #2a5298;
-  transform: translateY(-2px);
+.btn-page:hover:not(:disabled) {
+  background: #f8fafc;
+  color: #0fbf6a;
+  border-color: #0fbf6a;
 }
 
-.paginacion button:disabled {
-  opacity: 0.5;
+.btn-page:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* Números de página (opcional futuro) */
-.paginacion .pagina-info {
-  font-size: 14px;
-  color: #333;
-  font-weight: 500;
-}
-
-/* Responsive Paginación */
-@media (max-width: 600px) {
-  .paginacion {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
-/* =========================================
-   MENSAJE CUANDO NO HAY RESULTADOS
-   ========================================= */
-.mensaje-vacio {
-  flex-grow: 1;
+.page-numbers {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #555;
-  font-style: italic;
-  font-size: 15px;
-}
-
-/* =========================================
-   ACCIONES - Menú contextual elegante
-   ========================================= */
-.acciones {
-  text-align: center;
-  position: relative;
-}
-
-.acciones-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.btn-menu {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #0a7c4a;
-  padding: 6px;
-  border-radius: 50%;
-  transition: background 0.3s, transform 0.2s;
-}
-
-.btn-menu:hover {
-  background-color: #f0f2f7;
-  transform: scale(1.1);
-}
-
-/* Menú desplegable */
-.menu-acciones {
-  position: absolute;
-  right: 0;
-  top: 30px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 140px;
-  z-index: 10;
-  animation: fadeIn 0.2s ease-out;
-}
-
-.menu-acciones button {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  width: 100%;
-  background: none;
+}
+
+.btn-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   border: none;
-  padding: 10px 14px;
-  font-size: 14px;
-  color: #333;
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: 0.2s;
 }
 
-.menu-acciones button:hover {
-  background-color: #f5f5f5;
+.btn-num:hover {
+  background: #e2e8f0;
 }
 
-/* Íconos personalizados */
-.menu-acciones .editar i {
-  color: #1e88e5;
+.btn-num.active {
+  background: #0fbf6a;
+  color: white;
+  box-shadow: 0 4px 12px rgba(15, 191, 106, 0.3);
 }
 
-.menu-acciones .eliminar i {
-  color: #e53935;
+/* FILA VACÍA */
+.empty-td {
+  height: 60px;
+  background: #fcfdfe !important;
 }
 
-/* Animación del menú */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .buscador-wrapper {
+    width: 100%;
+    margin-top: 15px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
-
-/* Ajuste de anchos por columna */
-.tabla-usuarios th:nth-child(1),  /* ID */
-.tabla-usuarios td:nth-child(1) {
-  width: 50px;
-}
-
-.tabla-usuarios th:nth-child(2),  /* Nombre */
-.tabla-usuarios td:nth-child(2) {
-  width: 130px;
-}
-
-.tabla-usuarios th:nth-child(3),  /* Apellido */
-.tabla-usuarios td:nth-child(3) {
-  width: 130px;
-}
-
-.tabla-usuarios th:nth-child(4),  /* Correo */
-.tabla-usuarios td:nth-child(4) {
-  width: 170px; /* Más ancho */
-  word-wrap: break-word;
-}
-
-.tabla-usuarios th:nth-child(5),  /* Teléfono */
-.tabla-usuarios td:nth-child(5) {
-  width: 100px; /* Más espacio */
-  word-wrap: break-word;
-}
-
-.tabla-usuarios th:nth-child(6),  /* Prefijo */
-.tabla-usuarios td:nth-child(6) {
-  width: 70px;
-}
-
-.tabla-usuarios th:nth-child(7),  /* Rol */
-.tabla-usuarios td:nth-child(7) {
-  width: 100px;
-}
-
-.tabla-usuarios th:nth-child(8),  /* Estado */
-.tabla-usuarios td:nth-child(8) {
-  width: 120px;
-}
-
-.tabla-usuarios th:nth-child(9),  /* País */
-.tabla-usuarios td:nth-child(9) {
-  width: 100px;
-}
-
-.tabla-usuarios th:nth-child(10), /* DNI */
-.tabla-usuarios td:nth-child(10) {
-  width: 90px;
-}
-
-.tabla-usuarios th:nth-child(11), /* Fecha Nacimiento */
-.tabla-usuarios td:nth-child(11) {
-  width: 90px;
-}
-
-.tabla-usuarios th:nth-child(12), /* Fecha Registro */
-.tabla-usuarios td:nth-child(12) {
-  width: 90px;
-}
-
-.tabla-usuarios th:nth-child(13), /* Acciones */
-.tabla-usuarios td:nth-child(13) {
-  width: 90px;
-  text-align: center;
-}
-
-/* Estilo del selector de estado */
-.estado-select {
-  padding: 6px 10px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 120px;
-}
-
-.estado-select:hover {
-  border-color: #0a7c4a;
-}
-
-.estado-select:focus {
-  outline: none;
-  border-color: #0a7c4a;
-  box-shadow: 0 0 6px rgba(30,60,114,0.3);
-}
-
-/* Colores según estado */
-.estado-select[value="Activado"],
-.estado-select option[value="Activado"] {
-  color: #2e7d32;
-}
-
-.estado-select[value="Desactivado"],
-.estado-select option[value="Desactivado"] {
-  color: #c62828;
-}
-
-/* 🎨 Estilo del selector de rol */
-.rol-select {
-  padding: 6px 10px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 110px;
-}
-
-.rol-select:hover {
-  border-color: #0a7c4a;
-}
-
-.rol-select:focus {
-  outline: none;
-  border-color: #0a7c4a;
-  box-shadow: 0 0 6px rgba(30,60,114,0.3);
-}
-
-/* 🎭 Colores según el rol */
-.rol-select[value="ADMIN"],
-.rol-select option[value="ADMIN"] {
-  color: #1e88e5; /* Azul */
-  font-weight: 600;
-}
-
-.rol-select[value="DOCTOR"],
-.rol-select option[value="DOCTOR"] {
-  color: #00897b; /* Verde agua */
-  font-weight: 600;
-}
-
-.rol-select[value="PACIENTE"],
-.rol-select option[value="PACIENTE"] {
-  color: #6a1b9a; /* Púrpura */
-  font-weight: 600;
-}
-
-.rol-select[value="RECEPCION"],
-.rol-select option[value="RECEPCION"] {
-  color: #f9a825; /* Amarillo */
-  font-weight: 600;
-}
-

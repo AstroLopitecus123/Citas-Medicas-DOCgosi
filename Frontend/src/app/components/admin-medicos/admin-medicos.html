@@ -1,69 +1,86 @@
-<div class="admin-medicos-layout">
-
-  <!-- Panel izquierdo: formulario -->
-  <div class="admin-medicos-container">
-    <h2>Configuración Médico</h2>
-
-    <!-- Selección de médico -->
-    <div class="form-group">
-      <label for="medicoSelect">Selecciona un médico:</label>
-      <select 
-        id="medicoSelect" 
-        [(ngModel)]="ctrl.medicoSeleccionado"
-        (ngModelChange)="ctrl.onMedicoChange()">
-        <option *ngFor="let medico of ctrl.medicosConIndice" [ngValue]="medico">
-          {{ medico.fila }} - {{ medico.nombre }} {{ medico.apellido }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Selección de especialidad -->
-    <div class="form-group">
-      <label for="especialidadSelect">Especialidad</label>
-      <select 
-        id="especialidadSelect" 
-        [(ngModel)]="ctrl.especialidadSeleccionada">
-        <option *ngFor="let esp of ctrl.listaEspecialidades" [ngValue]="esp">
-          {{ esp.nombre }}
-        </option>
-      </select>
-    </div>
-
-    <button type="button" (click)="ctrl.asignarEspecialidades()">
-      Guardar Especialidad
-    </button>
+<div class="admin-layout">
+  
+  <!-- 🔍 Cabecera de Sección -->
+  <div class="section-header">
+    <h2><i class="fa-solid fa-user-doctor"></i> Configuración de Cuerpo Médico</h2>
   </div>
 
-  <!-- Panel derecho: tabla de médicos -->
-  <div class="tabla-medicos-container">
-    <h2>Administrar Médicos</h2>
+  <div class="admin-medicos-grid">
+    <!-- Panel izquierdo: formulario en tarjeta -->
+    <div class="premium-card">
+      <h3><i class="fa-solid fa-id-card-clip"></i> Asignar Especialidad</h3>
+      
+      <div class="form-group-modern">
+        <label for="medicoSelect">Selecciona un médico:</label>
+        <select 
+          id="medicoSelect" 
+          class="form-control"
+          [(ngModel)]="ctrl.medicoSeleccionado"
+          (ngModelChange)="ctrl.onMedicoChange()">
+          <option *ngFor="let medico of ctrl.medicosConIndice" [ngValue]="medico">
+            {{ medico.fila }} - {{ medico.nombre }} {{ medico.apellido }}
+          </option>
+        </select>
+      </div>
 
-    <div *ngIf="ctrl.error" class="error">{{ ctrl.error }}</div>
+      <div class="form-group-modern">
+        <label for="especialidadSelect">Especialidad a asignar</label>
+        <select 
+          id="especialidadSelect" 
+          class="form-control"
+          [(ngModel)]="ctrl.especialidadSeleccionada">
+          <option *ngFor="let esp of ctrl.listaEspecialidades" [ngValue]="esp">
+            {{ esp.nombre }}
+          </option>
+        </select>
+      </div>
 
-    <table class="tabla-medicos">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Especialidad</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let medico of ctrl.medicosConIndice">
-          <td>{{ medico.fila }}</td>
-          <td>{{ medico.nombre }}</td>
-          <td>{{ medico.apellido }}</td>
-          <td>{{ medico.especialidad?.nombre || '-' }}</td>
-          <td>
-            <button class="btn-modificar" (click)="ctrl.modificarHorario(medico)">
-              Modificar horario
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <button type="button" class="btn-action btn-add w-100" (click)="ctrl.asignarEspecialidades()">
+        <i class="fa-solid fa-floppy-disk"></i> Guardar Especialidad
+      </button>
+    </div>
+
+    <!-- Panel derecho: tabla de médicos -->
+    <div class="premium-card">
+      <div class="card-header-flex">
+        <h3><i class="fa-solid fa-list-check"></i> Listado de Médicos</h3>
+        <div *ngIf="ctrl.error" class="error-pill">{{ ctrl.error }}</div>
+      </div>
+
+      <div class="modern-table-container">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Médico</th>
+              <th>Especialidad</th>
+              <th style="text-align: center;">Gestión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let medico of ctrl.medicosConIndice">
+              <td class="id-cell">{{ medico.fila }}</td>
+              <td>
+                <div class="doc-info-cell">
+                  <strong>{{ medico.nombre }} {{ medico.apellido }}</strong>
+                  <span class="sub-txt">ID: {{ medico.id }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="badge badge-info" *ngIf="medico.especialidad">
+                  {{ medico.especialidad.nombre }}
+                </span>
+                <span class="badge badge-danger" *ngIf="!medico.especialidad">Sin asignar</span>
+              </td>
+              <td style="text-align: center;">
+                <button class="btn-action btn-modificar-modern" (click)="ctrl.modificarHorario(medico)">
+                  <i class="fa-solid fa-calendar-days"></i> Horarios
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-
 </div>

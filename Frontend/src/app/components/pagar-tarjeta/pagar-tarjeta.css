@@ -1,0 +1,100 @@
+/* ==========================================================================
+   PAGAR CON TARJETA (STRIPE INTEGRATION)
+   ========================================================================== */
+
+.center-card {
+  max-width: 450px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 40px;
+}
+
+.payment-header {
+  margin-bottom: 25px;
+}
+
+.stripe-logo {
+  font-size: 3rem;
+  color: #635bff; /* Stripe Blurple */
+  margin-bottom: 10px;
+}
+
+.payment-header h2 {
+  font-size: 1.5rem;
+  color: #1a2a3a;
+  margin: 0 0 10px 0;
+}
+
+.amount {
+  font-size: 1.1rem;
+  color: #475569;
+  margin: 0;
+}
+
+.amount strong {
+  font-size: 1.4rem;
+  color: #0fbf6a;
+}
+
+/* STRIPE ELEMENT WRAPPER */
+.stripe-element-wrapper {
+  background: #f8fafc;
+  border: 1px solid #cbd3de;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.stripe-element-wrapper:focus-within {
+  border-color: #635bff;
+  box-shadow: 0 0 0 2px rgba(99, 91, 255, 0.2);
+}
+
+.stripe-error {
+  color: #fa755a;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  min-height: 20px;
+}
+
+.security-badge {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.security-badge i {
+  color: #0fbf6a;
+}
+
+.success-box {
+  background: #f0fff4;
+  border: 1px solid rgba(15, 191, 106, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  color: #0a7c4a;
+  animation: fadeIn 0.5s ease;
+}
+
+.success-box i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.success-box p {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.mt-20 { margin-top: 20px; }
+.w-100 { width: 100%; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

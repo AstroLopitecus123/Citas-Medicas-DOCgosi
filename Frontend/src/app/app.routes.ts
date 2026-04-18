@@ -9,9 +9,11 @@ import { RestablecerComponent } from './components/restablecer/restablecer';
 import { AdminEspecialidadesComponent } from './components/admin-especialidades/admin-especialidades';
 import { GestionarDisponibilidadComponent } from './components/gestionar-disponibilidad/gestionar-disponibilidad';
 import { PagarEfectivoComponent } from './components/pagar-efectivo/pagar-efectivo';
+import { HomeComponent } from './components/home/home';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },
   { path: 'usuarios', component: ListaUsuariosComponent },
   { path: 'medicos', component: AdminMedicos },

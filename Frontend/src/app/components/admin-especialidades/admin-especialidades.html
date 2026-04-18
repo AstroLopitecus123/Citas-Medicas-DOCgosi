@@ -1,85 +1,112 @@
-<div class="contenedor">
-  <h2>Administrar Especialidades Médicas</h2>
-
-  <!-- ✅ Mensajes -->
-  <p *ngIf="ctrl.mensaje" class="mensaje">{{ ctrl.mensaje }}</p>
-  <p *ngIf="ctrl.error" class="error">{{ ctrl.error }}</p>
-
-  <!-- ✅ Formulario -->
-  <div class="formulario">
-    <!-- Si está editando -->
-    <div *ngIf="ctrl.editando; else crearForm">
-      <input
-        type="text"
-        placeholder="Nombre"
-        [(ngModel)]="ctrl.editando.nombre"
-        name="nombreEditar"
-      />
-
-      <input
-        type="text"
-        placeholder="Descripción"
-        [(ngModel)]="ctrl.editando.descripcion"
-        name="descEditar"
-      />
-
-      <button (click)="ctrl.guardar()">Actualizar</button>
-      <button (click)="ctrl.cancelarEdicion()">Cancelar</button>
-    </div>
-
-    <!-- Si está creando una nueva -->
-    <ng-template #crearForm>
-      <input
-        type="text"
-        placeholder="Nombre"
-        [(ngModel)]="ctrl.nueva.nombre"
-        name="nombreNueva"
-      />
-
-      <input
-        type="text"
-        placeholder="Descripción"
-        [(ngModel)]="ctrl.nueva.descripcion"
-        name="descNueva"
-      />
-
-      <button (click)="ctrl.guardar()">Agregar</button>
-    </ng-template>
+<div class="admin-layout">
+  
+  <!-- 🔍 Cabecera de Sección -->
+  <div class="section-header">
+    <h2><i class="fa-solid fa-stethoscope"></i> Especialidades Médicas</h2>
   </div>
 
-  <!-- ✅ Tabla de especialidades -->
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Fecha Creación</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="admin-especialidades-grid">
+    <!-- Panel izquierdo: Formulario -->
+    <div class="premium-card">
+      <div class="card-title-flex">
+        <h3><i class="fa-solid" [class.fa-pen-to-square]="ctrl.editando" [class.fa-plus-circle]="!ctrl.editando"></i> 
+          {{ ctrl.editando ? 'Editar' : 'Nueva' }} Especialidad
+        </h3>
+        <span *ngIf="ctrl.mensaje" class="inline-msg success">{{ ctrl.mensaje }}</span>
+        <span *ngIf="ctrl.error" class="inline-msg error">{{ ctrl.error }}</span>
+      </div>
 
-    <tbody>
-      <tr *ngFor="let esp of ctrl.especialidades">
-        <td>{{ esp.id }}</td>
-        <td>{{ esp.nombre }}</td>
-        <td>{{ esp.descripcion || '-' }}</td>
-        <td>{{ esp.estado }}</td>
-        <td>{{ esp.fechaCreacion ? (esp.fechaCreacion | date:'short') : '-' }}</td>
-        <td>
-          <!-- Editar -->
-          <button (click)="ctrl.editar(esp)">✏️</button>
+      <div class="form-modern">
+        <!-- Formulario (Unificado para crear/editar) -->
+        <div class="form-group-modern">
+          <label>Nombre de la Especialidad</label>
+          <input *ngIf="ctrl.editando"
+            type="text"
+            class="form-control"
+            placeholder="Ej: Cardiología"
+            [(ngModel)]="ctrl.editando.nombre"
+          />
+          <input *ngIf="!ctrl.editando"
+            type="text"
+            class="form-control"
+            placeholder="Ej: Cardiología"
+            [(ngModel)]="ctrl.nueva.nombre"
+          />
+        </div>
 
-          <!-- Eliminar -->
-          <button (click)="ctrl.eliminar(esp.id)">🗑️</button>
+        <div class="form-group-modern">
+          <label>Descripción detallada</label>
+          <textarea *ngIf="ctrl.editando"
+            class="form-control tall-area"
+            placeholder="Describa el alcance de la especialidad..."
+            [(ngModel)]="ctrl.editando.descripcion"
+          ></textarea>
+          <textarea *ngIf="!ctrl.editando"
+            class="form-control tall-area"
+            placeholder="Describa el alcance de la especialidad..."
+            [(ngModel)]="ctrl.nueva.descripcion"
+          ></textarea>
+        </div>
 
-          <!-- Cambiar estado -->
-          <button (click)="ctrl.cambiarEstado(esp)">
-            {{ esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar' }}
+        <div class="form-actions">
+          <button class="btn-action btn-add" (click)="ctrl.guardar()">
+            <i class="fa-solid fa-floppy-disk"></i> {{ ctrl.editando ? 'Actualizar' : 'Guardar' }}
           </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <button *ngIf="ctrl.editando" class="btn-action btn-outline" (click)="ctrl.cancelarEdicion()">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel derecho: Listado -->
+    <div class="premium-card">
+      <h3><i class="fa-solid fa-list-ul"></i> Listado de Especialidades</h3>
+      
+      <div class="modern-table-container">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Especialidad</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th style="text-align: center;">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let esp of ctrl.especialidades">
+              <td class="id-cell">#{{ esp.id }}</td>
+              <td>
+                <div class="title-cell">
+                  <strong>{{ esp.nombre }}</strong>
+                  <span class="sub-txt">Creado: {{ esp.fechaCreacion | date:'dd/MM/yy' }}</span>
+                </div>
+              </td>
+              <td class="desc-cell">{{ esp.descripcion || '-' }}</td>
+              <td>
+                <span [class]="'badge' + (esp.estado === 'ACTIVA' ? ' badge-success' : ' badge-danger')">
+                  {{ esp.estado }}
+                </span>
+              </td>
+              <td>
+                <div class="actions-flex">
+                  <button class="btn-icon" (click)="ctrl.editar(esp)" title="Editar">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button class="btn-icon" (click)="ctrl.cambiarEstado(esp)" [title]="esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar'">
+                    <i class="fa-solid" [class.fa-toggle-on]="esp.estado === 'ACTIVA'" [class.fa-toggle-off]="esp.estado !== 'ACTIVA'"></i>
+                  </button>
+                  <button class="btn-icon delete" (click)="ctrl.eliminar(esp.id)" title="Eliminar">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

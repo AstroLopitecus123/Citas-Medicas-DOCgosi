@@ -1,15 +1,69 @@
-.contenedor-pago {
+/* ==========================================================================
+   PAGO EFECTIVO (MODERN DASHBOARD)
+   ========================================================================== */
+
+.center-card {
+  max-width: 500px;
+  margin: 60px auto;
   text-align: center;
-  padding: 40px;
+  padding: 50px 40px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 12px 20px;
-  background-color: #0066ff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
+.payment-icon {
+  font-size: 5rem;
+  color: #0fbf6a;
+  margin-bottom: 25px;
 }
 
+.payment-icon.loading {
+  color: #94a3b8;
+}
+
+.payment-details h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a2a3a;
+  margin-bottom: 20px;
+}
+
+.status-box {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 16px;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.status-box.success {
+  background: #f0fff4;
+  border: 1px solid rgba(15, 191, 106, 0.2);
+  color: #0a7c4a;
+}
+
+.receipt-tip {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0fbf6a;
+}
+
+.footer-actions.center {
+  justify-content: center;
+}
+
+/* CARANIMACIÓN */
+@keyframes pulsePayment {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.payment-icon:not(.loading) i {
+  animation: pulsePayment 2s infinite;
+}

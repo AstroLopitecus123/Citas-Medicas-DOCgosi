@@ -1,1 +1,32 @@
-<p>pagar-tarjeta works!</p>
+<div class="admin-layout">
+  <div class="premium-card center-card stripe-container">
+    <div class="payment-header">
+      <i class="fa-brands fa-cc-stripe stripe-logo"></i>
+      <h2>Pagar Cita de Consulta</h2>
+      <p class="amount">Total a pagar: <strong>S/ 100.00</strong></p>
+    </div>
+
+    <!-- Contenedor del Elemento de Tarjeta -->
+    <div class="stripe-element-wrapper">
+      <div id="card-element">
+        <!-- Stripe inyectará el iframe aquí -->
+      </div>
+      <div id="card-errors" role="alert" class="stripe-error">{{ errorMensaje }}</div>
+    </div>
+
+    <div class="form-actions center mt-20">
+      <button class="btn-action btn-add w-100" [disabled]="cargando" (click)="procesarPago()">
+        <span *ngIf="cargando"><i class="fa-solid fa-circle-notch fa-spin"></i> Procesando...</span>
+        <span *ngIf="!cargando"><i class="fa-solid fa-lock"></i> Pagar de forma segura</span>
+      </button>
+    </div>
+    
+    <p class="security-badge"><i class="fa-solid fa-shield-halved"></i> Tus datos están cifrados y seguros (PCI DSS).</p>
+
+    <div *ngIf="pagoExitoso" class="success-box mt-20">
+      <i class="fa-solid fa-circle-check"></i>
+      <p>¡Pago confirmado! Su cita ha sido agendada con éxito.</p>
+      <button class="btn-action btn-outline" routerLink="/mis-citas">Ir a Mis Citas</button>
+    </div>
+  </div>
+</div>

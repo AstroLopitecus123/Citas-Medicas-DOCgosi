@@ -1,10 +1,25 @@
+<div class="page-loader" *ngIf="loading">
+  <div class="loader-content">
+    <img src="/assets/images/LogoSOLO.png" alt="Cargando..." class="loader-logo">
+  </div>
+</div>
+
 <header class="header">
   <div class="header-container">
-    <h1 class="titulo">
-      <i class="fa-solid fa-hospital-user" style="margin-right: 8px;"></i>Clínica Real Madrid
+    <h1 class="titulo" routerLink="/">
+      <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo">
+      <div class="logo-text-stack">
+        <span class="reto-text">R.E.T.O.</span>
+        <span class="salud-text">Salud</span>
+      </div>
     </h1>
 
-    <nav class="nav-links">
+    <!-- Botón Hamburguesa (Móviles) -->
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <i class="fa-solid" [ngClass]="isMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
+    </button>
+
+    <nav class="nav-links" [ngClass]="{'open': isMenuOpen}" (click)="isMenuOpen = false">
 
       <!-- SOLO ADMIN -->
       <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/especialidades">
@@ -21,12 +36,12 @@
       <a *ngIf="!isLoggedIn" routerLink="/registrar">
         <i class="fa-solid fa-user-plus"></i> Registrar
       </a>
-      <a *ngIf="!isLoggedIn" routerLink="/">
+      <a *ngIf="!isLoggedIn" routerLink="/login">
         <i class="fa-solid fa-right-to-bracket"></i> Inicio de Sesión
       </a>
 
       <!-- CERRAR SESIÓN PARA CUALQUIER USUARIO LOGUEADO -->
-      <a *ngIf="isLoggedIn" (click)="abrirModalCerrarSesion()" class="cerrar-sesion">
+      <a *ngIf="isLoggedIn" (click)="abrirModalCerrarSesion(); $event.stopPropagation()" class="cerrar-sesion">
         <i class="fa-solid fa-power-off"></i> Cerrar sesión
       </a>
     </nav>
@@ -53,3 +68,6 @@
     </div>
   </div>
 </div>
+
+<!-- Asistente Virtual Inteligente (Gemini) -->
+<app-chatbot></app-chatbot>

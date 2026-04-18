@@ -472,6 +472,201 @@ html, body {
   font-weight: 700;
   color: #4a5568;
   font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 50, 30, 0.6); /* Verde oscuro glassmorphism */
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(4px); }
+}
+
+.modal {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border-top: 5px solid #0a7c4a;
+  transform: translateY(20px);
+  animation: slideUpModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideUpModal {
+  to { transform: translateY(0); }
+}
+
+.modal h3 {
+  color: #2f4f4f;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+/* BOTONES DEL MODAL */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+/* BOTÓN CONFIRMAR CERRAR SESIÓN */
+.modal-buttons button:first-child {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+  transform: translateY(-2px);
+}
+
+/* BOTÓN CANCELAR */
+.modal-buttons button:last-child {
+  background-color: #ecf0f1;
+  color: #333;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #d5dbdb;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   PAGE LOADER (TRANSICIÓN)
+   ========================================================================== */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #095a34 0%, #0a7c4a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999; /* Máxima prioridad visual */
+  transition: opacity 0.5s ease-out;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-logo {
+  width: 15vw; /* Tamaño responsivo */
+  max-width: 180px;
+  height: auto;
+  animation: pulseLogo 1.8s ease-in-out infinite;
+  filter: brightness(0) invert(1); /* Logo en blanco para fondo oscuro */
+}
+
+@keyframes pulseLogo {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* ==========================================================================
+   SISTEMA DE DISEÑO DASHBOARD (MODERN)
+   ========================================================================== */
+
+/* CONTENEDOR PRINCIPAL */
+.admin-layout {
+  padding: 32px;
+  min-height: 100vh;
+  animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* CABECERA DE SECCIÓN (UNIFICADA) */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0c4d2d;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.section-header h2 i {
+  color: #0fbf6a;
+  background: rgba(15, 191, 106, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* TARJETA PREMIUM */
+.premium-card {
+  background: white;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
+  margin-bottom: 30px;
+}
+
+/* TABLA MODERNA */
+.modern-table-container {
+  overflow-x: auto;
+  border-radius: 20px;
+  background: white;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.modern-table th {
+  background: #f8fafc;
+  padding: 18px 15px;
+  text-align: left;
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   border-bottom: 2px solid #edf2f7;
@@ -507,6 +702,20 @@ html, body {
 .badge-info { background: rgba(66, 153, 225, 0.15); color: #2b6cb0; }
 
 /* CONTROLES DE FORMULARIO (INPUTS/SELECTS) */
+.form-group-modern {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group-modern label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  margin-left: 4px;
+}
+
 .form-control {
   width: 100%;
   padding: 14px 18px;

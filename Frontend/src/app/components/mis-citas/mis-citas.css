@@ -239,7 +239,12 @@
 
 .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 25px; border-top: 1px solid #f1f5f9; padding-top: 20px; }
 
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 25px 30px; 
+  margin-top: 10px;
+}
 
 .medical-scroll { max-height: 50vh; overflow-y: auto; padding-right: 10px; }
 .tall { min-height: 120px; }

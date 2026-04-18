@@ -46,6 +46,10 @@ export const routes: Routes = [
         .then(m => m.GestionarDisponibilidadComponent)
   },
   
+  { path: 'pagar-tarjeta/:id', 
+    loadComponent: () => import('./components/pagar-tarjeta/pagar-tarjeta').then(m => m.PagarTarjetaComponent) 
+  },
+
   // Rutas para historial de pagos (para todos los roles)
   { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
   { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },

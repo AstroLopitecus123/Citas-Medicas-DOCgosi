@@ -1,115 +1,191 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Router, RouterModule } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CitaService } from '../../services/cita.service';
+import { PagoService } from '../../services/pago.service';
 
 declare var Stripe: any;
 
 @Component({
   selector: 'app-pagar-tarjeta',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './pagar-tarjeta.html',
   styleUrls: ['./pagar-tarjeta.css']
 })
-export class PagarTarjetaComponent implements OnInit, AfterViewInit {
-  stripe: any;
-  elements: any;
-  card: any;
+export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
+  citaId: number | null = null;
+  cita: any = null;
+  usuario: any = null;
+
+  // Stripe
+  stripe: any = null;
+  elements: any = null;
+  cardElement: any = null;
+  stripeReady = false;
+
+  // Forms  
+  nombreTitular = '';
+  emailTitular = '';
+
+  // UI State
   cargando = false;
   pagoExitoso = false;
   errorMensaje: string | null = null;
-  clientSecret: string | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  // Monto fijo por consulta (puede venir del backend en el futuro)
+  monto = 100.00;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private citaService: CitaService,
+    private pagoService: PagoService
+  ) {}
 
   ngOnInit(): void {
-    // Inicializar Stripe con la clave pública de prueba (Extraída de referencias WEB CALIDAD si no hay, uso pk_test estandar o asumo que el backend proveerá, o la pido)
-    // Ya que no tenemos la PK en .env, pondremos una clave de prueba. (Stripe necesita PK en frontend y SK en backend)
-    // Para simplificar, insertaré una clave de publicación de prueba general si el user no definió una en Front.
-    this.stripe = Stripe('pk_test_51SGkZhLdAZIW17N1Hntr2fGzE83... (Reemplazar con public key real)');
-    this.obtenerClientSecret();
+    this.citaId = Number(this.route.snapshot.paramMap.get('id'));
+    const usrStr = localStorage.getItem('usuario');
+    if (usrStr) {
+      this.usuario = JSON.parse(usrStr);
+      this.nombreTitular = `${this.usuario.nombre || ''} ${this.usuario.apellido || ''}`.trim();
+      this.emailTitular = this.usuario.correo || '';
+    }
+
+    if (this.citaId) {
+      this.citaService.obtenerPorId(this.citaId).subscribe({
+        next: (data: any) => { this.cita = data; },
+        error: (err: any) => console.error('Error cargando cita:', err)
+      });
+    } else {
+      // No hay citaId, volver al inicio
+      this.router.navigate(['/']);
+    }
   }
 
   ngAfterViewInit(): void {
-    this.elements = this.stripe.elements();
-    
-    // Estilos modernos para el input de Stripe
-    const style = {
-      base: {
-        color: '#1a2a3a',
-        fontFamily: '"Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
-        '::placeholder': {
-          color: '#94a3b8'
-        }
-      },
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
-      }
-    };
-
-    this.card = this.elements.create('card', { style: style, hidePostalCode: true });
-    this.card.mount('#card-element');
-
-    this.card.on('change', (event: any) => {
-      if (event.error) {
-        this.errorMensaje = event.error.message;
-      } else {
-        this.errorMensaje = null;
-      }
-    });
+    this.inicializarStripe();
   }
 
-  obtenerClientSecret() {
-    // Pedir al backend que cree la intención de pago
-    this.http.post<any>(`${environment.apiUrl}/api/pagos/crear-intent`, { monto: 100.00 })
-      .subscribe({
-        next: (res) => {
-          this.clientSecret = res.clientSecret;
+  ngOnDestroy(): void {
+    if (this.cardElement) {
+      try { this.cardElement.destroy(); } catch(e) {}
+    }
+  }
+
+  inicializarStripe(): void {
+    try {
+      // La clave publica de prueba de Stripe (pk_test_...)
+      // En produccion esto debe venir de una variable de entorno del frontend
+      const STRIPE_PK = 'pk_test_51R8xYxP5dMFAKEKEY000placeholder';
+      this.stripe = Stripe(STRIPE_PK);
+      this.elements = this.stripe.elements();
+
+      const style = {
+        base: {
+          color: '#1a2a3a',
+          fontFamily: '"Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '16px',
+          '::placeholder': { color: '#94a3b8' },
+          padding: '10px 0'
         },
-        error: (err) => {
-          console.error("Error al obtener config de Stripe:", err);
-          this.errorMensaje = "No se pudo conectar con el sistema de pagos.";
+        invalid: {
+          color: '#ef4444',
+          iconColor: '#ef4444'
         }
+      };
+
+      this.cardElement = this.elements.create('card', {
+        style,
+        hidePostalCode: true
       });
+
+      // Montar en el DOM — necesita un pequeño delay porque AfterViewInit puede correr antes del render
+      setTimeout(() => {
+        const container = document.getElementById('stripe-card-element');
+        if (container) {
+          this.cardElement.mount('#stripe-card-element');
+          this.stripeReady = true;
+
+          this.cardElement.on('change', (event: any) => {
+            this.errorMensaje = event.error ? event.error.message : null;
+          });
+        } else {
+          console.error('Contenedor #stripe-card-element no encontrado en el DOM');
+        }
+      }, 300);
+
+    } catch (e) {
+      console.error('Error al inicializar Stripe:', e);
+      this.errorMensaje = 'No se pudo inicializar el sistema de pagos. Verifique que Stripe está cargado.';
+    }
   }
 
-  async procesarPago() {
-    if (!this.clientSecret) {
-      this.errorMensaje = "Ocurrió un error cargando el método de pago, espere unos segundos.";
+  async procesarPago(): Promise<void> {
+    if (!this.stripe || !this.cardElement || this.cargando) return;
+
+    if (!this.nombreTitular.trim()) {
+      this.errorMensaje = 'Por favor ingresa el nombre del titular de la tarjeta.';
       return;
     }
 
     this.cargando = true;
     this.errorMensaje = null;
 
-    const { paymentIntent, error } = await this.stripe.confirmCardPayment(
-      this.clientSecret, {
-        payment_method: {
-          card: this.card,
-          billing_details: {
-            name: 'Paciente R.E.T.O Salud'
-          }
-        }
-      }
-    );
+    try {
+      // Crear token de pago (para modo simulado ó si no hay PaymentIntent)
+      const { token, error } = await this.stripe.createToken(this.cardElement, {
+        name: this.nombreTitular
+      });
 
-    if (error) {
-      this.cargando = false;
-      this.errorMensaje = error.message;
-    } else {
-      if (paymentIntent.status === 'succeeded') {
+      if (error) {
+        this.errorMensaje = error.message;
         this.cargando = false;
-        this.pagoExitoso = true;
-        
-        // Aquí podríamos disparar el servicio de confirmación de cita (que gatilla Twilio en Backend)
-        // Ejemplo simplificado:
-        // this.citaService.confirmarPago(idCita).subscribe(...)
+        return;
       }
+
+      // Llamar al backend con los datos del pago
+      if (!this.citaId) {
+        this.errorMensaje = 'Error: ID de cita no encontrado.';
+        this.cargando = false;
+        return;
+      }
+
+      const body = {
+        citaId: this.citaId as number,
+        usuarioId: this.usuario?.id as number,
+        monto: this.monto,
+        referencia: token.id,   // Token de Stripe (o PaymentIntent ID en producción)
+        exito: true
+      };
+
+      this.pagoService.pagarTarjeta(body).subscribe({
+        next: () => {
+          this.cargando = false;
+          this.pagoExitoso = true;
+        },
+        error: (err: any) => {
+          console.error('Error en el backend al registrar pago:', err);
+          this.cargando = false;
+          this.errorMensaje = err?.error?.message || 'El pago fue procesado pero ocurrió un error al registrarlo. Contacte soporte.';
+          // Aunque falle el registro en BD, el cobro ya fue simulado en Stripe test
+        }
+      });
+
+    } catch (err: any) {
+      console.error('Error inesperado:', err);
+      this.errorMensaje = 'Ocurrió un error inesperado. Por favor intente de nuevo.';
+      this.cargando = false;
+    }
+  }
+
+  volver(): void {
+    if (this.citaId) {
+      this.router.navigate(['/checkout', this.citaId]);
+    } else {
+      this.router.navigate(['/paciente/dashboard']);
     }
   }
 }

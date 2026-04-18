@@ -1,32 +1,104 @@
-<div class="admin-layout">
-  <div class="premium-card center-card stripe-container">
-    <div class="payment-header">
-      <i class="fa-brands fa-cc-stripe stripe-logo"></i>
-      <h2>Pagar Cita de Consulta</h2>
-      <p class="amount">Total a pagar: <strong>S/ 100.00</strong></p>
+<div class="pago-container">
+  
+  <!-- LOADING -->
+  <div class="loading-overlay" *ngIf="cargando">
+    <div class="loader-card">
+      <div class="spinner"></div>
+      <p>Procesando tu pago de forma segura...</p>
+      <small>Por favor no cierres esta ventana</small>
     </div>
+  </div>
 
-    <!-- Contenedor del Elemento de Tarjeta -->
-    <div class="stripe-element-wrapper">
-      <div id="card-element">
-        <!-- Stripe inyectará el iframe aquí -->
+  <!-- PAGO EXITOSO -->
+  <div class="success-screen" *ngIf="pagoExitoso">
+    <div class="success-card">
+      <div class="success-icon">
+        <i class="fa-solid fa-circle-check"></i>
       </div>
-      <div id="card-errors" role="alert" class="stripe-error">{{ errorMensaje }}</div>
+      <h2>¡Pago Confirmado!</h2>
+      <p>Tu cita ha sido reservada y pagada exitosamente.</p>
+      <div class="success-detail" *ngIf="cita">
+        <span>Especialidad: <strong>{{ cita.medico?.especialidad?.nombre }}</strong></span>
+        <span>Médico: <strong>Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</strong></span>
+        <span>Fecha: <strong>{{ cita.fecha | date:'dd/MM/yyyy h:mm a' }}</strong></span>
+      </div>
+      <div class="success-actions">
+        <button class="btn-primary" routerLink="/mis-citas">Ver Mis Citas</button>
+        <button class="btn-outline" routerLink="/paciente/dashboard">Ir al Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO DE PAGO -->
+  <div class="pago-card" *ngIf="!pagoExitoso && !cargando">
+
+    <!-- Header -->
+    <div class="pago-header">
+      <button class="btn-back" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <div class="stripe-branding">
+        <i class="fa-brands fa-stripe" style="font-size: 2.2rem; color: #635bff;"></i>
+      </div>
+      <h2>Pago Seguro con Tarjeta</h2>
+      <p>Tus datos están protegidos con cifrado SSL de 256 bits</p>
     </div>
 
-    <div class="form-actions center mt-20">
-      <button class="btn-action btn-add w-100" [disabled]="cargando" (click)="procesarPago()">
-        <span *ngIf="cargando"><i class="fa-solid fa-circle-notch fa-spin"></i> Procesando...</span>
-        <span *ngIf="!cargando"><i class="fa-solid fa-lock"></i> Pagar de forma segura</span>
-      </button>
+    <!-- Resumen -->
+    <div class="resumen-mini" *ngIf="cita">
+      <div class="resumen-row">
+        <span>Consulta Médica — {{ cita.medico?.especialidad?.nombre || 'Especialidad' }}</span>
+        <strong class="txt-green">S/. {{ monto | number:'1.2-2' }}</strong>
+      </div>
     </div>
     
-    <p class="security-badge"><i class="fa-solid fa-shield-halved"></i> Tus datos están cifrados y seguros (PCI DSS).</p>
+    <!-- Formulario -->
+    <div class="form-section">
+      
+      <div class="form-group">
+        <label>Nombre del Titular</label>
+        <input 
+          type="text" 
+          class="form-input" 
+          [(ngModel)]="nombreTitular" 
+          placeholder="Nombre completo como aparece en la tarjeta"
+        />
+      </div>
 
-    <div *ngIf="pagoExitoso" class="success-box mt-20">
-      <i class="fa-solid fa-circle-check"></i>
-      <p>¡Pago confirmado! Su cita ha sido agendada con éxito.</p>
-      <button class="btn-action btn-outline" routerLink="/mis-citas">Ir a Mis Citas</button>
+      <div class="form-group">
+        <label>
+          <i class="fa-brands fa-stripe" style="color: #635bff; margin-right: 6px;"></i>
+          Datos de Tarjeta
+        </label>
+        <!-- Stripe Elements monta aquí automáticamente -->
+        <div id="stripe-card-element" class="stripe-inputbox"></div>
+        <div class="stripe-error" *ngIf="errorMensaje">
+          <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMensaje }}
+        </div>
+      </div>
+
+      <!-- Tarjetas de prueba (modo test de Stripe) -->
+      <div class="test-cards-hint">
+        <i class="fa-solid fa-flask"></i>
+        <span>Modo pruebas — usa <code>4242 4242 4242 4242</code>, cualquier fecha futura y CVC</span>
+      </div>
+
+      <button 
+        class="btn-pagar" 
+        [disabled]="cargando || !stripeReady" 
+        (click)="procesarPago()"
+      >
+        <i class="fa-solid fa-lock" *ngIf="!cargando"></i>
+        <i class="fa-solid fa-circle-notch fa-spin" *ngIf="cargando"></i>
+        {{ cargando ? 'Procesando...' : 'Pagar S/. ' + monto.toFixed(2) + ' de forma segura' }}
+      </button>
+
+      <div class="security-row">
+        <span><i class="fa-solid fa-shield-halved"></i> PCI DSS Compliant</span>
+        <span><i class="fa-solid fa-lock"></i> SSL 256-bit</span>
+        <span><i class="fa-brands fa-stripe"></i> Powered by Stripe</span>
+      </div>
+
     </div>
   </div>
 </div>

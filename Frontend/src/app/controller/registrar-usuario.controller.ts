@@ -3,6 +3,8 @@ import { UsuarioService } from '../services/usuario.service';
 import { PaisService } from '../services/pais.service';
 import { Usuario } from '../models/usuario.model';
 import { Pais } from '../models/pais.model';
+import { Router } from '@angular/router';
+import { NotificationService } from '../services/notification.service';
 
 @Injectable()
 export class RegistrarUsuarioController {
@@ -55,6 +57,10 @@ export class RegistrarUsuarioController {
 
   // Paises
   paises: Pais[] = [];
+
+  // Utilidades inyectadas vía setUtils
+  private router?: Router;
+  private ns?: NotificationService;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -144,6 +150,11 @@ export class RegistrarUsuarioController {
     });
   }
 
+  setUtils(router: Router, ns: NotificationService) {
+    this.router = router;
+    this.ns = ns;
+  }
+
   togglePassword() {
     this.mostrarContrasena = !this.mostrarContrasena;
   }
@@ -181,8 +192,15 @@ export class RegistrarUsuarioController {
     delete payload.correoUsuario;
     this.usuarioService.crearUsuario(payload).subscribe({
       next: () => {
-        this.mensaje = this.MENSAJES.registroExitoso;
+        if (this.ns) this.ns.success('✅ ¡Cuenta creada con éxito! Bienvenido a R.E.T.O Salud.');
         this.inicializarFormulario();
+
+        // 🚀 Redirección automática al Login para que el usuario inicie sesión
+        if (this.router) {
+          setTimeout(() => {
+            this.router?.navigate(['/login']);
+          }, 2000);
+        }
       },
       error: (err) => {
         if (err.status === 409 && err.error?.field) {
@@ -191,8 +209,12 @@ export class RegistrarUsuarioController {
           if (field === 'correo') this.correoError = msg;
           else if (field === 'dni') this.dniError = msg;
           else if (field === 'telefono') this.telefonoError = msg;
+          
+          if (this.ns) this.ns.error(`❌ ${msg}`);
         } else {
-          this.error = 'Error al registrar: ' + (err.error?.message || err.message);
+          const errMsg = err.error?.message || err.message;
+          this.error = 'Error al registrar: ' + errMsg;
+          if (this.ns) this.ns.error('❌ Error al procesar el registro');
         }
       }
     });

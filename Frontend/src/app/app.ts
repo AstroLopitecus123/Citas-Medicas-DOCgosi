@@ -40,6 +40,7 @@ export class AppComponent {
         this.isPanelRoute = url.includes('/admin') || 
                            url.includes('/medico/dashboard') || 
                            url.includes('/recepcion/dashboard') ||
+                           url.includes('/paciente/dashboard') ||
                            url.includes('/mis-citas') ||
                            url.includes('/usuarios') || 
                            url.includes('/medicos') || 
@@ -94,7 +95,8 @@ export class AppComponent {
     if (rol === 'ADMIN') return '/admin';
     if (rol === 'MEDICO') return '/medico/dashboard';
     if (rol === 'RECEPCION') return '/recepcion/dashboard';
-    return '/mis-citas';
+    if (rol === 'PACIENTE') return '/paciente/dashboard';
+    return '/paciente/dashboard'; // Default para cualquier logueado
   }
 
   verificarLogin() {

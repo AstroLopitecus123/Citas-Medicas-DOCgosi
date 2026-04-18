@@ -1,0 +1,77 @@
+<div class="admin-layout">
+  <header class="section-header">
+    <div class="header-main">
+      <h2><i class="fa-solid fa-house-user"></i> {{ getGreeting() }}, {{ usuario?.nombre }}</h2>
+      <p class="subtitle">Bienvenido a tu Portal Personal de Salud R.E.T.O.</p>
+    </div>
+    <div class="header-actions">
+      <span class="date-badge"><i class="fa-solid fa-heart-pulse"></i> Paciente Regular</span>
+    </div>
+  </header>
+
+  <!-- KPI CARDS - Premium Style -->
+  <div class="stats-grid">
+    <div class="stat-card kpi-primary">
+      <div class="stat-icon"><i class="fa-solid fa-calendar-star"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.proximaCita }}</h3>
+        <p>Próxima Cita</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-success">
+      <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.totalCitas }}</h3>
+        <p>Citas Realizadas</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-info">
+      <div class="stat-icon"><i class="fa-solid fa-file-medical"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.historiasClinicas }}</h3>
+        <p>Historias Clínicas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- QUICK ACTIONS -->
+    <div class="premium-card">
+      <h3 class="card-title">Atención Inmediata</h3>
+      <div class="quick-actions">
+        <button class="action-btn" routerLink="/mis-citas">
+          <i class="fa-solid fa-plus-circle"></i>
+          <div class="btn-content">
+            <strong>Solicitar Nueva Cita</strong>
+            <span>Reserva tu turno ahora</span>
+          </div>
+        </button>
+        <button class="action-btn secondary" routerLink="/mis-citas">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <div class="btn-content">
+            <strong>Mis Citas Pasadas</strong>
+            <span>Consulta tu historial</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- HEALTH SUMMARY -->
+    <div class="premium-card help-panel">
+      <h3 class="card-title"><i class="fa-solid fa-shield-heart"></i> Recomendaciones</h3>
+      <div class="info-content">
+        <div class="recommendation-item">
+          <i class="fa-solid fa-circle-info"></i>
+          <p>Recuerda llegar 15 minutos antes de tu cita agendada para el triaje.</p>
+        </div>
+        <div class="recommendation-item">
+          <i class="fa-solid fa-file-pdf"></i>
+          <p>Tus resultados de laboratorio ahora están disponibles en la sección "Historias".</p>
+        </div>
+      </div>
+      <div class="ai-badge">
+        <i class="fa-solid fa-robot"></i> Asistente Gemini Activo
+      </div>
+    </div>
+  </div>
+</div>

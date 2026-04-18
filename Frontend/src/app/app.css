@@ -130,6 +130,29 @@ html, body {
   box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3) !important;
 }
 
+/* Link de perfil en el Header */
+.header-user-link {
+  color: #0a7c4a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(10, 124, 74, 0.2);
+  background: rgba(10, 124, 74, 0.05);
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px !important;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.header-user-link i {
+  font-size: 1.1rem;
+}
+
+.header-user-link:hover {
+  background: #0a7c4a !important;
+  color: white !important;
+}
+
 /* ===== CONTENIDO CENTRADO ===== */
 .contenido-centrado {
   display: block;

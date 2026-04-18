@@ -1,0 +1,99 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: transform 0.3s;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stat-card:hover { transform: translateY(-5px); }
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* Colors for Patient Dashboard */
+.kpi-primary .stat-icon { background: rgba(10, 124, 74, 0.1); color: #0a7c4a; }
+.kpi-success .stat-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.kpi-info .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
+
+.stat-info h3 { font-size: 1.4rem; font-weight: 800; margin: 0; color: #1e293b; }
+.stat-info p { margin: 0; color: #64748b; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.card-title { font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+.card-title i { color: #0a7c4a; }
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.action-btn {
+  padding: 20px;
+  border-radius: 18px;
+  border: none;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+}
+
+.action-btn i { font-size: 1.8rem; color: #0a7c4a; }
+.btn-content { display: flex; flex-direction: column; }
+.btn-content strong { font-size: 1.1rem; color: #1e293b; }
+.btn-content span { font-size: 0.85rem; color: #64748b; }
+
+.action-btn:hover { background: #0a7c4a; transform: scale(1.02); }
+.action-btn:hover strong, .action-btn:hover span, .action-btn:hover i { color: white; }
+
+.action-btn.secondary:hover { background: #3b82f6; }
+
+.info-content { display: flex; flex-direction: column; gap: 15px; }
+.recommendation-item { display: flex; gap: 15px; align-items: flex-start; padding: 12px; background: rgba(10, 124, 74, 0.03); border-radius: 12px; }
+.recommendation-item i { color: #0a7c4a; margin-top: 3px; }
+.recommendation-item p { margin: 0; font-size: 0.95rem; color: #475569; line-height: 1.5; }
+
+.ai-badge {
+  margin-top: 25px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #4f46e520, #0a7c4a20);
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0a7c4a;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}

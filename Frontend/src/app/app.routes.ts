@@ -21,6 +21,9 @@ export const routes: Routes = [
   { path: 'recepcion/dashboard', 
     loadComponent: () => import('./components/recepcion-dashboard/recepcion-dashboard').then(m => m.RecepcionDashboardComponent) 
   },
+  { path: 'paciente/dashboard', 
+    loadComponent: () => import('./components/paciente-dashboard/paciente-dashboard').then(m => m.PacienteDashboardComponent) 
+  },
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },
   { path: 'usuarios', component: ListaUsuariosComponent },

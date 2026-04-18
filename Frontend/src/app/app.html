@@ -21,8 +21,8 @@
 
     <nav class="nav-links" [ngClass]="{'open': isMenuOpen}" (click)="isMenuOpen = false">
 
-      <a *ngIf="isLoggedIn" [routerLink]="getDashboardRoute()" style="color: #0a7c4a; font-weight: 700; border: 1px solid rgba(10, 124, 74, 0.2); background: rgba(10, 124, 74, 0.05);">
-        <i class="fa-solid fa-circle-user"></i> {{ usuario?.nombre }}
+      <a *ngIf="isLoggedIn" [routerLink]="getDashboardRoute()" class="header-user-link">
+        <i class="fa-solid fa-circle-user"></i> <span>{{ usuario?.nombre || 'Mi Panel' }}</span>
       </a>
 
       <!-- SOLO USUARIOS NO LOGUEADOS -->
@@ -90,8 +90,14 @@
 
     <!-- LINKS PACIENTE -->
     <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
+      <a class="nav-item" routerLink="/paciente/dashboard" routerLinkActive="active">
+        <i class="fa-solid fa-house-chimney-user"></i> <span>Mi Panel</span>
+      </a>
       <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active">
-        <i class="fa-solid fa-heart-pulse"></i> <span>Mi Salud</span>
+        <i class="fa-solid fa-calendar-check"></i> <span>Mis Citas</span>
+      </a>
+      <a class="nav-item" routerLink="/mi-historial" routerLinkActive="active">
+        <i class="fa-solid fa-file-invoice-dollar"></i> <span>Mis Pagos</span>
       </a>
     </ng-container>
 

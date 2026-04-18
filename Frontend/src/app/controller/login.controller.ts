@@ -33,7 +33,7 @@ export class LoginController {
           } else if (rol === 'RECEPCION') {
             this.router.navigate(['/recepcion/dashboard']);
           } else {
-            this.router.navigate(['/mis-citas']);
+            this.router.navigate(['/paciente/dashboard']);
           }
         } else if ('message' in res) {
           this.error = `❌ ${res.message}`;

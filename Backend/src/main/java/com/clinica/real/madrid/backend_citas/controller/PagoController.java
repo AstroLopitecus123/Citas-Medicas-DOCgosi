@@ -1,9 +1,8 @@
 package com.clinica.real.madrid.backend_citas.controller;
 
-import com.clinica.real.madrid.backend_citas.dto.PagoEfectivoRequest;
-import com.clinica.real.madrid.backend_citas.dto.PagoResponse;
-import com.clinica.real.madrid.backend_citas.dto.PagoTarjetaRequest;
+import com.clinica.real.madrid.backend_citas.dto.*;
 import com.clinica.real.madrid.backend_citas.service.PagoService;
+import com.stripe.exception.StripeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,12 @@ public class PagoController {
     @PostMapping("/efectivo")
     public ResponseEntity<PagoResponse> pagarEfectivo(@RequestBody PagoEfectivoRequest request) {
         PagoResponse response = pagoService.pagarEfectivo(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/crear-intent")
+    public ResponseEntity<PaymentIntentResponse> crearPaymentIntent(@RequestBody PaymentIntentRequest request) throws StripeException {
+        PaymentIntentResponse response = pagoService.crearPaymentIntent(request);
         return ResponseEntity.ok(response);
     }
 

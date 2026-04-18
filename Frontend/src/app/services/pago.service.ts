@@ -51,6 +51,15 @@ export class PagoService {
     );
   }
 
+  crearPaymentIntent(body: {
+    citaId: number;
+    usuarioId: number;
+    monto: number;
+    moneda?: string;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crear-intent`, body, { headers: this.getHeaders() });
+  }
+
   // =======================================================
   // 🔹 Obtener pagos por cita
   // =======================================================

@@ -5,6 +5,9 @@ import com.clinica.real.madrid.backend_citas.model.*;
 import com.clinica.real.madrid.backend_citas.repository.CitaRepository;
 import com.clinica.real.madrid.backend_citas.repository.PagoRepository;
 import com.clinica.real.madrid.backend_citas.repository.UsuarioRepository;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,32 @@ public class PagoService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Transactional
+    public PaymentIntentResponse crearPaymentIntent(PaymentIntentRequest request) throws StripeException {
+        // Convertir monto a centavos para Stripe
+        long montoCentavos = (long) (request.getMonto() * 100);
+
+        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                .setAmount(montoCentavos)
+                .setCurrency(request.getMoneda() != null ? request.getMoneda().toLowerCase() : "pen")
+                .setAutomaticPaymentMethods(
+                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+                                .setEnabled(true)
+                                .build()
+                )
+                .putMetadata("citaId", request.getCitaId().toString())
+                .putMetadata("usuarioId", request.getUsuarioId().toString())
+                .build();
+
+        PaymentIntent intent = PaymentIntent.create(params);
+
+        return new PaymentIntentResponse(
+                intent.getClientSecret(),
+                intent.getId(),
+                intent.getStatus()
+        );
+    }
 
     @Transactional
     public PagoResponse pagarEfectivo(PagoEfectivoRequest request) {

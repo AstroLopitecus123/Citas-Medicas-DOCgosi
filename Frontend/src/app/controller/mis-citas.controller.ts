@@ -396,7 +396,7 @@ export class MisCitasController {
           // 💳 Redirección al flujo de pago (Similar a WEB CALIDAD)
           if (citaCreada && citaCreada.id) {
             setTimeout(() => {
-              this.router.navigate(['/pagar-efectivo', citaCreada.id]);
+              this.router.navigate(['/checkout', citaCreada.id]);
             }, 800);
           }
         },
@@ -568,7 +568,7 @@ export class MisCitasController {
   }
 
   pagarCita(cita: Cita) {
-    this.router.navigate(['/pagar-efectivo', cita.id]);
+    this.router.navigate(['/checkout', cita.id]);
   }
 
   verComprobante(url: string) {

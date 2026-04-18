@@ -1,0 +1,192 @@
+.checkout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  padding: 20px;
+}
+
+.checkout-card {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  padding: 40px 30px;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  background: #f4fdf7;
+  color: #0fbf6a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 15px;
+}
+
+.checkout-header h2 {
+  font-size: 1.6rem;
+  color: #1a2a3a;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+}
+
+.checkout-header p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.resumen-reserva {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #e2e8f0;
+}
+
+.resumen-header {
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.resumen-header i {
+  color: #0a7c4a;
+}
+
+.resumen-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.resumen-row:last-child {
+  margin-bottom: 0;
+}
+
+.resumen-row .label {
+  color: #64748b;
+}
+
+.resumen-row .value {
+  color: #1a2a3a;
+  font-weight: 600;
+  text-align: right;
+}
+
+.resumen-row .highlight {
+  color: #0fbf6a;
+  font-weight: 800;
+}
+
+.mt-2 { margin-top: 10px; }
+.mt-4 { margin-top: 20px; }
+.text-center { text-align: center; }
+
+.opcion-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.opcion-card:hover {
+  border-color: #0fbf6a;
+  box-shadow: 0 8px 20px rgba(15, 191, 106, 0.1);
+  transform: translateY(-2px);
+}
+
+.opcion-icon {
+  font-size: 2rem;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.text-primary { color: #6366f1; } /* Stripe blurple ish */
+.text-success { color: #10b981; }
+
+.opcion-info {
+  flex-grow: 1;
+}
+
+.opcion-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.opcion-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.opcion-arrow {
+  color: #cbd5e1;
+  font-size: 1.2rem;
+}
+
+.opcion-card:hover .opcion-arrow {
+  color: #0fbf6a;
+}
+
+.btn-cancel {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+  padding: 10px;
+}
+
+.btn-cancel:hover {
+  color: #ef4444;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 50px;
+  color: #0fbf6a;
+}
+
+.loading-state i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.loading-state p {
+  color: #64748b;
+  font-weight: 600;
+}

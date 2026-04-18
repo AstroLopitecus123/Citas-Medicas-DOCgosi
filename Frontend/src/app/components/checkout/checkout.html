@@ -1,0 +1,79 @@
+<div class="checkout-container">
+  <div class="checkout-card" *ngIf="!cargando && cita; else loadingTpl">
+    
+    <div class="checkout-header">
+      <div class="icon-circle">
+        <i class="fa-solid fa-credit-card"></i>
+      </div>
+      <h2>Procesar Pago</h2>
+      <p>Selecciona tu método de pago preferido para confirmar la cita</p>
+    </div>
+
+    <!-- Resumen de cita -->
+    <div class="resumen-reserva">
+      <div class="resumen-header">
+        <i class="fa-solid fa-notes-medical"></i>
+        <span>Resumen de Reserva</span>
+      </div>
+      <div class="resumen-body">
+        <div class="resumen-row">
+          <span class="label">Paciente:</span>
+          <span class="value">{{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}</span>
+        </div>
+        <div class="resumen-row">
+          <span class="label">Especialidad:</span>
+          <span class="value">{{ cita.medico?.especialidad?.nombre || 'General' }}</span>
+        </div>
+        <div class="resumen-row">
+          <span class="label">Médico:</span>
+          <span class="value">Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
+        </div>
+        <div class="resumen-row mt-2">
+          <span class="label">Fecha y Hora:</span>
+          <span class="value highlight">{{ cita.fecha | date:'dd/MM/yyyy h:mm a' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="opciones-pago">
+      <!-- Opción Tarjeta (Stripe) -->
+      <div class="opcion-card" (click)="pagarTarjeta()">
+        <div class="opcion-icon text-primary">
+          <i class="fa-brands fa-stripe"></i>
+        </div>
+        <div class="opcion-info">
+          <h3>Pago Seguro con Tarjeta</h3>
+          <p>Visa, MasterCard, Amex vía Stripe</p>
+        </div>
+        <div class="opcion-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <!-- Opción Efectivo -->
+      <div class="opcion-card" (click)="pagarEfectivo()">
+        <div class="opcion-icon text-success">
+          <i class="fa-solid fa-money-bill-wave"></i>
+        </div>
+        <div class="opcion-info">
+          <h3>Pago en Efectivo (Caja)</h3>
+          <p>Confirma presencialmente en el módulo</p>
+        </div>
+        <div class="opcion-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 text-center">
+      <button class="btn-cancel" (click)="volverDashboard()">Cancelar Reserva</button>
+    </div>
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Cargando información de tu cita...</p>
+    </div>
+  </ng-template>
+</div>

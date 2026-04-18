@@ -14,6 +14,12 @@ export class Pago {
   fechaPago?: string;
   transaccionId?: string;
 
+  // Nuevos campos extendidos para Historial de Pagos
+  pacienteNombre?: string;
+  medicoNombre?: string;
+  especialidad?: string;
+  citaFechaResumen?: string;
+
   comprobante?: Comprobante;
 
   constructor(data?: any) {
@@ -38,6 +44,11 @@ export class Pago {
 
       this.fechaPago = data.fechaPago ?? this.fechaPago;
       this.transaccionId = data.transaccionId ?? this.transaccionId;
+
+      this.pacienteNombre = data.pacienteNombre;
+      this.medicoNombre = data.medicoNombre;
+      this.especialidad = data.especialidad;
+      this.citaFechaResumen = data.citaFechaResumen;
 
       this.comprobante = data.comprobante
         ? new Comprobante(data.comprobante)

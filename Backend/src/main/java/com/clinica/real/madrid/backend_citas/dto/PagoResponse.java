@@ -12,6 +12,13 @@ public class PagoResponse {
     private String estadoPago;
     private String fechaPago;
     private String transaccionId;
+    
+    // Datos extendidos para la tabla Frontend
+    private String pacienteNombre;
+    private String medicoNombre;
+    private String especialidad;
+    private String citaFechaResumen;
+    
     private ComprobanteResponse comprobante;
 
     public Long getId() {
@@ -84,5 +91,37 @@ public class PagoResponse {
 
     public void setComprobante(ComprobanteResponse comprobante) {
         this.comprobante = comprobante;
+    }
+
+    public String getPacienteNombre() {
+        return pacienteNombre;
+    }
+
+    public void setPacienteNombre(String pacienteNombre) {
+        this.pacienteNombre = pacienteNombre;
+    }
+
+    public String getMedicoNombre() {
+        return medicoNombre;
+    }
+
+    public void setMedicoNombre(String medicoNombre) {
+        this.medicoNombre = medicoNombre;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public String getCitaFechaResumen() {
+        return citaFechaResumen;
+    }
+
+    public void setCitaFechaResumen(String citaFechaResumen) {
+        this.citaFechaResumen = citaFechaResumen;
     }
 }

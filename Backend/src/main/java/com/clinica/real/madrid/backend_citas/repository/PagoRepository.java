@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByCitaId(Long citaId);
+    List<Pago> findByUsuarioId(Long usuarioId);
+    List<Pago> findByCita_Medico_Id(Long medicoId);
 }

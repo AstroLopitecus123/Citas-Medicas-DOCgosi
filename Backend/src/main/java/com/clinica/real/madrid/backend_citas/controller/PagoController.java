@@ -42,4 +42,19 @@ public class PagoController {
         PagoResponse response = pagoService.anularPago(pagoId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<List<PagoResponse>> obtenerTodosLosPagos() {
+        return ResponseEntity.ok(pagoService.obtenerTodosLosPagos());
+    }
+
+    @GetMapping("/paciente/{usuarioId}")
+    public ResponseEntity<List<PagoResponse>> obtenerPagosPorUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(pagoService.obtenerPagosPorUsuario(usuarioId));
+    }
+
+    @GetMapping("/medico/{medicoId}")
+    public ResponseEntity<List<PagoResponse>> obtenerPagosPorMedico(@PathVariable Long medicoId) {
+        return ResponseEntity.ok(pagoService.obtenerPagosPorMedico(medicoId));
+    }
 }

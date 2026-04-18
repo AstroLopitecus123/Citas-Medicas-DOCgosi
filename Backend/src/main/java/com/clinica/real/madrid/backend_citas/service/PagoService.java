@@ -99,6 +99,24 @@ public class PagoService {
                 .collect(Collectors.toList());
     }
 
+    public List<PagoResponse> obtenerTodosLosPagos() {
+        return pagoRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<PagoResponse> obtenerPagosPorUsuario(Long usuarioId) {
+        return pagoRepository.findByUsuarioId(usuarioId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<PagoResponse> obtenerPagosPorMedico(Long medicoId) {
+        return pagoRepository.findByCita_Medico_Id(medicoId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public PagoResponse anularPago(Long pagoId) {
         Pago pago = pagoRepository.findById(pagoId)
@@ -117,6 +135,20 @@ public class PagoService {
         response.setMetodo(pago.getMetodo().name());
         response.setEstadoPago(pago.getEstadoPago().name());
         response.setTransaccionId(pago.getTransaccionId());
+        
+        // Pobar detalles visuales para el Dashboard (Frontend)
+        if (pago.getUsuario() != null) {
+            response.setPacienteNombre(pago.getUsuario().getNombre() + " " + pago.getUsuario().getApellido());
+        }
+        if (pago.getCita() != null && pago.getCita().getMedico() != null) {
+            response.setMedicoNombre(pago.getCita().getMedico().getUsuario().getNombre() + " " + pago.getCita().getMedico().getUsuario().getApellido());
+            if (pago.getCita().getMedico().getEspecialidad() != null) {
+                response.setEspecialidad(pago.getCita().getMedico().getEspecialidad().getNombre());
+            }
+            if (pago.getCita().getFechaHora() != null) {
+                response.setCitaFechaResumen(pago.getCita().getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+            }
+        }
         
         if (pago.getFechaPago() != null) {
             response.setFechaPago(pago.getFechaPago().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));

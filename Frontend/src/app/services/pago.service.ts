@@ -54,6 +54,24 @@ export class PagoService {
   // =======================================================
   // 🔹 Obtener pagos por cita
   // =======================================================
+  // =======================================================
+  // 🔹 HISTORIAL DE PAGOS
+  // =======================================================
+  obtenerTodosLosPagos(): Observable<Pago[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`, { headers: this.getHeaders() })
+      .pipe(map(data => data.map(p => new Pago(p))));
+  }
+
+  obtenerPagosPorUsuario(usuarioId: number): Observable<Pago[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/paciente/${usuarioId}`, { headers: this.getHeaders() })
+      .pipe(map(data => data.map(p => new Pago(p))));
+  }
+
+  obtenerPagosPorMedico(medicoId: number): Observable<Pago[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/medico/${medicoId}`, { headers: this.getHeaders() })
+      .pipe(map(data => data.map(p => new Pago(p))));
+  }
+
   obtenerPagosPorCita(citaId: number): Observable<Pago[]> {
     return this.http.get<any[]>(
       `${this.apiUrl}/cita/${citaId}`,

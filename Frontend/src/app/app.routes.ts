@@ -35,6 +35,9 @@ export const routes: Routes = [
   { path: 'especialidades', component: AdminEspecialidadesComponent },
   { path: 'gestionar-disponibilidad/:id', component: GestionarDisponibilidadComponent },
   { path: 'pagar-efectivo/:id', component: PagarEfectivoComponent },
+  { path: 'checkout/:id', 
+    loadComponent: () => import('./components/checkout/checkout').then(m => m.CheckoutComponent) 
+  },
 
   {
     path: 'gestionar-disponibilidad/:id',
@@ -42,5 +45,12 @@ export const routes: Routes = [
       import('./components/gestionar-disponibilidad/gestionar-disponibilidad')
         .then(m => m.GestionarDisponibilidadComponent)
   },
+  
+  // Rutas para historial de pagos (para todos los roles)
+  { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+  { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+  { path: 'recepcion/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+  { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+
   { path: '**', redirectTo: '' }
 ];

@@ -87,7 +87,8 @@ public class CitaService {
                       && !cita.getFecha().toLocalTime().isBefore(d.getHoraInicio())
                       && !cita.getFecha().toLocalTime().isAfter(d.getHoraFin()))
             .findFirst()
-            .orElseThrow(() -> new RuntimeException("El horario seleccionado ya no está disponible o no existe"));
+            .orElseThrow(() -> new RuntimeException("El horario seleccionado ya no está disponible o no existe. Cita: " 
+                + cita.getFecha() + ", Disponibles: " + disponibles.size()));
 
         disp.setEstado(Disponibilidad.EstadoDisponibilidad.NO_DISPONIBLE);
         disponibilidadRepository.save(disp);

@@ -47,7 +47,8 @@ public class SecurityConfig {
                     "/auth/**",
                     "/h2-console/**",
                     "/api/paises/**",
-                    "/api/disponibilidades/**"
+                    "/api/disponibilidades/**",
+                    "/api/chatbot/**"
                 ).permitAll()
                 .requestMatchers("/api/medicos/usuario/**").authenticated()
                 .anyRequest().authenticated()

@@ -123,8 +123,19 @@ public class CitaService {
             throw new RuntimeException("No se encontró la cita con ID " + id);
         }
 
-        // Obtener cita para notificación
+        // Obtener cita
         Cita cita = citaRepository.findById(id).orElseThrow();
+        
+        // 🛡️ Liberar el horario automáticamente
+        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+            cita.getMedico().getId(), 
+            cita.getFecha().toLocalDate(), 
+            cita.getFecha().toLocalTime()
+        ).ifPresent(disp -> {
+            disp.setEstado(Disponibilidad.EstadoDisponibilidad.DISPONIBLE);
+            disponibilidadRepository.save(disp);
+        });
+
         notificarCambioCita(cita, "cancelada");
     }
     
@@ -136,6 +147,31 @@ public class CitaService {
         if (cita.getEstado() == EstadoCita.CANCELADA) {
             throw new RuntimeException("No se puede reprogramar una cita cancelada");
         }
+
+        // 1️⃣ Liberar el horario antiguo
+        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+            cita.getMedico().getId(), 
+            cita.getFecha().toLocalDate(), 
+            cita.getFecha().toLocalTime()
+        ).ifPresent(disp -> {
+            disp.setEstado(Disponibilidad.EstadoDisponibilidad.DISPONIBLE);
+            disponibilidadRepository.save(disp);
+        });
+
+        // 2️⃣ Bloquear el nuevo horario
+        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+            cita.getMedico().getId(), 
+            nuevaFecha.toLocalDate(), 
+            nuevaFecha.toLocalTime()
+        ).ifPresentOrElse(disp -> {
+            if (disp.getEstado() != Disponibilidad.EstadoDisponibilidad.DISPONIBLE) {
+                throw new RuntimeException("El nuevo horario ya no está disponible");
+            }
+            disp.setEstado(Disponibilidad.EstadoDisponibilidad.NO_DISPONIBLE);
+            disponibilidadRepository.save(disp);
+        }, () -> {
+            throw new RuntimeException("El nuevo horario no existe en la agenda del médico");
+        });
 
         cita.setFecha(nuevaFecha);
         cita.setEstado(EstadoCita.REPROGRAMADA);

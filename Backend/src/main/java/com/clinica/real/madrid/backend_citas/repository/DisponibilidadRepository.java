@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, Long> {
@@ -22,6 +24,9 @@ public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, 
     List<Disponibilidad> findByMedicoIdAndFechaBetween(Long medicoId, LocalDate inicio, LocalDate fin);
     
     List<Disponibilidad> findByMedicoIdAndEstado(Long medicoId, Disponibilidad.EstadoDisponibilidad estado);
+
+    // 🔹 Buscar disponibilidad específica para bloqueo/liberación
+    Optional<Disponibilidad> findByMedicoIdAndFechaAndHoraInicio(Long medicoId, LocalDate fecha, LocalTime horaInicio);
 
     // 🔹 Eliminar disponibilidades por rango
     void deleteByMedicoIdAndFechaBetween(Long medicoId, LocalDate inicio, LocalDate fin);

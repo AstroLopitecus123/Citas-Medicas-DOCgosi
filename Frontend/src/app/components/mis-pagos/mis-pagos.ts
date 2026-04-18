@@ -45,14 +45,9 @@ export class MisPagosComponent implements OnInit {
     if (rol === 'PACIENTE') {
       request$ = this.pagoService.obtenerPagosPorUsuario(this.usuario.id);
     } else if (rol === 'MEDICO') {
-      // Si el backend es adaptado a usar el ID del MEDICO.
-      // Recuerda que el medicoId no es el usuarioId en nuestro backend actual.
-      // Pero para simplificar, usaremos el mismo usuario.id. 
-      // Ups, en un paso anterior dijimos que "medicoId" era consultado, veamos: findByCita_Medico_Id(Long medicoId).
-      // Debemos buscar el MedicoID usando medicoService.obtenerPorUsuarioId, pero para rapidez si no lo tenemos a mano:
-      // Lo mejor es lanzar la llamada con el ID de usuario si tuviéramos un helper. Para no bloquear:
-      // Si falla lo dejaremos así por ahora, lo ajustamos si es necesario.
-      request$ = this.pagoService.obtenerTodosLosPagos(); // Fallback temporal si no tenemos "medicoId" listo sincrónico.
+      // Usar medicoId si está disponible en el objeto usuario
+      const medicoId = this.usuario.medicoId || this.usuario.id;
+      request$ = this.pagoService.obtenerPagosPorMedico(medicoId);
     } else {
       // Recepcion / Admin
       request$ = this.pagoService.obtenerTodosLosPagos();

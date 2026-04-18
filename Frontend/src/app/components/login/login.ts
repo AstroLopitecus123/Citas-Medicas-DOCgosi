@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { LoginController } from '../../controller/login.controller';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,13 @@ import { LoginController } from '../../controller/login.controller';
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
+  @Output() loginExitoso = new EventEmitter<void>();
   ctrl: LoginController;
 
   constructor(
     usuarioService: UsuarioService,
     router: Router
   ) {
-    this.ctrl = new LoginController(usuarioService, router);
+    this.ctrl = new LoginController(usuarioService, router, this.loginExitoso);
   }
 }

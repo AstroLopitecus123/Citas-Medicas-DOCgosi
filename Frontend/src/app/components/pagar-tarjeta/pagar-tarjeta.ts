@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 declare var Stripe: any;
 
@@ -65,7 +66,7 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit {
 
   obtenerClientSecret() {
     // Pedir al backend que cree la intención de pago
-    this.http.post<any>('http://localhost:8080/api/pagos/crear-intent', { monto: 100.00 })
+    this.http.post<any>(`${environment.apiUrl}/api/pagos/crear-intent`, { monto: 100.00 })
       .subscribe({
         next: (res) => {
           this.clientSecret = res.clientSecret;

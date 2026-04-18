@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Usuario, LoginResponse, RolUsuario } from './models/tipos';
@@ -12,7 +12,8 @@ import { ChatbotComponent } from './components/chatbot/chatbot';
   standalone: true,
   imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  styleUrls: ['./app.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   title = 'RETO Salud';

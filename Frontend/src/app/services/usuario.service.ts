@@ -93,14 +93,14 @@ export class UsuarioService {
   }
 
   listarPaises(): Observable<Pais[]> {
-    return this.http.get<Pais[]>(`http://localhost:8080/api/paises`);
+    return this.http.get<Pais[]>(`${environment.apiUrl}/api/paises`);
   }
 
   obtenerUsuario(id: number) {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
 
-    return this.http.get<Usuario>(`http://localhost:8080/api/usuarios/${id}`, { headers });
+    return this.http.get<Usuario>(`${environment.apiUrl}/api/usuarios/${id}`, { headers });
   }
 
   recuperarContrasena(correo: string): Observable<any> {

@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../services/usuario.service';
 import { UsuarioFull } from '../models/usuario-full.model';
 import { EventEmitter } from '@angular/core';
+import { NotificationService } from '../services/notification.service';
 
 export class LoginController {
   correo: string = '';
@@ -12,7 +13,8 @@ export class LoginController {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private loginExitoso?: EventEmitter<void>
+    private loginExitoso?: EventEmitter<void>,
+    private ns?: NotificationService
   ) { }
 
   iniciarSesion() {
@@ -24,6 +26,8 @@ export class LoginController {
           localStorage.setItem('usuario', JSON.stringify(usuario));
           if (this.loginExitoso) this.loginExitoso.emit();
           
+          if (this.ns) this.ns.success(`¡Bienvenido de nuevo, ${usuario.nombre}!`);
+
           // 🚀 Redirección inteligente basada en rol
           const rol = usuario.rol?.toUpperCase();
           if (rol === 'ADMIN') {
@@ -37,13 +41,16 @@ export class LoginController {
           }
         } else if ('message' in res) {
           this.error = `❌ ${res.message}`;
+          if (this.ns) this.ns.error(res.message);
         } else {
           this.error = '❌ Error inesperado al iniciar sesión.';
+          if (this.ns) this.ns.error('Error inesperado');
         }
       },
       error: (err) => {
         console.error('Error en login:', err);
         this.error = '❌ Correo o contraseña incorrectos.';
+        if (this.ns) this.ns.error('Correo o contraseña incorrectos');
       }
     });
   }

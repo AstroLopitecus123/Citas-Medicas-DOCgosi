@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { LoginController } from '../../controller/login.controller';
 import { EventEmitter, Output } from '@angular/core';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,9 @@ export class LoginComponent {
 
   constructor(
     usuarioService: UsuarioService,
-    router: Router
+    router: Router,
+    ns: NotificationService
   ) {
-    this.ctrl = new LoginController(usuarioService, router, this.loginExitoso);
+    this.ctrl = new LoginController(usuarioService, router, this.loginExitoso, ns);
   }
 }

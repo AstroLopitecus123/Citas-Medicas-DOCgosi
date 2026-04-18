@@ -49,8 +49,11 @@ public class PagoService {
         comprobante.setPago(pago);
 
         pago.setComprobante(comprobante);
-
         Pago savedPago = pagoRepository.save(pago);
+
+        // 🛡️ Sincronización Automática: Confirmar la cita tras el pago
+        cita.setEstado(EstadoCita.CONFIRMADA);
+        citaRepository.save(cita);
 
         return mapToResponse(savedPago);
     }
@@ -78,12 +81,15 @@ public class PagoService {
             comprobante.setFecha(LocalDateTime.now());
             comprobante.setPago(pago);
             pago.setComprobante(comprobante);
+
+            // 🛡️ Sincronización Automática
+            cita.setEstado(EstadoCita.CONFIRMADA);
+            citaRepository.save(cita);
         } else {
             pago.setEstadoPago(EstadoPago.PENDIENTE);
         }
 
         Pago savedPago = pagoRepository.save(pago);
-
         return mapToResponse(savedPago);
     }
 

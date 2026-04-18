@@ -1,32 +1,71 @@
 <div class="admin-layout">
-    <div class="premium-card center-card">
-        
-        <div class="payment-icon" [class.loading]="cargando">
-            <i class="fa-solid" [class.fa-spinner]="cargando" [class.fa-spin]="cargando" [class.fa-circle-check]="!cargando"></i>
+  <div class="payment-wrapper">
+    <!-- SUMMARY CARD -->
+    <div class="premium-card summary-card">
+      <div class="card-header">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <h3>Resumen de Reserva</h3>
+      </div>
+      
+      <div class="summary-details" *ngIf="cita">
+        <div class="detail-row">
+          <span class="label">Especialidad:</span>
+          <span class="value">{{ cita.medico?.especialidad?.nombre }}</span>
         </div>
-
-        <div class="payment-details">
-            <h2 *ngIf="cargando">Procesando pago en efectivo...</h2>
-            <h2 *ngIf="!cargando">¡Pago Registrado!</h2>
-
-            <div class="status-box" *ngIf="cargando">
-                <p>Estamos validando la transacción con el sistema de caja central. Por favor, no cierre esta ventana.</p>
-            </div>
-
-            <div class="status-box success" *ngIf="!cargando">
-                <p>{{ mensaje }}</p>
-                <div class="receipt-tip">
-                    <i class="fa-solid fa-receipt"></i>
-                    <span>Puede ver su comprobante en la sección de 'Mis Citas'.</span>
-                </div>
-            </div>
-
-            <div class="footer-actions center" *ngIf="!cargando">
-                <button class="btn-action btn-add" (click)="volver()">
-                    <i class="fa-solid fa-arrow-left"></i> Volver al Panel
-                </button>
-            </div>
+        <div class="detail-row">
+          <span class="label">Médico:</span>
+          <span class="value">{{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
         </div>
+        <div class="detail-row">
+          <span class="label">Fecha y Hora:</span>
+          <span class="value highlight">{{ cita.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <hr class="divider">
+        <div class="detail-row total">
+          <span class="label">Total a Pagar:</span>
+          <span class="value price">S/ 20.00</span>
+        </div>
+      </div>
 
+      <div class="loading-placeholder" *ngIf="cargando">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <p>Cargando detalles...</p>
+      </div>
     </div>
+
+    <!-- ACTION CARD -->
+    <div class="premium-card action-card">
+      <div class="payment-status" [class.processing]="procesandoPago" [class.success]="mensaje.includes('¡Voucher')">
+        
+        <div class="status-icon" *ngIf="!procesandoPago && !mensaje">
+           <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <div class="status-icon" *ngIf="procesandoPago">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </div>
+
+        <div class="status-icon success-anim" *ngIf="mensaje.includes('¡Voucher')">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div class="status-text">
+          <h2 *ngIf="!procesandoPago && !mensaje">Confirmar Pago en Efectivo</h2>
+          <h2 *ngIf="procesandoPago">Verificando transacción...</h2>
+          <h2 *ngIf="mensaje">{{ mensaje }}</h2>
+          <p *ngIf="!mensaje">Por favor, acércate a la caja central con tu DNI para finalizar el proceso.</p>
+        </div>
+
+        <div class="button-group" *ngIf="!procesandoPago && !mensaje">
+          <button class="btn-confirm" (click)="confirmarPago()">
+            <i class="fa-solid fa-check-double"></i> Confirmar y Generar Registro
+          </button>
+          <button class="btn-cancel" (click)="volver()">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

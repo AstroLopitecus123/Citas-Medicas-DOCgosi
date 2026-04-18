@@ -1,69 +1,136 @@
-/* ==========================================================================
-   PAGO EFECTIVO (MODERN DASHBOARD)
-   ========================================================================== */
-
-.center-card {
-  max-width: 500px;
-  margin: 60px auto;
-  text-align: center;
-  padding: 50px 40px;
+.payment-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-.payment-icon {
-  font-size: 5rem;
-  color: #0fbf6a;
+.summary-card {
+  background: white;
+  padding: 30px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 25px;
-}
-
-.payment-icon.loading {
-  color: #94a3b8;
-}
-
-.payment-details h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #1a2a3a;
-  margin-bottom: 20px;
-}
-
-.status-box {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 16px;
-  color: #64748b;
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 30px;
-}
-
-.status-box.success {
-  background: #f0fff4;
-  border: 1px solid rgba(15, 191, 106, 0.2);
   color: #0a7c4a;
 }
 
-.receipt-tip {
-  margin-top: 15px;
+.card-header h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+.card-header i { font-size: 1.5rem; }
+
+.summary-details { display: flex; flex-direction: column; gap: 15px; }
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label { color: #64748b; font-size: 0.95rem; }
+.value { color: #1e293b; font-weight: 600; text-align: right; }
+.highlight { color: #0a7c4a; font-weight: 700; }
+
+.divider { border: 0; border-top: 1px dashed #e2e8f0; margin: 10px 0; }
+
+.total { margin-top: 10px; }
+.total .label { font-size: 1.1rem; font-weight: 700; color: #0f172a; }
+.price { font-size: 1.5rem; color: #0a7c4a; font-weight: 800; }
+
+.action-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #0fbf6a;
+  text-align: center;
+  padding: 40px;
+  background: #f8fafc;
 }
 
-.footer-actions.center {
+.payment-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.status-icon {
+  width: 90px;
+  height: 90px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 2.5rem;
+  color: #0a7c4a;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  margin-bottom: 10px;
 }
 
-/* CARANIMACIÓN */
-@keyframes pulsePayment {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+.processing .status-icon {
+  color: #3b82f6;
+  border: 4px solid #3b82f620;
+}
+
+.success-anim {
+  background: #10b981;
+  color: white;
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.status-text h2 { margin: 0; font-weight: 800; color: #1e293b; font-size: 1.5rem; }
+.status-text p { color: #64748b; font-size: 0.95rem; margin-top: 10px; line-height: 1.5; }
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btn-confirm {
+  background: #0a7c4a;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: 0.3s;
+}
+
+.btn-confirm:hover { background: #0fbf6a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(10, 124, 74, 0.3); }
+
+.btn-cancel {
+  background: transparent;
+  color: #ef4444;
+  border: 2px solid #ef444420;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-cancel:hover { background: #fee2e2; border-color: #ef4444; }
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 0.9; }
   100% { transform: scale(1); opacity: 1; }
 }
 
-.payment-icon:not(.loading) i {
-  animation: pulsePayment 2s infinite;
+@media (max-width: 768px) {
+  .payment-wrapper { grid-template-columns: 1fr; }
 }

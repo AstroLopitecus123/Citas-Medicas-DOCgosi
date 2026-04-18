@@ -6,11 +6,13 @@ import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { ChatbotComponent } from './components/chatbot/chatbot';
+import { ToastComponent } from './components/toast/toast';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
   encapsulation: ViewEncapsulation.None
@@ -26,8 +28,15 @@ export class AppComponent {
   isPanelRoute = false;
 
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router, 
+    private http: HttpClient,
+    private ns: NotificationService
+  ) {
     this.verificarLogin();
+    
+    // 🛡️ Inicialización forzada usando el pathname real del navegador
+    this.actualizarEstadoPanel(window.location.pathname);
 
     // ⏱️ Control de Animación de Transición de Página
     this.router.events.subscribe((event) => {
@@ -35,16 +44,7 @@ export class AppComponent {
         this.loading = true;
       } else if (event instanceof NavigationEnd) {
         this.loading = false;
-        // 🛡️ Detectar si estamos en una ruta de Dashboard/Panel
-        const url = event.urlAfterRedirects;
-        this.isPanelRoute = url.includes('/admin') || 
-                           url.includes('/medico/dashboard') || 
-                           url.includes('/recepcion/dashboard') ||
-                           url.includes('/paciente/dashboard') ||
-                           url.includes('/mis-citas') ||
-                           url.includes('/usuarios') || 
-                           url.includes('/medicos') || 
-                           url.includes('/especialidades');
+        this.actualizarEstadoPanel(event.urlAfterRedirects);
       } else if (
         event instanceof NavigationCancel ||
         event instanceof NavigationError
@@ -86,7 +86,20 @@ export class AppComponent {
     this.isLoggedIn = false;
     this.mostrarModal = false;
 
+    this.ns.info('Sesión cerrada correctamente');
     this.router.navigate(['/']);
+  }
+
+  private actualizarEstadoPanel(url: string) {
+    this.isPanelRoute = url.includes('/admin') || 
+                       url.includes('/medico/dashboard') || 
+                       url.includes('/recepcion/dashboard') ||
+                       url.includes('/paciente/dashboard') ||
+                       url.includes('/mis-citas') ||
+                       url.includes('/usuarios') || 
+                       url.includes('/medicos') || 
+                       url.includes('/especialidades');
+    console.log('🛡️ Estado Panel Actualizado:', this.isPanelRoute, 'para URL:', url);
   }
 
   getDashboardRoute(): string {

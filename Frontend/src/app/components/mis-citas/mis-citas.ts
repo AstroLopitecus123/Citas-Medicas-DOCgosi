@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router'; // 👈 importa ActivatedRoute
 import { Router} from '@angular/router';
 import { MedicoService} from '../../services/medico.service';
 import { HistorialService } from '../../services/historial.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-mis-citas',
@@ -27,10 +28,19 @@ export class MisCitasComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private medicoService: MedicoService,
-    private historialService: HistorialService
+    private historialService: HistorialService,
+    private ns: NotificationService
   ) {
-    // 👇 pasamos los tres parámetros al controlador
-    this.ctrl = new MisCitasController(this.citaService, this.usuarioService, this.route, this.router, this.medicoService, this.historialService);
+    // 👇 pasamos los parámetros al controlador
+    this.ctrl = new MisCitasController(
+      this.citaService, 
+      this.usuarioService, 
+      this.route, 
+      this.router, 
+      this.medicoService, 
+      this.historialService,
+      this.ns
+    );
   }
 
   ngOnInit(): void {

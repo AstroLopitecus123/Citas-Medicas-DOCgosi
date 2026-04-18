@@ -15,6 +15,12 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminDashboardComponent },
+  { path: 'medico/dashboard', 
+    loadComponent: () => import('./components/medico-dashboard/medico-dashboard').then(m => m.MedicoDashboardComponent) 
+  },
+  { path: 'recepcion/dashboard', 
+    loadComponent: () => import('./components/recepcion-dashboard/recepcion-dashboard').then(m => m.RecepcionDashboardComponent) 
+  },
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarUsuarioComponent },
   { path: 'usuarios', component: ListaUsuariosComponent },

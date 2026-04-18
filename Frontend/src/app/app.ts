@@ -23,7 +23,7 @@ export class AppComponent {
   loading = false;
   isMenuOpen = false;
   loginActualizado$ = new Subject<void>();
-  isAdminRoute = false;
+  isPanelRoute = false;
 
 
   constructor(private router: Router, private http: HttpClient) {
@@ -35,13 +35,15 @@ export class AppComponent {
         this.loading = true;
       } else if (event instanceof NavigationEnd) {
         this.loading = false;
-        // 🛡️ Detectar si estamos en una ruta administrativa
+        // 🛡️ Detectar si estamos en una ruta de Dashboard/Panel
         const url = event.urlAfterRedirects;
-        this.isAdminRoute = url.startsWith('/admin') || 
-                           url.startsWith('/usuarios') || 
-                           url.startsWith('/medicos') || 
-                           url.startsWith('/especialidades') ||
-                           url.startsWith('/gestionar-disponibilidad');
+        this.isPanelRoute = url.includes('/admin') || 
+                           url.includes('/medico/dashboard') || 
+                           url.includes('/recepcion/dashboard') ||
+                           url.includes('/mis-citas') ||
+                           url.includes('/usuarios') || 
+                           url.includes('/medicos') || 
+                           url.includes('/especialidades');
       } else if (
         event instanceof NavigationCancel ||
         event instanceof NavigationError
@@ -84,6 +86,15 @@ export class AppComponent {
     this.mostrarModal = false;
 
     this.router.navigate(['/']);
+  }
+
+  getDashboardRoute(): string {
+    if (!this.usuario) return '/login';
+    const rol = this.usuario.rol?.toUpperCase();
+    if (rol === 'ADMIN') return '/admin';
+    if (rol === 'MEDICO') return '/medico/dashboard';
+    if (rol === 'RECEPCION') return '/recepcion/dashboard';
+    return '/mis-citas';
   }
 
   verificarLogin() {

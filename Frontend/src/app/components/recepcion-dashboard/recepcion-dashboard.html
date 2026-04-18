@@ -1,0 +1,69 @@
+<div class="admin-layout">
+  <header class="section-header">
+    <div class="header-main">
+      <h2><i class="fa-solid fa-hotel"></i> {{ getGreeting() }}, {{ usuario?.nombre }}</h2>
+      <p class="subtitle">Mesa de Recepción - Gestión de Flujo de Pacientes</p>
+    </div>
+    <div class="header-actions">
+      <span class="date-badge"><i class="fa-solid fa-clock-rotate-left"></i> Turno Activo</span>
+    </div>
+  </header>
+
+  <!-- KPI CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card kpi-indigo">
+      <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.citasHoy }}</h3>
+        <p>Citas Agendadas hoy</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-orange">
+      <div class="stat-icon"><i class="fa-solid fa-bell"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.pendientesConfirmar }}</h3>
+        <p>Por Confirmar</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-green">
+      <div class="stat-icon"><i class="fa-solid fa-user-check"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.medicosActivos }}</h3>
+        <p>Médicos en Turno</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="premium-card">
+      <h3 class="card-title">Gestión Operativa</h3>
+      <div class="quick-actions">
+        <button class="action-btn" routerLink="/usuarios">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Registrar Nuevo Paciente</span>
+        </button>
+        <button class="action-btn info" routerLink="/mis-citas">
+          <i class="fa-solid fa-table-list"></i>
+          <span>Ver Agenda Global</span>
+        </button>
+        <button class="action-btn secondary" routerLink="/medicos">
+          <i class="fa-solid fa-user-md"></i>
+          <span>Consultar Médicos</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="premium-card info-panel">
+      <h3 class="card-title"><i class="fa-solid fa-info-circle"></i> Resumen del Estado Clínica</h3>
+      <div class="info-content">
+        <p>Actualmente el sistema está operando con normalidad. Hay <strong>{{ stats.medicosActivos }}</strong> profesionales disponibles para atención inmediata.</p>
+        <div class="system-alerts">
+          <div class="alert-item warn">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>{{ stats.pendientesConfirmar }} citas requieren confirmación telefónica.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

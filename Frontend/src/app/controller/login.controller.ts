@@ -24,8 +24,14 @@ export class LoginController {
           localStorage.setItem('usuario', JSON.stringify(usuario));
           if (this.loginExitoso) this.loginExitoso.emit();
           
-          if (usuario.rol === 'ADMIN') {
+          // 🚀 Redirección inteligente basada en rol
+          const rol = usuario.rol?.toUpperCase();
+          if (rol === 'ADMIN') {
             this.router.navigate(['/admin']);
+          } else if (rol === 'MEDICO') {
+            this.router.navigate(['/medico/dashboard']);
+          } else if (rol === 'RECEPCION') {
+            this.router.navigate(['/recepcion/dashboard']);
           } else {
             this.router.navigate(['/mis-citas']);
           }

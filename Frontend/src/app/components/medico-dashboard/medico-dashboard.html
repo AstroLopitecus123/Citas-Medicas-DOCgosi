@@ -1,0 +1,87 @@
+<div class="admin-layout">
+  <header class="section-header">
+    <div class="header-main">
+      <h2><i class="fa-solid fa-user-doctor"></i> {{ getGreeting() }}, Dr. {{ usuario?.nombre }}</h2>
+      <p class="subtitle">Bienvenido a su panel de control médico</p>
+    </div>
+    <div class="header-actions">
+      <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ today | date:'fullDate' }}</span>
+    </div>
+  </header>
+
+  <!-- KPI CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card kpi-blue">
+      <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.citasHoy }}</h3>
+        <p>Citas para Hoy</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-green">
+      <div class="stat-icon"><i class="fa-solid fa-hospital-user"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.pacientesAtendidos }}</h3>
+        <p>Pacientes este Mes</p>
+      </div>
+    </div>
+    <div class="stat-card kpi-teal">
+      <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.horasDisponibles }}h</h3>
+        <p>Horas Disponibles</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- ACCIONES RÁPIDAS -->
+    <div class="premium-card">
+      <h3 class="card-title">Operaciones Rápidas</h3>
+      <div class="quick-actions">
+        <button class="action-btn" routerLink="/mis-citas">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <span>Ver Mi Agenda</span>
+        </button>
+        <button class="action-btn secondary" routerLink="/gestionar-disponibilidad">
+          <i class="fa-solid fa-business-time"></i>
+          <span>Configurar Horarios</span>
+        </button>
+        <button class="action-btn info">
+          <i class="fa-solid fa-users-rectangle"></i>
+          <span>Lista de Pacientes</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PRÓXIMAS CITAS (Placeholder interactivo) -->
+    <div class="premium-card appointment-preview">
+      <div class="card-header">
+        <h3 class="card-title">Próximas Citas</h3>
+        <a routerLink="/mis-citas" class="view-all">Ver todas</a>
+      </div>
+      
+      <div class="appointment-list" *ngIf="!cargando">
+        <div class="apt-item">
+          <div class="apt-time">09:00 AM</div>
+          <div class="apt-patient">Juan Perez</div>
+          <div class="apt-status confirmed">Confirmada</div>
+        </div>
+        <div class="apt-item">
+          <div class="apt-time">10:30 AM</div>
+          <div class="apt-patient">Maria Lopez</div>
+          <div class="apt-status pending">Pendiente</div>
+        </div>
+        <div class="apt-item">
+          <div class="apt-time">12:00 PM</div>
+          <div class="apt-patient">Carlos Gomez</div>
+          <div class="apt-status confirmed">Confirmada</div>
+        </div>
+      </div>
+      
+      <div class="loading-state" *ngIf="cargando">
+         <i class="fa-solid fa-circle-notch fa-spin"></i> Cargando agenda...
+      </div>
+    </div>
+  </div>
+</div>

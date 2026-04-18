@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<header class="header" *ngIf="!isAdminRoute">
+<header class="header" *ngIf="!isPanelRoute">
   <div class="header-container">
     <h1 class="titulo" routerLink="/">
       <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo">
@@ -21,8 +21,8 @@
 
     <nav class="nav-links" [ngClass]="{'open': isMenuOpen}" (click)="isMenuOpen = false">
 
-      <a *ngIf="isLoggedIn && usuario?.rol === 'ADMIN'" routerLink="/admin">
-        <i class="fa-solid fa-gauge-high"></i> Dashboard
+      <a *ngIf="isLoggedIn" [routerLink]="getDashboardRoute()" style="color: #0a7c4a; font-weight: 700; border: 1px solid rgba(10, 124, 74, 0.2); background: rgba(10, 124, 74, 0.05);">
+        <i class="fa-solid fa-circle-user"></i> {{ usuario?.nombre }}
       </a>
 
       <!-- SOLO USUARIOS NO LOGUEADOS -->
@@ -41,40 +41,67 @@
   </div>
 </header>
 
-<!-- ━━━ SIDEBAR PERSISTENTE (SOLO ADMIN) ━━━ -->
-<aside class="dashboard-sidebar" *ngIf="isAdminRoute">
+<!-- ━━━ SIDEBAR PERSISTENTE (MULTIROLES) ━━━ -->
+<aside class="dashboard-sidebar" *ngIf="isPanelRoute">
   <div class="sidebar-brand">
     <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" />
     <div class="brand-text">
       <span class="brand-name">R.E.T.O</span>
-      <span class="brand-sub">Panel Admin</span>
+      <span class="brand-sub">Panel {{ usuario?.rol || 'Dashboard' }}</span>
     </div>
   </div>
 
   <nav class="sidebar-nav">
-    <a class="nav-item" routerLink="/admin" routerLinkActive="active">
-      <i class="fa-solid fa-house-chimney-medical"></i>
-      <span>Dashboard</span>
+    <!-- LINKS ADMIN -->
+    <ng-container *ngIf="usuario?.rol === 'ADMIN'">
+      <a class="nav-item" routerLink="/admin" routerLinkActive="active">
+        <i class="fa-solid fa-house-chimney-medical"></i> <span>Dashboard</span>
+      </a>
+      <a class="nav-item" routerLink="/especialidades" routerLinkActive="active">
+        <i class="fa-solid fa-stethoscope"></i> <span>Especialidades</span>
+      </a>
+      <a class="nav-item" routerLink="/medicos" routerLinkActive="active">
+        <i class="fa-solid fa-user-doctor"></i> <span>Médicos</span>
+      </a>
+      <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
+        <i class="fa-solid fa-users"></i> <span>Usuarios</span>
+      </a>
+    </ng-container>
+
+    <!-- LINKS MEDICO -->
+    <ng-container *ngIf="usuario?.rol === 'MEDICO'">
+      <a class="nav-item" routerLink="/medico/dashboard" routerLinkActive="active">
+        <i class="fa-solid fa-house-medical-circle-check"></i> <span>Mi Agenda</span>
+      </a>
+      <a class="nav-item" routerLink="/gestionar-disponibilidad" routerLinkActive="active">
+        <i class="fa-solid fa-clock"></i> <span>Disponibilidad</span>
+      </a>
+    </ng-container>
+
+    <!-- LINKS RECEPCION -->
+    <ng-container *ngIf="usuario?.rol === 'RECEPCION'">
+      <a class="nav-item" routerLink="/recepcion/dashboard" routerLinkActive="active">
+        <i class="fa-solid fa-hospital-user"></i> <span>Panel Recepción</span>
+      </a>
+      <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
+        <i class="fa-solid fa-user-plus"></i> <span>Pacientes</span>
+      </a>
+    </ng-container>
+
+    <!-- LINKS PACIENTE -->
+    <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
+      <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active">
+        <i class="fa-solid fa-heart-pulse"></i> <span>Mi Salud</span>
+      </a>
+    </ng-container>
+
+    <!-- COMÚN PARA TODOS LOS PANELES -->
+    <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active" *ngIf="usuario?.rol !== 'PACIENTE'">
+      <i class="fa-solid fa-calendar-days"></i> <span>Gestión Citas</span>
     </a>
-    <a class="nav-item" routerLink="/especialidades" routerLinkActive="active">
-      <i class="fa-solid fa-stethoscope"></i>
-      <span>Especialidades</span>
-    </a>
-    <a class="nav-item" routerLink="/medicos" routerLinkActive="active">
-      <i class="fa-solid fa-user-doctor"></i>
-      <span>Médicos</span>
-    </a>
-    <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
-      <i class="fa-solid fa-users"></i>
-      <span>Usuarios</span>
-    </a>
-    <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active">
-      <i class="fa-solid fa-calendar-days"></i>
-      <span>Citas</span>
-    </a>
+    
     <a class="nav-item" routerLink="/" routerLinkActive="active">
-      <i class="fa-solid fa-home"></i>
-      <span>Ver Web</span>
+      <i class="fa-solid fa-home"></i> <span>Ver Web</span>
     </a>
   </nav>
 
@@ -84,8 +111,8 @@
         <i class="fa-solid fa-user-shield"></i>
       </div>
       <div class="admin-info">
-        <span class="admin-name">{{ usuario?.nombre || 'Admin' }}</span>
-        <span class="admin-role">Administrador</span>
+        <span class="admin-name">{{ usuario?.nombre }}</span>
+        <span class="admin-role">{{ usuario?.rol }}</span>
       </div>
     </div>
     <button class="btn-logout-sidebar" (click)="abrirModalCerrarSesion()">
@@ -95,7 +122,7 @@
 </aside>
 
 <!-- Contenedor para centrar el contenido del router -->
-<div class="contenido-centrado" [class.no-padding]="isAdminRoute">
+<div class="contenido-centrado" [class.no-padding]="isPanelRoute">
   <!-- 🔥 Detecta login sin recargar la página -->
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
 </div>

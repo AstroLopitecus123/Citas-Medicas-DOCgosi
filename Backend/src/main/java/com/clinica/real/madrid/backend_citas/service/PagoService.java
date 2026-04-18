@@ -33,6 +33,7 @@ public class PagoService {
 
     @Transactional
     public PaymentIntentResponse crearPaymentIntent(PaymentIntentRequest request) throws StripeException {
+        System.out.println("💳 Iniciando PaymentIntent para Cita ID: " + request.getCitaId() + " por S/. " + request.getMonto());
         // Convertir monto a centavos para Stripe
         long montoCentavos = (long) (request.getMonto() * 100);
 
@@ -49,6 +50,7 @@ public class PagoService {
                 .build();
 
         PaymentIntent intent = PaymentIntent.create(params);
+        System.out.println("✅ PaymentIntent creado: " + intent.getId() + " - Status: " + intent.getStatus());
 
         return new PaymentIntentResponse(
                 intent.getClientSecret(),

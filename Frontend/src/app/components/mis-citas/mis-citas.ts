@@ -15,6 +15,7 @@ import { NotificationService } from '../../services/notification.service';
   selector: 'app-mis-citas',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
+  providers: [DatePipe],
   templateUrl: './mis-citas.html',
   styleUrls: ['./mis-citas.css']
 })

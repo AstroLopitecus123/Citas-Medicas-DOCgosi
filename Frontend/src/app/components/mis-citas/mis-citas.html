@@ -10,11 +10,8 @@
                 </div>
                 <div class="header-actions">
                     <span class="date-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        {{ 'today' | date:'shortTime' }}
+                        <i class="fa-regular fa-clock" style="margin-right: 5px;"></i>
+                        {{ ctrl.fechaActual | date:'shortTime' }}
                     </span>
                     <button class="btn-action btn-add" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
                         <i class="fa-solid fa-plus"></i> Nueva Cita

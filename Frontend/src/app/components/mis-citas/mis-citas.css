@@ -142,6 +142,36 @@
 .btn-cancel-glass { min-width: 120px; background: white; color: #64748b; font-weight: 700; padding: 14px 25px; border-radius: 12px; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; }
 .btn-cancel-glass:hover { background: #f1f5f9; color: #1e293b; }
 
+/* STACKS PARA EVITAR AMONTONAMIENTO */
+.date-stack, .user-info-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.2;
+}
+
+.date-stack strong {
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.time-txt {
+    font-size: 0.82rem;
+    color: #0fbf6a;
+    font-weight: 700;
+}
+
+.user-info-stack strong {
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.sub-txt {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
 @media (max-width: 1024px) {
   .mis-citas-grid { grid-template-columns: 1fr; }
   .profile-sidebar { position: static; }

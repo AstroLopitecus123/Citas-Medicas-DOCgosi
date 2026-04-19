@@ -44,57 +44,112 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
+  padding: 20px;
+  background: rgba(241, 245, 249, 0.9);
 }
 .success-card {
   background: white;
-  padding: 50px 40px;
-  border-radius: 24px;
-  max-width: 480px;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 440px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+  animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.85); }
-  to { opacity: 1; transform: scale(1); }
-}
-.success-icon {
-  font-size: 5rem;
-  color: #10b981;
-  margin-bottom: 20px;
-  animation: bounceIn 0.6s 0.2s both;
-}
-@keyframes bounceIn {
-  0% { transform: scale(0); }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-.success-card h2 { font-size: 1.8rem; font-weight: 800; color: #1a2a3a; margin: 0 0 8px; }
-.success-card > p { color: #64748b; margin-bottom: 25px; }
-.success-detail {
-  background: #f8fafc;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 28px;
-  border: 1px solid #e2e8f0;
-  text-align: left;
-}
-.detail-row {
+
+/* Checkmark Animation */
+.success-icon-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 25px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  font-size: 0.95rem;
-  color: #475569;
-  border-bottom: 1px solid #f1f5f9;
+  justify-content: center;
 }
-.detail-row:last-child { border-bottom: none; }
-.detail-row i { color: #0fbf6a; width: 18px; text-align: center; }
-.detail-row strong { color: #1a2a3a; }
-.amount-row strong { font-size: 1.1rem; }
-.txt-green { color: #0fbf6a !important; }
-.success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.success-circle {
+  position: absolute;
+  inset: 0;
+  background: #10b981;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: revealCircle 0.5s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.success-icon-wrapper i {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 3.5rem;
+  transform: scale(0);
+  animation: bounceCheck 0.5s 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes revealCircle { to { transform: scale(1); } }
+@keyframes bounceCheck { to { transform: scale(1); } }
+
+.success-card h2 { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+.success-msg { color: #64748b; font-size: 0.95rem; margin-bottom: 30px; }
+
+/* Receipt Style Detail */
+.purchase-receipt {
+  background: #f8fafc;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.receipt-header {
+  background: #f1f5f9;
+  padding: 12px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+.receipt-body { padding: 20px; }
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.item-label { font-size: 0.82rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.item-label i { color: #10b981; width: 14px; }
+.item-value { font-size: 0.85rem; color: #1e293b; font-weight: 700; text-align: right; }
+.receipt-divider { height: 1px; background: #e2e8f0; margin: 12px 0; border-top: 2px dashed #cbd5e1; }
+.receipt-item.total { padding-top: 5px; }
+.receipt-item.total .item-label { color: #1e293b; font-size: 0.9rem; font-weight: 800; }
+.receipt-item.total .item-value { color: #10b981; font-size: 1.1rem; font-weight: 800; }
+
+.success-actions { display: flex; flex-direction: column; gap: 12px; }
+
+.btn-primary-success {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-primary-success:hover { background: #059669; transform: translateY(-2px); }
+
+.btn-outline-success {
+  background: white;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-outline-success:hover { background: #f8fafc; border-color: #cbd5e1; }
 
 /* ========== MAIN CARD ========== */
 .pago-card {

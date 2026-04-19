@@ -12,35 +12,44 @@
   <!-- SUCCESS SCREEN -->
   <div class="success-screen" *ngIf="pagoExitoso">
     <div class="success-card">
-      <div class="success-icon">
-        <i class="fa-solid fa-circle-check"></i>
+      <div class="success-icon-wrapper">
+        <div class="success-circle"></div>
+        <i class="fa-solid fa-check"></i>
       </div>
+      
       <h2>¡Pago Confirmado!</h2>
-      <p>Tu cita ha sido reservada y pagada exitosamente.</p>
-      <div class="success-detail" *ngIf="cita">
-        <div class="detail-row">
-          <i class="fa-solid fa-stethoscope"></i>
-          <span>Especialidad: <strong>{{ cita.medico?.especialidad?.nombre }}</strong></span>
-        </div>
-        <div class="detail-row">
-          <i class="fa-solid fa-user-doctor"></i>
-          <span>Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
-        </div>
-        <div class="detail-row">
-          <i class="fa-solid fa-calendar-check"></i>
-          <span>{{ cita.fecha | date:'dd/MM/yyyy h:mm a' }}</span>
-        </div>
-        <div class="detail-row amount-row">
-          <i class="fa-solid fa-receipt"></i>
-          <span>Total pagado: <strong class="txt-green">S/. {{ monto | number:'1.2-2' }}</strong></span>
+      <p class="success-msg">Tu cita ha sido reservada y pagada exitosamente.</p>
+      
+      <div class="purchase-receipt" *ngIf="cita">
+        <div class="receipt-header">Detalle de tu Cita</div>
+        
+        <div class="receipt-body">
+          <div class="receipt-item">
+            <span class="item-label"><i class="fa-solid fa-stethoscope"></i> Especialidad</span>
+            <span class="item-value">{{ cita.medico?.especialidad?.nombre || 'Especialidad' }}</span>
+          </div>
+          <div class="receipt-item">
+            <span class="item-label"><i class="fa-solid fa-user-doctor"></i> Médico</span>
+            <span class="item-value">Dr. {{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
+          </div>
+          <div class="receipt-item">
+            <span class="item-label"><i class="fa-solid fa-calendar"></i> Fecha y Hora</span>
+            <span class="item-value">{{ cita.fecha | date:'dd/MM/yyyy - h:mm a' }}</span>
+          </div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-item total">
+            <span class="item-label">Monto Total</span>
+            <span class="item-value">S/. {{ monto | number:'1.2-2' }}</span>
+          </div>
         </div>
       </div>
+
       <div class="success-actions">
-        <button class="btn-primary" routerLink="/mis-citas">
+        <button class="btn-primary-success" routerLink="/mis-citas">
           <i class="fa-solid fa-calendar-days"></i> Ver Mis Citas
         </button>
-        <button class="btn-outline-green" routerLink="/paciente/dashboard">
-          Ir al Dashboard
+        <button class="btn-outline-success" routerLink="/paciente/dashboard">
+          <i class="fa-solid fa-house"></i> Ir al Inicio
         </button>
       </div>
     </div>

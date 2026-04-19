@@ -195,25 +195,98 @@
 .btn-medical { background: #f0fdfa; color: #0d9488; border: 1px solid #99f6e4; }
 .btn-medical:hover { background: #0d9488; color: white; }
 
-/* MODALES ESPECÍFICOS */
-.modal-large { max-width: 800px; width: 90%; }
-.modal-medium { max-width: 600px; width: 90%; }
-
-.modal-header {
+.date-badge {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 15px;
+  gap: 8px;
+  background: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0fbf6a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 
-.modal-header h2 { margin: 0; font-size: 1.5rem; color: #1a2a3a; font-weight: 800; display: flex; gap: 12px; align-items: center; }
-.modal-header h2 i { color: #0fbf6a; }
+/* GLASS MODAL STYLES */
+.glass-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
 
-.btn-close { background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
+.glass-modal {
+    background: white;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
 
-.modal-body.scroll-y { max-height: 60vh; overflow-y: auto; padding-right: 15px; }
+.modal-header-glass {
+    padding: 25px 30px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+
+.modal-header-glass h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.header-icon-box {
+    width: 44px;
+    height: 44px;
+    background: rgba(15, 191, 106, 0.1);
+    color: #0fbf6a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-close-glass {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #94a3b8;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-body-glass {
+    padding: 30px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer-glass {
+    padding: 20px 30px 30px;
+    background: white;
+}
+
+.modal-large { max-width: 850px; }
+.modal-medium { max-width: 600px; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 

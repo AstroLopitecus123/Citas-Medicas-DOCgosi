@@ -97,6 +97,7 @@ export class AppComponent {
                        url.includes('/paciente') ||
                        url.includes('/mis-citas') ||
                        url.includes('/mi-historial') ||
+                       url.includes('/mi-perfil') ||
                        url.includes('/usuarios') || 
                        url.includes('/medicos') || 
                        url.includes('/especialidades') ||

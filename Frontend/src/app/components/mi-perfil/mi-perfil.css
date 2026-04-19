@@ -1,9 +1,8 @@
 .profile-container {
-    max-width: 1000px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 25px;
+    width: 100%;
 }
 
 .profile-main-card {
@@ -13,28 +12,28 @@
 
 .profile-banner {
     background: linear-gradient(135deg, #094a2b 0%, #0fbf6a 100%);
-    padding: 40px;
+    padding: 30px;
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 25px;
     color: white;
 }
 
 .avatar-wrapper {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    border: 4px solid rgba(255, 255, 255, 0.4);
+    font-size: 3.5rem;
+    border: 3px solid rgba(255, 255, 255, 0.4);
 }
 
 .banner-info h3 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 800;
 }
 
@@ -51,10 +50,10 @@
 }
 
 .profile-grid-info {
-    padding: 40px;
+    padding: 30px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 30px;
 }
 
 .info-group label {

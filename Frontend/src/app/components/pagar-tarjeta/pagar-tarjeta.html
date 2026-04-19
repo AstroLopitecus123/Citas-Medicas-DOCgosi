@@ -73,6 +73,36 @@
       <div class="resumen-monto">S/. {{ monto | number:'1.2-2' }}</div>
     </div>
 
+    <!-- Card Visual Preview -->
+    <div class="card-preview" [ngClass]="{
+      'is-visa': cardBrand === 'visa',
+      'is-mc': cardBrand === 'mastercard',
+      'is-amex': cardBrand === 'amex'
+    }">
+      <div class="card-preview-top">
+        <div class="card-chip"><i class="fa-solid fa-microchip"></i></div>
+        <div class="card-type-icon">
+          <i class="fa-brands fa-cc-visa" *ngIf="cardBrand === 'visa'"></i>
+          <i class="fa-brands fa-cc-mastercard" *ngIf="cardBrand === 'mastercard'"></i>
+          <i class="fa-brands fa-cc-amex" *ngIf="cardBrand === 'amex'"></i>
+          <i class="fa-solid fa-credit-card" *ngIf="cardBrand === 'unknown'"></i>
+        </div>
+      </div>
+      <div class="card-number-preview">
+        ••••  ••••  ••••  {{ cardLast4 }}
+      </div>
+      <div class="card-preview-bottom">
+        <div class="card-info">
+          <div class="card-label">Titular</div>
+          <div class="card-name">{{ nombreTitular || 'Nombre del Titular' }}</div>
+        </div>
+        <div class="card-info">
+          <div class="card-label">Expira</div>
+          <div class="card-exp">MM/AA</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Formulario -->
     <div class="form-section">
 

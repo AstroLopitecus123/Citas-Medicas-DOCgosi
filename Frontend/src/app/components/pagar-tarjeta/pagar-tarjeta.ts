@@ -24,6 +24,10 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
   cardElementMontado = false;
   nombreTitular = '';
 
+  // Card Preview State
+  cardBrand = 'unknown';
+  cardLast4 = '••••';
+
   // Monto fijo por consulta
   monto = 100.00;
 
@@ -61,6 +65,12 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
       if (element) {
         this.cardElementMontado = true;
         console.log('✅ Stripe Card Element listo para recibir datos de tarjeta.');
+
+        // 🎯 Escuchar cambios para actualizar la tarjeta visual
+        element.on('change', (event: any) => {
+          this.cardBrand = event.brand || 'unknown';
+        });
+
       } else {
         console.error('❌ No se pudo montar el formulario de Stripe.');
         this.ns.error('Error al cargar el formulario seguro de pago. Recarga la página.');

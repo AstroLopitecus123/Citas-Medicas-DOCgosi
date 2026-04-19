@@ -119,7 +119,8 @@
 
 /* ==========================================================================
    DASHBOARD SIDEBAR (PREMIUM UNIFIED)
-   ========================================================================== *.dashboard-sidebar {
+   ========================================================================== */
+.dashboard-sidebar {
   width: 290px; height: 100vh; 
   background: linear-gradient(180deg, #094a2b 0%, #0a7c4a 100%); 
   position: fixed; left: 0; top: 0;

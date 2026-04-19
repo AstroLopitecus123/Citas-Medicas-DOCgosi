@@ -9,7 +9,6 @@ export class LoginController {
   contrasena: string = '';
   mensaje: string = '';
   error: string = '';
-  mostrarContrasena: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -17,10 +16,6 @@ export class LoginController {
     private loginExitoso?: EventEmitter<void>,
     private ns?: NotificationService
   ) { }
-
-  togglePassword() {
-    this.mostrarContrasena = !this.mostrarContrasena;
-  }
 
   iniciarSesion() {
     this.error = '';

@@ -39,8 +39,9 @@
 /* HERO SECTION (RETO) */
 .hero {
   background: linear-gradient(135deg, #ffffff 0%, #f4fdf7 100%);
-  padding: 120px 0 80px;
+  padding: 100px 0 80px;
   overflow: hidden;
+  margin-top: 0 !important;
 }
 
 .hero-content {

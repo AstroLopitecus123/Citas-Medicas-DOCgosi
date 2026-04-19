@@ -60,14 +60,14 @@
 }
 
 .hero-glass-panel {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  background: rgba(255, 255, 255, 0.8); /* Menos transparencia para máxima legibilidad */
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
   border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   padding: 45px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  margin-left: 280px; /* Ajustado para respetar al doctor pero estar más centrado */
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  margin-left: 280px; 
   animation: slideFadeIn 0.8s ease-out;
 }
 
@@ -79,15 +79,15 @@
 .hero-content h1 {
   font-size: 3rem;
   font-weight: 800;
-  color: #1a2a3a;
+  color: #0f172a; /* Azul más profundo */
   line-height: 1.1;
   margin-bottom: 20px;
 }
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #4a5568;
-  font-weight: 500;
+  color: #334155; /* Texto principal más oscuro */
+  font-weight: 600;
   margin-bottom: 40px;
   line-height: 1.4;
 }

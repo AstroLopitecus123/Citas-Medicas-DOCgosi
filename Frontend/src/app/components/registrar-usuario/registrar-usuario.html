@@ -72,7 +72,7 @@
           <div class="input-with-domain">
             <input id="correo" type="text" [(ngModel)]="ctrl.usuario.correoUsuario" name="correoUsuario"
               placeholder="usuario" (input)="ctrl.setTouched('correo')" required>
-            <span class="domain-tag">@gmail.com</span>
+            <span class="domain-tag">&#64;gmail.com</span>
           </div>
           <div class="error-stack">
             <span *ngIf="ctrl.touched.correo && !ctrl.usuario.correoUsuario" class="msg-error-mini">El correo es obligatorio</span>

@@ -213,7 +213,8 @@ public class CitaService {
     @Transactional
     public void reprogramarCita(Long id, LocalDateTime nuevaFecha) {
         // ... (Este método se mantiene para compatibilidad con Admin que reprograma directamente)
-    
+    }
+
     public void eliminarHistorialesPorUsuario(Long usuarioId) {
         // Primero obtenemos todas las citas del usuario
         List<Cita> citas = citaRepository.findByPacienteId(usuarioId);

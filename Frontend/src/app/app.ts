@@ -85,16 +85,19 @@ export class AppComponent {
   }
 
   cerrarSesion() {
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('token');
-    sessionStorage.clear();
-
-    this.usuario = null;
-    this.isLoggedIn = false;
     this.mostrarModal = false;
+    this.ns.info('Cerrando sesión...');
 
-    this.ns.info('Sesión cerrada correctamente');
-    this.router.navigate(['/']);
+    // 🚀 Primero navegamos al Home para evitar errores en componentes del Dashboard que dependen del usuario
+    this.router.navigate(['/']).then(() => {
+      localStorage.removeItem('usuario');
+      localStorage.removeItem('token');
+      sessionStorage.clear();
+
+      this.usuario = null;
+      this.isLoggedIn = false;
+      console.log('✅ Sesión limpiada correctamente tras navegación');
+    });
   }
 
   // Helper para verificar si una URL pertenece a la interfaz de paneles

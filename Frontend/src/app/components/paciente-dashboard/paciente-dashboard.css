@@ -75,7 +75,7 @@
 .action-btn:hover { background: #0a7c4a; transform: scale(1.02); }
 .action-btn:hover strong, .action-btn:hover span, .action-btn:hover i { color: white; }
 
-.action-btn.secondary:hover { background: #3b82f6; }
+.action-btn.secondary:hover { background: #0a7c4a; }
 
 .info-content { display: flex; flex-direction: column; gap: 15px; }
 .recommendation-item { display: flex; gap: 15px; align-items: flex-start; padding: 12px; background: rgba(10, 124, 74, 0.03); border-radius: 12px; }

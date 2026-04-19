@@ -6,11 +6,19 @@
             <p class="subtitle">Gestiona tu información personal y preferencias de seguridad.</p>
         </div>
         <div class="header-actions">
-            <button class="btn-action btn-outline" (click)="abrirModalPassword()" style="margin-right: 10px;">
-                <i class="fa-solid fa-key"></i> Cambiar Contraseña
+            <button class="btn-action glass-btn" (click)="abrirModalPassword()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Seguridad
             </button>
-            <button class="btn-action btn-add" (click)="activarEdicion()" *ngIf="!editando">
-                <i class="fa-solid fa-user-pen"></i> Editar Perfil
+            <button class="btn-action glass-btn primary" (click)="activarEdicion()" *ngIf="!editando">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Editar Datos
             </button>
         </div>
     </header>
@@ -31,36 +39,90 @@
 
             <div class="profile-grid-info">
                 <div class="info-group">
-                    <label><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Correo Electrónico
+                    </label>
                     <p>{{ usuario.correo || '-' }}</p>
                 </div>
                 <div class="info-group">
-                    <label><i class="fa-solid fa-id-card"></i> Documento DNI</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Documento DNI
+                    </label>
                     <p>{{ usuario.dni || '-' }}</p>
                 </div>
                 <div class="info-group">
-                    <label><i class="fa-solid fa-phone"></i> Teléfono Móvil</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Teléfono Móvil
+                    </label>
                     <p>{{ usuario.telefono || '-' }}</p>
                 </div>
                 <div class="info-group">
-                    <label><i class="fa-solid fa-calendar-day"></i> Fecha de Nacimiento</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Fecha de Nacimiento
+                    </label>
                     <p>{{ usuario.fechaNacimiento ? (usuario.fechaNacimiento | date:'longDate') : '-' }}</p>
                 </div>
                 <div class="info-group">
-                    <label><i class="fa-solid fa-earth-americas"></i> País de Residencia</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        País de Residencia
+                    </label>
                     <p>{{ usuario.pais?.nombre || '-' }}</p>
                 </div>
                 <div class="info-group">
-                    <label><i class="fa-solid fa-clock-rotate-left"></i> Miembro desde</label>
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                        Miembro desde
+                    </label>
                     <p>{{ usuario.fechaRegistro | date:'mediumDate' }}</p>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- FORMULARIO DE EDICIÓN (Opcional según estado) -->
-        <div class="premium-card edit-card animation-slide-up" *ngIf="editando">
-            <h3 class="card-title"><i class="fa-solid fa-user-pen"></i> Actualizar mis Datos</h3>
-            
+<!-- MODAL GLASS: EDITAR PERFIL -->
+<div class="glass-overlay" *ngIf="editando" (click)="cancelarEdicion()">
+    <div class="glass-modal premium-card animation-pop-in" (click)="$event.stopPropagation()">
+        <div class="modal-header-glass">
+            <div class="header-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div>
+                <h3>Actualizar mis Datos</h3>
+                <p>Mantén tu información al día</p>
+            </div>
+            <button class="btn-close-glass" (click)="cancelarEdicion()">&times;</button>
+        </div>
+        
+        <div class="modal-body-glass">
             <div class="form-grid">
                 <div class="form-group-modern">
                     <label>Nombres</label>
@@ -89,55 +151,85 @@
                     </select>
                 </div>
             </div>
-
-            <div class="form-actions mt-4">
-                <button class="btn-action btn-add" (click)="guardarCambios()">
-                    <i class="fa-solid fa-check"></i> Guardar Cambios
-                </button>
-                <button class="btn-action btn-outline ml-2" (click)="cancelarEdicion()">
-                    Cancelar
-                </button>
-            </div>
         </div>
 
+        <div class="modal-footer-glass">
+            <button class="btn-action primary w-100" (click)="guardarCambios()">
+                <i class="fa-solid fa-check"></i> Guardar Cambios
+            </button>
+            <button class="btn-action outline w-100 mt-2" (click)="cancelarEdicion()">
+                Cancelar
+            </button>
+        </div>
     </div>
 </div>
 
-        <!-- SECCIÓN DE SEGURIDAD (CAMBIO DE CONTRASEÑA) -->
-        <div class="premium-card edit-card animation-slide-up" *ngIf="mostrarModalPassword">
-            <h3 class="card-title">
-                <i class="fa-solid fa-shield-halved"></i> Actualizar Seguridad
-            </h3>
-            <p class="subtitle mb-4">Ingresa tu contraseña actual y la nueva para autorizar el cambio.</p>
-            
-            <div class="form-grid">
-                <div class="form-group-modern">
-                    <label>Contraseña Actual</label>
-                    <input type="password" class="form-control" [(ngModel)]="pwdActual" placeholder="••••••••">
-                </div>
-                <!-- Divisor visual -->
-                <div class="form-group-modern" style="grid-column: span 2; margin: 0;"><hr style="opacity: 0.05;"></div>
-                
-                <div class="form-group-modern">
-                    <label>Nueva Contraseña</label>
-                    <input type="password" class="form-control" [(ngModel)]="pwdNueva" placeholder="Mín. 8 caracteres">
-                </div>
-                <div class="form-group-modern">
-                    <label>Confirmar Nueva Contraseña</label>
-                    <input type="password" class="form-control" [(ngModel)]="pwdConfirmar" placeholder="Repite la contraseña">
+<!-- MODAL GLASS: CAMBIO PASSWORD -->
+<div class="glass-overlay" *ngIf="mostrarModalPassword" (click)="cerrarModalPassword()">
+    <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
+        <div class="modal-header-glass security">
+            <div class="header-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <div>
+                <h3>Actualizar Seguridad</h3>
+                <p>Protege el acceso a tu cuenta</p>
+            </div>
+            <button class="btn-close-glass" (click)="cerrarModalPassword()">&times;</button>
+        </div>
+        
+        <div class="modal-body-glass">
+            <div class="form-group-modern mb-4">
+                <label class="svg-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    Confirmación de Identidad
+                </label>
+                <div class="input-glass-container">
+                    <input [type]="verPadActual ? 'text' : 'password'" class="form-control" [(ngModel)]="pwdActual" placeholder="Contraseña Actual">
+                    <button class="eye-toggle" (click)="verPadActual = !verPadActual">
+                        <i class="fa-solid" [class.fa-eye]="!verPadActual" [class.fa-eye-slash]="verPadActual"></i>
+                    </button>
                 </div>
             </div>
 
-            <div class="form-actions mt-4">
-                <button class="btn-action btn-add" (click)="ejecutarCambioPassword()">
-                    <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
-                </button>
-                <button class="btn-action btn-outline ml-2" (click)="cerrarModalPassword()">
-                    Cancelar
-                </button>
+            <div class="divider-glass"></div>
+
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Nueva Contraseña</label>
+                <div class="input-glass-container">
+                    <input [type]="verPadNueva ? 'text' : 'password'" class="form-control" [(ngModel)]="pwdNueva" placeholder="Mínimo 8 caracteres">
+                    <button class="eye-toggle" (click)="verPadNueva = !verPadNueva">
+                        <i class="fa-solid" [class.fa-eye]="!verPadNueva" [class.fa-eye-slash]="verPadNueva"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group-modern">
+                <label class="svg-label">Confirmar Nueva Contraseña</label>
+                <div class="input-glass-container">
+                    <input [type]="verPadConfirmar ? 'text' : 'password'" class="form-control" [(ngModel)]="pwdConfirmar" placeholder="Repite la contraseña">
+                    <button class="eye-toggle" (click)="verPadConfirmar = !verPadConfirmar">
+                        <i class="fa-solid" [class.fa-eye]="!verPadConfirmar" [class.fa-eye-slash]="verPadConfirmar"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
+        <div class="modal-footer-glass">
+            <button class="btn-action primary w-100" (click)="ejecutarCambioPassword()">
+                <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
+            </button>
+            <button class="btn-action outline w-100 mt-2" (click)="cerrarModalPassword()">
+                Cancelar
+            </button>
+        </div>
     </div>
 </div>
 

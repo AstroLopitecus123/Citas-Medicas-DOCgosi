@@ -10,11 +10,11 @@
       <div class="summary-details" *ngIf="cita">
         <div class="detail-row">
           <span class="label">Especialidad:</span>
-          <span class="value">{{ cita.medico?.especialidad?.nombre }}</span>
+          <span class="value">{{ cita.medico.especialidad.nombre }}</span>
         </div>
         <div class="detail-row">
           <span class="label">Médico:</span>
-          <span class="value">{{ cita.medico?.usuario?.nombre }} {{ cita.medico?.usuario?.apellido }}</span>
+          <span class="value">{{ cita.medico.usuario.nombre }} {{ cita.medico.usuario.apellido }}</span>
         </div>
         <div class="detail-row">
           <span class="label">Fecha y Hora:</span>

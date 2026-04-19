@@ -26,6 +26,11 @@ export class MiPerfilComponent implements OnInit {
   pwdNueva = '';
   pwdConfirmar = '';
 
+  // Toggles de visibilidad (estilo WEB CALIDAD)
+  verPadActual = false;
+  verPadNueva = false;
+  verPadConfirmar = false;
+
   constructor(
     private usuarioService: UsuarioService,
     private ns: NotificationService

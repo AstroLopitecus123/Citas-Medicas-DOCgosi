@@ -57,8 +57,31 @@ export class CitaService {
 
   cancelarCita(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/citas/${id}/cancelar`, {}, {
-      headers: this.getAuthHeaders(),
-      responseType: 'text' as 'json'
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  solicitarReprogramar(id: number, cita: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/solicitar-reprogramar`, cita, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  confirmarReprogramar(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/confirmar-reprogramar`, {}, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  solicitarCancelar(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/solicitar-cancelar`, {}, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  confirmarCancelar(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/confirmar-cancelar`, {}, {
+      headers: this.getAuthHeaders()
     });
   }
 

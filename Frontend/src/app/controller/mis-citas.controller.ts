@@ -349,9 +349,8 @@ export class MisCitasController {
   }
 
   registrarCita() {
-    // 🔹 Validaciones iniciales
     if (!this.especialidadSeleccionada || !this.medicoSeleccionado || !this.horarioSeleccionado) {
-      alert('Debes seleccionar especialidad, médico y horario');
+      if (this.ns) this.ns.error('Debes seleccionar especialidad, médico y horario');
       return;
     }
 
@@ -359,27 +358,33 @@ export class MisCitasController {
     const hora = this.horarioSeleccionado.horaInicio || '00:00:00';
     const fechaCompleta = `${fecha}T${hora}`;
 
-    // 🔹 Si estamos en modo reprogramación
     if (this.modoReprogramacion && this.citaEnReprogramacion) {
-      const citaActualizada = {
-        ...this.citaEnReprogramacion,
-        fecha: fechaCompleta
-      };
+      const citaActualizada = { ...this.citaEnReprogramacion, fecha: fechaCompleta };
 
-      this.citaService.reprogramarCita(citaActualizada.id, citaActualizada).subscribe({
-        next: () => {
-          if (this.ns) this.ns.success('Cita reprogramada correctamente');
-          this.cargarCitas();
-          this.cerrarModalCita();
-        },
-        error: (err) => {
-          console.error('Error al reprogramar cita:', err);
-          if (this.ns) this.ns.error('Error al reprogramar la cita');
-        }
-      });
+      if (this.usuario.rol === 'PACIENTE') {
+        // El paciente solicita reprogramar
+        this.citaService.solicitarReprogramar(citaActualizada.id, citaActualizada).subscribe({
+          next: () => {
+            if (this.ns) this.ns.success('Solicitud de reprogramación enviada. Pendiente de aprobación.');
+            this.cargarCitas();
+            this.cerrarModalCita();
+          },
+          error: () => { if (this.ns) this.ns.error('Error al solicitar reprogramación'); }
+        });
+      } else {
+        // Admin/Medico reprograma directamente
+        this.citaService.reprogramarCita(citaActualizada.id, citaActualizada).subscribe({
+          next: () => {
+            if (this.ns) this.ns.success('Cita reprogramada correctamente');
+            this.cargarCitas();
+            this.cerrarModalCita();
+          },
+          error: () => { if (this.ns) this.ns.error('Error al reprogramar la cita'); }
+        });
+      }
 
     } else {
-      // 🔹 Crear nueva cita
+      // Crear nueva cita
       const nuevaCita: any = {
         paciente: this.usuario,
         medico: this.medicoSeleccionado,
@@ -390,22 +395,58 @@ export class MisCitasController {
       this.citaService.crear(nuevaCita).subscribe({
         next: (citaCreada) => {
           if (this.ns) this.ns.success('Reserva realizada. Redirigiendo al pago...');
-          
           this.cargarCitas();
           this.cerrarModalCita();
-
-          // 💳 Redirección al flujo de pago (Similar a WEB CALIDAD)
-          if (citaCreada && citaCreada.id) {
-            setTimeout(() => {
-              this.router.navigate(['/checkout', citaCreada.id]);
-            }, 800);
+          if (citaCreada?.id) {
+            setTimeout(() => this.router.navigate(['/checkout', citaCreada.id]), 800);
           }
         },
         error: (err) => {
-          console.error('Error al registrar cita:', err);
-          const msg = err.error?.message || 'Ocurrió un error al registrar la cita';
-          if (this.ns) this.ns.error(`${msg}`);
+          const msg = err.error?.message || 'Error al registrar la cita';
+          if (this.ns) this.ns.error(msg);
         }
+      });
+    }
+  }
+
+  confirmarCita(cita: Cita) {
+    this.citaService.confirmarCita(cita.id).subscribe({
+      next: () => {
+        if (this.ns) this.ns.success('Cita confirmada exitosamente');
+        this.cargarCitas();
+      },
+      error: () => { if (this.ns) this.ns.error('Error al confirmar la cita'); }
+    });
+  }
+
+  aprobarReprogramacion(cita: Cita) {
+    this.citaService.confirmarReprogramar(cita.id).subscribe({
+      next: () => {
+        if (this.ns) this.ns.success('Reprogramación aprobada correctamente');
+        this.cargarCitas();
+      },
+      error: (err) => { if (this.ns) this.ns.error(err.error || 'Error al aprobar reprogramación'); }
+    });
+  }
+
+  cancelarCita(cita: Cita) {
+    if (this.usuario.rol === 'PACIENTE') {
+      // Paciente solicita cancelar
+      this.citaService.solicitarCancelar(cita.id).subscribe({
+        next: () => {
+          if (this.ns) this.ns.success('Solicitud de cancelación enviada. Pendiente de aprobación.');
+          this.cargarCitas();
+        },
+        error: () => { if (this.ns) this.ns.error('Error al solicitar cancelación'); }
+      });
+    } else {
+      // Admin/Medico confirma cancelación (final)
+      this.citaService.confirmarCancelar(cita.id).subscribe({
+        next: () => {
+          if (this.ns) this.ns.success('Cancelación confirmada exitosamente');
+          this.cargarCitas();
+        },
+        error: () => { if (this.ns) this.ns.error('Error al confirmar cancelación'); }
       });
     }
   }

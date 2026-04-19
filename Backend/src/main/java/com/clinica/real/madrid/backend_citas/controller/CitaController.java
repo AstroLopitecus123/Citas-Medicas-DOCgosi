@@ -87,11 +87,51 @@ public class CitaController {
     public ResponseEntity<?> reprogramarCita(@PathVariable Long id, @RequestBody Cita nuevaCita) {
         try {
             citaService.reprogramarCita(id, nuevaCita.getFecha());
-            return ResponseEntity.ok("Cita reprogramada correctamente");
+            return ResponseEntity.ok(Map.of("mensaje", "Cita reprogramada correctamente"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al reprogramar la cita");
+        }
+    }
+
+    @PutMapping("/{id}/solicitar-reprogramar")
+    public ResponseEntity<?> solicitarReprogramar(@PathVariable Long id, @RequestBody Cita nuevaCita) {
+        try {
+            citaService.solicitarReprogramacion(id, nuevaCita.getFecha());
+            return ResponseEntity.ok(Map.of("mensaje", "Solicitud de reprogramación enviada"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al solicitar reprogramación");
+        }
+    }
+
+    @PutMapping("/{id}/confirmar-reprogramar")
+    public ResponseEntity<?> confirmarReprogramar(@PathVariable Long id) {
+        try {
+            citaService.confirmarReprogramacion(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Reprogramación confirmada correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/solicitar-cancelar")
+    public ResponseEntity<?> solicitarCancelar(@PathVariable Long id) {
+        try {
+            citaService.solicitarCancelacion(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Solicitud de cancelación enviada"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al solicitar cancelación");
+        }
+    }
+
+    @PutMapping("/{id}/confirmar-cancelar")
+    public ResponseEntity<?> confirmarCancelar(@PathVariable Long id) {
+        try {
+            citaService.confirmarCancelacion(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Cancelación confirmada correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
         }
     }
 

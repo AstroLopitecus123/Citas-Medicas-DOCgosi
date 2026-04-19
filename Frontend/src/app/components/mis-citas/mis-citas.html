@@ -57,38 +57,65 @@
                                     <span class="specialty-txt">{{ cita?.medico?.especialidad?.nombre || '-' }}</span>
                                 </td>
                                 <td>
-                                    <span [class]="'badge' + (cita.estado === 'PENDIENTE' ? ' badge-info' : cita.estado === 'CONFIRMADA' ? ' badge-success' : ' badge-danger')">
-                                        {{ cita?.estado }}
+                                    <span class="badge" [ngClass]="{
+                                        'badge-info': cita.estado === 'PENDIENTE',
+                                        'badge-success': cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA',
+                                        'badge-danger': cita.estado === 'CANCELADA',
+                                        'badge-warning': cita.estado === 'SOLICITUD_REPROGRAMACION' || cita.estado === 'SOLICITUD_CANCELACION'
+                                    }">
+                                        {{ cita?.estado?.replace('_', ' ') }}
                                     </span>
                                 </td>
-                                <td class="reason-cell">{{ cita?.motivo || '-' }}</td>
+                                <td class="reason-cell">
+                                    <div *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'">
+                                      <small class="prop-label">Propuesta:</small>
+                                      <strong>{{ cita.fechaPropuesta | date:'dd/MM HH:mm' }}</strong>
+                                    </div>
+                                    <span *ngIf="cita.estado !== 'SOLICITUD_REPROGRAMACION'">{{ cita?.motivo || '-' }}</span>
+                                </td>
                                 <td style="text-align: center;">
                                     <div class="actions-flex-buttons">
-                                        <!-- Confirmar (Solo Admin/Recepcion y si está pendiente) -->
+                                        <!-- Confirmar (Solo Admin/Recepcion/Medico y si está PENDIENTE) -->
                                         <button class="btn-table-action btn-confirm" 
-                                                *ngIf="cita.estado === 'PENDIENTE'"
+                                                *ngIf="cita.estado === 'PENDIENTE' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.confirmarCita(cita)" 
                                                 title="Confirmar Cita">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
 
-                                        <!-- Reprogramar -->
+                                        <!-- Aprobar Reprogramación (Solo Admin/Recepcion/Medico) -->
+                                        <button class="btn-table-action btn-confirm" 
+                                                *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION' && ctrl.usuario.rol !== 'PACIENTE'"
+                                                (click)="ctrl.aprobarReprogramacion(cita)" 
+                                                title="Aprobar Cambio">
+                                            <i class="fa-solid fa-calendar-check"></i>
+                                        </button>
+
+                                        <!-- Confirmar Cancelación (Solo Admin/Recepcion/Medico) -->
+                                        <button class="btn-table-action btn-cancel" 
+                                                *ngIf="cita.estado === 'SOLICITUD_CANCELACION' && ctrl.usuario.rol !== 'PACIENTE'"
+                                                (click)="ctrl.cancelarCita(cita)" 
+                                                title="Confirmar Cancelación">
+                                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                                        </button>
+
+                                        <!-- Reprogramar (Solicitar si es paciente) -->
                                         <button class="btn-table-action btn-reprogram" 
-                                                *ngIf="cita.estado !== 'CANCELADA'"
+                                                *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
                                                 (click)="ctrl.reprogramarCita(cita)" 
-                                                title="Reprogramar">
+                                                [title]="ctrl.usuario.rol === 'PACIENTE' ? 'Solicitar Cambio' : 'Reprogramar'">
                                             <i class="fa-solid fa-clock-rotate-left"></i>
                                         </button>
 
-                                        <!-- Cancelar -->
+                                        <!-- Cancelar (Solicitar si es paciente) -->
                                         <button class="btn-table-action btn-cancel" 
-                                                *ngIf="cita.estado !== 'CANCELADA'"
+                                                *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
                                                 (click)="ctrl.cancelarCita(cita)" 
-                                                title="Cancelar">
+                                                [title]="ctrl.usuario.rol === 'PACIENTE' ? 'Solicitar Cancelación' : 'Cancelar'">
                                             <i class="fa-solid fa-xmark"></i>
                                         </button>
 
-                                        <!-- Diagnóstico / Historial -->
+                                        <!-- Diagnóstico -->
                                         <button class="btn-table-action btn-medical" 
                                                 *ngIf="(ctrl.usuario.rol === 'MEDICO') || (ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
                                                 (click)="ctrl.abrirModalHistorial(cita)" 
@@ -112,38 +139,34 @@
         </section>
     </div>
 
-    <!-- 🔄 MODAL GLASS: NUEVA CITA -->
+    <!-- 🔄 MODAL GLASS: NUEVA CITA / REPROGRAMAR -->
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCita" (click)="ctrl.cerrarModalCita()">
         <div class="glass-modal modal-large animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass">
                 <div class="header-icon-box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; height:24px;">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                        <polyline points="7 3 7 8 15 8"></polyline>
-                    </svg>
+                    <i class="fa-solid" [ngClass]="ctrl.modoReprogramacion ? 'fa-calendar-day' : 'fa-calendar-plus'"></i>
                 </div>
                 <div>
-                    <h3>Nueva Cita Médica</h3>
-                    <p>Selecciona tu especialidad y horario preferido</p>
+                    <h3>{{ ctrl.modoReprogramacion ? 'Solicitar Cambio de Cita' : 'Nueva Cita Médica' }}</h3>
+                    <p>{{ ctrl.modoReprogramacion ? 'Selecciona tu nuevo horario preferido' : 'Selecciona tu especialidad y horario preferido' }}</p>
                 </div>
                 <button class="btn-close-glass" (click)="ctrl.cerrarModalCita()">&times;</button>
             </div>
 
             <div class="modal-body-glass scroll-y">
-                <div class="form-row">
+                <div class="selection-grid">
                     <div class="form-group-modern">
-                        <label>Especialidad Requerida</label>
+                        <label><i class="fa-solid fa-stethoscope"></i> Especialidad</label>
                         <select class="form-control" [(ngModel)]="ctrl.especialidadSeleccionada" (change)="ctrl.cargarMedicosPorEspecialidad()">
-                            <option [ngValue]="null">Seleccione especialidad...</option>
+                            <option [ngValue]="null">Seleccione...</option>
                             <option *ngFor="let esp of ctrl.especialidades" [ngValue]="esp">{{ esp.nombre }}</option>
                         </select>
                     </div>
 
                     <div class="form-group-modern" *ngIf="ctrl.especialidadSeleccionada">
-                        <label>Médico Disponible</label>
+                        <label><i class="fa-solid fa-user-doctor"></i> Especialista</label>
                         <select class="form-control" [(ngModel)]="ctrl.medicoSeleccionado" (change)="ctrl.cargarHorariosDisponibles()">
-                            <option [ngValue]="null">Seleccione médico...</option>
+                            <option [ngValue]="null">Seleccione...</option>
                             <option *ngFor="let med of ctrl.medicosDisponibles" [ngValue]="med">
                                 {{ med.usuario.nombre }} {{ med.usuario.apellido }}
                             </option>
@@ -153,36 +176,45 @@
 
                 <div class="availability-section" *ngIf="ctrl.mostrarTablaDisponibilidad && ctrl.horariosDisponibles.length">
                     <div class="semana-nav">
-                        <button class="btn-icon" (click)="ctrl.anteriorSemana()" [disabled]="ctrl.semanaIndice === 0"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span>Semana {{ ctrl.semanaIndice + 1 }} de 3</span>
-                        <button class="btn-icon" (click)="ctrl.siguienteSemana()" [disabled]="ctrl.semanaIndice === 2"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button class="btn-nav-step" (click)="ctrl.anteriorSemana()" [disabled]="ctrl.semanaIndice === 0">
+                            <i class="fa-solid fa-chevron-left"></i> Anterior
+                        </button>
+                        <span class="semana-label">Semana {{ ctrl.semanaIndice + 1 }} de 3</span>
+                        <button class="btn-nav-step" (click)="ctrl.siguienteSemana()" [disabled]="ctrl.semanaIndice === 2">
+                            Siguiente <i class="fa-solid fa-chevron-right"></i>
+                        </button>
                     </div>
 
-                    <div class="schedule-grid">
-                        <table class="modern-table mini-table">
+                    <div class="schedule-grid-container">
+                        <table class="schedule-table">
                             <thead>
                                 <tr>
-                                    <th>Hora</th>
-                                    <th *ngFor="let dia of ctrl.dias">{{ dia.nombre }}<br><small>{{ dia.fecha }}</small></th>
+                                    <th class="sticky-time">Hora</th>
+                                    <th *ngFor="let dia of ctrl.dias" class="day-header">
+                                        <span class="day-name">{{ dia.nombre }}</span>
+                                        <span class="day-date">{{ dia.fecha }}</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let h of ctrl.horas">
-                                    <td class="time-col">{{ h }}:00</td>
+                                    <td class="time-mark">{{ h }}:00</td>
                                     <td *ngFor="let dia of ctrl.dias" 
+                                        class="slot-cell"
                                         [class.not-available]="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)"
                                         [class.slot-occupied]="ctrl.isOcupado(dia.fecha, h)">
                                         
                                         <!-- Slot Disponible -->
-                                        <div class="slot-check" *ngIf="ctrl.isDisponible(dia.fecha, h)">
+                                        <label class="slot-radio" *ngIf="ctrl.isDisponible(dia.fecha, h)">
                                             <input type="radio" name="horarioSeleccionado"
                                                 [checked]="ctrl.horarioSeleccionado === ctrl.getHorario(dia.fecha, h)"
                                                 (change)="ctrl.horarioSeleccionado = ctrl.getHorario(dia.fecha, h)">
-                                        </div>
+                                            <span class="radio-custom"></span>
+                                        </label>
 
                                         <!-- Slot Ocupado (Visual Rojo) -->
-                                        <div class="slot-taken" *ngIf="ctrl.isOcupado(dia.fecha, h)">
-                                            <div class="red-radio-mock"></div>
+                                        <div class="slot-taken-mask" *ngIf="ctrl.isOcupado(dia.fecha, h)">
+                                            <i class="fa-solid fa-lock"></i>
                                         </div>
                                     </td>
                                 </tr>
@@ -191,15 +223,17 @@
                     </div>
                 </div>
 
-                <div class="form-group-modern mt-15">
-                    <label>Motivo de la Consulta</label>
-                    <textarea class="form-control" [(ngModel)]="ctrl.motivoCita" placeholder="Describa brevemente el motivo..."></textarea>
+                <div class="form-group-modern mt-20">
+                    <label><i class="fa-solid fa-comment-medical"></i> Motivo de la Cita</label>
+                    <textarea class="form-control-text" [(ngModel)]="ctrl.motivoCita" placeholder="Escribe aquí el motivo de tu consulta..."></textarea>
                 </div>
             </div>
 
-            <div class="modal-footer-glass">
-                <button class="btn-action btn-add w-100" (click)="ctrl.registrarCita()">Confirmar Reserva</button>
-                <button class="btn-action btn-outline w-100 mt-2" (click)="ctrl.cerrarModalCita()">Cancelar</button>
+            <div class="modal-footer-glass flex-row">
+                <button class="btn-action btn-cancel-glass" (click)="ctrl.cerrarModalCita()">Cerrar</button>
+                <button class="btn-action btn-confirm-glass" (click)="ctrl.registrarCita()">
+                    {{ ctrl.modoReprogramacion ? (ctrl.usuario.rol === 'PACIENTE' ? 'Solicitar Cambio' : 'Reprogramar Cita') : 'Confirmar Reserva' }}
+                </button>
             </div>
         </div>
     </div>

@@ -140,13 +140,34 @@ public class CitaService {
     }
     
     @Transactional
-    public void reprogramarCita(Long id, LocalDateTime nuevaFecha) {
+    public void solicitarReprogramacion(Long id, LocalDateTime nuevaFecha) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        cita.setFechaPropuesta(nuevaFecha);
+        cita.setEstado(EstadoCita.SOLICITUD_REPROGRAMACION);
+        citaRepository.save(cita);
+        notificarCambioCita(cita, "solicitud de reprogramación");
+    }
 
-        if (cita.getEstado() == EstadoCita.CANCELADA) {
-            throw new RuntimeException("No se puede reprogramar una cita cancelada");
+    @Transactional
+    public void solicitarCancelacion(Long id) {
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
+        citaRepository.save(cita);
+        notificarCambioCita(cita, "solicitud de cancelación");
+    }
+
+    @Transactional
+    public void confirmarReprogramacion(Long id) {
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        
+        if (cita.getFechaPropuesta() == null) {
+            throw new RuntimeException("No hay una fecha propuesta para esta cita");
         }
+
+        LocalDateTime nuevaFecha = cita.getFechaPropuesta();
 
         // 1️⃣ Liberar el horario antiguo
         disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
@@ -174,12 +195,24 @@ public class CitaService {
         });
 
         cita.setFecha(nuevaFecha);
+        cita.setFechaPropuesta(null);
         cita.setEstado(EstadoCita.REPROGRAMADA);
         citaRepository.save(cita);
 
-        // Notificar paciente y médico
-        notificarCambioCita(cita, "reprogramada");
+        notificarCambioCita(cita, "reprogramada y confirmada");
     }
+
+    @Transactional
+    public void confirmarCancelacion(Long id) {
+        cancelarCita(id); // Reutilizamos la lógica existente de cancelación final
+        // Notificar que se ha confirmado por el admin
+        Cita cita = citaRepository.findById(id).orElseThrow();
+        notificarCambioCita(cita, "cancelación aprobada");
+    }
+
+    @Transactional
+    public void reprogramarCita(Long id, LocalDateTime nuevaFecha) {
+        // ... (Este método se mantiene para compatibilidad con Admin que reprograma directamente)
     
     public void eliminarHistorialesPorUsuario(Long usuarioId) {
         // Primero obtenemos todas las citas del usuario

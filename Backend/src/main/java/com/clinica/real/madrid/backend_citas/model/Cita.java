@@ -36,6 +36,9 @@ public class Cita {
     private EstadoCita estado = EstadoCita.PENDIENTE;
 
     private String motivo;
+    
+    @Column(name = "fecha_propuesta")
+    private LocalDateTime fechaPropuesta;
 
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
@@ -93,6 +96,14 @@ public class Cita {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public LocalDateTime getFechaPropuesta() {
+        return fechaPropuesta;
+    }
+
+    public void setFechaPropuesta(LocalDateTime fechaPropuesta) {
+        this.fechaPropuesta = fechaPropuesta;
     }
 
     public LocalDateTime getFechaCreacion() {

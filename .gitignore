@@ -16,3 +16,9 @@
 DIAGRAMAS_FINAL_2*.docx
 DIAGRAMAS_FINAL_2*.zip
 scratch_*.json
+
+# Frontend build artifacts
+**/browser/
+**/dist/
+node_modules/
+.angular/

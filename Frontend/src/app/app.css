@@ -618,8 +618,8 @@ html, body {
   padding: 24px 30px;
   min-height: 100vh;
   animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  max-width: 1400px; /* Evitar que se estire demasiado en pantallas gigantes */
-  margin: 0 auto;
+  max-width: 100%; 
+  margin: 0;
 }
 
 @keyframes slideInRight {

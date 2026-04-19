@@ -57,30 +57,38 @@
                                 </td>
                                 <td class="reason-cell">{{ cita?.motivo || '-' }}</td>
                                 <td style="text-align: center;">
-                                    <div class="actions-flex">
-                                        <button class="btn-icon" (click)="ctrl.toggleMenu(cita)" title="Acciones">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    <div class="actions-flex-buttons">
+                                        <!-- Confirmar (Solo Admin/Recepcion y si está pendiente) -->
+                                        <button class="btn-table-action btn-confirm" 
+                                                *ngIf="cita.estado === 'PENDIENTE'"
+                                                (click)="ctrl.confirmarCita(cita)" 
+                                                title="Confirmar Cita">
+                                            <i class="fa-solid fa-check"></i>
                                         </button>
-                                        
-                                        <!-- Menú Contextual Moderno -->
-                                        <div class="context-menu" *ngIf="cita.menuAbierto">
-                                            <button (click)="ctrl.confirmarCita(cita)" [disabled]="cita.estado !== 'PENDIENTE'">
-                                                <i class="fa-solid fa-check"></i> Confirmar
-                                            </button>
-                                            <button (click)="ctrl.reprogramarCita(cita)" [disabled]="cita.estado === 'CANCELADA'">
-                                                <i class="fa-solid fa-rotate"></i> Reprogramar
-                                            </button>
-                                            <button class="txt-danger" (click)="ctrl.cancelarCita(cita)" [disabled]="cita.estado === 'CANCELADA'">
-                                                <i class="fa-solid fa-xmark"></i> Cancelar
-                                            </button>
-                                            <hr>
-                                            <button *ngIf="ctrl.usuario.rol === 'MEDICO'" (click)="ctrl.abrirModalHistorial(cita)">
-                                                <i class="fa-solid fa-stethoscope"></i> {{ cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico' }}
-                                            </button>
-                                            <button *ngIf="ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial" (click)="ctrl.abrirModalHistorial(cita)">
-                                                <i class="fa-solid fa-file-waveform"></i> Ver diagnóstico
-                                            </button>
-                                        </div>
+
+                                        <!-- Reprogramar -->
+                                        <button class="btn-table-action btn-reprogram" 
+                                                *ngIf="cita.estado !== 'CANCELADA'"
+                                                (click)="ctrl.reprogramarCita(cita)" 
+                                                title="Reprogramar">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                        </button>
+
+                                        <!-- Cancelar -->
+                                        <button class="btn-table-action btn-cancel" 
+                                                *ngIf="cita.estado !== 'CANCELADA'"
+                                                (click)="ctrl.cancelarCita(cita)" 
+                                                title="Cancelar">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+
+                                        <!-- Diagnóstico / Historial -->
+                                        <button class="btn-table-action btn-medical" 
+                                                *ngIf="(ctrl.usuario.rol === 'MEDICO') || (ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
+                                                (click)="ctrl.abrirModalHistorial(cita)" 
+                                                [title]="ctrl.usuario.rol === 'MEDICO' ? (cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico') : 'Ver diagnóstico'">
+                                            <i class="fa-solid" [ngClass]="ctrl.usuario.rol === 'MEDICO' ? 'fa-stethoscope' : 'fa-file-waveform'"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

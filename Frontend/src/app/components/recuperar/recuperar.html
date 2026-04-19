@@ -4,29 +4,48 @@
     <img src="/assets/images/DoctorLogin.png" alt="Doctor" class="doctor-img">
   </div>
 
-  <!-- COLUMNA IZQUIERDA (Texto) -->
+  <!-- COLUMNA IZQUIERDA (Texto con Glassmorphism) -->
   <div class="login-hero anim-fade-in">
-    <div class="hero-content">
-      <h1>Recupera tu acceso</h1>
-      <p class="hero-subtitle">Ingresa tu correo electrónico y te enviaremos un enlace de seguridad para restablecer tu contraseña.</p>
-      <div class="hero-disclaimer">
-        <i class="fa-solid fa-shield-halved"></i> Tu seguridad es nuestra prioridad. El enlace expirará en 30 minutos.
+    <div class="hero-glass-panel">
+      <div class="hero-content">
+        <h1>Recupera tu acceso</h1>
+        <p class="hero-subtitle">No te preocupes, enviaremos un enlace de seguridad a tu correo para que puedas restablecer tu contraseña en segundos.</p>
+        
+        <div class="hero-features">
+          <div class="feature-item">
+            <i class="fa-solid fa-envelope-circle-check"></i>
+            <div>
+              <strong>Envío Instantáneo</strong>
+              <span>Recibe tu código de acceso en menos de 1 minuto</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fa-solid fa-user-shield"></i>
+            <div>
+              <strong>Protección de Cuenta</strong>
+              <span>Verificación de identidad en dos pasos</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="hero-disclaimer mt-30">
+          <i class="fa-solid fa-shield-halved"></i> Tu seguridad es nuestra prioridad. El enlace expirará en 30 minutos por motivos de protección.
+        </p>
       </div>
     </div>
   </div>
 
   <!-- COLUMNA DERECHA (Formulario) -->
   <div class="login-form-wrapper">
-    <div class="login-card anim-slide-up">
+    <div class="login-card anim-slide-up login-card-custom">
       <div class="back-link">
         <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
       </div>
       
       <h2 class="card-title">Recuperar Contraseña</h2>
-      
       <p class="instructor-text">Indícanos el correo asociado a tu cuenta R.E.T.O para continuar.</p>
 
-      <form (ngSubmit)="ctrl.recuperar()">
+      <form (ngSubmit)="ctrl.recuperar()" class="login-form">
         <!-- Campo Correo Electrónico -->
         <div class="input-group">
           <label for="correo">Correo electrónico</label>
@@ -42,27 +61,26 @@
         </div>
 
         <!-- Botón de submit -->
-        <button type="submit" class="btn-submit" [disabled]="ctrl.enviado">
-          <span *ngIf="!ctrl.enviado">Enviar enlace de recuperación</span>
-          <span *ngIf="ctrl.enviado"><i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...</span>
+        <button type="submit" class="btn-submit w-100" [disabled]="ctrl.enviado">
+          <span *ngIf="!ctrl.enviado">
+            <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i> Enviar enlace de recuperación
+          </span>
+          <span *ngIf="ctrl.enviado">
+            <i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...
+          </span>
         </button>
       </form>
 
       <!-- Mensajes de Estado -->
-      <div class="status-messages">
-        <p *ngIf="ctrl.mensaje" class="msg-general has-success">
-          <i class="fa-solid fa-circle-check"></i> {{ ctrl.mensaje }}
-        </p>
-        <p *ngIf="ctrl.error" class="msg-general has-error">
-          <i class="fa-solid fa-triangle-exclamation"></i> {{ ctrl.error }}
+      <div class="status-messages" *ngIf="ctrl.mensaje || ctrl.error">
+        <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">
+          <i class="fa-solid" [class.fa-circle-check]="ctrl.mensaje" [class.fa-triangle-exclamation]="ctrl.error"></i>
+          {{ ctrl.mensaje || ctrl.error }}
         </p>
       </div>
 
-      <hr class="divider">
-
-      <div class="crear-cuenta-wrapper">
-        <span>¿Aún tienes problemas?</span>
-        <a href="mailto:soporte@retosalud.com" class="crear-cuenta-link">Contactar soporte <i class="fa-solid fa-envelope"></i></a>
+      <div class="crear-cuenta-wrapper mt-30">
+        <p>¿Aún tienes problemas? <a href="mailto:soporte@retosalud.com" class="crear-cuenta-link">Contactar soporte</a></p>
       </div>
     </div>
   </div>

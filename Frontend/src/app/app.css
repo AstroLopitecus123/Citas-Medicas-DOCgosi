@@ -462,6 +462,87 @@
   animation: slideFadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* ==========================================================================
+   MODALES PREMIUM (GLASSMORPHISM SYSTEM)
+   ========================================================================== */
+.glass-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(10px) saturate(180%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000; /* Por encima de todo */
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.glass-modal {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-header-glass {
+  padding: 24px 30px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.modal-header-glass i {
+  font-size: 1.5rem;
+  color: #ef4444; /* Color de salida/peligro */
+}
+
+.modal-header-glass h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.modal-body-glass {
+  padding: 30px;
+  text-align: center;
+}
+
+.modal-body-glass p {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.modal-footer-glass {
+  padding: 20px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 @keyframes slideFadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }

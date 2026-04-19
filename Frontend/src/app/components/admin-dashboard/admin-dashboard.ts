@@ -39,7 +39,7 @@ export class AdminDashboardComponent implements OnInit {
       descripcion: 'Administra el cuerpo médico y sus horarios',
       icono: 'fa-user-doctor',
       ruta: '/medicos',
-      color: 'card-blue',
+      color: 'card-green',
       stat: 'totalMedicos',
       label: 'médicos registrados'
     },
@@ -48,7 +48,7 @@ export class AdminDashboardComponent implements OnInit {
       descripcion: 'Controla accesos, roles y estado de usuarios',
       icono: 'fa-users',
       ruta: '/usuarios',
-      color: 'card-purple',
+      color: 'card-teal',
       stat: 'totalUsuarios',
       label: 'usuarios en sistema'
     },
@@ -66,7 +66,7 @@ export class AdminDashboardComponent implements OnInit {
       descripcion: 'Historial financiero y gestión de transacciones',
       icono: 'fa-file-invoice-dollar',
       ruta: '/admin/pagos',
-      color: 'card-purple',
+      color: 'card-teal',
       stat: 'totalUsuarios',
       label: 'transacciones'
     }

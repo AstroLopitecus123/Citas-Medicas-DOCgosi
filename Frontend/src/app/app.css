@@ -860,3 +860,174 @@ html, body {
     border-radius: 12px;
   }
 }
+
+/* ==========================================================================
+   UNIFIED DASHBOARD DESIGN SYSTEM (SPA READY)
+   ========================================================================== */
+
+/* Layout Base del Panel */
+.admin-layout {
+  padding: 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  animation: slideFadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabecera Estándar de Sección */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.header-main h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0c4d2d;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-main h2 i {
+  color: #0fbf6a;
+  background: rgba(15, 191, 106, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.date-badge {
+  background: white;
+  padding: 10px 18px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.date-badge i { color: #0fbf6a; }
+
+/* Grid de Estadísticas (KPI Cards) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 24px;
+  padding: 26px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,0,0,0.07); }
+
+.stat-icon {
+  width: 58px; height: 58px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.stat-info h3 { font-size: 1.6rem; font-weight: 900; margin: 0; color: #0f172a; line-height: 1; }
+.stat-info p { margin: 4px 0 0; color: #94a3b8; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Paleta de Colores Dashboard (Todos Verdes/Médicos) */
+.kpi-primary .stat-icon { background: #e6fff4; color: #0fbf6a; }
+.kpi-success .stat-icon { background: #f0fdf4; color: #16a34a; }
+.kpi-info .stat-icon { background: #f0fdfa; color: #0d9488; }
+.kpi-warning .stat-icon { background: #fffcf0; color: #ca8a04; }
+
+/* Tarjetas Premium de Contenido */
+.premium-card {
+  background: white;
+  border-radius: 28px;
+  padding: 30px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.02);
+  margin-bottom: 30px;
+}
+
+.card-title {
+  margin: 0 0 25px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Botones de Acción en Dashboard */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.action-btn {
+  padding: 18px 24px;
+  border-radius: 20px;
+  border: 1.5px solid #f1f5f9;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s;
+  text-align: left;
+}
+
+.action-btn i { font-size: 1.6rem; color: #0fbf6a; transition: 0.3s; }
+.action-btn strong { display: block; font-size: 1rem; color: #0f172a; }
+.action-btn span { font-size: 0.8rem; color: #64748b; }
+
+.action-btn:hover {
+  background: #0fbf6a;
+  border-color: #0fbf6a;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(15, 191, 106, 0.2);
+}
+
+.action-btn:hover i,
+.action-btn:hover strong,
+.action-btn:hover span { color: white; }
+
+/* Responsividad Global de Dashboards */
+@media (max-width: 768px) {
+  .admin-layout { padding: 24px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr !important; }
+}

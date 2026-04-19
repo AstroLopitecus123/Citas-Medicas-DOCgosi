@@ -1,59 +1,46 @@
-<!-- ━━━ MAIN CONTENT DASHBOARD (Estadísticas y Módulos) ━━━ -->
-<main class="dashboard-main-content">
-
-  <!-- TOP BAR -->
-  <div class="topbar-modern">
-    <div class="topbar-left">
-      <h1 class="topbar-title">
-        {{ getHora() }}, {{ usuario?.nombre || 'Admin' }}
-        <span class="wave">👋</span>
-      </h1>
-      <p class="topbar-sub">Vista general del sistema — R.E.T.O Salud</p>
+<div class="admin-layout">
+  <header class="section-header">
+    <div class="header-main">
+      <h2><i class="fa-solid fa-user-shield"></i> {{ getHora() }}, {{ usuario?.nombre || 'Admin' }}</h2>
+      <p class="subtitle">Vista general del sistema — Gestión R.E.T.O Salud</p>
     </div>
-    <div class="topbar-right">
-      <div class="topbar-date">
-        <i class="fa-regular fa-calendar"></i>
-        {{ 'today' | date:'EEEE, d MMMM yyyy' }}
-      </div>
+    <div class="header-actions">
+      <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ 'today' | date:'EEEE, d MMMM yyyy' }}</span>
     </div>
-  </div>
+  </header>
 
   <!-- KPI CARDS -->
-  <div class="kpi-grid">
-    <div class="kpi-card kpi-green">
-      <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
-      <div class="kpi-body">
-        <p class="kpi-label">Total Usuarios</p>
-        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalUsuarios }}</h2>
+  <div class="stats-grid">
+    <div class="stat-card kpi-primary">
+      <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.totalUsuarios }}</h3>
+        <p>Total Usuarios</p>
       </div>
-      <div class="kpi-trend"><i class="fa-solid fa-arrow-trend-up"></i> activos</div>
     </div>
 
-    <div class="kpi-card kpi-blue">
-      <div class="kpi-icon"><i class="fa-solid fa-user-doctor"></i></div>
-      <div class="kpi-body">
-        <p class="kpi-label">Médicos</p>
-        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalMedicos }}</h2>
+    <div class="stat-card kpi-success">
+      <div class="stat-icon"><i class="fa-solid fa-user-doctor"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.totalMedicos }}</h3>
+        <p>Médicos Registrados</p>
       </div>
-      <div class="kpi-trend"><i class="fa-solid fa-stethoscope"></i> registrados</div>
     </div>
 
-    <div class="kpi-card kpi-teal">
-      <div class="kpi-icon"><i class="fa-solid fa-notes-medical"></i></div>
-      <div class="kpi-body">
-        <p class="kpi-label">Especialidades</p>
-        <h2 class="kpi-value">{{ cargando ? '—' : stats.totalEspecialidades }}</h2>
+    <div class="stat-card kpi-info">
+      <div class="stat-icon"><i class="fa-solid fa-notes-medical"></i></div>
+      <div class="stat-info">
+        <h3>{{ stats.totalEspecialidades }}</h3>
+        <p>Especialidades</p>
       </div>
-      <div class="kpi-trend"><i class="fa-solid fa-check-circle"></i> activas</div>
     </div>
 
-    <div class="kpi-card kpi-purple">
-      <div class="kpi-icon"><i class="fa-solid fa-calendar-check"></i></div>
-      <div class="kpi-body">
-        <p class="kpi-label">Citas Totales</p>
-        <h2 class="kpi-value"><i class="fa-solid fa-chart-line"></i></h2>
+    <div class="stat-card kpi-warning">
+      <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+      <div class="stat-info">
+        <h3>KPI</h3>
+        <p>Ver Módulos</p>
       </div>
-      <div class="kpi-trend"><i class="fa-solid fa-bolt"></i> ver módulo</div>
     </div>
   </div>
 
@@ -107,4 +94,4 @@
     </button>
   </div>
 
-</main>
+</div>

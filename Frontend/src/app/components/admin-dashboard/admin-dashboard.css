@@ -1,153 +1,8 @@
 /* ════════════════════════════════════════════
    ADMIN DASHBOARD CONTENT — R.E.T.O SALUD
-════════════════════════════════════════════ */
+   ════════════════════════════════════════════ */
 
-.dashboard-main-content {
-  padding: 32px;
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Top bar (Modern) */
-.topbar-modern {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 36px;
-}
-
-.topbar-title {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #0c4d2d;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.wave {
-  animation: wave 1.5s ease-in-out infinite;
-  display: inline-block;
-  transform-origin: 70% 70%;
-}
-
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(20deg); }
-  75% { transform: rotate(-10deg); }
-}
-
-.topbar-sub {
-  margin: 6px 0 0;
-  color: #64748b;
-  font-size: 0.95rem;
-}
-
-.topbar-date {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  padding: 12px 20px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  color: #334155;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.topbar-date i { color: #0fbf6a; }
-
-/* ════ KPI CARDS ════ */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  margin-bottom: 45px;
-}
-
-.kpi-card {
-  background: white;
-  border-radius: 24px;
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
-  border-bottom: 5px solid transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.kpi-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-.kpi-green { border-bottom-color: #0fbf6a; }
-.kpi-green .kpi-icon { color: #0fbf6a; background: #e6fff4; }
-
-.kpi-blue { border-bottom-color: #3b82f6; }
-.kpi-blue .kpi-icon { color: #3b82f6; background: #eff6ff; }
-
-.kpi-teal { border-bottom-color: #14b8a6; }
-.kpi-teal .kpi-icon { color: #14b8a6; background: #f0fdfa; }
-
-.kpi-purple { border-bottom-color: #8b5cf6; }
-.kpi-purple .kpi-icon { color: #8b5cf6; background: #f5f3ff; }
-
-.kpi-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-}
-
-.kpi-label {
-  margin: 0;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #94a3b8;
-}
-
-.kpi-value {
-  margin: 0;
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: #0f172a;
-  line-height: 1;
-}
-
-.kpi-trend {
-  font-size: 0.8rem;
-  color: #64748b;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-/* ════ MODULE CARDS ════ */
-.section-title-dash {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
-}
-
-.section-title-dash i { color: #0fbf6a; font-size: 1.1rem; }
-.section-title-dash h2 { margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b; }
+/* La mayoría de los estilos ahora son GLOBALES en app.css para consistencia (SPA) */
 
 .module-grid {
   display: grid;
@@ -178,8 +33,6 @@
 }
 
 .card-teal .module-icon-wrap { background: #f0fdfa; color: #14b8a6; }
-.card-blue .module-icon-wrap { background: #eff6ff; color: #3b82f6; }
-.card-purple .module-icon-wrap { background: #f5f3ff; color: #8b5cf6; }
 .card-green .module-icon-wrap { background: #e6fff4; color: #0fbf6a; }
 
 .module-icon-wrap {
@@ -203,7 +56,17 @@
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
 .module-card:hover .module-arrow { color: #0fbf6a; transform: translateX(5px); }
 
-/* ════ QUICK ACTIONS ════ */
+.section-title-dash {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  margin-top: 20px;
+}
+
+.section-title-dash i { color: #0fbf6a; font-size: 1.1rem; }
+.section-title-dash h2 { margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b; }
+
 .quick-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -237,19 +100,11 @@
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.12);
 }
 
-/* ════ RESPONSIVE ════ */
-@media (max-width: 1400px) {
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
 @media (max-width: 1000px) {
   .module-grid { grid-template-columns: 1fr; }
   .quick-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .dashboard-main-content { padding: 20px; }
-  .topbar-modern { flex-direction: column; gap: 20px; }
-  .kpi-grid { grid-template-columns: 1fr; }
   .quick-grid { grid-template-columns: 1fr; }
 }

@@ -92,13 +92,17 @@ export class AppComponent {
 
   private actualizarEstadoPanel(url: string) {
     this.isPanelRoute = url.includes('/admin') || 
-                       url.includes('/medico/dashboard') || 
-                       url.includes('/recepcion/dashboard') ||
-                       url.includes('/paciente/dashboard') ||
+                       url.includes('/medico') || 
+                       url.includes('/recepcion') ||
+                       url.includes('/paciente') ||
                        url.includes('/mis-citas') ||
+                       url.includes('/mi-historial') ||
                        url.includes('/usuarios') || 
                        url.includes('/medicos') || 
-                       url.includes('/especialidades');
+                       url.includes('/especialidades') ||
+                       url.includes('/checkout') ||
+                       url.includes('/pagar-tarjeta') ||
+                       url.includes('/gestionar-disponibilidad');
     console.log('🛡️ Estado Panel Actualizado:', this.isPanelRoute, 'para URL:', url);
   }
 

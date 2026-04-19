@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
   /* Fondo hospitalario muy moderno y limpio */
   background: linear-gradient(135deg, #f7fafc, #eef7f2);
   background-attachment: fixed;

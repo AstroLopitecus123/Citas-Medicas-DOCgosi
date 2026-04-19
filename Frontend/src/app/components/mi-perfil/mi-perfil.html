@@ -1,0 +1,107 @@
+<div class="admin-layout" *ngIf="!cargando; else loader">
+    
+    <header class="section-header">
+        <div class="header-main">
+            <h2><i class="fa-solid fa-user-gear"></i> Mi Perfil de Usuario</h2>
+            <p class="subtitle">Gestiona tu información personal y preferencias de seguridad.</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-action btn-add" (click)="activarEdicion()" *ngIf="!editando">
+                <i class="fa-solid fa-user-pen"></i> Editar Perfil
+            </button>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        
+        <!-- CARD DE INFORMACIÓN -->
+        <div class="premium-card profile-main-card">
+            <div class="profile-banner">
+                <div class="avatar-wrapper">
+                    <i class="fa-solid fa-user-circle"></i>
+                </div>
+                <div class="banner-info">
+                    <h3>{{ usuario.nombre }} {{ usuario.apellido }}</h3>
+                    <span class="role-badge">{{ usuario.rol }}</span>
+                </div>
+            </div>
+
+            <div class="profile-grid-info">
+                <div class="info-group">
+                    <label><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <p>{{ usuario.correo || '-' }}</p>
+                </div>
+                <div class="info-group">
+                    <label><i class="fa-solid fa-id-card"></i> Documento DNI</label>
+                    <p>{{ usuario.dni || '-' }}</p>
+                </div>
+                <div class="info-group">
+                    <label><i class="fa-solid fa-phone"></i> Teléfono Móvil</label>
+                    <p>{{ usuario.telefono || '-' }}</p>
+                </div>
+                <div class="info-group">
+                    <label><i class="fa-solid fa-calendar-day"></i> Fecha de Nacimiento</label>
+                    <p>{{ usuario.fechaNacimiento ? (usuario.fechaNacimiento | date:'longDate') : '-' }}</p>
+                </div>
+                <div class="info-group">
+                    <label><i class="fa-solid fa-earth-americas"></i> País de Residencia</label>
+                    <p>{{ usuario.pais?.nombre || '-' }}</p>
+                </div>
+                <div class="info-group">
+                    <label><i class="fa-solid fa-clock-rotate-left"></i> Miembro desde</label>
+                    <p>{{ usuario.fechaRegistro | date:'mediumDate' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULARIO DE EDICIÓN (Opcional según estado) -->
+        <div class="premium-card edit-card animation-slide-up" *ngIf="editando">
+            <h3 class="card-title"><i class="fa-solid fa-user-pen"></i> Actualizar mis Datos</h3>
+            
+            <div class="form-grid">
+                <div class="form-group-modern">
+                    <label>Nombres</label>
+                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.nombre">
+                </div>
+                <div class="form-group-modern">
+                    <label>Apellidos</label>
+                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.apellido">
+                </div>
+                <div class="form-group-modern">
+                    <label>Correo</label>
+                    <input type="email" class="form-control" [(ngModel)]="usuarioEditado.correo">
+                </div>
+                <div class="form-group-modern">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.telefono">
+                </div>
+                <div class="form-group-modern">
+                    <label>Fecha Nacimiento</label>
+                    <input type="date" class="form-control" [(ngModel)]="usuarioEditado.fechaNacimiento">
+                </div>
+                <div class="form-group-modern">
+                    <label>País</label>
+                    <select class="form-control" [(ngModel)]="usuarioEditado.pais" [compareWith]="comparePais">
+                        <option *ngFor="let p of listaPaises" [ngValue]="p">{{ p.nombre }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions mt-4">
+                <button class="btn-action btn-add" (click)="guardarCambios()">
+                    <i class="fa-solid fa-check"></i> Guardar Cambios
+                </button>
+                <button class="btn-action btn-outline ml-2" (click)="cancelarEdicion()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #loader>
+    <div class="admin-layout flex-center">
+        <i class="fa-solid fa-circle-notch fa-spin text-success fa-3x"></i>
+    </div>
+</ng-template>

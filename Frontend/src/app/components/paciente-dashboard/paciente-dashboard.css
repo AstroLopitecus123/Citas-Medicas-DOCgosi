@@ -39,8 +39,9 @@
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 30px;
+  width: 100%;
 }
 
 .card-title { font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }

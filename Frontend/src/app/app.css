@@ -837,6 +837,17 @@ html, body {
   /* Modificar Grid general para celular */
   .admin-layout {
     padding: 20px 10px;
+    width: 100%;
+    overflow-x: hidden; /* Evitar scroll horizontal en el contenedor principal */
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
   }
 
   .section-header {
@@ -856,9 +867,24 @@ html, body {
 @media (max-width: 900px) {
   .modern-table-container {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     white-space: nowrap;
     border-radius: 12px;
+    width: 100%;
+    display: block;
   }
+}
+
+/* Ajuste Global para evitar desbordamientos en resoluciones 1366x768 y similares */
+.contenido-centrado {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================

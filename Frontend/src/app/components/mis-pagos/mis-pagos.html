@@ -1,41 +1,56 @@
 <div class="admin-layout">
-  <div class="mis-citas-grid premium-dashboard" *ngIf="usuario; else sinUsuario">
+  <div class="mis-pagos-full" *ngIf="usuario; else sinUsuario">
     
-    <aside class="premium-card profile-sidebar">
-      <div class="profile-header">
-        <div class="profile-avatar">
-          <i class="fa-solid fa-file-invoice-dollar"></i>
+    <header class="section-header">
+      <div class="header-main">
+        <h2><i class="fa-solid fa-file-invoice-dollar"></i> Gestión Financiera</h2>
+        <p class="subtitle">Consulta tu historial de pagos y transacciones realizadas en la plataforma.</p>
+      </div>
+      <div class="header-actions">
+        <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ 'today' | date:'fullDate' }}</span>
+      </div>
+    </header>
+
+    <!-- RESUMEN HORIZONTAL (GESTIÓN) -->
+    <div class="stats-grid">
+      <div class="stat-card kpi-info">
+        <div class="stat-icon"><i class="fa-solid fa-receipt"></i></div>
+        <div class="stat-info">
+          <h3>{{ totalTransacciones }}</h3>
+          <p>Total Transacciones</p>
         </div>
-        <h3>Gestión Financiera</h3>
-        <span class="role-badge">{{ usuario.rol }}</span>
       </div>
       
-      <div class="profile-details text-center">
-        <p class="sidebar-note mt-3">Historial y resumen de transacciones de la plataforma.</p>
-        
-        <div class="financial-summary mt-4">
-          <div class="summary-box mb-3">
-            <span class="label text-muted d-block font-xs">Total Transacciones</span>
-            <strong class="h3 d-block txt-primary">{{ totalTransacciones }}</strong>
-          </div>
-          
-          <div class="summary-box mb-3" *ngIf="usuario.rol !== 'PACIENTE'">
-            <span class="label text-muted d-block font-xs">Ingresos Recaudados</span>
-            <strong class="h3 d-block txt-success">S/. {{ totalIngresos | number:'1.2-2' }}</strong>
-          </div>
+      <div class="stat-card kpi-success">
+        <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-info">
+          <h3>{{ pagosCompletados }}</h3>
+          <p>Pagos Confirmados</p>
         </div>
       </div>
-    </aside>
 
-    <section class="main-content">
-      <div class="welcome-banner text-white bg-gradient-success">
-        <h2><i class="fa-solid fa-clock-rotate-left mr-2"></i> Historial de Pagos</h2>
-        <p>Revise el estado y detalle de los pagos de las citas médicas.</p>
+      <div class="stat-card kpi-primary" *ngIf="usuario.rol !== 'PACIENTE'">
+        <div class="stat-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+        <div class="stat-info">
+          <h3>S/. {{ totalIngresos | number:'1.2-2' }}</h3>
+          <p>Ingresos Recaudados</p>
+        </div>
       </div>
 
+      <div class="stat-card kpi-warning">
+          <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+          <div class="stat-info">
+            <h3>{{ pagosPendientes }}</h3>
+            <p>Pendientes</p>
+          </div>
+        </div>
+    </div>
+
+    <!-- TABLA DE HISTORIAL -->
+    <section class="main-content">
       <div class="premium-card">
         <div class="card-header-flex">
-          <h3><i class="fa-solid fa-list-check"></i> Transacciones Recientes</h3>
+          <h3><i class="fa-solid fa-list-ul"></i> Historial de Transacciones</h3>
         </div>
 
         <div *ngIf="cargando" class="text-center p-5">
@@ -47,21 +62,23 @@
           <table class="modern-table">
             <thead>
               <tr>
-                <th><i class="fa-solid fa-calendar-day"></i> Fecha Pago</th>
-                <th><i class="fa-solid fa-user-injured"></i> Paciente</th>
-                <th *ngIf="usuario.rol !== 'PACIENTE'"><i class="fa-solid fa-user-doctor"></i> Médico</th>
+                <th>Fecha Pago</th>
+                <th>Paciente</th>
+                <th *ngIf="usuario.rol !== 'PACIENTE'">Médico</th>
                 <th>Monto</th>
                 <th>Método</th>
                 <th>Estado</th>
                 <th>Cita Asoc.</th>
-                <th *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'">Acciones</th>
+                <th *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'" style="text-align: center;">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of pagos" class="align-middle">
-                <td>
-                  <strong>{{ p.fechaPago ? (p.fechaPago | date:'dd/MM/yyyy') : '-' }}</strong><br>
-                  <small class="text-muted">{{ p.fechaPago ? (p.fechaPago | date:'h:mm a') : '-' }}</small>
+              <tr *ngFor="let p of pagos">
+                <td class="date-cell">
+                  <div class="date-stack">
+                    <strong>{{ p.fechaPago ? (p.fechaPago | date:'dd/MM/yyyy') : '-' }}</strong>
+                    <span class="time-txt">{{ p.fechaPago ? (p.fechaPago | date:'h:mm a') : '-' }}</span>
+                  </div>
                 </td>
                 <td>{{ p.pacienteNombre || '-' }}</td>
                 <td *ngIf="usuario.rol !== 'PACIENTE'">
@@ -72,28 +89,28 @@
                   <span class="fw-bold txt-success">S/. {{ p.monto | number:'1.2-2' }}</span>
                 </td>
                 <td>
-                  <span class="badge" [ngClass]="p.metodo === 'TARJETA' ? 'bg-primary' : 'bg-success'">
-                    <i class="fa-solid" [ngClass]="p.metodo === 'TARJETA' ? 'fa-credit-card' : 'fa-money-bill'"></i>
+                  <span class="badge" [ngClass]="p.metodo === 'TARJETA' ? 'badge-info' : 'badge-success'">
+                    <i class="fa-solid" [ngClass]="p.metodo === 'TARJETA' ? 'fa-credit-card' : 'fa-money-bill-1'"></i>
                     {{ p.metodo }}
                   </span>
                 </td>
                 <td>
-                  <span class="status-indicator" [ngClass]="{
-                    'status-completed': p.estadoPago === 'COMPLETADO',
-                    'status-pending': p.estadoPago === 'PENDIENTE',
-                    'status-voided': p.estadoPago === 'ANULADO'
-                  }"></span>
-                  {{ p.estadoPago }}
+                  <span [class]="'badge' + (p.estadoPago === 'COMPLETADO' ? ' badge-success' : p.estadoPago === 'PENDIENTE' ? ' badge-info' : ' badge-danger')">
+                    <i class="fa-solid fa-circle" style="font-size: 8px; margin-right: 5px;"></i>
+                    {{ p.estadoPago }}
+                  </span>
                 </td>
                 <td><small class="text-muted">{{ p.citaFechaResumen || ('#Cita ' + p.citaId) }}</small></td>
                 
-                <td *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'">
-                   <button *ngIf="p.estadoPago !== 'ANULADO'" class="btn btn-sm btn-outline-danger" (click)="anularPago(p.id)" title="Anular Pago">
-                     <i class="fa-solid fa-ban"></i>
-                   </button>
-                   <button *ngIf="p.comprobante?.archivoUrl" class="btn btn-sm btn-outline-info ms-1" (click)="verComprobante(p.comprobante?.archivoUrl || '')" title="Ver Recibo">
-                      <i class="fa-solid fa-file-pdf"></i>
-                   </button>
+                <td *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'" style="text-align: center;">
+                   <div class="actions-flex" style="justify-content: center;">
+                       <button *ngIf="p.estadoPago !== 'ANULADO'" class="btn-icon delete" (click)="$event.stopPropagation(); anularPago(p.id)" title="Anular Pago">
+                         <i class="fa-solid fa-ban"></i>
+                       </button>
+                       <button *ngIf="p.comprobante?.archivoUrl" class="btn-icon" (click)="$event.stopPropagation(); verComprobante(p.comprobante?.archivoUrl || '')" title="Ver Recibo">
+                          <i class="fa-solid fa-file-pdf"></i>
+                       </button>
+                   </div>
                 </td>
               </tr>
             </tbody>
@@ -101,7 +118,7 @@
         </div>
 
         <ng-template #noPagos>
-          <div *ngIf="!cargando" class="empty-state p-5 text-center">
+          <div *ngIf="!cargando" class="empty-state p-5">
              <i class="fa-solid fa-file-invoice fa-3x text-muted mb-3 d-block"></i>
              <p>No se encontraron transacciones en el historial.</p>
           </div>
@@ -113,8 +130,12 @@
 </div>
 
 <ng-template #sinUsuario>
-  <div class="empty-state text-center p-5 mt-5">
-    <h2>Sesión no iniciada</h2>
-    <p>Por favor inicie sesión para ver sus transacciones.</p>
+  <div class="admin-layout flex-center">
+    <div class="error-container text-center">
+        <i class="fa-solid fa-lock fa-3x text-muted mb-3"></i>
+        <h2>Sesión no iniciada</h2>
+        <p>Por favor inicie sesión para ver sus transacciones.</p>
+        <button class="btn-action btn-add mt-3" routerLink="/login">Ir al Login</button>
+    </div>
   </div>
 </ng-template>

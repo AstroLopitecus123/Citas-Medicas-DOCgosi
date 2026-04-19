@@ -4,28 +4,49 @@
     <img src="/assets/images/DoctorLogin.png" alt="Doctor" class="doctor-img">
   </div>
 
-  <!-- COLUMNA IZQUIERDA (Texto) -->
-  <div class="login-hero">
-    <div class="hero-content">
-      <h1>Iniciar sesión en tu cuenta</h1>
-      <p class="hero-subtitle">Tu cuenta de R.E.T.O Salud te da acceso a tu información médica y a tu historia clínica.</p>
-      <p class="hero-disclaimer">
-        *Si has visitado un consultorio médico en nuestra sede de Lima Metropolitana, consulta las <a href="#">opciones adicionales de acceso al portal aquí</a>.
-      </p>
+  <!-- COLUMNA IZQUIERDA (Texto con Glassmorphism) -->
+  <div class="login-hero anim-fade-in">
+    <div class="hero-glass-panel">
+      <div class="hero-content">
+        <h1>Iniciar sesión en tu cuenta</h1>
+        <p class="hero-subtitle">Tu cuenta de R.E.T.O Salud te da acceso a tu información médica pública y privada, y a tu historia clínica digital.</p>
+        
+        <div class="hero-features">
+          <div class="feature-item">
+            <i class="fa-solid fa-lock"></i>
+            <div>
+              <strong>Seguridad Bancaria</strong>
+              <span>Tus datos están protegidos y cifrados</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <div>
+              <strong>Historial Completo</strong>
+              <span>Resultados y diagnósticos en tiempo real</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="hero-disclaimer mt-30">
+          <i class="fa-solid fa-circle-info"></i> *Si has visitado nuestra sede de Lima Metropolitana, consulta las <a href="#">opciones adicionales aquí</a>.
+        </p>
+      </div>
     </div>
   </div>
 
   <!-- COLUMNA DERECHA (Formulario) -->
   <div class="login-form-wrapper">
-    <div class="login-card">
+    <div class="login-card anim-slide-up login-card-custom">
       <h2 class="card-title">Iniciar Sesión</h2>
+      <p class="instructor-text">Ingresa tus credenciales para acceder al portal.</p>
 
       <div class="login-tabs">
-        <button class="tab active">Inicio de sesión estándar</button>
-        <button class="tab">Inicio de sesión alternativo</button>
+        <button class="tab active">Inicio estándar</button>
+        <button class="tab">Inicio alternativo</button>
       </div>
 
-      <form (ngSubmit)="ctrl.iniciarSesion()">
+      <form (ngSubmit)="ctrl.iniciarSesion()" class="login-form">
         <!-- Campo Correo Electrónico -->
         <div class="input-group">
           <label for="correo">Usuario (Correo electrónico)</label>
@@ -34,6 +55,7 @@
             id="correo"
             [(ngModel)]="ctrl.correo"
             name="correo"
+            placeholder="correo@ejemplo.com"
             required
           />
         </div>
@@ -43,39 +65,41 @@
           <label for="contrasena">Contraseña</label>
           <div class="input-icon-wrapper">
             <input
-              type="password"
+              [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
               id="contrasena"
               [(ngModel)]="ctrl.contrasena"
               name="contrasena"
+              placeholder="••••••••"
               required
             />
-            <button type="button" class="eye-btn">
-              <i class="fa-regular fa-eye"></i>
+            <button type="button" class="eye-btn" (click)="ctrl.togglePassword()">
+              <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
             </button>
           </div>
         </div>
 
         <!-- Botón de submit -->
-        <button type="submit" class="btn-submit">Iniciar sesión</button>
+        <button type="submit" class="btn-submit w-100">
+          <i class="fa-solid fa-right-to-bracket" style="margin-right: 8px;"></i> Iniciar sesión
+        </button>
       </form>
 
-      <p *ngIf="ctrl.mensaje || ctrl.error" class="msg-general" [ngClass]="{'has-error': ctrl.error}">
-        {{ ctrl.mensaje || ctrl.error }}
-      </p>
+      <div class="status-messages" *ngIf="ctrl.mensaje || ctrl.error">
+        <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">
+          {{ ctrl.mensaje || ctrl.error }}
+        </p>
+      </div>
 
-      <hr class="divider">
-
-      <div class="ayuda-section">
-        <p class="necesita-ayuda">¿Necesita ayuda?<i class="fa-solid fa-chevron-right help-icon"></i></p>
+      <div class="ayuda-section mt-15">
+        <p class="necesita-ayuda">¿Necesitas ayuda? <i class="fa-solid fa-chevron-right help-icon"></i></p>
         <div class="ayuda-botones">
           <button class="pill-btn" routerLink="/recuperar">Olvidé la contraseña</button>
         </div>
       </div>
 
       <!-- Enlace para crear cuenta -->
-      <div class="crear-cuenta-wrapper">
-        <span>¿No tiene una cuenta?</span>
-        <a routerLink="/registrar" class="crear-cuenta-link">Crear una cuenta <i class="fa-solid fa-chevron-right"></i></a>
+      <div class="crear-cuenta-wrapper mt-30">
+        <p>¿No tienes una cuenta? <a routerLink="/registrar" class="crear-cuenta-link">Regístrate ahora</a></p>
       </div>
     </div>
   </div>

@@ -54,24 +54,34 @@
 .login-hero {
   flex: 1.2;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* Lo pegamos más hacia el centro/derecha para dejar ver al doctor */
   align-items: center;
   padding: 60px 4%;
 }
 
+.hero-glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 45px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  margin-left: 280px; /* Ajustado para respetar al doctor pero estar más centrado */
+  animation: slideFadeIn 0.8s ease-out;
+}
+
 .hero-content {
-  max-width: 600px;
-  margin-left: 380px; 
+  max-width: 500px;
   text-align: left;
 }
 
 .hero-content h1 {
-  font-size: 3.2rem;
+  font-size: 3rem;
   font-weight: 800;
   color: #1a2a3a;
   line-height: 1.1;
-  margin-bottom: 15px;
-  text-shadow: 0 0 20px rgba(255,255,255,1);
+  margin-bottom: 20px;
 }
 
 .hero-subtitle {
@@ -110,7 +120,8 @@
   justify-content: center;
   font-size: 1.3rem;
   color: #0fbf6a;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 15px rgba(10, 124, 74, 0.08);
+  flex-shrink: 0;
 }
 
 .feature-item strong {

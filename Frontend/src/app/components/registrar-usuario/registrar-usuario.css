@@ -65,11 +65,11 @@
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-left: 8px solid #0fbf6a; /* El borde verde que sugeriste */
-  padding: 45px 55px; /* Más espacio lateral por el borde */
+  border-left: 8px solid #0fbf6a; 
+  padding: 45px 55px; 
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-  margin-left: 420px; 
-  width: 600px; /* Forzamos el ancho para que no se vea encogido */
+  margin-left: 320px; /* Ajustado para que no empuje tanto al otro panel */
+  width: 600px; 
   animation: slideFadeIn 0.8s ease-out;
 }
 
@@ -148,8 +148,8 @@
 }
 
 .registrar-card-wide {
-  max-width: 550px !important; /* Más ancha para el grid */
-  padding: 40px !important;
+  max-width: 550px !important; /* Restauramos el ancho amplio original */
+  padding: 45px !important;
 }
 
 .login-card {

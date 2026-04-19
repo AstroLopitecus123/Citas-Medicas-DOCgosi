@@ -147,6 +147,32 @@
   border: 1px solid rgba(255,255,255,1);
 }
 
+.crear-cuenta-wrapper {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #64748b;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 25px;
+}
+
+.crear-cuenta-wrapper p {
+    margin: 0;
+}
+
+.crear-cuenta-link {
+  font-weight: 800;
+  color: #1a2a3a;
+  text-decoration: none;
+  margin-left: 5px;
+  transition: 0.2s;
+  border-bottom: 2px solid rgba(15, 191, 106, 0.2);
+}
+
+.crear-cuenta-link:hover {
+  color: #0fbf6a;
+  border-bottom-color: #0fbf6a;
+}
+
 .card-title {
   text-align: center;
   font-size: 2rem;
@@ -280,6 +306,16 @@
   box-shadow: 0 12px 22px rgba(10, 124, 74, 0.3);
 }
 
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrapper input {
+  padding-right: 45px !important; /* Espacio para el ojo */
+}
+
 .eye-btn {
   position: absolute;
   right: 12px;
@@ -289,7 +325,17 @@
   border: none;
   color: #94a3b8;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.eye-btn:hover {
+  color: #0fbf6a;
 }
 
 /* MENSAJES */

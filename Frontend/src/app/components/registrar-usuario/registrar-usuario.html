@@ -100,7 +100,7 @@
             <label for="confirmarContrasena">Confirmación</label>
             <div class="input-icon-wrapper">
               <input id="confirmarContrasena" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
-                [(ngModel)]="ctrl.confirmarContrasena" name="confirmarContrasena" placeholder="Repite password" 
+                [(ngModel)]="ctrl.confirmarContrasena" name="confirmarContrasena" placeholder="Repite tu contraseña" 
                 (input)="ctrl.setTouched('confirmarContrasena')" required>
               <button type="button" class="eye-btn" (click)="ctrl.toggleConfirmarPassword()">
                 <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarConfirmarContrasena" [class.fa-eye-slash]="ctrl.mostrarConfirmarContrasena"></i>
@@ -158,9 +158,8 @@
 
       </form>
 
-      <div class="crear-cuenta-wrapper mt-20">
-        <span>¿Ya tienes una cuenta?</span>
-        <a routerLink="/login" class="crear-cuenta-link">Inicia sesión</a>
+      <div class="crear-cuenta-wrapper mt-30">
+        <p>¿Ya tienes una cuenta? <a routerLink="/login" class="crear-cuenta-link">Inicia sesión aquí</a></p>
       </div>
 
       <!-- Mensajes globales -->

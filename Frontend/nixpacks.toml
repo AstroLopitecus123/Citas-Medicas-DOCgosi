@@ -1,8 +1,8 @@
 [phases.install]
-cmds = ["echo 'Skipping install, using prebuilt browser folder'"]
+cmds = ["npm install"]
 
 [phases.build]
-cmds = ["echo 'Skipping build, using prebuilt browser folder'"]
+cmds = ["npm run build"]
 
 [start]
 cmd = "npx -y serve -s browser -l $PORT"

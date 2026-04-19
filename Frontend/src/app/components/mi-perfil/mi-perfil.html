@@ -103,43 +103,41 @@
     </div>
 </div>
 
-<!-- MODAL CAMBIO CONTRASEÑA -->
-<div class="modal-overlay" *ngIf="mostrarModalPassword">
-    <div class="modal password-modal animation-pop-in" style="max-width: 450px;">
-        <div class="modal-header">
-            <h3><i class="fa-solid fa-lock text-success" style="margin-right: 10px;"></i> Actualizar Seguridad</h3>
-            <button class="btn-close" (click)="cerrarModalPassword()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-        </div>
-        
-        <div class="modal-body" style="padding: 20px 0;">
-            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Ingresa tu contraseña actual para autorizar el cambio.</p>
+        <!-- SECCIÓN DE SEGURIDAD (CAMBIO DE CONTRASEÑA) -->
+        <div class="premium-card edit-card animation-slide-up" *ngIf="mostrarModalPassword">
+            <h3 class="card-title">
+                <i class="fa-solid fa-shield-halved"></i> Actualizar Seguridad
+            </h3>
+            <p class="subtitle mb-4">Ingresa tu contraseña actual y la nueva para autorizar el cambio.</p>
             
-            <div class="form-group-modern">
-                <label>Contraseña Actual</label>
-                <input type="password" class="form-control" [(ngModel)]="pwdActual" placeholder="••••••••">
+            <div class="form-grid">
+                <div class="form-group-modern">
+                    <label>Contraseña Actual</label>
+                    <input type="password" class="form-control" [(ngModel)]="pwdActual" placeholder="••••••••">
+                </div>
+                <!-- Divisor visual -->
+                <div class="form-group-modern" style="grid-column: span 2; margin: 0;"><hr style="opacity: 0.05;"></div>
+                
+                <div class="form-group-modern">
+                    <label>Nueva Contraseña</label>
+                    <input type="password" class="form-control" [(ngModel)]="pwdNueva" placeholder="Mín. 8 caracteres">
+                </div>
+                <div class="form-group-modern">
+                    <label>Confirmar Nueva Contraseña</label>
+                    <input type="password" class="form-control" [(ngModel)]="pwdConfirmar" placeholder="Repite la contraseña">
+                </div>
             </div>
 
-            <hr style="opacity: 0.1; margin: 20px 0;">
-
-            <div class="form-group-modern">
-                <label>Nueva Contraseña</label>
-                <input type="password" class="form-control" [(ngModel)]="pwdNueva" placeholder="Mín. 8 caracteres">
-            </div>
-
-            <div class="form-group-modern">
-                <label>Confirmar Nueva Contraseña</label>
-                <input type="password" class="form-control" [(ngModel)]="pwdConfirmar" placeholder="Repite la contraseña">
+            <div class="form-actions mt-4">
+                <button class="btn-action btn-add" (click)="ejecutarCambioPassword()">
+                    <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
+                </button>
+                <button class="btn-action btn-outline ml-2" (click)="cerrarModalPassword()">
+                    Cancelar
+                </button>
             </div>
         </div>
 
-        <div class="modal-footer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-            <button class="btn-action btn-add w-100" (click)="ejecutarCambioPassword()">
-                <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
-            </button>
-            <button class="btn-action btn-outline w-100" style="border: 1px solid #e2e8f0;" (click)="cerrarModalPassword()">
-                Cancelar
-            </button>
-        </div>
     </div>
 </div>
 

@@ -49,16 +49,21 @@
   <!-- FORMULARIO DE PAGO CON STRIPE ELEMENTS -->
   <div class="pago-card" *ngIf="!pagoExitoso">
 
-    <!-- Header -->
+    <!-- Header Premium -->
     <div class="pago-header">
-      <button class="btn-back" (click)="volver()">
+      <button class="btn-back" (click)="volver()" title="Volver">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
-      <div class="header-brand">
-        <i class="fa-solid fa-shield-check text-green"></i>
+      
+      <div class="header-main-content">
+        <div class="lock-icon-container">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div class="header-text">
+          <h2>Pago Seguro con <span class="txt-highlight">Tarjeta</span></h2>
+          <p><i class="fa-solid fa-shield-check"></i> Cifrado SSL 256-bit — Transacción Protegida</p>
+        </div>
       </div>
-      <h2>Pago Seguro con Tarjeta</h2>
-      <p>Cifrado SSL 256-bit — Transacción Protegida</p>
     </div>
 
     <!-- Resumen Cita -->

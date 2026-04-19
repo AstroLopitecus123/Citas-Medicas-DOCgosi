@@ -54,7 +54,7 @@
             <td>
               <div class="title-cell">
                 <strong>{{ esp.nombre }}</strong>
-                <span class="sub-txt">Actualizado: {{ esp.fechaCreacion | date:'dd/MM/yy' }}</span>
+                <span class="sub-txt">Actualizado: {{ esp.fechaCreacion ? (esp.fechaCreacion | date:'dd/MM/yy') : 'No registrada' }}</span>
               </div>
             </td>
             <td class="desc-cell">{{ esp.descripcion || '-' }}</td>

@@ -23,6 +23,7 @@ export class AdminDashboardComponent implements OnInit {
 
   cargando = true;
   usuario: any = null;
+  today: Date = new Date();
 
   menuItems = [
     {

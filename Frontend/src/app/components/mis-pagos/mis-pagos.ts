@@ -16,6 +16,7 @@ export class MisPagosComponent implements OnInit {
   pagos: Pago[] = [];
   cargando = true;
   usuario: any = null;
+  today: Date = new Date();
   error = '';
   
   // Dashboard Analytics

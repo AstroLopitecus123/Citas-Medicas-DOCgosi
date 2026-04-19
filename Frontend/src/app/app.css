@@ -17,6 +17,7 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   height: 75px;
+  padding: 0 40px; /* Añade espacio a los lados para que no pegue a los bordes */
   display: flex;
   align-items: center;
   position: sticky;

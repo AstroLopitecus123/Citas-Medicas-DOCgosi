@@ -49,8 +49,12 @@ public class JwtFilter extends OncePerRequestFilter {
             token = header.substring(7);
             System.out.println("Token extraído: " + token);
 
-            username = jwtUtil.getUsernameFromToken(token);
-            System.out.println("Username from token: " + username);
+            try {
+                username = jwtUtil.getUsernameFromToken(token);
+                System.out.println("Username from token: " + username);
+            } catch (Exception e) {
+                System.err.println("❌ No se pudo extraer el usuario del token (puede estar expirado): " + e.getMessage());
+            }
         }
 
 

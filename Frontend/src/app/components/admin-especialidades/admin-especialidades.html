@@ -1,111 +1,141 @@
 <div class="admin-layout">
   
-  <!-- 🔍 Cabecera de Sección -->
-  <div class="section-header">
-    <h2><i class="fa-solid fa-stethoscope"></i> Especialidades Médicas</h2>
-  </div>
+  <!-- 🔍 Banner de Bienvenida Premium -->
+  <section class="premium-welcome-banner">
+    <div class="banner-content">
+      <div class="banner-text">
+        <div class="badge-role">ADMINISTRADOR</div>
+        <h1>Gestión de Especialidades 🌿</h1>
+        <p>Configura y administra el catálogo de especialidades médicas de la clínica.</p>
+        
+        <div class="banner-stats">
+          <div class="stat-pill">
+            <span class="label">Total Especialidades:</span>
+            <span class="value">{{ ctrl.especialidades.length }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="banner-actions">
+        <button class="btn-premium-action" (click) = "ctrl.abrirModalNuevo()">
+          <i class="fa-solid fa-plus"></i> Nueva Especialidad
+        </button>
+      </div>
+    </div>
+    <div class="banner-visual">
+       <i class="fa-solid fa-stethoscope floating-icon"></i>
+    </div>
+  </section>
 
-  <div class="admin-especialidades-grid">
-    <!-- Panel izquierdo: Formulario -->
-    <div class="premium-card">
-      <div class="card-title-flex">
-        <h3><i class="fa-solid" [class.fa-pen-to-square]="ctrl.editando" [class.fa-plus-circle]="!ctrl.editando"></i> 
-          {{ ctrl.editando ? 'Editar' : 'Nueva' }} Especialidad
-        </h3>
+  <!-- 📊 Listado de Especialidades (Full Width) -->
+  <div class="premium-card table-card animation-slide-up">
+    <div class="card-header-modern">
+      <h3><i class="fa-solid fa-list-ul"></i> Listado de Especialidades</h3>
+      <div class="header-filters">
         <span *ngIf="ctrl.mensaje" class="inline-msg success">{{ ctrl.mensaje }}</span>
         <span *ngIf="ctrl.error" class="inline-msg error">{{ ctrl.error }}</span>
       </div>
+    </div>
+    
+    <div class="modern-table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Especialidad</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th style="text-align: center;">Acciones</th>
+          </tr>
+        </thead>
 
-      <div class="form-modern">
-        <!-- Formulario (Unificado para crear/editar) -->
-        <div class="form-group-modern">
-          <label>Nombre de la Especialidad</label>
-          <input *ngIf="ctrl.editando"
-            type="text"
-            class="form-control"
-            placeholder="Ej: Cardiología"
-            [(ngModel)]="ctrl.editando.nombre"
-          />
-          <input *ngIf="!ctrl.editando"
-            type="text"
-            class="form-control"
-            placeholder="Ej: Cardiología"
-            [(ngModel)]="ctrl.nueva.nombre"
-          />
+        <tbody>
+          <tr *ngFor="let esp of ctrl.especialidades">
+            <td class="id-cell">#{{ esp.id }}</td>
+            <td>
+              <div class="title-cell">
+                <strong>{{ esp.nombre }}</strong>
+                <span class="sub-txt">Actualizado: {{ esp.fechaCreacion | date:'dd/MM/yy' }}</span>
+              </div>
+            </td>
+            <td class="desc-cell">{{ esp.descripcion || '-' }}</td>
+            <td>
+              <span [class]="'badge-modern ' + (esp.estado === 'ACTIVA' ? 'success' : 'danger')">
+                {{ esp.estado }}
+              </span>
+            </td>
+            <td>
+              <div class="actions-flex">
+                <button class="btn-table-action btn-edit" (click)="ctrl.editar(esp)" title="Editar">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn-table-action btn-status" (click)="ctrl.cambiarEstado(esp)" 
+                        [title]="esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar'">
+                  <i class="fa-solid" [class.fa-eye-slash]="esp.estado === 'ACTIVA'" [class.fa-eye]="esp.estado !== 'ACTIVA'"></i>
+                </button>
+                <button class="btn-table-action btn-delete" (click)="ctrl.eliminar(esp.id)" title="Eliminar">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 💎 MODAL GLASS: NUEVA / EDITAR ESPECIALIDAD -->
+  <div class="glass-overlay" *ngIf="ctrl.mostrandoModal" (click)="ctrl.cerrarModal()">
+    <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
+      <div class="modal-header-glass">
+        <div class="header-icon-box">
+          <i class="fa-solid" [ngClass]="ctrl.modoEdicion ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
         </div>
-
-        <div class="form-group-modern">
-          <label>Descripción detallada</label>
-          <textarea *ngIf="ctrl.editando"
-            class="form-control tall-area"
-            placeholder="Describa el alcance de la especialidad..."
-            [(ngModel)]="ctrl.editando.descripcion"
-          ></textarea>
-          <textarea *ngIf="!ctrl.editando"
-            class="form-control tall-area"
-            placeholder="Describa el alcance de la especialidad..."
-            [(ngModel)]="ctrl.nueva.descripcion"
-          ></textarea>
+        <div>
+          <h3>{{ ctrl.modoEdicion ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h3>
+          <p>Completa la información técnica de la rama médica.</p>
         </div>
+        <button class="btn-close-glass" (click)="ctrl.cerrarModal()">&times;</button>
+      </div>
 
-        <div class="form-actions">
-          <button class="btn-action btn-add" (click)="ctrl.guardar()">
-            <i class="fa-solid fa-floppy-disk"></i> {{ ctrl.editando ? 'Actualizar' : 'Guardar' }}
-          </button>
-          <button *ngIf="ctrl.editando" class="btn-action btn-outline" (click)="ctrl.cancelarEdicion()">
-            <i class="fa-solid fa-xmark"></i> Cancelar
-          </button>
+      <div class="modal-body-glass">
+        <div class="form-modern">
+          <div class="form-group-modern">
+            <label><i class="fa-solid fa-tag"></i> Nombre de la Especialidad</label>
+            <input *ngIf="ctrl.editando"
+              type="text"
+              class="form-control-text"
+              placeholder="Ej: Cardiología"
+              [(ngModel)]="ctrl.editando.nombre"
+            />
+            <input *ngIf="!ctrl.editando"
+              type="text"
+              class="form-control-text"
+              placeholder="Ej: Cardiología"
+              [(ngModel)]="ctrl.nueva.nombre"
+            />
+          </div>
+
+          <div class="form-group-modern">
+            <label><i class="fa-solid fa-align-left"></i> Descripción detallada</label>
+            <textarea *ngIf="ctrl.editando"
+              class="form-control-text tall-area"
+              placeholder="Describa el alcance de la especialidad..."
+              [(ngModel)]="ctrl.editando.descripcion"
+            ></textarea>
+            <textarea *ngIf="!ctrl.editando"
+              class="form-control-text tall-area"
+              placeholder="Describa el alcance de la especialidad..."
+              [(ngModel)]="ctrl.nueva.descripcion"
+            ></textarea>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Panel derecho: Listado -->
-    <div class="premium-card">
-      <h3><i class="fa-solid fa-list-ul"></i> Listado de Especialidades</h3>
-      
-      <div class="modern-table-container">
-        <table class="modern-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Especialidad</th>
-              <th>Descripción</th>
-              <th>Estado</th>
-              <th style="text-align: center;">Acciones</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr *ngFor="let esp of ctrl.especialidades">
-              <td class="id-cell">#{{ esp.id }}</td>
-              <td>
-                <div class="title-cell">
-                  <strong>{{ esp.nombre }}</strong>
-                  <span class="sub-txt">Creado: {{ esp.fechaCreacion | date:'dd/MM/yy' }}</span>
-                </div>
-              </td>
-              <td class="desc-cell">{{ esp.descripcion || '-' }}</td>
-              <td>
-                <span [class]="'badge' + (esp.estado === 'ACTIVA' ? ' badge-success' : ' badge-danger')">
-                  {{ esp.estado }}
-                </span>
-              </td>
-              <td>
-                <div class="actions-flex">
-                  <button class="btn-icon" (click)="ctrl.editar(esp)" title="Editar">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
-                  <button class="btn-icon" (click)="ctrl.cambiarEstado(esp)" [title]="esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar'">
-                    <i class="fa-solid" [class.fa-toggle-on]="esp.estado === 'ACTIVA'" [class.fa-toggle-off]="esp.estado !== 'ACTIVA'"></i>
-                  </button>
-                  <button class="btn-icon delete" (click)="ctrl.eliminar(esp.id)" title="Eliminar">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="ctrl.cerrarModal()">Cancelar</button>
+        <button class="btn-confirm-glass" (click)="ctrl.guardar()">
+          <i class="fa-solid fa-floppy-disk"></i> {{ ctrl.modoEdicion ? 'Actualizar Cambios' : 'Guardar Especialidad' }}
+        </button>
       </div>
     </div>
   </div>

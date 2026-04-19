@@ -18,6 +18,7 @@ export class AdminMedicosController {
   listaEspecialidades: Especialidad[] = [];
   medicoSeleccionado: UsuarioFull = new UsuarioFull();
   especialidadSeleccionada?: Especialidad;
+  mostrandoModalAsignar = false;
   error = '';
   cargando = false;
 
@@ -79,9 +80,21 @@ export class AdminMedicosController {
         next: medicoActualizado => {
           console.log('Especialidad actualizada:', medicoActualizado);
           this.medicoSeleccionado.especialidad = medicoActualizado.especialidad;
+          this.cerrarModal();
+          this.cargarMedicos(); // Recargar para ver cambios en la tabla
         },
         error: err => console.error('Error al actualizar especialidad:', err)
       });
+  }
+
+  abrirModalAsignar(medico: UsuarioFull) {
+    this.medicoSeleccionado = medico;
+    this.especialidadSeleccionada = medico.especialidad ?? undefined;
+    this.mostrandoModalAsignar = true;
+  }
+
+  cerrarModal() {
+    this.mostrandoModalAsignar = false;
   }
 
   modificarHorario(medico: UsuarioFull) {

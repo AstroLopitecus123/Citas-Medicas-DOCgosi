@@ -1,59 +1,60 @@
 /* ==========================================================================
-   ADMIN MEDICOS (MODERN DASHBOARD)
+   ADMIN MEDICOS (PREMIUM UNIFIED)
    ========================================================================== */
 
-.admin-medicos-grid {
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 30px;
-  align-items: start;
+.table-card {
+    padding: 0;
+    overflow: hidden;
 }
 
-.premium-card h3 {
-  font-size: 1.25rem;
-  color: #1a2a3a;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 0;
+.card-header-modern {
+    padding: 25px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.premium-card h3 i {
-  color: #0fbf6a;
+.card-header-modern h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #1a2a3a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.form-group-modern {
-  margin-bottom: 20px;
+.card-header-modern h3 i {
+    color: #0fbf6a;
 }
 
-.form-group-modern label {
-  display: block;
-  font-size: 0.9rem;
+.error-pill {
+  background: rgba(245, 101, 101, 0.1);
+  color: #c53030;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #4a5568;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.w-100 {
-  width: 100%;
+  border: 1px solid rgba(245,101,101,0.2);
 }
 
 /* TABLA ASIGNACIONES */
 .id-cell {
   font-weight: 700;
   color: #94a3b8;
+  width: 70px;
+  padding-left: 35px !important;
 }
 
 .doc-info-cell {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .doc-info-cell strong {
   color: #1a2a3a;
+  font-size: 1rem;
 }
 
 .sub-txt {
@@ -61,39 +62,53 @@
   color: #94a3b8;
 }
 
-.btn-modificar-modern {
-  background: white;
-  border: 1px solid #0fbf6a;
-  color: #0a7c4a;
-  font-size: 0.85rem;
-  padding: 8px 16px;
+.specialty-badge-group {
+    display: flex;
+    gap: 8px;
 }
 
-.btn-modificar-modern:hover {
-  background: #f4fdf7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(15, 191, 106, 0.15);
+.badge-modern {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.card-header-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+.badge-modern.info { background: #ebf8ff; color: #3182ce; }
+.badge-modern.danger { background: #fff5f5; color: #e53e3e; }
+
+/* MODAL PREVIEW */
+.doc-preview-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
 }
 
-.error-pill {
-  background: rgba(245, 101, 101, 0.1);
-  color: #c53030;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
+.doc-preview-card strong {
+    font-size: 1.1rem;
+    color: #0f172a;
 }
+
+.doc-preview-card span {
+    font-size: 0.85rem;
+    color: #0fbf6a;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.justify-center { justify-content: center; }
+.mt-15 { margin-top: 15px; }
 
 /* RESPONSIVE */
-@media (max-width: 1100px) {
-  .admin-medicos-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1024px) {
+  .admin-layout { padding: 20px; }
+  .badge-modern span { display: none; }
 }

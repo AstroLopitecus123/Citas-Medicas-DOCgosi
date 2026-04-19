@@ -7,6 +7,8 @@ export class AdminEspecialidadesController {
   especialidades: Especialidad[] = [];
   nueva: Especialidad = new Especialidad();
   editando: Especialidad | null = null;
+  mostrandoModal = false;
+  modoEdicion = false;
   mensaje: string = '';
   error: string = '';
 
@@ -34,7 +36,7 @@ export class AdminEspecialidadesController {
       this.especialidadService.actualizar(this.editando.id, this.editando).subscribe({
         next: () => {
           this.mensaje = '✅ Especialidad actualizada correctamente.';
-          this.cancelarEdicion();
+          this.cerrarModal();
           this.listar();
         },
         error: () => this.error = '❌ Error al actualizar la especialidad.'
@@ -44,6 +46,7 @@ export class AdminEspecialidadesController {
         next: () => {
           this.mensaje = '✅ Especialidad creada correctamente.';
           this.nueva = new Especialidad();
+          this.cerrarModal();
           this.listar();
         },
         error: () => this.error = '❌ Error al crear la especialidad.'
@@ -51,8 +54,24 @@ export class AdminEspecialidadesController {
     }
   }
 
+  abrirModalNuevo(): void {
+    this.nueva = new Especialidad();
+    this.editando = null;
+    this.modoEdicion = false;
+    this.mostrandoModal = true;
+  }
+
   editar(esp: Especialidad): void {
     this.editando = new Especialidad({ ...esp });
+    this.modoEdicion = true;
+    this.mostrandoModal = true;
+  }
+
+  cerrarModal(): void {
+    this.mostrandoModal = false;
+    this.editando = null;
+    this.mensaje = '';
+    this.error = '';
   }
 
   eliminar(id: number): void {

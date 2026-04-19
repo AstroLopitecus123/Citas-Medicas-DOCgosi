@@ -1,98 +1,93 @@
 /* ==========================================================================
-   ADMIN ESPECIALIDADES (MODERN DASHBOARD)
+   ADMIN ESPECIALIDADES (PREMIUM UNIFIED)
    ========================================================================== */
 
-.admin-especialidades-grid {
-  display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 30px;
-  align-items: start;
+.table-card {
+    padding: 0;
+    overflow: hidden;
 }
 
-.card-title-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+.card-header-modern {
+    padding: 25px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.card-title-flex h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #1a2a3a;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.card-header-modern h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #1a2a3a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.card-title-flex h3 i {
-  color: #0fbf6a;
+.card-header-modern h3 i {
+    color: #0fbf6a;
 }
 
 .inline-msg {
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.inline-msg.success { background: rgba(15, 191, 106, 0.1); color: #0a7c4a; }
-.inline-msg.error { background: rgba(245, 101, 101, 0.1); color: #c53030; }
-
-.form-group-modern {
-  margin-bottom: 20px;
-}
-
-.form-group-modern label {
-  display: block;
+  padding: 6px 16px;
+  border-radius: 10px;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #4a5568;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.tall-area {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-}
+.inline-msg.success { background: rgba(15, 191, 106, 0.1); color: #0a7c4a; border: 1px solid rgba(15,191,106,0.2); }
+.inline-msg.error { background: rgba(245, 101, 101, 0.1); color: #c53030; border: 1px solid rgba(245,101,101,0.2); }
 
 /* TABLA REFINADA */
 .id-cell {
   font-weight: 700;
   color: #94a3b8;
-  width: 50px;
+  width: 70px;
+  padding-left: 35px !important;
 }
 
 .title-cell {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+}
+
+.title-cell strong {
+    color: #1a2a3a;
+    font-size: 1rem;
 }
 
 .desc-cell {
-  max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 400px;
   color: #64748b;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .sub-txt {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #94a3b8;
 }
 
+.badge-modern {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-modern.success { background: #e6fffa; color: #047481; }
+.badge-modern.danger { background: #fff5f5; color: #c53030; }
+
+.tall-area {
+    min-height: 140px;
+    resize: none;
+}
+
 /* RESPONSIVE */
-@media (max-width: 1100px) {
-  .admin-especialidades-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1024px) {
+  .admin-layout { padding: 20px; }
+  .desc-cell { max-width: 200px; }
 }

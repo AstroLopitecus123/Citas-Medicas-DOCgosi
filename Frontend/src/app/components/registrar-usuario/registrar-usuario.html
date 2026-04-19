@@ -1,131 +1,174 @@
-<div class="registrar-container-modern">
-  
-  <div class="premium-card registrar-card-premium">
-    <div class="registrar-header">
-       <i class="fa-solid fa-user-plus main-icon"></i>
-       <h2>Crea tu Cuenta Médica</h2>
-       <p>Únete a la red de salud más avanzada de la región.</p>
+<div class="login-layout">
+  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+  <div class="doctor-container">
+    <img src="/assets/images/DoctorLogin.png" alt="Doctor" class="doctor-img">
+  </div>
+
+  <!-- COLUMNA IZQUIERDA (Texto) -->
+  <div class="login-hero anim-fade-in">
+    <div class="hero-content">
+      <h1>Únete a R.E.T.O Salud</h1>
+      <p class="hero-subtitle">Crea tu cuenta hoy y accede a la red de salud más avanzada desde la comodidad de tu hogar.</p>
+      
+      <div class="hero-features">
+        <div class="feature-item">
+          <i class="fa-solid fa-calendar-check"></i>
+          <div>
+            <strong>Citas en 24h</strong>
+            <span>Acceso rápido a especialistas</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-file-medical"></i>
+          <div>
+            <strong>Historia Digital</strong>
+            <span>Tus documentos siempre contigo</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-shield-heart"></i>
+          <div>
+            <strong>Atención Segura</strong>
+            <span>Protocolos de alta calidad</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <form (ngSubmit)="ctrl.registrar()" class="registrar-form">
-
-      <div class="form-row-modern">
-        <!-- Nombre -->
-        <div class="form-group-modern">
-          <label for="nombre">Nombre</label>
-          <input id="nombre" class="form-control" type="text" [(ngModel)]="ctrl.usuario.nombre" name="nombre"
-            placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')">
-          <span *ngIf="ctrl.touched.nombre && !ctrl.usuario.nombre" class="msg-error-mini">
-            Requerido
-          </span>
-        </div>
-
-        <!-- Apellido -->
-        <div class="form-group-modern">
-          <label for="apellido">Apellido</label>
-          <input id="apellido" class="form-control" type="text" [(ngModel)]="ctrl.usuario.apellido" name="apellido"
-            placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')">
-          <span *ngIf="ctrl.touched.apellido && !ctrl.usuario.apellido" class="msg-error-mini">
-            Requerido
-          </span>
-        </div>
+  <!-- COLUMNA DERECHA (Formulario) -->
+  <div class="login-form-wrapper">
+    <div class="login-card anim-slide-up registrar-card-wide">
+      <div class="back-link">
+        <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
       </div>
 
-      <!-- Correo -->
-      <div class="form-group-modern correo-group">
-        <label for="correo">Correo Electrónico</label>
-        <div class="input-with-domain">
-          <input id="correo" class="form-control" type="text" [(ngModel)]="ctrl.usuario.correoUsuario" name="correoUsuario"
-            placeholder="usuario" (input)="ctrl.setTouched('correo')">
-          <span class="domain-badge">&#64;gmail.com</span>
-        </div>
-        <div class="error-stack">
-          <span *ngIf="ctrl.touched.correo && !ctrl.usuario.correoUsuario" class="msg-error-mini">El correo es obligatorio</span>
-          <span *ngIf="ctrl.touched.correo && ctrl.usuario.correoUsuario && !ctrl.emailValido" class="msg-error-mini">Formato inválido</span>
-          <span *ngIf="ctrl.correoError" class="msg-error-mini">{{ ctrl.correoError }}</span>
-        </div>
-      </div>
+      <h2 class="card-title">Crear Cuenta</h2>
+      <p class="instructor-text">Completa tus datos para empezar a cuidar tu salud.</p>
 
-      <!-- Contraseña -->
-      <div class="form-group-modern pos-rel">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" class="form-control" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
-          [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••"
-          (input)="ctrl.setTouched('contrasena'); ctrl.setTouched('confirmarContrasena')">
-        <span class="password-toggle-icon" (click)="ctrl.togglePassword()">
-          <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
-        </span>
-      </div>
+      <form (ngSubmit)="ctrl.registrar()" class="registrar-form">
+        
+        <div class="form-grid">
+          <!-- Nombre -->
+          <div class="input-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" [(ngModel)]="ctrl.usuario.nombre" name="nombre"
+              placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')" required>
+            <span *ngIf="ctrl.touched.nombre && !ctrl.usuario.nombre" class="msg-error-mini">Requerido</span>
+          </div>
 
-      <!-- Confirmar Contraseña -->
-      <div class="form-group-modern pos-rel mt-15">
-        <label for="confirmarContrasena">Confirmación de Contraseña</label>
-        <input id="confirmarContrasena" class="form-control" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
-          [(ngModel)]="ctrl.confirmarContrasena" name="confirmarContrasena" placeholder="Repite tu contraseña" 
-          (input)="ctrl.setTouched('confirmarContrasena')">
-        <span class="password-toggle-icon" (click)="ctrl.toggleConfirmarPassword()">
-          <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarConfirmarContrasena" [class.fa-eye-slash]="ctrl.mostrarConfirmarContrasena"></i>
-        </span>
-      </div>
-
-      <!-- Validaciones visuales de contraseña -->
-      <div class="pw-strength" *ngIf="ctrl.touched.contrasena">
-        <div class="check-item" [class.valid]="ctrl.passwordChecks.length"><i class="fa-solid fa-circle-check"></i> 8+ caracteres</div>
-        <div class="check-item" [class.valid]="ctrl.passwordChecks.uppercase"><i class="fa-solid fa-circle-check"></i> Mayúscula</div>
-        <div class="check-item" [class.valid]="ctrl.passwordChecks.number"><i class="fa-solid fa-circle-check"></i> Un número</div>
-        <div class="check-item" [class.valid]="ctrl.passwordChecks.match" *ngIf="ctrl.touched.confirmarContrasena"><i class="fa-solid fa-circle-check"></i> Coinciden</div>
-      </div>
-
-      <div class="form-row-modern mt-10">
-        <!-- DNI -->
-        <div class="form-group-modern">
-          <label for="dni">DNI / ID</label>
-          <input id="dni" class="form-control" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" (input)="ctrl.setTouched('dni')">
-          <span *ngIf="ctrl.touched.dni && !ctrl.dniValido" class="msg-error-mini">Mínimo 8 dígitos</span>
+          <!-- Apellido -->
+          <div class="input-group">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" type="text" [(ngModel)]="ctrl.usuario.apellido" name="apellido"
+              placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')" required>
+            <span *ngIf="ctrl.touched.apellido && !ctrl.usuario.apellido" class="msg-error-mini">Requerido</span>
+          </div>
         </div>
 
-        <!-- Teléfono -->
-        <div class="form-group-modern">
-          <label for="telefono">Teléfono</label>
-          <input id="telefono" class="form-control" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono"
-            (input)="ctrl.setTouched('telefono')">
-          <span *ngIf="ctrl.touched.telefono && !ctrl.telefonoValido" class="msg-error-mini">
-            9 dígitos requeridos
-          </span>
+        <!-- Correo -->
+        <div class="input-group correo-group-modern">
+          <label for="correo">Correo Electrónico</label>
+          <div class="input-with-domain">
+            <input id="correo" type="text" [(ngModel)]="ctrl.usuario.correoUsuario" name="correoUsuario"
+              placeholder="usuario" (input)="ctrl.setTouched('correo')" required>
+            <span class="domain-tag">@gmail.com</span>
+          </div>
+          <div class="error-stack">
+            <span *ngIf="ctrl.touched.correo && !ctrl.usuario.correoUsuario" class="msg-error-mini">El correo es obligatorio</span>
+            <span *ngIf="ctrl.touched.correo && ctrl.usuario.correoUsuario && !ctrl.emailValido" class="msg-error-mini">Formato inválido</span>
+            <span *ngIf="ctrl.correoError" class="msg-error-mini">{{ ctrl.correoError }}</span>
+          </div>
         </div>
+
+        <div class="form-grid">
+          <!-- Contraseña -->
+          <div class="input-group pos-rel">
+            <label for="contrasena">Contraseña</label>
+            <div class="input-icon-wrapper">
+              <input id="contrasena" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
+                [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••"
+                (input)="ctrl.setTouched('contrasena'); ctrl.setTouched('confirmarContrasena')" required>
+              <button type="button" class="eye-btn" (click)="ctrl.togglePassword()">
+                <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Confirmar Contraseña -->
+          <div class="input-group pos-rel">
+            <label for="confirmarContrasena">Confirmación</label>
+            <div class="input-icon-wrapper">
+              <input id="confirmarContrasena" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
+                [(ngModel)]="ctrl.confirmarContrasena" name="confirmarContrasena" placeholder="Repite password" 
+                (input)="ctrl.setTouched('confirmarContrasena')" required>
+              <button type="button" class="eye-btn" (click)="ctrl.toggleConfirmarPassword()">
+                <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarConfirmarContrasena" [class.fa-eye-slash]="ctrl.mostrarConfirmarContrasena"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validaciones de contraseña chips -->
+        <div class="pw-chips" *ngIf="ctrl.touched.contrasena">
+          <span [class.valid]="ctrl.passwordChecks.length">8+ letras</span>
+          <span [class.valid]="ctrl.passwordChecks.uppercase">Mayúscula</span>
+          <span [class.valid]="ctrl.passwordChecks.number">Número</span>
+          <span [class.valid]="ctrl.passwordChecks.match" *ngIf="ctrl.touched.confirmarContrasena">Coindicen</span>
+        </div>
+
+        <div class="form-grid mt-10">
+          <!-- DNI -->
+          <div class="input-group">
+            <label for="dni">DNI / ID</label>
+            <input id="dni" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" (input)="ctrl.setTouched('dni')" required>
+            <span *ngIf="ctrl.touched.dni && !ctrl.dniValido" class="msg-error-mini">Mínimo 8 dígitos</span>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="input-group">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono"
+              (input)="ctrl.setTouched('telefono')" required>
+            <span *ngIf="ctrl.touched.telefono && !ctrl.telefonoValido" class="msg-error-mini">9 dígitos</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <!-- Fecha Nacimiento -->
+          <div class="input-group">
+            <label for="fechaNacimiento">Nacimiento</label>
+            <input id="fechaNacimiento" type="date" [(ngModel)]="ctrl.usuario.fechaNacimiento" name="fechaNacimiento"
+              (input)="ctrl.setTouched('fechaNacimiento')" required>
+          </div>
+
+          <!-- País -->
+          <div class="input-group">
+            <label for="pais">País</label>
+            <select id="pais" [(ngModel)]="ctrl.usuario.paisId" name="pais" (change)="ctrl.setTouched('paisId')" required>
+              <option value="" disabled>Selecciona...</option>
+              <option *ngFor="let p of ctrl.paises" [value]="p.id">{{ p.nombre }}</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit w-100 mt-20">
+          <i class="fa-solid fa-user-check" style="margin-right: 8px;"></i> Finalizar Registro
+        </button>
+
+      </form>
+
+      <div class="crear-cuenta-wrapper mt-20">
+        <span>¿Ya tienes una cuenta?</span>
+        <a routerLink="/login" class="crear-cuenta-link">Inicia sesión</a>
       </div>
 
-      <div class="form-row-modern">
-        <!-- Fecha Nacimiento -->
-        <div class="form-group-modern">
-          <label for="fechaNacimiento">Nacimiento</label>
-          <input id="fechaNacimiento" class="form-control" type="date" [(ngModel)]="ctrl.usuario.fechaNacimiento" name="fechaNacimiento"
-            (input)="ctrl.setTouched('fechaNacimiento')">
-        </div>
-
-        <!-- País -->
-        <div class="form-group-modern">
-          <label for="pais">País</label>
-          <select id="pais" class="form-control" [(ngModel)]="ctrl.usuario.paisId" name="pais" (change)="ctrl.setTouched('paisId')">
-            <option value="" disabled>Selecciona...</option>
-            <option *ngFor="let p of ctrl.paises" [value]="p.id">{{ p.nombre }}</option>
-          </select>
-        </div>
+      <!-- Mensajes globales -->
+      <div class="status-messages" *ngIf="ctrl.mensaje || (ctrl.error && !ctrl.formularioValido)">
+        <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">
+          {{ ctrl.mensaje || ctrl.error }}
+        </p>
       </div>
-
-      <button type="submit" class="btn-action btn-add w-100 mt-20">
-        <i class="fa-solid fa-user-check"></i> Finalizar Registro
-      </button>
-
-    </form>
-
-    <div class="registrar-footer">
-       <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
-    </div>
-
-    <!-- Mensajes globales -->
-    <div class="global-msg" *ngIf="ctrl.mensaje || (ctrl.error && !ctrl.formularioValido)">
-        <p [class.success]="ctrl.mensaje" [class.error]="ctrl.error">{{ ctrl.mensaje || ctrl.error }}</p>
     </div>
   </div>
 </div>

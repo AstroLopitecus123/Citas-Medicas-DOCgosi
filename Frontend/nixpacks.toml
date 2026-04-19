@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["echo 'Skipping install, using prebuilt browser folder'"]
+
+[phases.build]
+cmds = ["echo 'Skipping build, using prebuilt browser folder'"]
+
+[start]
+cmd = "npx -y serve -s browser -l $PORT"

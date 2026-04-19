@@ -11,6 +11,16 @@ import { HistorialService } from '../services/historial.service';
 import { Historial } from '../models/historial.model';
 import { NotificationService } from '../services/notification.service';
 
+export class MisCitasController {
+
+  // ==================== HISTORIAL ====================
+  mostrandoModalHistorial = false;
+  historialActual: Historial = new Historial();
+  vistaSoloLectura = false;
+  citaSeleccionada: Cita | null = null;
+  historialSeleccionado: Historial | null = null;
+  modoVisualizacion = false;
+
   // ==================== CANCELACIÓN ====================
   mostrandoModalCancelar = false;
   citaACancelar: Cita | null = null;

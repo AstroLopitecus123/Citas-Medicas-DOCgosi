@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CitaService } from '../../services/cita.service';
 import { MisCitasController } from '../../controller/mis-citas.controller';

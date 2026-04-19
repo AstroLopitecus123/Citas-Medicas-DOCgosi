@@ -31,6 +31,7 @@ export class MisCitasController {
   editando = false;
   error = '';
   cargando = false;
+  public fechaActual: Date = new Date();
 
   // Citas
   citas: Cita[] = [];

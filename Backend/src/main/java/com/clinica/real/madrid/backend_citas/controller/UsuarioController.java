@@ -1,5 +1,6 @@
 package com.clinica.real.madrid.backend_citas.controller;
 
+import com.clinica.real.madrid.backend_citas.dto.PasswordChangeRequest;
 import com.clinica.real.madrid.backend_citas.dto.UsuarioRegistroRequest;
 import com.clinica.real.madrid.backend_citas.model.EstadoUsuario;
 import com.clinica.real.madrid.backend_citas.model.Usuario;
@@ -95,6 +96,14 @@ public class UsuarioController {
             @RequestBody Usuario usuario) {
         Usuario actualizado = usuarioService.actualizarUsuario(id, usuario);
         return ResponseEntity.ok(actualizado);
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<String> cambiarPassword(
+            @PathVariable Long id,
+            @RequestBody PasswordChangeRequest request) {
+        usuarioService.cambiarPassword(id, request.getActualPassword(), request.getNuevapassword());
+        return ResponseEntity.ok("Contraseña actualizada exitosamente");
     }
 }
 

@@ -110,4 +110,11 @@ export class UsuarioService {
   restablecerContrasena(token: string, nuevaContrasena: string): Observable<any> {
     return this.http.post(`${this.authUrl}/restablecer`, { token, nuevaContrasena });
   }
+
+  cambiarPassword(id: number, actualPassword: string, nuevaPassword: string): Observable<string> {
+    const token = localStorage.getItem('token') || '';
+    const headers = { Authorization: `Bearer ${token}` };
+    const body = { actualPassword, nuevaPassword };
+    return this.http.put(`${this.usuariosUrl}/${id}/password`, body, { headers, responseType: 'text' });
+  }
 }

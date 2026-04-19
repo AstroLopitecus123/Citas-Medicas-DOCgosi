@@ -118,3 +118,53 @@
         gap: 25px;
     }
 }
+
+/* ESTILOS MODAL CONTRASEÑA */
+.animation-pop-in {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.password-modal .modal-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 15px;
+}
+
+.password-modal .modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+}
+
+.password-modal .form-group-modern {
+    margin-bottom: 15px;
+}
+
+.password-modal .form-control {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+}
+
+.password-modal .form-control:focus {
+    border-color: #0fbf6a;
+    background: white;
+}
+
+.btn-outline {
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    color: #64748b;
+}
+
+.btn-outline:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}

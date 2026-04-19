@@ -20,6 +20,12 @@ export class MiPerfilComponent implements OnInit {
   editando = false;
   cargando = true;
 
+  // Variables para Modal Password
+  mostrarModalPassword = false;
+  pwdActual = '';
+  pwdNueva = '';
+  pwdConfirmar = '';
+
   constructor(
     private usuarioService: UsuarioService,
     private ns: NotificationService
@@ -82,5 +88,45 @@ export class MiPerfilComponent implements OnInit {
 
   comparePais(p1: Pais | null, p2: Pais | null): boolean {
     return !!p1 && !!p2 ? p1.id === p2.id : p1 === p2;
+  }
+
+  // --- LOGICA CAMBIO PASSWORD ---
+  abrirModalPassword() {
+    this.pwdActual = '';
+    this.pwdNueva = '';
+    this.pwdConfirmar = '';
+    this.mostrarModalPassword = true;
+  }
+
+  cerrarModalPassword() {
+    this.mostrarModalPassword = false;
+  }
+
+  ejecutarCambioPassword() {
+    if (!this.pwdActual || !this.pwdNueva || !this.pwdConfirmar) {
+      this.ns.error('Todos los campos son obligatorios');
+      return;
+    }
+
+    if (this.pwdNueva !== this.pwdConfirmar) {
+      this.ns.error('Las nuevas contraseñas no coinciden');
+      return;
+    }
+
+    if (this.pwdNueva.length < 8) {
+      this.ns.error('La nueva contraseña debe tener al menos 8 caracteres');
+      return;
+    }
+
+    this.usuarioService.cambiarPassword(this.usuario.id, this.pwdActual, this.pwdNueva).subscribe({
+      next: (res) => {
+        this.ns.success('¡Contraseña actualizada correctamente!');
+        this.cerrarModalPassword();
+      },
+      error: (err) => {
+        const msg = err.error?.message || 'Error al cambiar la contraseña';
+        this.ns.error(msg);
+      }
+    });
   }
 }

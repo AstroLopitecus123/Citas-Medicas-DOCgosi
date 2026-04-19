@@ -242,5 +242,23 @@ public class UsuarioService {
 
         usuarioRepository.save(usuario);
     }
+
+    /**
+     * Cambiar contraseña validando la clave actual
+     */
+    @Transactional
+    public void cambiarPassword(Long id, String actualPassword, String nuevaPassword) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        // Validar que la contraseña actual sea correcta
+        if (!passwordEncoder.matches(actualPassword, usuario.getContrasena())) {
+            throw new BadRequestException("La contraseña actual es incorrecta");
+        }
+
+        // Cifrar y guardar la nueva contraseña
+        usuario.setContrasena(passwordEncoder.encode(nuevaPassword));
+        usuarioRepository.save(usuario);
+    }
 }
 

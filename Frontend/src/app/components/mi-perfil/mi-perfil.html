@@ -6,6 +6,9 @@
             <p class="subtitle">Gestiona tu información personal y preferencias de seguridad.</p>
         </div>
         <div class="header-actions">
+            <button class="btn-action btn-outline" (click)="abrirModalPassword()" style="margin-right: 10px;">
+                <i class="fa-solid fa-key"></i> Cambiar Contraseña
+            </button>
             <button class="btn-action btn-add" (click)="activarEdicion()" *ngIf="!editando">
                 <i class="fa-solid fa-user-pen"></i> Editar Perfil
             </button>
@@ -97,6 +100,46 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- MODAL CAMBIO CONTRASEÑA -->
+<div class="modal-overlay" *ngIf="mostrarModalPassword">
+    <div class="modal password-modal animation-pop-in" style="max-width: 450px;">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-lock text-success" style="margin-right: 10px;"></i> Actualizar Seguridad</h3>
+            <button class="btn-close" (click)="cerrarModalPassword()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <div class="modal-body" style="padding: 20px 0;">
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Ingresa tu contraseña actual para autorizar el cambio.</p>
+            
+            <div class="form-group-modern">
+                <label>Contraseña Actual</label>
+                <input type="password" class="form-control" [(ngModel)]="pwdActual" placeholder="••••••••">
+            </div>
+
+            <hr style="opacity: 0.1; margin: 20px 0;">
+
+            <div class="form-group-modern">
+                <label>Nueva Contraseña</label>
+                <input type="password" class="form-control" [(ngModel)]="pwdNueva" placeholder="Mín. 8 caracteres">
+            </div>
+
+            <div class="form-group-modern">
+                <label>Confirmar Nueva Contraseña</label>
+                <input type="password" class="form-control" [(ngModel)]="pwdConfirmar" placeholder="Repite la contraseña">
+            </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+            <button class="btn-action btn-add w-100" (click)="ejecutarCambioPassword()">
+                <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
+            </button>
+            <button class="btn-action btn-outline w-100" style="border: 1px solid #e2e8f0;" (click)="cerrarModalPassword()">
+                Cancelar
+            </button>
+        </div>
     </div>
 </div>
 

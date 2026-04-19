@@ -38,21 +38,28 @@ export class AppComponent {
     // 🛡️ Inicialización forzada usando el pathname real del navegador
     this.actualizarEstadoPanel(window.location.pathname);
 
-    // ⏱️ Control de Animación de Transición de Página
+    // ⏱️ Control de Animación de Transición de Página (Smart Context Detection)
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (event instanceof NavigationEnd) {
-        this.loading = false;
+        // Determinamos si la nueva ruta es del panel
+        const willBePanelRoute = this.checkIfUrlIsPanel(event.url);
+        
+        // 🔄 Solo mostramos el loader si cambiamos de contexto (de Home a Panel o viceversa)
+        // O si es la carga inicial de la aplicación
+        if (this.isPanelRoute !== willBePanelRoute || event.id === 1) {
+          this.loading = true;
+          console.log('🚀 Cambio de contexto detectado — Activando Preloader Premium');
+        }
+      } 
+      else if (event instanceof NavigationEnd) {
+        // Al terminar, actualizamos el estado real y ocultamos el loader con un pequeño delay para suavidad
         this.actualizarEstadoPanel(event.urlAfterRedirects);
-      } else if (
-        event instanceof NavigationCancel ||
-        event instanceof NavigationError
-      ) {
-        // Pequeño timeout para asegurar que la animación se vea fluida
         setTimeout(() => {
           this.loading = false;
-        }, 600);
+        }, 800);
+      } 
+      else if (event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.loading = false;
       }
     });
 
@@ -90,20 +97,19 @@ export class AppComponent {
     this.router.navigate(['/']);
   }
 
+  // Helper para verificar si una URL pertenece a la interfaz de paneles
+  private checkIfUrlIsPanel(url: string): boolean {
+    const panelKeywords = [
+      '/admin', '/medico', '/recepcion', '/paciente', 
+      '/mis-citas', '/mi-historial', '/mi-perfil', 
+      '/usuarios', '/medicos', '/especialidades', 
+      '/checkout', '/pagar-tarjeta', '/gestionar-disponibilidad'
+    ];
+    return panelKeywords.some(keyword => url.includes(keyword));
+  }
+
   private actualizarEstadoPanel(url: string) {
-    this.isPanelRoute = url.includes('/admin') || 
-                       url.includes('/medico') || 
-                       url.includes('/recepcion') ||
-                       url.includes('/paciente') ||
-                       url.includes('/mis-citas') ||
-                       url.includes('/mi-historial') ||
-                       url.includes('/mi-perfil') ||
-                       url.includes('/usuarios') || 
-                       url.includes('/medicos') || 
-                       url.includes('/especialidades') ||
-                       url.includes('/checkout') ||
-                       url.includes('/pagar-tarjeta') ||
-                       url.includes('/gestionar-disponibilidad');
+    this.isPanelRoute = this.checkIfUrlIsPanel(url);
     console.log('🛡️ Estado Panel Actualizado:', this.isPanelRoute, 'para URL:', url);
   }
 

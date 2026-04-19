@@ -60,14 +60,16 @@
 }
 
 .hero-glass-panel {
-  background: rgba(255, 255, 255, 0.8); /* Menos transparencia para máxima legibilidad */
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(20px) saturate(200%);
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  padding: 45px;
+  border-left: 8px solid #0fbf6a; /* El borde verde que sugeriste */
+  padding: 45px 55px; /* Más espacio lateral por el borde */
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-  margin-left: 480px; /* Desplazado más a la derecha para acercarse al formulario */
+  margin-left: 420px; 
+  width: 600px; /* Forzamos el ancho para que no se vea encogido */
   animation: slideFadeIn 0.8s ease-out;
 }
 

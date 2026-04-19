@@ -17,40 +17,6 @@
 
 
 </head>
-<style id="layout-bypass">
-  /* 💉 BYPASS DE EMERGENCIA: FORZADO DE DISEÑO 💉 */
-  .header {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    z-index: 10000 !important; /* Por encima de todo */
-    background: white !important;
-    height: 70px !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-  .contenido-centrado {
-    margin-top: 70px !important;
-    display: block !important;
-  }
-  .contenido-centrado.no-padding {
-    margin-top: 0 !important;
-  }
-  @media (min-width: 901px) {
-    .menu-toggle { display: none !important; }
-  }
-  /* Fix del cargador para que no empuje contenido */
-  .page-loader {
-    position: fixed !important;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: white;
-    z-index: 20000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
 <body>
   <app-root></app-root>
 </body>

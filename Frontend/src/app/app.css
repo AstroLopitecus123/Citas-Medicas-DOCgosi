@@ -1,29 +1,8 @@
-/* ==========================================================================
-   DOCGOSI GLOBAL STYLES (PREMIUM RESTORATION)
-   ========================================================================== */
+/* ===== Estilo del Layout Base (Heredado de styles.css) ===== */
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Outfit', 'Inter', sans-serif;
-  background-color: #f8fafc;
-  color: #1e293b;
-  overflow-x: hidden;
-}
-
-/* ════ HEADER GLOBAL (LANDING PAGE) ════ */
+/* ════ HEADER GLOBAL (Heredado de styles.css) ════ */
 .header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 50, 30, 0.06);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2000;
-  height: 70px;
-  display: flex !important;
-  align-items: center;
   border-bottom: 2px solid #0fbf6a;
   box-sizing: border-box;
 }
@@ -99,16 +78,13 @@ html, body {
 .app-container { min-height: 100vh; position: relative; }
 
 .contenido-centrado {
-  display: block;
-  padding-top: 70px; /* Igual al alto del header */
   min-height: calc(100vh - 70px);
-  width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 /* Solo se aplica en rutas de Dashboard */
 .contenido-centrado.no-padding {
-  padding-top: 0 !important;
   margin-left: 260px;
   width: calc(100% - 260px) !important;
 }
@@ -185,7 +161,7 @@ html, body {
 .text-center { text-align: center; }
 
 /* ════ RESPONSIVE ════ */
-.menu-toggle { display: none !important; }
+/* menu-toggle se controla en styles.css para evitar parpadeos */
 
 @media (max-width: 1024px) {
   .dashboard-sidebar { width: 80px; }
@@ -196,7 +172,7 @@ html, body {
 
 @media (max-width: 900px) {
   .header-container { padding: 0 15px; }
-  .nav-links { display: none; } /* En móvil se activaría un drawer si fuera necesario */
+  .nav-links { display: none; }
   .menu-toggle { 
     display: flex !important; 
     background: none; border: none; font-size: 1.8rem; color: #0a7c4a; cursor: pointer;

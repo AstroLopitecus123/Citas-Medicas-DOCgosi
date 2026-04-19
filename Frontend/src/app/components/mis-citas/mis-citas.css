@@ -116,9 +116,9 @@
 .schedule-grid-container { overflow-x: auto; background: white; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1); }
 .schedule-grid-container::-webkit-scrollbar { height: 0; display: none; } /* Ocultar scroll horizontal bugeado */
 .schedule-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 650px; table-layout: fixed; }
-.schedule-table th, .schedule-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; height: 60px; }
-.sticky-time { position: sticky; left: 0; background: #f8fafc; z-index: 5; font-weight: 800; color: #0fbf6a; width: 70px; font-size: 0.85rem; border-right: 2px solid #cbd5e1 !important; }
-.day-header { background: #f8fafc; padding: 10px 5px !important; }
+.schedule-table th, .schedule-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; height: 60px; }
+.sticky-time { position: sticky; left: 0; background: #f1f5f9; z-index: 5; font-weight: 800; color: #094a2b; width: 75px; font-size: 0.85rem; border-right: 2px solid #94a3b8 !important; }
+.day-header { background: #f8fafc; padding: 12px 5px !important; border-bottom: 2px solid #94a3b8 !important; }
 .mt-20 { margin-top: 35px !important; }
 .day-name { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
 .day-date { display: block; font-size: 0.82rem; color: #1e293b; margin-top: 2px; font-weight: 700; }

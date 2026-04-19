@@ -101,7 +101,7 @@
 .btn-close-glass:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
 
 .modal-body-glass { padding: 25px; max-height: 65vh; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
-.selection-grid-modern { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; background: rgba(15, 191, 106, 0.05); padding: 18px; border-radius: 16px; align-items: end; }
+.selection-grid-modern { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 25px; background: #f8fafc; padding: 22px; border-radius: 18px; align-items: end; border: 1px solid #eef2f6; }
 
 .form-group-modern label { display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; }
 .form-group-modern label i { color: #0fbf6a; margin-right: 6px; }
@@ -113,12 +113,13 @@
 .form-control:focus { border-color: #0fbf6a; background: white; box-shadow: 0 0 0 5px rgba(15, 191, 106, 0.1); outline: none; }
 
 /* SCHEDULE TABLE */
-.schedule-grid-container { overflow-x: auto; background: white; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.05); }
+.schedule-grid-container { overflow-x: auto; background: white; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1); }
 .schedule-grid-container::-webkit-scrollbar { height: 0; display: none; } /* Ocultar scroll horizontal bugeado */
 .schedule-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 650px; table-layout: fixed; }
-.schedule-table th, .schedule-table td { padding: 8px 4px; text-align: center; border-bottom: 1px solid #f1f5f9; border-right: 1px solid #f1f5f9; height: 50px; }
-.sticky-time { position: sticky; left: 0; background: #f8fafc; z-index: 5; font-weight: 800; color: #0fbf6a; width: 70px; font-size: 0.85rem; border-right: 2px solid #e2e8f0 !important; }
+.schedule-table th, .schedule-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; height: 60px; }
+.sticky-time { position: sticky; left: 0; background: #f8fafc; z-index: 5; font-weight: 800; color: #0fbf6a; width: 70px; font-size: 0.85rem; border-right: 2px solid #cbd5e1 !important; }
 .day-header { background: #f8fafc; padding: 10px 5px !important; }
+.mt-20 { margin-top: 35px !important; }
 .day-name { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
 .day-date { display: block; font-size: 0.82rem; color: #1e293b; margin-top: 2px; font-weight: 700; }
 

@@ -232,9 +232,7 @@ export class MisCitasController {
     cita.menuAbierto = !cita.menuAbierto;
   }
 
-  confirmarCita(cita: Cita) {
-    this.citaService.confirmarCita(cita.id).subscribe(() => this.cargarCitas());
-  }
+
 
   reprogramarCita(cita: Cita) {
     this.modoReprogramacion = true;
@@ -265,19 +263,7 @@ export class MisCitasController {
     }
   }
 
-  cancelarCita(cita: Cita) {
-    this.citaService.cancelarCita(cita.id).subscribe({
-      next: (response) => {
-        console.log('Respuesta:', response);
-        if (this.ns) this.ns.success('Cita cancelada exitosamente');
-        this.cargarCitas();
-      },
-      error: (err) => {
-        console.error('Error al cancelar cita:', err);
-        if (this.ns) this.ns.error('No se pudo cancelar la cita');
-      }
-    });
-  }
+
 
   // ==================== MODAL NUEVA CITA ====================
   abrirModalCita() {

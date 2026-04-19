@@ -9,7 +9,7 @@ export enum EstadoDisponibilidad {
   NO_DISPONIBLE = 'NO_DISPONIBLE',
 }
 
-export type EstadoCita = 'PENDIENTE' | 'CONFIRMADA' | 'REPROGRAMADA' | 'CANCELADA';
+export type EstadoCita = 'PENDIENTE' | 'CONFIRMADA' | 'REPROGRAMADA' | 'CANCELADA' | 'SOLICITUD_REPROGRAMACION' | 'SOLICITUD_CANCELACION';
 
 export interface Usuario {
   id?: number;

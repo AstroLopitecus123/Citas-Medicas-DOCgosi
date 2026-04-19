@@ -19,6 +19,7 @@ export class Cita {
   historial?: Historial;
   tieneHistorial: boolean = false;
   pago?: Pago;
+  fechaPropuesta?: string;
 
 
   // ➕ Nuevo
@@ -70,6 +71,7 @@ export class Cita {
       }
 
       this.menuAbierto = data.menuAbierto ?? false;
+      this.fechaPropuesta = data.fechaPropuesta;
     }
   }
 }

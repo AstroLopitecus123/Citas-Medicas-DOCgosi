@@ -150,10 +150,11 @@ public class CitaService {
     }
 
     @Transactional
-    public void solicitarCancelacion(Long id) {
+    public void solicitarCancelacion(Long id, String motivo) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
         cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
+        cita.setMotivo(motivo); // 👈 Guardamos el motivo proporcionado
         citaRepository.save(cita);
         notificarCambioCita(cita, "solicitud de cancelación");
     }

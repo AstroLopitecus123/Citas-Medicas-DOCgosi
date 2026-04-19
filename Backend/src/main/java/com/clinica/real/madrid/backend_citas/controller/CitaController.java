@@ -116,9 +116,10 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/solicitar-cancelar")
-    public ResponseEntity<?> solicitarCancelar(@PathVariable Long id) {
+    public ResponseEntity<?> solicitarCancelar(@PathVariable Long id, @RequestBody Map<String, String> body) {
         try {
-            citaService.solicitarCancelacion(id);
+            String motivo = body.getOrDefault("motivo", "Sin motivo especificado");
+            citaService.solicitarCancelacion(id, motivo);
             return ResponseEntity.ok(Map.of("mensaje", "Solicitud de cancelación enviada"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al solicitar cancelación");

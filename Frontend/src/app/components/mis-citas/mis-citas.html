@@ -242,6 +242,48 @@
         </div>
     </div>
 
+    <!-- 🗑️ MODAL GLASS: CANCELAR CITA -->
+    <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCancelar" (click)="ctrl.cerrarModalCancelar()">
+        <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
+            <div class="modal-header-glass warning-header">
+                <div class="header-icon-box bg-danger">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <div>
+                    <h3>¿Cancelar esta cita?</h3>
+                    <p>Esta acción solicitará la anulación definitiva de tu consulta.</p>
+                </div>
+                <button class="btn-close-glass" (click)="ctrl.cerrarModalCancelar()">&times;</button>
+            </div>
+
+            <div class="modal-body-glass">
+                <div class="alert-box-modern">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <p>Por políticas de la clínica, necesitamos saber el motivo de la cancelación para mejorar nuestro servicio.</p>
+                </div>
+
+                <div class="form-group-modern mt-15">
+                    <label>Escribe el motivo de cancelación:</label>
+                    <textarea 
+                        class="form-control-text" 
+                        rows="3" 
+                        [(ngModel)]="ctrl.motivoCancelacion"
+                        placeholder="Ej: Motivos de salud, cambio de planes, etc.">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer-glass">
+                <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()">Mantener Cita</button>
+                <button class="btn-confirm-glass bg-gradient-danger" 
+                        [disabled]="ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion"
+                        (click)="ctrl.confirmarCancelacionProceso()">
+                    Confirmar Cancelación
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 🔄 MODAL GLASS: HISTORIAL -->
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalHistorial" (click)="ctrl.cerrarModalHistorial()">
         <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">

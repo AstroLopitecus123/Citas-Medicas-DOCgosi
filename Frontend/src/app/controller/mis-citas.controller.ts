@@ -11,15 +11,10 @@ import { HistorialService } from '../services/historial.service';
 import { Historial } from '../models/historial.model';
 import { NotificationService } from '../services/notification.service';
 
-export class MisCitasController {
-
-  // ==================== HISTORIAL ====================
-  mostrandoModalHistorial = false;
-  historialActual: Historial = new Historial();
-  vistaSoloLectura = false;
-  citaSeleccionada: Cita | null = null;
-  historialSeleccionado: Historial | null = null;
-  modoVisualizacion = false;
+  // ==================== CANCELACIÓN ====================
+  mostrandoModalCancelar = false;
+  citaACancelar: Cita | null = null;
+  motivoCancelacion = '';
 
   // Datos del usuario y edición
   modoReprogramacion = false;
@@ -417,21 +412,36 @@ export class MisCitasController {
   }
 
   cancelarCita(cita: Cita) {
+    this.citaACancelar = cita;
+    this.motivoCancelacion = '';
+    this.mostrandoModalCancelar = true;
+  }
+
+  cerrarModalCancelar() {
+    this.mostrandoModalCancelar = false;
+    this.citaACancelar = null;
+  }
+
+  confirmarCancelacionProceso() {
+    if (!this.citaACancelar) return;
+
     if (this.usuario.rol === 'PACIENTE') {
-      // Paciente solicita cancelar
-      this.citaService.solicitarCancelar(cita.id).subscribe({
+      // Paciente solicita cancelar enviando el motivo
+      this.citaService.solicitarCancelar(this.citaACancelar.id, this.motivoCancelacion).subscribe({
         next: () => {
           if (this.ns) this.ns.success('Solicitud de cancelación enviada. Pendiente de aprobación.');
           this.cargarCitas();
+          this.cerrarModalCancelar();
         },
         error: () => { if (this.ns) this.ns.error('Error al solicitar cancelación'); }
       });
     } else {
       // Admin/Medico confirma cancelación (final)
-      this.citaService.confirmarCancelar(cita.id).subscribe({
+      this.citaService.confirmarCancelar(this.citaACancelar.id).subscribe({
         next: () => {
           if (this.ns) this.ns.success('Cancelación confirmada exitosamente');
           this.cargarCitas();
+          this.cerrarModalCancelar();
         },
         error: () => { if (this.ns) this.ns.error('Error al confirmar cancelación'); }
       });

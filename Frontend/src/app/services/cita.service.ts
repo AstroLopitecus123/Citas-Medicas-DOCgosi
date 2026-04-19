@@ -73,8 +73,8 @@ export class CitaService {
     });
   }
 
-  solicitarCancelar(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/citas/${id}/solicitar-cancelar`, {}, {
+  solicitarCancelar(id: number, motivo: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/solicitar-cancelar`, { motivo }, {
       headers: this.getAuthHeaders()
     });
   }

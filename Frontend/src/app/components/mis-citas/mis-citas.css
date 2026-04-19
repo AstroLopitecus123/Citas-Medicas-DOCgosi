@@ -187,7 +187,22 @@
     font-weight: 600;
 }
 
+/* CANCELLATION MODAL SPECIFICS */
+.warning-header { border-bottom: 2px solid #fee2e2 !important; }
+.bg-danger { background: #fee2e2 !important; color: #ef4444 !important; }
+.bg-gradient-danger { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important; }
+.bg-gradient-danger:hover { box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5) !important; }
+
+.alert-box-modern {
+    display: flex; gap: 15px; background: #fff7ed; padding: 18px; border-radius: 16px; 
+    border: 1px solid #ffedd5; color: #9a3412; align-items: flex-start; margin-bottom: 20px;
+}
+.alert-box-modern i { font-size: 1.2rem; color: #f97316; margin-top: 2px; }
+.alert-box-modern p { margin: 0; font-size: 0.88rem; font-weight: 500; line-height: 1.5; }
+
+.mt-15 { margin-top: 15px !important; }
+
 @media (max-width: 1024px) {
-  .mis-citas-grid { grid-template-columns: 1fr; }
+  .mis-citas-full { padding: 20px; }
   .profile-sidebar { position: static; }
 }

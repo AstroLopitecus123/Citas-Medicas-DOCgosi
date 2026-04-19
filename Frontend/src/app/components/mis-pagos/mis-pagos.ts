@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { PagoService } from '../../services/pago.service';
 import { Pago } from '../../models/pago.model';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-mis-pagos',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  providers: [DatePipe],
   templateUrl: './mis-pagos.html',
   styleUrls: ['./mis-pagos.css']
 })

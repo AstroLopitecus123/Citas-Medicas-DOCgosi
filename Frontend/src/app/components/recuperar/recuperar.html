@@ -1,17 +1,69 @@
-<div class="recuperar-container">
-  <div class="card">
-    <h2>Recuperar Contraseña</h2>
+<div class="login-layout">
+  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+  <div class="doctor-container">
+    <img src="/assets/images/DoctorLogin.png" alt="Doctor" class="doctor-img">
+  </div>
 
-    <form (ngSubmit)="ctrl.recuperar()">
-      <div class="form-group">
-        <label for="correo">Correo electrónico:</label>
-        <input type="email" id="correo" [(ngModel)]="ctrl.correo" name="correo" placeholder="ejemplo@correo.com" required>
+  <!-- COLUMNA IZQUIERDA (Texto) -->
+  <div class="login-hero anim-fade-in">
+    <div class="hero-content">
+      <h1>Recupera tu acceso</h1>
+      <p class="hero-subtitle">Ingresa tu correo electrónico y te enviaremos un enlace de seguridad para restablecer tu contraseña.</p>
+      <div class="hero-disclaimer">
+        <i class="fa-solid fa-shield-halved"></i> Tu seguridad es nuestra prioridad. El enlace expirará en 30 minutos.
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMNA DERECHA (Formulario) -->
+  <div class="login-form-wrapper">
+    <div class="login-card anim-slide-up">
+      <div class="back-link">
+        <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
+      </div>
+      
+      <h2 class="card-title">Recuperar Contraseña</h2>
+      
+      <p class="instructor-text">Indícanos el correo asociado a tu cuenta R.E.T.O para continuar.</p>
+
+      <form (ngSubmit)="ctrl.recuperar()">
+        <!-- Campo Correo Electrónico -->
+        <div class="input-group">
+          <label for="correo">Correo electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            [(ngModel)]="ctrl.correo"
+            name="correo"
+            placeholder="ejemplo@correo.com"
+            required
+            #correoInput="ngModel"
+          />
+        </div>
+
+        <!-- Botón de submit -->
+        <button type="submit" class="btn-submit" [disabled]="ctrl.enviado">
+          <span *ngIf="!ctrl.enviado">Enviar enlace de recuperación</span>
+          <span *ngIf="ctrl.enviado"><i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...</span>
+        </button>
+      </form>
+
+      <!-- Mensajes de Estado -->
+      <div class="status-messages">
+        <p *ngIf="ctrl.mensaje" class="msg-general has-success">
+          <i class="fa-solid fa-circle-check"></i> {{ ctrl.mensaje }}
+        </p>
+        <p *ngIf="ctrl.error" class="msg-general has-error">
+          <i class="fa-solid fa-triangle-exclamation"></i> {{ ctrl.error }}
+        </p>
       </div>
 
-      <button type="submit" class="btn-enviar" [disabled]="ctrl.enviado">Enviar enlace</button>
-    </form>
+      <hr class="divider">
 
-    <p *ngIf="ctrl.mensaje" class="msg-exito">{{ ctrl.mensaje }}</p>
-    <p *ngIf="ctrl.error" class="msg-error">{{ ctrl.error }}</p>
+      <div class="crear-cuenta-wrapper">
+        <span>¿Aún tienes problemas?</span>
+        <a href="mailto:soporte@retosalud.com" class="crear-cuenta-link">Contactar soporte <i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
   </div>
 </div>

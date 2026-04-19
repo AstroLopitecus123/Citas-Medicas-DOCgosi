@@ -1,23 +1,27 @@
-<div class="admin-layout">
+<div class="dashboard-page-content">
     <div class="mis-citas-full" *ngIf="ctrl.usuario; else sinUsuario">
         
-        <!-- 📅 PANEL ÚNICO: CITAS -->
+        <!-- 📅 BIENVENIDA PREMIUM -->
+        <header class="premium-welcome-banner">
+            <div class="welcome-icon-box">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div class="welcome-text">
+                <h1>Mis Citas Médicas</h1>
+                <p>Gestiona todas tus consultas y revisa tu historial médico en un solo lugar.</p>
+            </div>
+            <div class="header-actions">
+                <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-regular fa-clock" style="color: #0fbf6a;"></i>
+                    {{ ctrl.fechaActual | date:'shortTime' }}
+                </span>
+                <button class="btn-action btn-add" style="margin-left: 15px;" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
+                    <i class="fa-solid fa-plus"></i> Nueva Cita
+                </button>
+            </div>
+        </header>
+
         <section class="main-content">
-            <header class="section-header">
-                <div class="header-main">
-                    <h2><i class="fa-solid fa-calendar-days"></i> Mis Citas Médicas</h2>
-                    <p class="subtitle">Gestiona todas tus consultas y revisa tu historial médico aquí.</p>
-                </div>
-                <div class="header-actions">
-                    <span class="date-badge">
-                        <i class="fa-regular fa-clock" style="margin-right: 5px;"></i>
-                        {{ ctrl.fechaActual | date:'shortTime' }}
-                    </span>
-                    <button class="btn-action btn-add" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
-                        <i class="fa-solid fa-plus"></i> Nueva Cita
-                    </button>
-                </div>
-            </header>
 
             <div class="premium-card">
                 <div class="modern-table-container" *ngIf="ctrl.citas.length; else noCitas">

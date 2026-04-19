@@ -1,11 +1,17 @@
-<div class="admin-layout">
-  <header class="section-header">
-    <div class="header-main">
-      <h2><i class="fa-solid fa-user-doctor"></i> {{ getGreeting() }}, Dr. {{ usuario?.nombre }}</h2>
-      <p class="subtitle">Bienvenido a su panel de control médico</p>
+<div class="dashboard-page-content">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #14b8a6;">
+    <div class="welcome-icon-box" style="background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);">
+      <i class="fa-solid fa-user-doctor"></i>
+    </div>
+    <div class="welcome-text">
+       <h1>{{ getGreeting() }}, Dr. {{ usuario?.nombre }}</h1>
+       <p>Gestione su agenda y atienda a sus pacientes — Panel Médico R.E.T.O</p>
     </div>
     <div class="header-actions">
-      <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ today | date:'fullDate' }}</span>
+        <span class="date-badge" style="background: #f0fdfa; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #0d9488; display: inline-flex; align-items: center; gap: 8px; border: 1px solid #ccfbf1;">
+            <i class="fa-solid fa-calendar-check"></i>
+            {{ today | date:'EEEE, d MMMM' }}
+        </span>
     </div>
   </header>
 

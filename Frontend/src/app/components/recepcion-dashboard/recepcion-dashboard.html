@@ -1,11 +1,17 @@
-<div class="admin-layout">
-  <header class="section-header">
-    <div class="header-main">
-      <h2><i class="fa-solid fa-hotel"></i> {{ getGreeting() }}, {{ usuario?.nombre }}</h2>
-      <p class="subtitle">Mesa de Recepción - Gestión de Flujo de Pacientes</p>
+<div class="dashboard-page-content">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #6366f1;">
+    <div class="welcome-icon-box" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">
+      <i class="fa-solid fa-hotel"></i>
+    </div>
+    <div class="welcome-text">
+       <h1>{{ getGreeting() }}, {{ usuario?.nombre }}</h1>
+       <p>Bienvenido al Centro Operativo de Recepción — Gestión de Flujo R.E.T.O</p>
     </div>
     <div class="header-actions">
-      <span class="date-badge"><i class="fa-solid fa-clock-rotate-left"></i> Turno Activo</span>
+        <span class="date-badge" style="background: #eef2ff; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #4f46e5; display: inline-flex; align-items: center; gap: 8px; border: 1px solid #e0e7ff;">
+            <i class="fa-solid fa-clock-rotate-left" style="color: #6366f1;"></i>
+            Turno Activo
+        </span>
     </div>
   </header>
 

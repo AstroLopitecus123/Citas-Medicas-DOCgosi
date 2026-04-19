@@ -2,24 +2,34 @@
    MIS CITAS (MODERN DASHBOARD) — v2.2.0 — Premium Layout
    ========================================================================== */
 
-.mis-citas-grid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 30px;
-  align-items: start;
+.mis-citas-full {
+  padding: 30px 40px;
 }
 
-/* SIDEBAR: PERFIL */
-.profile-sidebar {
-  padding: 0;
-  overflow: hidden;
-  background: white;
-  position: sticky;
-  top: 100px;
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.02);
-  border: 1px solid #f1f5f9;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #edf2f7;
 }
+
+.header-main h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1a2a3a;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* El sidebar ahora es GLOBAL en app.css */
 
 .profile-header {
   padding: 40px 30px 30px;

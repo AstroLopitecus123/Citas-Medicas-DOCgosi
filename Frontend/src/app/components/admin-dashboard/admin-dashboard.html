@@ -1,11 +1,17 @@
-<div class="admin-layout">
-  <header class="section-header">
-    <div class="header-main">
-      <h2><i class="fa-solid fa-user-shield"></i> {{ getHora() }}, {{ usuario?.nombre || 'Admin' }}</h2>
-      <p class="subtitle">Vista general del sistema — Gestión R.E.T.O Salud</p>
+<div class="dashboard-page-content">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-user-shield"></i>
+    </div>
+    <div class="welcome-text">
+       <h1>{{ getHora() }}, {{ usuario?.nombre || 'Administrador' }}</h1>
+       <p>Bienvenido al Panel de Control Central — Gestión R.E.T.O Salud</p>
     </div>
     <div class="header-actions">
-      <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ 'today' | date:'EEEE, d MMMM yyyy' }}</span>
+        <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-calendar-day" style="color: #0fbf6a;"></i>
+            {{ 'today' | date:'EEEE, d MMMM' }}
+        </span>
     </div>
   </header>
 

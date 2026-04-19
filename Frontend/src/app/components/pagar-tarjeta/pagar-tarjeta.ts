@@ -124,7 +124,8 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (!resultado.success) {
           this.cargando = false;
-          this.ns.error(resultado.error || 'Error al procesar el pago con la tarjeta.');
+          const mensajeReal = this.getMensajeErrorReal(resultado);
+          this.ns.error(mensajeReal);
           return;
         }
 
@@ -168,5 +169,25 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.router.navigate(['/paciente/dashboard']);
     }
+  }
+
+  /**
+   * 🛡️ Mapeo de errores técnicos a mensajes "reales" y profesionales
+   * Filtra menciones a "modo de prueba" para que el usuario sienta una experiencia real.
+   */
+  private getMensajeErrorReal(resultado: any): string {
+    const code = resultado.errorCode;
+    
+    const mensajes: { [key: string]: string } = {
+      'test_mode_live_card': 'La tarjeta ingresada no puede ser procesada en este entorno. Verifique los datos o use otra tarjeta.',
+      'card_declined': 'Su tarjeta ha sido rechazada por la entidad emisora. Por favor, contacte con su banco.',
+      'expired_card': 'La tarjeta ha caducado. Por favor, verifique la fecha de vencimiento e intente de nuevo.',
+      'incorrect_cvc': 'El código de seguridad (CVC) es incorrecto. Revise el reverso de su tarjeta.',
+      'insufficient_funds': 'La transacción ha fallado por fondos insuficientes en la cuenta.',
+      'incorrect_number': 'El número de tarjeta es incorrecto o incompleto.',
+      'processing_error': 'Ha ocurrido un error técnico al procesar el pago. Por favor, intente de nuevo en unos minutos.'
+    };
+
+    return mensajes[code] || resultado.error || 'No se pudo procesar el pago. Verifique sus datos e intente de nuevo.';
   }
 }

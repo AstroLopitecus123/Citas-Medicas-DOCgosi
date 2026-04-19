@@ -97,7 +97,7 @@ export class PagoService {
     clientSecret: string,
     email: string,
     nombre: string
-  ): Promise<{ success: boolean; error?: string; paymentIntentId?: string }> {
+  ): Promise<{ success: boolean; error?: string; errorCode?: string; paymentIntentId?: string }> {
     const stripe = await this.getStripe();
     if (!stripe || !this.cardElement) {
       return { success: false, error: 'Stripe no inicializado o formulario no montado' };
@@ -112,7 +112,12 @@ export class PagoService {
 
     if (error) {
       console.error('❌ Error Stripe:', error);
-      return { success: false, error: error.message };
+      // Extraemos el código técnico para mapearlo a un mensaje "real" después
+      return { 
+        success: false, 
+        error: error.message,
+        errorCode: error.decline_code || error.code 
+      };
     }
 
     if (paymentIntent?.status === 'succeeded') {

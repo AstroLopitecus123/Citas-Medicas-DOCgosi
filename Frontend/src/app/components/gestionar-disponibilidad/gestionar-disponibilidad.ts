@@ -153,66 +153,58 @@ export class GestionarDisponibilidadComponent implements OnInit {
 }
 
 
-  validarMinimoHoras(): boolean {
-    const lunesSemana = new Date(this.getLunesDeSemana());
-    lunesSemana.setDate(lunesSemana.getDate() + 7 + this.semanaIndice * 7);
-    lunesSemana.setHours(0, 0, 0, 0);
+  // Devuelve las disponibilidades que pertenecen a la semana visible
+  get horasSemanaActual(): Disponibilidad[] {
+    if (!this.dias.length) return [];
+    
+    // Obtenemos rango de la semana actual en formato ISO (YYYY-MM-DD)
+    const fechaInicioISO = this.fechaToISO(this.dias[0].fecha);
+    const fechaFinISO = this.fechaToISO(this.dias[this.dias.length - 1].fecha);
 
-    const finSemana = new Date(lunesSemana);
-    finSemana.setDate(lunesSemana.getDate() + 5);
-    finSemana.setHours(23, 59, 59, 999);
-
-    const horasSemana = this.disponibilidades.filter(d => {
-      const fecha = new Date(d.fecha);
-      fecha.setHours(0, 0, 0, 0);
-      return fecha >= lunesSemana && fecha <= finSemana && d.estado === EstadoDisponibilidad.DISPONIBLE;
-    });
-
-    // Validar Total Semanal
-    if(horasSemana.length < this.minimoHorasSemana) return false;
-
-    // Validar Mínimo por Día (Agrupar por fecha)
-    const porDia: {[fecha: string]: number} = {};
-    horasSemana.forEach(d => {
-      porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
-    });
-
-    // Debe haber trabajado al menos los 6 días de la jornada (L-S) y cada día >= 6h
-    const diasTrabajados = Object.keys(porDia);
-    if(diasTrabajados.length < 6) return false;
-
-    return diasTrabajados.every(fecha => porDia[fecha] >= this.minimoHorasDia);
-  }
-
-  getLunesDeSemana(): Date {
-    const today = new Date();
-    const day = today.getDay() || 7;
-    const diff = today.getDate() - day + 1;
-    return new Date(today.setDate(diff));
-  }
-
-  isDisponible(fecha: string, hora: number): boolean {
-    return this.disponibilidades.some(d =>
-      d.fecha === this.fechaToISO(fecha) &&
-      parseInt(d.horaInicio.split(':')[0]) === hora &&
+    return this.disponibilidades.filter(d => 
+      d.fecha >= fechaInicioISO && 
+      d.fecha <= fechaFinISO && 
       d.estado === EstadoDisponibilidad.DISPONIBLE
     );
   }
 
+  get totalHorasSeleccionadas(): number {
+    return this.horasSemanaActual.length;
+  }
+
+  validarMinimoHoras(): boolean {
+    const horasSemana = this.horasSemanaActual;
+
+    // 1. Validar Total Semanal (Mínimo 36h)
+    if (horasSemana.length < this.minimoHorasSemana) return false;
+
+    // 2. Validar Mínimo por Día (Mínimo 6h por cada uno de los 6 días L-S)
+    const porDia: { [fecha: string]: number } = {};
+    horasSemana.forEach(d => {
+      porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
+    });
+
+    const diasTrabajados = Object.keys(porDia);
+    if (diasTrabajados.length < 6) return false;
+
+    return diasTrabajados.every(fecha => porDia[fecha] >= this.minimoHorasDia);
+  }
+
   esEditable(fecha: string): boolean {
-    const partes = fecha.split('/').map(p => parseInt(p, 10));
-    const f = new Date(2000 + partes[2], partes[1] - 1, partes[0]);
-    f.setHours(0, 0, 0, 0);
+    // La fecha viene en DD/MM/YY
+    const isoFecha = this.fechaToISO(fecha);
+    
+    // Obtenemos lunes de la semana 1 (la del sistema)
+    const lunesBase = this.getLunesDeSemana();
+    const lunesBaseISO = lunesBase.toISOString().split('T')[0];
 
-    const lunesSemana = new Date(this.getLunesDeSemana());
-    lunesSemana.setDate(lunesSemana.getDate() + 7 + this.semanaIndice * 7);
-    lunesSemana.setHours(0, 0, 0, 0);
+    // Por políticas, solo se editan semanas futuras o la actual? 
+    // En este componente se manejan Semana 1, 2 y 3.
+    // La lógica original comparaba con el rango visible, mantendremos eso pero con strings.
+    const inicioVisible = this.fechaToISO(this.dias[0].fecha);
+    const finVisible = this.fechaToISO(this.dias[this.dias.length - 1].fecha);
 
-    const finSemana = new Date(lunesSemana);
-    finSemana.setDate(lunesSemana.getDate() + 5);
-    finSemana.setHours(23, 59, 59, 999);
-
-    return f >= lunesSemana && f <= finSemana;
+    return isoFecha >= inicioVisible && isoFecha <= finVisible;
   }
 
   siguienteSemana(): void {
@@ -232,21 +224,7 @@ export class GestionarDisponibilidadComponent implements OnInit {
   }
 
   horasFaltantes(): number {
-    const lunesSemana = new Date(this.getLunesDeSemana());
-    lunesSemana.setDate(lunesSemana.getDate() + 7 + this.semanaIndice * 7);
-    lunesSemana.setHours(0, 0, 0, 0);
-
-    const finSemana = new Date(lunesSemana);
-    finSemana.setDate(lunesSemana.getDate() + 5);
-    finSemana.setHours(23, 59, 59, 999);
-
-    const horasSeleccionadas = this.disponibilidades.filter(d => {
-      const fecha = new Date(d.fecha);
-      fecha.setHours(0, 0, 0, 0);
-      return fecha >= lunesSemana && fecha <= finSemana && d.estado === EstadoDisponibilidad.DISPONIBLE;
-    });
-
-    const faltantes = this.minimoHorasSemana - horasSeleccionadas.length;
+    const faltantes = this.minimoHorasSemana - this.totalHorasSeleccionadas;
     return faltantes > 0 ? faltantes : 0;
   }
 }

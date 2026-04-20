@@ -10,7 +10,17 @@
        <h1>Agenda de Disponibilidad</h1>
        <p>Gestión de horarios semanales para el Dr. {{ nombreMedico }}</p>
     </div>
-    <div class="header-actions">
+    <div class="header-actions" style="display: flex; gap: 15px; align-items: center;">
+        <!-- ⏱️ Contador de Horas Seleccionadas -->
+        <div class="hours-counter-badge" [class.meets-requirement]="totalHorasSeleccionadas >= minimoHorasSemana"
+             style="background: #fff; padding: 10px 18px; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center;">
+          <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 700;">Horas Semanales</span>
+          <div style="display: flex; align-items: baseline; gap: 4px;">
+            <strong style="font-size: 1.2rem; color: #1e293b;">{{ totalHorasSeleccionadas }}</strong>
+            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 500;">/ {{ minimoHorasSemana }}h</span>
+          </div>
+        </div>
+
         <!-- Navegación de Semanas -->
         <div class="semana-nav-premium" style="display: flex; align-items: center; gap: 15px; background: #f1f5f9; padding: 10px 20px; border-radius: 30px;">
           <button class="btn-icon" (click)="anteriorSemana()" [disabled]="semanaIndice === 0" style="background: none; border: none; cursor: pointer; color: #475569;">
@@ -28,9 +38,12 @@
   </header>
 
   <!-- ⚠️ Alerta de horas faltantes -->
-  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger">
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <span>Atención: Le faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para completar el mínimo semanal de {{ minimoHorasSemana }} horas.</span>
+  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="margin: 20px; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
+    <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem;"></i>
+    <div>
+      <span style="display: block;">Faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para el mínimo de {{ minimoHorasSemana }}.</span>
+      <small style="opacity: 0.8; font-size: 0.8rem;">Recuerda que debes trabajar al menos 6 horas por día de Lunes a Sábado.</small>
+    </div>
   </div>
 
   <!-- 🧾 Tarjeta de la Agenda -->

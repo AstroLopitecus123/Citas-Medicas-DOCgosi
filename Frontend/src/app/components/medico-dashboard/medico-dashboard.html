@@ -40,77 +40,85 @@
     </div>
   </div>
 
-  <!-- NOTIFICACIONES INTEGRADAS -->
-  <div class="section-title-dash" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: #0f172a;">
-    <i class="fa-solid fa-bell" style="color: #14b8a6; background: rgba(20, 184, 166, 0.1); padding: 10px; border-radius: 12px;"></i>
-    <h2 style="margin: 0; font-size: 1.4rem; font-weight: 800;">Centro de Avisos</h2>
-  </div>
-  <div class="premium-card" style="margin-bottom: 30px;">
-    <app-notificaciones [modoDashboard]="true"></app-notificaciones>
-  </div>
-
-  <div class="dashboard-grid">
-
-    <!-- ACCIONES RÁPIDAS -->
-    <div class="premium-card">
-      <h3 class="card-title">Operaciones Rápidas</h3>
-      <div class="quick-actions">
-        <button class="action-btn" routerLink="/mis-citas">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span>Ver Mi Agenda</span>
-        </button>
-        <button class="action-btn secondary" [routerLink]="['/gestionar-disponibilidad', usuario?.id]">
-          <i class="fa-solid fa-business-time"></i>
-          <span>Configurar Horarios</span>
-        </button>
-        <button class="action-btn info">
-          <i class="fa-solid fa-users-rectangle"></i>
-          <span>Lista de Pacientes</span>
-        </button>
-        <button class="action-btn" routerLink="/medico/pagos">
-          <i class="fa-solid fa-file-invoice-dollar"></i>
-          <span>Mis Pagos</span>
-        </button>
-      </div>
-    </div>
-    <!-- PRÓXIMAS CITAS (Placeholder interactivo) -->
-    <div class="premium-card appointment-preview">
-      <div class="card-header">
-        <h3 class="card-title">Próximas Citas</h3>
-        <a routerLink="/mis-citas" class="view-all">Ver todas</a>
-      </div>
+  <div class="dashboard-split-view">
+    
+    <!-- COLUMNA IZQUIERDA: ENFOQUE OPERATIVO (Agenda Principal) -->
+    <div class="primary-column">
       
-      <div class="appointment-list" *ngIf="!cargando">
-        <!-- Renderizar cada cita dinámicamente -->
-        <div class="apt-item" *ngFor="let cita of proximasCitas">
-          <div class="apt-time" style="font-family: monospace; font-weight: 700; color: #0d9488;">
-            {{ cita.fecha | date:'h:mm a' }}
+      <div class="premium-card appointment-preview" style="height: 100%;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0fbf6a; margin-right: 8px;"></i> Próximas Citas</h3>
+          <a routerLink="/mis-citas" class="view-all">Ver agenda completa</a>
+        </div>
+        
+        <div class="appointment-list" *ngIf="!cargando">
+          <!-- Renderizar cada cita dinámicamente -->
+          <div class="apt-item" *ngFor="let cita of proximasCitas">
+            
+            <div class="apt-time-block">
+              <span class="apt-hour">{{ cita.fecha | date:'h:mm' }}</span>
+              <span class="apt-meridian">{{ cita.fecha | date:'a' }}</span>
+            </div>
+            
+            <div class="apt-patient-info" style="flex: 1;">
+              <h4 style="margin: 0; font-weight: 700; color: #1e293b; font-size: 1.1rem;">{{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}</h4>
+              <small style="color: #64748b; font-weight: 500;">
+                <i class="fa-solid fa-notes-medical"></i> {{ cita.motivo?.substring(0, 30) || 'Consulta general' }}...
+              </small>
+            </div>
+            
+            <div class="apt-actions" style="display: flex; align-items: center; gap: 15px;">
+              <!-- Etiqueta de estado -->
+              <div class="apt-status" 
+                   [ngClass]="{
+                     'confirmed': cita.estado === 'CONFIRMADA', 
+                     'pending': cita.estado === 'PENDIENTE'
+                   }">
+                {{ cita.estado }}
+              </div>
+              
+              <!-- Botón Teleconsulta Inmediato -->
+              <button class="btn-primary-action" *ngIf="cita.estado === 'CONFIRMADA'" routerLink="/teleconsulta/{{cita.id}}" title="Entrar a Videollamada">
+                <i class="fa-solid fa-video"></i>
+              </button>
+            </div>
           </div>
-          <div class="apt-patient" style="flex: 1; font-weight: 600; color: #1e293b;">
-            {{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}
-          </div>
-          <!-- Etiqueta de estado interactiva -->
-          <div class="apt-status" 
-               [ngClass]="{
-                 'confirmed': cita.estado === 'CONFIRMADA', 
-                 'pending': cita.estado === 'PENDIENTE',
-                 'in-progress': cita.estado === 'ESPERANDO'
-               }">
-            {{ cita.estado }}
+          
+          <!-- Estado Vacío -->
+          <div class="empty-state-card" *ngIf="proximasCitas.length === 0" style="text-align: center; padding: 60px 20px;">
+             <div class="empty-icon-circle">
+               <i class="fa-solid fa-mug-hot"></i>
+             </div>
+             <p style="color: #1e293b; font-size: 1.2rem; margin: 15px 0 5px 0; font-weight: 700;">Tu agenda está despejada</p>
+             <p style="color: #64748b; margin: 0;">No tienes próximas citas. Buen momento para revisar reportes o descansar.</p>
           </div>
         </div>
         
-        <!-- Estado Vacío -->
-        <div class="empty-state-card" *ngIf="proximasCitas.length === 0" style="text-align: center; padding: 40px 20px;">
-           <i class="fa-solid fa-mug-hot" style="font-size: 3rem; color: #e2e8f0; margin-bottom: 15px; display:block;"></i>
-           <p style="color: #64748b; margin: 0; font-weight: 500;">No tienes próximas citas.</p>
-           <small style="color: #94a3b8;">La agenda está despejada.</small>
+        <div class="loading-state" *ngIf="cargando" style="padding: 40px; text-align: center; color: #0d9488;">
+           <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
+           <p>Sincronizando agenda...</p>
         </div>
       </div>
-      
-      <div class="loading-state" *ngIf="cargando">
-         <i class="fa-solid fa-circle-notch fa-spin"></i> Cargando agenda...
-      </div>
+
     </div>
+
+    <!-- COLUMNA DERECHA: RESUMEN Y AVISOS -->
+    <div class="secondary-column">
+      
+      <div class="premium-card notifications-panel">
+        <div class="card-header border-bottom">
+          <h3 class="card-title" style="margin: 0; font-size: 1.1rem;">
+            <i class="fa-solid fa-bell" style="color: #f59e0b; margin-right: 8px;"></i> Centro de Avisos
+          </h3>
+        </div>
+        
+        <!-- Componente nativo inyectado en vista compacta -->
+        <div class="compact-notifications-wrapper">
+          <app-notificaciones [modoDashboard]="true"></app-notificaciones>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>

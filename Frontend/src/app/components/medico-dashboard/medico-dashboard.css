@@ -35,66 +35,111 @@
 .stat-info h3 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #1e293b; }
 .stat-info p { margin: 0; color: #64748b; font-size: 0.9rem; font-weight: 600; }
 
-.dashboard-grid {
+.dashboard-split-view {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 380px;
   gap: 30px;
 }
 
+.primary-column { display: flex; flex-direction: column; gap: 30px; }
+.secondary-column { display: flex; flex-direction: column; gap: 30px; }
+
 .card-title { font-size: 1.2rem; font-weight: 700; color: #0f172a; margin-bottom: 20px; }
+.border-bottom { padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
-.quick-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.view-all { color: #0fbf6a; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.view-all:hover { color: #0d9488; text-decoration: underline; }
 
-.action-btn {
-  padding: 18px;
-  border-radius: 15px;
-  border: none;
-  background: #f8fafc;
-  color: #334155;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: 0.3s;
-  text-align: left;
-}
-
-.action-btn i { font-size: 1.2rem; min-width: 24px; }
-.action-btn:hover { background: #0fbf6a; color: white; transform: scale(1.02); }
-.action-btn.secondary:hover { background: #3b82f6; }
-.action-btn.info:hover { background: #14b8a6; }
-
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.view-all { color: #0fbf6a; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
-
-.appointment-list { display: flex; flex-direction: column; gap: 12px; }
+.appointment-list { display: flex; flex-direction: column; gap: 15px; }
 .apt-item {
   display: flex;
   align-items: center;
-  padding: 16px;
-  background: #f8fafc;
+  padding: 16px 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #0fbf6a;
   border-radius: 12px;
   gap: 20px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
-.apt-time { font-weight: 800; color: #0fbf6a; min-width: 80px; }
-.apt-patient { flex: 1; font-weight: 700; color: #1e293b; }
+.apt-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+}
+
+.apt-time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f0fdfa;
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 80px;
+}
+
+.apt-hour { font-size: 1.2rem; font-weight: 800; color: #0fbf6a; letter-spacing: -0.5px; }
+.apt-meridian { font-size: 0.75rem; font-weight: 700; color: #0d9488; text-transform: uppercase; }
+
 .apt-status {
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #10b981; }
 .apt-status.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.apt-status.in-progress { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+
+.btn-primary-action {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.3);
+}
+
+.btn-primary-action:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 15px rgba(20, 184, 166, 0.4);
+}
+
+.empty-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 2.5rem;
+  color: #cbd5e1;
+}
+
+.compact-notifications-wrapper {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.compact-notifications-wrapper::-webkit-scrollbar { width: 6px; }
+.compact-notifications-wrapper::-webkit-scrollbar-track { background: transparent; }
+.compact-notifications-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
 @media (max-width: 1024px) {
-  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-split-view { grid-template-columns: 1fr; }
+  .apt-item { flex-direction: column; text-align: center; }
+  .apt-time-block { width: 100%; flex-direction: row; justify-content: center; gap: 10px; }
 }

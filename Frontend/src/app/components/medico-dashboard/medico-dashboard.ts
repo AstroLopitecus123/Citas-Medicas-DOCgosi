@@ -48,7 +48,7 @@ export class MedicoDashboardComponent implements OnInit {
         const hoyStr = new Date().toISOString().split('T')[0];
         
         const citasHoy = citas.filter(c => c.fecha && c.fecha.startsWith(hoyStr));
-        const atendidosMes = citas.filter(c => c.estado === 'COMPLETADA' || c.estado === 'CONFIRMADA').length; // Simplificando stats
+        const atendidosMes = citas.filter(c => c.tieneHistorial || c.estado === 'CONFIRMADA').length; // Simplificando stats
         
         this.stats = {
           citasHoy: citasHoy.length,
@@ -58,7 +58,7 @@ export class MedicoDashboardComponent implements OnInit {
 
         // Extraer las próximas citas (futuras o del dia en curso que no estén canceladas)
         this.proximasCitas = citas
-          .filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA')
+          .filter(c => c.estado !== 'CANCELADA' && c.estado !== 'SOLICITUD_CANCELACION')
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
           .slice(0, 5); // Tomamos las top 5 mas prontas
 

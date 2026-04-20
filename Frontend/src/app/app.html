@@ -1,6 +1,6 @@
 <div class="page-loader" *ngIf="loading">
   <div class="loader-content">
-    <img src="/assets/images/LogoSOLO.png" alt="Cargando..." class="loader-logo" style="max-width: 150px; height: auto;">
+    <img src="/assets/images/LogoSOLO.png" alt="Cargando..." class="loader-logo" style="width: 150px; height: auto;">
     <div class="loader-spinner"></div>
   </div>
 </div>
@@ -8,7 +8,7 @@
 <header class="header" *ngIf="!isPanelRoute">
   <div class="header-container">
     <h1 class="titulo" routerLink="/">
-      <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo" style="max-width: 120px; height: auto;">
+      <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo" style="height: 48px; width: auto;">
       <div class="logo-text-stack">
         <span class="reto-text">R.E.T.O.</span>
         <span class="salud-text">Salud</span>
@@ -45,7 +45,7 @@
 <!-- ━━━ SIDEBAR PERSISTENTE (MULTIROLES) ━━━ -->
 <aside class="dashboard-sidebar" *ngIf="isPanelRoute">
   <div class="sidebar-brand">
-    <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" style="max-width: 150px; height: auto;" />
+    <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" style="height: 44px; width: auto;" />
     <div class="brand-text">
       <span class="brand-name">R.E.T.O</span>
       <span class="brand-sub">Panel {{ usuario?.rol || 'Dashboard' }}</span>
@@ -149,8 +149,8 @@
   </div>
 </aside>
 
-<!-- Contenedor para centrar el contenido del router -->
-<div class="contenido-centrado" [class.no-padding]="isPanelRoute">
+<!-- Contenedor Inteligente de Layout -->
+<div [class]="isPanelRoute ? 'panel-layout-container' : 'web-layout-container'">
   <!-- 🔥 Detecta login sin recargar la página -->
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
 </div>

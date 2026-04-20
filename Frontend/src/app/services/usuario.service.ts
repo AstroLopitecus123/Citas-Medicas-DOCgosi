@@ -44,7 +44,9 @@ export class UsuarioService {
   }
 
   actualizarEstado(id: number, nuevoEstado: string): Observable<any> {
-    return this.http.put(`${this.usuariosUrl}/${id}/estado`, { estado: nuevoEstado });
+    const token = localStorage.getItem('token') || '';
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this.usuariosUrl}/${id}/estado`, { estado: nuevoEstado }, { headers });
   }
 
   actualizarRol(id: number, nuevoRol: string): Observable<any> {

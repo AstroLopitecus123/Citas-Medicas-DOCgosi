@@ -40,6 +40,9 @@ public class CitaService {
     @Autowired
     private TwilioService twilioService;
 
+    @Autowired
+    private PagoService pagoService;
+
     public List<Cita> listar() {
         return citaRepository.findAll();
     }

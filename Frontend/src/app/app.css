@@ -172,7 +172,9 @@
    DASHBOARD SHARED COMPONENTS (PREMIUM)
    ========================================================================== */
 .dashboard-page-content {
-  padding: 40px 50px; flex-grow: 1;
+  padding: 30px 40px; flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .premium-welcome-banner {
@@ -259,6 +261,79 @@
 .premium-card {
   background: white; border-radius: 24px; padding: 35px; border: 1px solid #edf2f7;
   box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* MARCO PARA TABLAS (ELEVA LA VISIBILIDAD) */
+.modern-table-frame {
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 20px !important;
+  padding: 5px !important;
+  background: #f8fafc !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+  margin-bottom: 20px !important;
+}
+
+/* SELECT PREMIUM (BORRA EL DISEÑO SIMPLE) */
+.form-control-text.premium-select {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 15px center !important;
+  background-size: 18px !important;
+  padding-right: 45px !important;
+  cursor: pointer !important;
+  border: 2px solid #e2e8f0 !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+}
+
+.form-control-text.premium-select:focus {
+  border-color: #0fbf6a !important;
+  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.15) !important;
+  background-color: white !important;
+}
+
+/* DOC PREVIEW CARD PREMIUM */
+.doc-preview-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  border: 1.5px dashed #cbd5e1 !important;
+  border-radius: 20px !important;
+  padding: 24px !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 25px !important;
+  transition: all 0.3s ease !important;
+}
+
+.doc-preview-card strong {
+  font-size: 1.3rem !important;
+  color: #0f4a2b !important;
+  letter-spacing: -0.5px !important;
+}
+
+.doc-preview-card span {
+  color: #0fbf6a !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* AJUSTE FULL WIDTH PARA CITAS */
+.mis-citas-full {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.main-content {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* AJUSTE DE CONTENIDO PARA SIDEBAR */
@@ -877,11 +952,15 @@
   background: white !important;
   border-radius: 28px !important;
   width: 100% !important;
-  max-width: 500px !important;
+  max-width: 500px; /* Default */
   overflow: hidden !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
   animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
+
+.modal-small { max-width: 420px !important; }
+.modal-medium { max-width: 680px !important; }
+.modal-large { max-width: 1000px !important; }
 
 .modal-header-glass {
   padding: 25px 30px !important;

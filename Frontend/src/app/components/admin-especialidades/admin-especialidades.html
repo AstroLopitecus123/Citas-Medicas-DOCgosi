@@ -97,12 +97,14 @@
             <input *ngIf="ctrl.editando"
               type="text"
               class="form-control-text"
+              style="font-weight: 700; color: #0f4a2b;"
               placeholder="Ej: Cardiología"
               [(ngModel)]="ctrl.editando.nombre"
             />
             <input *ngIf="!ctrl.editando"
               type="text"
               class="form-control-text"
+              style="font-weight: 700; color: #0f4a2b;"
               placeholder="Ej: Cardiología"
               [(ngModel)]="ctrl.nueva.nombre"
             />
@@ -112,11 +114,13 @@
             <label><i class="fa-solid fa-align-left"></i> Descripción detallada</label>
             <textarea *ngIf="ctrl.editando"
               class="form-control-text tall-area"
+              style="line-height: 1.6;"
               placeholder="Describa el alcance de la especialidad..."
               [(ngModel)]="ctrl.editando.descripcion"
             ></textarea>
             <textarea *ngIf="!ctrl.editando"
               class="form-control-text tall-area"
+              style="line-height: 1.6;"
               placeholder="Describa el alcance de la especialidad..."
               [(ngModel)]="ctrl.nueva.descripcion"
             ></textarea>

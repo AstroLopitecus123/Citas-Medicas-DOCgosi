@@ -35,44 +35,46 @@
 
   <!-- 🧾 Tarjeta de la Agenda -->
   <div class="premium-card">
-    <div class="modern-table-container scroll-x" *ngIf="medico; else cargando">
-      <table class="modern-table agenda-table">
-        <thead>
-          <tr>
-            <th class="sticky-col">Bloque Horario</th>
-            <th *ngFor="let dia of dias" class="dia-header">
-              <div class="dia-stack">
-                 <span class="dia-nombre">{{ dia.nombre }}</span>
-                 <span class="dia-fecha">{{ dia.fecha }}</span>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let h of horas">
-            <td class="sticky-col time-label">
-              <i class="fa-regular fa-clock"></i> {{ h }}:00 - {{ h + 1 }}:00
-            </td>
-            <td *ngFor="let dia of dias" 
-                class="slot-cell"
-                [class.disponible]="isDisponible(dia.fecha, h)" 
-                [class.fixed]="!esEditable(dia.fecha)">
-              
-              <label class="modern-checkbox" *ngIf="esEditable(dia.fecha); else noEditable">
-                <input #chk type="checkbox" [checked]="isDisponible(dia.fecha, h)"
-                  (change)="toggleHorario(dia.fecha, h, chk.checked)">
-                <span class="checkmark"></span>
-              </label>
-
-              <ng-template #noEditable>
-                <div class="status-marker" [class.marked]="isDisponible(dia.fecha, h)">
-                   <i class="fa-solid" [class.fa-check-double]="isDisponible(dia.fecha, h)" [class.fa-lock]="!isDisponible(dia.fecha, h)"></i>
+    <div class="modern-table-frame" *ngIf="medico; else cargando">
+      <div class="modern-table-container scroll-x">
+        <table class="modern-table agenda-table">
+          <thead>
+            <tr>
+              <th class="sticky-col">Bloque Horario</th>
+              <th *ngFor="let dia of dias" class="dia-header">
+                <div class="dia-stack">
+                   <span class="dia-nombre">{{ dia.nombre }}</span>
+                   <span class="dia-fecha">{{ dia.fecha }}</span>
                 </div>
-              </ng-template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let h of horas">
+              <td class="sticky-col time-label">
+                <i class="fa-regular fa-clock"></i> {{ h }}:00 - {{ h + 1 }}:00
+              </td>
+              <td *ngFor="let dia of dias" 
+                  class="slot-cell"
+                  [class.disponible]="isDisponible(dia.fecha, h)" 
+                  [class.fixed]="!esEditable(dia.fecha)">
+                
+                <label class="modern-checkbox" *ngIf="esEditable(dia.fecha); else noEditable">
+                  <input #chk type="checkbox" [checked]="isDisponible(dia.fecha, h)"
+                    (change)="toggleHorario(dia.fecha, h, chk.checked)">
+                  <span class="checkmark"></span>
+                </label>
+  
+                <ng-template #noEditable>
+                  <div class="status-marker" [class.marked]="isDisponible(dia.fecha, h)">
+                     <i class="fa-solid" [class.fa-check-double]="isDisponible(dia.fecha, h)" [class.fa-lock]="!isDisponible(dia.fecha, h)"></i>
+                  </div>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- 💾 Acciones -->

@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 })
 export class GestionarDisponibilidadComponent implements OnInit {
 
-  minimoHorasSemana = 10;
+  minimoHorasSemana = 36;
+  minimoHorasDia = 6;
   semanaIndice = 0; // 0 = siguiente semana, 1 = semana después, 2 = tercera semana
   medico!: Medico;
   disponibilidades: Disponibilidad[] = [];
@@ -112,7 +113,7 @@ export class GestionarDisponibilidadComponent implements OnInit {
 
   guardar(): void {
   if (!this.validarMinimoHoras()) {
-    alert(`Debes seleccionar el mínimo de ${this.minimoHorasSemana} horas por semana`);
+    alert(`Normativa Institucional: Debes seleccionar el mínimo de ${this.minimoHorasSemana} horas por semana y al menos ${this.minimoHorasDia} horas por día (Lunes a Sábado).`);
     return;
   }
 
@@ -156,13 +157,26 @@ export class GestionarDisponibilidadComponent implements OnInit {
     finSemana.setDate(lunesSemana.getDate() + 5);
     finSemana.setHours(23, 59, 59, 999);
 
-    const horasSeleccionadas = this.disponibilidades.filter(d => {
+    const horasSemana = this.disponibilidades.filter(d => {
       const fecha = new Date(d.fecha);
       fecha.setHours(0, 0, 0, 0);
       return fecha >= lunesSemana && fecha <= finSemana && d.estado === EstadoDisponibilidad.DISPONIBLE;
     });
 
-    return horasSeleccionadas.length >= this.minimoHorasSemana;
+    // Validar Total Semanal
+    if(horasSemana.length < this.minimoHorasSemana) return false;
+
+    // Validar Mínimo por Día (Agrupar por fecha)
+    const porDia: {[fecha: string]: number} = {};
+    horasSemana.forEach(d => {
+      porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
+    });
+
+    // Debe haber trabajado al menos los 6 días de la jornada (L-S) y cada día >= 6h
+    const diasTrabajados = Object.keys(porDia);
+    if(diasTrabajados.length < 6) return false;
+
+    return diasTrabajados.every(fecha => porDia[fecha] >= this.minimoHorasDia);
   }
 
   getLunesDeSemana(): Date {

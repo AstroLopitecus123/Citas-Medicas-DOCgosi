@@ -49,10 +49,10 @@ public class SecurityConfig {
                     "/h2-console/**",
                     "/api/paises/**",
                     "/api/chatbot/**",
-                    "/api/especialidades" // Permitir ver especialidades para registro
+                    "/api/especialidades"
                 ).permitAll()
-                .requestMatchers("/api/disponibilidades/medico/*/rango").permitAll() // Permitir ver horarios para citas
-                .requestMatchers("/api/medicos").permitAll() // Permitir ver doctores
+                .requestMatchers("/api/disponibilidades/medico/*/rango").permitAll()
+                .requestMatchers("/api/medicos").permitAll()
                 .anyRequest().authenticated()
             )
             .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));

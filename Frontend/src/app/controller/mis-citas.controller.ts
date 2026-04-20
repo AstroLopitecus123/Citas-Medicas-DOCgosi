@@ -433,27 +433,47 @@ export class MisCitasController {
   }
 
   confirmarCancelacionProceso() {
-    if (!this.citaACancelar) return;
+    console.log('🚀 Iniciando proceso de cancelación...', {
+      idCita: this.citaACancelar?.id,
+      rol: this.usuario?.rol,
+      motivo: this.motivoCancelacion
+    });
 
-    if (this.usuario.rol === 'PACIENTE') {
-      // Paciente solicita cancelar enviando el motivo
+    if (!this.citaACancelar) {
+      console.warn('⚠️ No hay cita seleccionada para cancelar.');
+      return;
+    }
+
+    // Normalizamos el rol para la comparación
+    const rol = this.usuario?.rol?.toUpperCase();
+
+    if (rol === 'PACIENTE') {
+      console.log('📩 Enviando solicitud de cancelación (Paciente)...');
       this.citaService.solicitarCancelar(this.citaACancelar.id, this.motivoCancelacion).subscribe({
         next: () => {
+          console.log('✅ Solicitud de cancelación enviada con éxito');
           if (this.ns) this.ns.success('Solicitud de cancelación enviada. Pendiente de aprobación.');
           this.cargarCitas();
           this.cerrarModalCancelar();
         },
-        error: () => { if (this.ns) this.ns.error('Error al solicitar cancelación'); }
+        error: (err) => { 
+          console.error('❌ Error al solicitar cancelación:', err);
+          if (this.ns) this.ns.error('Error al solicitar cancelación: ' + (err.error?.message || 'Error desconocido')); 
+        }
       });
     } else {
-      // Admin/Medico confirma cancelación (final)
+      console.log('🛠️ Confirmando cancelación directa (Admin/Staff)...');
       this.citaService.confirmarCancelar(this.citaACancelar.id).subscribe({
         next: () => {
+          console.log('✅ Cancelación confirmada con éxito');
           if (this.ns) this.ns.success('Cancelación confirmada exitosamente');
           this.cargarCitas();
           this.cerrarModalCancelar();
         },
-        error: () => { if (this.ns) this.ns.error('Error al confirmar cancelación'); }
+        error: (err) => { 
+          console.error('❌ Error al confirmar cancelación:', err);
+          if (this.ns) this.ns.error('Error al confirmar cancelación'); 
+        }
       });
     }
   }

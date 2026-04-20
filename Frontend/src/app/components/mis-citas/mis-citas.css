@@ -119,6 +119,7 @@
 .form-control, .form-control-text {
     width: 100%; padding: 12px 18px; border-radius: 14px; border: 2px solid #f1f5f9;
     background: #f8fafc; color: #1e293b; font-size: 0.95rem; transition: all 0.3s ease;
+    box-sizing: border-box; /* 👈 Evita choque con bordes */
 }
 .form-control:focus { border-color: #0fbf6a; background: white; box-shadow: 0 0 0 5px rgba(15, 191, 106, 0.1); outline: none; }
 

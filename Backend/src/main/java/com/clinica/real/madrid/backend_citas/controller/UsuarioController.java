@@ -97,6 +97,7 @@ public class UsuarioController {
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Usuario> actualizarUsuario(
             @PathVariable Long id,
             @RequestBody Usuario usuario) {
@@ -105,6 +106,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/password")
+    @PreAuthorize("#id == authentication.principal.id")
     public ResponseEntity<String> cambiarPassword(
             @PathVariable Long id,
             @RequestBody PasswordChangeRequest request) {

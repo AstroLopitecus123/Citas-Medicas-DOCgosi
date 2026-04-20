@@ -21,15 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "Usuario no encontrado con correo: " + correo));
 
-        // Convertir el rol de tu enum RolUsuario a String para Spring Security
-        String rol = usuario.getRol() != null ? usuario.getRol().name() : "PACIENTE";
-
-        // Retornamos un UserDetails de Spring Security
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(usuario.getCorreo())
-                .password(usuario.getContrasena()) // contraseña hasheada con BCrypt
-                .roles(rol) // Spring Security espera roles sin "ROLE_" prefijo
-                .build();
+        // Retornamos nuestro UsuarioPrincipal personalizado
+        return UsuarioPrincipal.fromUsuario(usuario);
     }
 }
 

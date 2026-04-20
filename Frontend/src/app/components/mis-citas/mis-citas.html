@@ -134,7 +134,11 @@
                 <ng-template #noCitas>
                     <div class="empty-state">
                         <i class="fa-solid fa-calendar-xmark"></i>
-                        <p>Aún no tiene citas registradas.</p>
+                        <p>Aún no tiene citas registradas</p>
+                        <span>Aquí aparecerán todas tus consultas médicas programadas, recordatorios e historial de atención.</span>
+                        <button class="btn-premium-action mt-20" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
+                           <i class="fa-solid fa-plus"></i> Agendar mi primera cita
+                        </button>
                     </div>
                 </ng-template>
             </div>

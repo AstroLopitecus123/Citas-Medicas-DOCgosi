@@ -126,9 +126,10 @@
         </div>
 
         <ng-template #noPagos>
-          <div *ngIf="!cargando" class="empty-state p-5">
-             <i class="fa-solid fa-file-invoice fa-3x text-muted mb-3 d-block"></i>
-             <p>No se encontraron transacciones en el historial.</p>
+          <div *ngIf="!cargando" class="empty-state">
+             <i class="fa-solid fa-file-invoice-dollar"></i>
+             <p>Sin transacciones financieras</p>
+             <span>No hemos detectado registros de pagos o facturación asociados a tu cuenta en este momento.</span>
           </div>
         </ng-template>
 

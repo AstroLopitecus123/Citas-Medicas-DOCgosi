@@ -34,10 +34,10 @@
   <div class="premium-card" *ngIf="!loading">
 
     <!-- Empty State -->
-    <div *ngIf="notificacionesFiltradas.length === 0" style="text-align:center; padding: 60px 20px; color: #94a3b8;">
-      <i class="fa-solid fa-bell-slash" style="font-size: 3rem; margin-bottom: 16px; display:block; color: #cbd5e1;"></i>
-      <p style="font-weight: 600; font-size: 1.1rem;">No hay avisos pendientes</p>
-      <p style="font-size: 0.9rem; margin-top: 6px;">Cuando los pacientes soliciten cambios en sus citas, aparecerán aquí.</p>
+    <div *ngIf="notificacionesFiltradas.length === 0" class="empty-state">
+      <i class="fa-solid fa-bell-slash"></i>
+      <p>No hay avisos pendientes</p>
+      <span>Cuando los pacientes soliciten cambios en sus citas o existan alertas del sistema, aparecerán detalladas aquí.</span>
     </div>
 
     <!-- Notificación Item -->

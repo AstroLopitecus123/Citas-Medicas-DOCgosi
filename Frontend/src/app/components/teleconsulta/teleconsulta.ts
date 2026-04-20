@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-teleconsulta',
   standalone: true,
@@ -39,6 +41,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   private deepgramSocket: any = null;
   private mediaRecorder: MediaRecorder | null = null;
 
+  private apiUrl = environment.apiUrl;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -56,7 +60,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   obtenerConfiguracion() {
     // Obtenemos las llaves de seguridad desde el backend
-    this.http.get<any>('http://localhost:8080/api/teleconsulta/config').subscribe({
+    this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config`).subscribe({
       next: (config) => {
         this.agoraAppId = config.agoraAppId;
         this.deepgramApiKey = config.deepgramApiKey;

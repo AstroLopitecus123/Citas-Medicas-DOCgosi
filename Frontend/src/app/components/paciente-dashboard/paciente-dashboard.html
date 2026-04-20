@@ -1,104 +1,101 @@
 <div class="dashboard-page-content">
+  <!-- 🔍 Banner de Bienvenida Premium -->
   <header class="premium-welcome-banner">
-    <div class="welcome-icon-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-      <i class="fa-solid fa-house-user"></i>
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-user-circle"></i>
     </div>
     <div class="welcome-text">
-       <h1>{{ getGreeting() }}, {{ usuario?.nombre }}</h1>
-       <p>Bienvenido a tu Portal Personal de Salud R.E.T.O.</p>
+       <div class="badge-role">PACIENTE</div>
+       <h1>{{ getGreeting() }}, {{ usuario?.nombre || 'Paciente' }}</h1>
+       <p>Bienvenido a su portal de salud R.E.T.O Salud</p>
     </div>
     <div class="header-actions">
-        <span class="date-badge" style="background: #ecfdf5; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #065f46; display: inline-flex; align-items: center; gap: 8px; border: 1px solid #d1fae5;">
-            <i class="fa-solid fa-heart-pulse"></i>
-            Paciente Regular
+        <span class="date-badge">
+            <i class="fa-solid fa-calendar-day"></i>
+            {{ today | date:'EEEE, d MMMM' }}
         </span>
     </div>
   </header>
 
-  <!-- KPI CARDS - Premium Style -->
+  <!-- KPI STATS -->
   <div class="stats-grid">
     <div class="stat-card kpi-primary">
-      <div class="stat-icon"><i class="fa-solid fa-calendar-star"></i></div>
+      <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
       <div class="stat-info">
-        <h3>{{ stats.proximaCita }}</h3>
-        <p>Próxima Cita</p>
+        <h3>{{ stats.totalCitas }}</h3>
+        <p>Citas Agendadas</p>
       </div>
     </div>
     <div class="stat-card kpi-success">
-      <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-      <div class="stat-info">
-        <h3>{{ stats.totalCitas }}</h3>
-        <p>Citas Realizadas</p>
-      </div>
-    </div>
-    <div class="stat-card kpi-info">
       <div class="stat-icon"><i class="fa-solid fa-file-medical"></i></div>
       <div class="stat-info">
         <h3>{{ stats.historiasClinicas }}</h3>
         <p>Historias Clínicas</p>
       </div>
     </div>
+    <div class="stat-card kpi-info">
+      <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="stat-info">
+        <h3>Pendiente</h3>
+        <p>Próximo Triaje</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICACIONES INTEGRADAS (ANCHO COMPLETO COMO ADMIN) -->
+  <div class="section-title-dash">
+    <i class="fa-solid fa-bell"></i>
+    <h2>Centro de Avisos</h2>
+  </div>
+  <div class="premium-card" style="margin-bottom: 25px;">
+    <app-notificaciones [modoDashboard]="true"></app-notificaciones>
   </div>
 
   <div class="dashboard-grid">
     <!-- QUICK ACTIONS -->
     <div class="premium-card">
-      <h3 class="card-title">Atención Inmediata</h3>
+      <h3 class="card-title">Acciones del Paciente</h3>
       <div class="quick-actions">
         <button class="action-btn" routerLink="/mis-citas">
-          <i class="fa-solid fa-plus-circle"></i>
+          <i class="fa-solid fa-calendar-plus"></i>
           <div class="btn-content">
-            <strong>Solicitar Nueva Cita</strong>
-            <span>Reserva tu turno ahora</span>
+            <strong>Reservar Cita</strong>
+            <span>Busca médicos y especialidades</span>
           </div>
         </button>
         <button class="action-btn secondary" routerLink="/mis-citas">
-          <i class="fa-solid fa-clock-rotate-left"></i>
+          <i class="fa-solid fa-calendar-check"></i>
           <div class="btn-content">
-            <strong>Historial de Citas</strong>
-            <span>Consulta tu historial</span>
+            <strong>Mis Próximas Citas</strong>
+            <span>Gestiona tus consultas agendadas</span>
           </div>
         </button>
-        <button class="action-btn" routerLink="/mi-historial">
-          <i class="fa-solid fa-file-invoice-dollar"></i>
+        <button class="action-btn info">
+          <i class="fa-solid fa-folder-open"></i>
           <div class="btn-content">
-            <strong>Mis Pagos</strong>
-            <span>Historial de transacciones</span>
+            <strong>Historias Clínicas</strong>
+            <span>Accede a tus informes médicos</span>
           </div>
         </button>
       </div>
     </div>
 
-    <!-- RECIENTES Y RECOMENDACIONES -->
-    <div class="dashboard-side-panels">
-        <!-- NOTIFICACIONES INTEGRADAS -->
-        <div class="premium-card notif-panel">
-            <div class="card-header-flex">
-                <h3 class="card-title">Mis Notificaciones</h3>
-                <a routerLink="/notificaciones" class="view-all-link">Centro de Avisos</a>
-            </div>
-            
-            <!-- Usamos el componente real embebido -->
-            <app-notificaciones [modoDashboard]="true"></app-notificaciones>
+    <!-- RECOMENDACIONES -->
+    <div class="premium-card help-panel">
+      <h3 class="card-title"><i class="fa-solid fa-shield-heart"></i> Recomendaciones</h3>
+      <div class="info-content">
+        <div class="recommendation-item">
+          <i class="fa-solid fa-circle-info"></i>
+          <p>Recuerda llegar 15 minutos antes de tu cita agendada para el triaje.</p>
         </div>
-
-        <!-- RECOMENDACIONES -->
-        <div class="premium-card help-panel">
-            <h3 class="card-title"><i class="fa-solid fa-shield-heart"></i> Recomendaciones</h3>
-            <div class="info-content">
-                <div class="recommendation-item">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <p>Recuerda llegar 15 minutos antes de tu cita agendada para el triaje.</p>
-                </div>
-                <div class="recommendation-item">
-                    <i class="fa-solid fa-file-pdf"></i>
-                    <p>Tus resultados de laboratorio ahora están disponibles en la sección "Historias".</p>
-                </div>
-            </div>
-            <div class="ai-badge">
-                <i class="fa-solid fa-robot"></i> Asistente Gemini Activo
-            </div>
+        <div class="recommendation-item">
+          <i class="fa-solid fa-file-pdf"></i>
+          <p>Tus resultados de laboratorio ahora están disponibles en la sección "Historias".</p>
         </div>
+      </div>
+      <div class="ai-badge">
+        <i class="fa-solid fa-robot"></i> Asistente Gemini Activo
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,30 @@
+.git
+.gitignore
+.angular
+node_modules
+target
+bin
+out
+*.zip
+*.docx
+*.pdf
+*.log
+Frontend/.angular
+Frontend/node_modules
+Backend/target
+Backend/.settings
+Backend/.project
+Backend/.classpath
+.vscode
+.settings
+.project
+.classpath
+help.md
+HELP.md
+DIAGRAMAS_FINAL_2 (1).docx
+DIAGRAMAS_FINAL_2.zip
+WEB CALIDAD/
+docx_extracted2/
+package-lock.json
+!Frontend/package-lock.json
+!Backend/pom.xml

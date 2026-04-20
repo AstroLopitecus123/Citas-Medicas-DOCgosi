@@ -23,7 +23,7 @@ export class PacienteGuard implements CanActivate {
     try {
       const usuario = JSON.parse(usuarioStr);
       const rol = usuario?.rol?.toUpperCase();
-      if (rol === 'PACIENTE') return true;
+      if (rol === 'PACIENTE' || rol === 'ADMIN' || rol === 'RECEPCION') return true;
 
       console.log('⛔ No es PACIENTE → redirigiendo');
       this.redirigirPorRol(rol);

@@ -35,6 +35,7 @@ export const routes: Routes = [
   { path: 'especialidades', component: AdminEspecialidadesComponent, title: 'Especialidades', canActivate: [AdminGuard] },
   { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Control de Pagos', canActivate: [AdminGuard] },
   { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent), title: 'Avisos y Alertas', canActivate: [AdminGuard] },
+  { path: 'admin/gestion-citas', component: MisCitasComponent, title: 'Gestión de Citas', canActivate: [AdminGuard] },
 
   // ─── PANEL DE MÉDICO ──────────────────────────────────────────────────────────
   { path: 'medico/dashboard',

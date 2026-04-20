@@ -175,10 +175,18 @@ export class MisCitasController {
     if (!this.usuario?.id) return;
 
     this.cargando = true;
+    const rol = this.usuario.rol?.toUpperCase();
+    const idRuta = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Si el usuario es médico, usar su médico.id
-    if (this.usuario.rol?.toUpperCase() === 'MEDICO') {
-      // Esperar a que el médico haya sido cargado
+    // 1. Si es ADMIN o RECEPCION y NO hay un id en la ruta -> Cargar TODAS las citas de la clínica
+    if ((rol === 'ADMIN' || rol === 'RECEPCION') && !idRuta) {
+      this.citaService.listarTodas().subscribe({
+        next: data => this.asignarCitas(data),
+        error: err => this.manejarErrorCitas(err)
+      });
+    }
+    // 2. Si el usuario es médico -> Cargar sus propias citas médicas
+    else if (rol === 'MEDICO') {
       if (this.medico && this.medico.id) {
         this.citaService.listarPorMedico(this.medico.id).subscribe({
           next: data => this.asignarCitas(data),
@@ -188,8 +196,9 @@ export class MisCitasController {
         console.warn('No se encontró el ID del médico para cargar citas.');
         this.cargando = false;
       }
-    } else {
-      // Si es paciente u otro rol
+    } 
+    // 3. Caso general: Cargar citas de un paciente específico (sea por ruta o por ser el usuario actual)
+    else {
       this.citaService.listarPorUsuario(this.usuario.id).subscribe({
         next: data => this.asignarCitas(data),
         error: err => this.manejarErrorCitas(err)

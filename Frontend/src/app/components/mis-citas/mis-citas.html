@@ -7,9 +7,11 @@
                 <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="welcome-text">
-                <div class="badge-role">PACIENTE / STAFF</div>
-                <h1>Mis Citas Médicas</h1>
-                <p>Gestiona tus consultas y revisa tu historial médico institucional en un solo lugar.</p>
+                <div class="badge-role" [style.background]="ctrl.usuario.rol === 'ADMIN' ? 'rgba(245,158,11,0.1)' : ''" [style.color]="ctrl.usuario.rol === 'ADMIN' ? '#b45309' : ''">
+                    {{ ctrl.usuario.rol === 'ADMIN' ? 'ADMINISTRADOR' : 'PACIENTE / STAFF' }}
+                </div>
+                <h1>{{ ctrl.usuario.rol === 'ADMIN' ? 'Gestión Global de Citas' : 'Mis Citas Médicas' }}</h1>
+                <p>{{ ctrl.usuario.rol === 'ADMIN' ? 'Panel de supervisión y control de la agenda institucional.' : 'Gestiona tus consultas y revisa tu historial médico institucional en un solo lugar.' }}</p>
             </div>
             <div class="header-actions">
                 <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
@@ -30,6 +32,7 @@
                         <thead>
                             <tr>
                                 <th>Fecha y Hora</th>
+                                <th *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">Paciente</th>
                                 <th>{{ ctrl.usuario.rol === 'MEDICO' ? 'Paciente' : 'Personal Médico' }}</th>
                                 <th>Especialidad</th>
                                 <th>Estado</th>
@@ -45,8 +48,13 @@
                                         <span class="time-txt">{{ cita?.fecha | date:'shortTime' }}</span>
                                     </div>
                                 </td>
+                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">
+                                        <strong style="color: #0fbf6a;">{{ cita?.paciente?.nombre }} {{ cita?.paciente?.apellido }}</strong>
+                                        <span class="sub-txt">ID: {{ cita?.paciente?.id }}</span>
+                                    </div>
+                                </td>
                                 <td>
-                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol !== 'MEDICO'">
+                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION' || ctrl.usuario.rol === 'PACIENTE'">
                                         <strong>{{ cita?.medico?.usuario?.nombre }} {{ cita?.medico?.usuario?.apellido }}</strong>
                                         <span class="sub-txt">Matrícula: {{ cita?.medico?.id }}</span>
                                     </div>

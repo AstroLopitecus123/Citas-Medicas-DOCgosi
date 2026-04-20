@@ -23,6 +23,11 @@ export class ListaUsuariosController {
   mostrandoConfirmarEliminar = false;
   usuarioSeleccionadoAEliminar: UsuarioFull | null = null;
 
+  // Edición de Rol
+  mostrandoModalRol = false;
+  usuarioSeleccionadoRol: UsuarioFull | null = null;
+  nuevoRolVisual: string = '';
+
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
@@ -145,21 +150,33 @@ export class ListaUsuariosController {
     });
   }
 
-  actualizarRol(usuario: any, nuevoRol: string): void {
-    if (!usuario) return;
-
-    this.usuarioService.actualizarRol(usuario.id, nuevoRol).subscribe({
-      next: (res) => {
-        usuario.rol = nuevoRol;
-        console.log(`Rol de ${usuario.nombre} actualizado a ${nuevoRol}`);
-      },
-      error: (err) => console.error('Error al actualizar rol', err)
-    });
-  }
-
-  editarUsuario(usuario: UsuarioFull | null): void {
+  abrirModalRol(usuario: UsuarioFull | null): void {
     if (!usuario) return;
     this.menuAbierto = null;
-    this.router.navigate(['/mis-citas', usuario.id]);
+    this.usuarioSeleccionadoRol = usuario;
+    this.nuevoRolVisual = usuario.rol;
+    this.mostrandoModalRol = true;
+  }
+
+  cerrarModalRol(): void {
+    this.mostrandoModalRol = false;
+    this.usuarioSeleccionadoRol = null;
+  }
+
+  guardarRolUsuario(): void {
+    if (!this.usuarioSeleccionadoRol) return;
+    const u = this.usuarioSeleccionadoRol;
+    
+    this.usuarioService.actualizarRol(u.id, this.nuevoRolVisual).subscribe({
+      next: (res) => {
+        u.rol = this.nuevoRolVisual as any;
+        this.ns.success(`Rol de ${u.nombre} actualizado a ${this.nuevoRolVisual}`);
+        this.cerrarModalRol();
+      },
+      error: (err) => {
+        console.error('Error al actualizar rol', err);
+        this.ns.error('Error al actualizar el rol del usuario.');
+      }
+    });
   }
 }

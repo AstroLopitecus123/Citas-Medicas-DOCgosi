@@ -40,7 +40,7 @@
       <div class="stat-card kpi-primary" *ngIf="usuario.rol !== 'PACIENTE'">
         <div class="stat-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
         <div class="stat-info">
-          <h3>S/. {{ totalIngresos | number:'1.2-2' }}</h3>
+          <h3 class="money-highlight-kpi">S/. {{ totalIngresos | number:'1.2-2' }}</h3>
           <p>Ingresos Recaudados</p>
         </div>
       </div>
@@ -94,7 +94,7 @@
                   <small class="text-muted">{{ p.especialidad || '-' }}</small>
                 </td>
                 <td>
-                  <span class="fw-bold txt-success">S/. {{ p.monto | number:'1.2-2' }}</span>
+                  <span class="money-highlight">S/. {{ p.monto | number:'1.2-2' }}</span>
                 </td>
                 <td>
                   <span class="badge" [ngClass]="p.metodo === 'TARJETA' ? 'badge-info' : 'badge-success'">

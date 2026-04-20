@@ -88,7 +88,7 @@
               <!-- ✅ Acciones Premium Unificadas -->
               <td>
                 <div class="actions-flex justify-center">
-                  <button class="btn-table-action btn-edit" (click)="ctrl.editarUsuario(usuario!)" title="Editar / Ver Citas">
+                  <button class="btn-table-action btn-edit" (click)="ctrl.abrirModalRol(usuario!)" title="Editar Rol">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button class="btn-table-action btn-status" (click)="ctrl.toggleEstado(usuario!)" 
@@ -164,6 +164,47 @@
           <i class="fa-solid fa-trash"></i> Eliminar Definitivamente
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🧑‍💼 MODAL GLASS: EDITAR ROL -->
+<div class="glass-overlay" *ngIf="ctrl.mostrandoModalRol" (click)="ctrl.cerrarModalRol()">
+  <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
+    <div class="modal-header-glass">
+      <div class="header-info">
+        <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
+          <i class="fa-solid fa-user-gear"></i>
+        </div>
+        <div>
+          <h3>Editar Rol de Usuario</h3>
+          <p>Configura los permisos de acceso al sistema.</p>
+        </div>
+      </div>
+      <button class="btn-close-glass" (click)="ctrl.cerrarModalRol()">&times;</button>
+    </div>
+
+    <div class="modal-body-glass">
+      <div class="user-info mb-3">
+        <strong>{{ ctrl.usuarioSeleccionadoRol?.nombre }} {{ ctrl.usuarioSeleccionadoRol?.apellido }}</strong>
+        <span style="font-size: 0.85rem; color: #64748b; display: block;">{{ ctrl.usuarioSeleccionadoRol?.correo }}</span>
+      </div>
+      <div class="form-group-modern mt-15">
+        <label><i class="fa-solid fa-user-shield"></i> Nuevo Rol Asignado</label>
+        <select class="form-control-text premium-select" [(ngModel)]="ctrl.nuevoRolVisual">
+          <option value="ADMIN">Administrador</option>
+          <option value="MEDICO">Médico</option>
+          <option value="RECEPCION">Recepción</option>
+          <option value="PACIENTE">Paciente</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer-glass">
+      <button class="btn-cancel-glass" (click)="ctrl.cerrarModalRol()">Cancelar</button>
+      <button class="btn-confirm-glass" (click)="ctrl.guardarRolUsuario()">
+        <i class="fa-solid fa-floppy-disk"></i> Guardar Rol
+      </button>
     </div>
   </div>
 </div>

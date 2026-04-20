@@ -22,6 +22,14 @@ export class GestionarDisponibilidadComponent implements OnInit {
   semanaIndice = 0; // 0 = siguiente semana, 1 = semana después, 2 = tercera semana
   medico!: Medico;
   disponibilidades: Disponibilidad[] = [];
+  
+  // Estado de Validación Flexible
+  mostrarModalConfirmacion = false;
+  resultadoValidacion = {
+    totalValido: true,
+    distribucionValida: true,
+    diasBajos: [] as string[] // Guardará las fechas que no cumplen con 6h
+  };
 
   dias: { nombre: string, fecha: string }[] = [];
   horas = Array.from({ length: 13 }, (_, i) => 8 + i); // 8am a 8pm
@@ -111,46 +119,96 @@ export class GestionarDisponibilidadComponent implements OnInit {
     }
   }
 
-  guardar(): void {
-  if (!this.validarMinimoHoras()) {
-    alert(`Normativa Institucional: Debes seleccionar el mínimo de ${this.minimoHorasSemana} horas por semana y al menos ${this.minimoHorasDia} horas por día (Lunes a Sábado).`);
-    return;
-  }
+  validarHorario(): void {
+    const horasSemana = this.horasSemanaActual;
+    const porDia: { [fecha: string]: number } = {};
+    
+    // Reset
+    this.resultadoValidacion = { 
+      totalValido: true, 
+      distribucionValida: true, 
+      diasBajos: [] 
+    };
 
-  const disponibilidadesParaEnviar = this.disponibilidades.map(d => ({
-    id: d.id || null,
-    medico: { id: this.medico.id },
-    fecha: d.fecha,
-    horaInicio: d.horaInicio,
-    horaFin: d.horaFin,
-    estado: d.estado
-  }));
+    // 1. Validar Total (Mandatorio 36h)
+    if (horasSemana.length < this.minimoHorasSemana) {
+      this.resultadoValidacion.totalValido = false;
+    }
 
-  this.controller.guardarDisponibilidades(disponibilidadesParaEnviar as any)
-    .subscribe({
-      next: res => {
-        this.disponibilidades = res.map(d => new Disponibilidad(d));
-        alert('Disponibilidades guardadas correctamente');
+    // 2. Validar Distribución (Advertencia si no hay 6h por día o no hay 6 días)
+    horasSemana.forEach(d => {
+      porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
+    });
 
-        const usuarioStr = localStorage.getItem('usuario');
-        const usuarioActual = usuarioStr ? JSON.parse(usuarioStr) : null;
-        const rol = usuarioActual?.rol?.toUpperCase();
+    const diasVisibles = this.dias.map(d => ({ 
+      iso: this.fechaToISO(d.fecha), 
+      nombre: d.nombre 
+    }));
 
-        if (rol === 'ADMIN') {
-          // Si es Admin, vuelve a la gestión de médicos
-          this.router.navigate(['/medicos']);
-        } else {
-          // Si es Médico o cualquier otro, vuelve a sus citas
-          const usuarioId = this.medico.usuario.id;
-          this.router.navigate(['/mis-citas', usuarioId]);
-        }
-      },
-      error: err => {
-        console.error(err);
-        alert('Ocurrió un error al guardar las disponibilidades');
+    diasVisibles.forEach(dia => {
+      const cant = porDia[dia.iso] || 0;
+      if (cant < this.minimoHorasDia) {
+        this.resultadoValidacion.distribucionValida = false;
+        this.resultadoValidacion.diasBajos.push(dia.nombre);
       }
     });
-}
+
+    if (Object.keys(porDia).length < 6) {
+      this.resultadoValidacion.distribucionValida = false;
+    }
+  }
+
+  guardar(): void {
+    this.validarHorario();
+
+    if (!this.resultadoValidacion.totalValido) {
+      alert(`⚠️ Bloqueo Normativo: El sistema requiere un mínimo de ${this.minimoHorasSemana} horas asignadas por semana para poder guardar. Actualmente tiene ${this.totalHorasSeleccionadas}h.`);
+      return;
+    }
+
+    if (!this.resultadoValidacion.distribucionValida) {
+      this.mostrarModalConfirmacion = true;
+      return;
+    }
+
+    this.confirmarGuardado();
+  }
+
+  confirmarGuardado(): void {
+    const disponibilidadesParaEnviar = this.disponibilidades.map(d => ({
+      id: d.id || null,
+      medico: { id: this.medico.id },
+      fecha: d.fecha,
+      horaInicio: d.horaInicio,
+      horaFin: d.horaFin,
+      estado: d.estado
+    }));
+
+    this.controller.guardarDisponibilidades(disponibilidadesParaEnviar as any)
+      .subscribe({
+        next: res => {
+          this.disponibilidades = res.map(d => new Disponibilidad(d));
+          this.mostrarModalConfirmacion = false;
+          alert('Agenda guardada con éxito');
+
+          const usuarioStr = localStorage.getItem('usuario');
+          const usuarioActual = usuarioStr ? JSON.parse(usuarioStr) : null;
+          const rol = usuarioActual?.rol?.toUpperCase();
+
+          if (rol === 'ADMIN') {
+            this.router.navigate(['/medicos']);
+          } else {
+            const usuarioId = this.medico.usuario.id;
+            this.router.navigate(['/mis-citas', usuarioId]);
+          }
+        },
+        error: err => {
+          console.error(err);
+          this.mostrarModalConfirmacion = false;
+          alert('Error al guardar la disponibilidad');
+        }
+      });
+  }
 
 
   // Devuelve las disponibilidades que pertenecen a la semana visible

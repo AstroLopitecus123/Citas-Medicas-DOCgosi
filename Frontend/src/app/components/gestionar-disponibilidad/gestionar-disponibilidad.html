@@ -41,8 +41,52 @@
   <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="margin: 20px; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
     <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem;"></i>
     <div>
-      <span style="display: block;">Faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para el mínimo de {{ minimoHorasSemana }}.</span>
-      <small style="opacity: 0.8; font-size: 0.8rem;">Recuerda que debes trabajar al menos 6 horas por día de Lunes a Sábado.</small>
+      <span style="display: block;">Faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para alcanzar el mínimo mandatorio de {{ minimoHorasSemana }}h.</span>
+      <small style="opacity: 0.8; font-size: 0.8rem;">Nota: La carga diaria de {{ minimoHorasDia }}h es una recomendación institucional, pero las {{ minimoHorasSemana }}h totales son obligatorias para guardar.</small>
+    </div>
+  </div>
+
+  <!-- MODAL DE ADVERTENCIA PREMIUM -->
+  <div class="glass-overlay" *ngIf="mostrarModalConfirmacion">
+    <div class="glass-modal warning" style="max-width: 480px;">
+      <div class="modal-header-glass">
+        <div class="header-icon-title">
+          <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 10px; border-radius: 12px;"></i>
+          <h3 style="margin: 0; font-weight: 800; color: #1e293b;">Distribución de Agenda</h3>
+        </div>
+        <button class="btn-close-glass" (click)="mostrarModalConfirmacion = false">&times;</button>
+      </div>
+      
+      <div class="modal-body-glass" style="padding: 30px 25px; text-align: center;">
+        <p style="font-size: 1.05rem; color: #1e293b; margin: 0 0 20px; font-weight: 600;">
+          Has completado las <strong>{{ totalHorasSeleccionadas }} h semanales</strong> mandatorias.
+        </p>
+        
+        <div class="low-hours-warning" style="background: rgba(245, 158, 11, 0.04); padding: 20px; border-radius: 18px; border: 1.5px dashed rgba(245, 158, 11, 0.3); text-align: left;">
+           <span style="font-size: 0.8rem; color: #b45309; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Días con carga inferior a la recomendada ({{ minimoHorasDia }}h):</span>
+           <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
+              <span *ngFor="let dia of resultadoValidacion.diasBajos" 
+                    style="background: #fef3c7; color: #92400e; padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                {{ dia }}
+              </span>
+           </div>
+        </div>
+        
+        <p style="margin-top: 25px; font-weight: 500; color: #64748b; font-size: 0.95rem; line-height: 1.5;">
+          La normativa institucional recomienda una carga diaria equilibrada. ¿Deseas autorizar y guardar esta configuración de todas formas?
+        </p>
+      </div>
+
+      <div class="modal-footer-glass" style="padding: 0 25px 30px; display: flex; gap: 12px; justify-content: center;">
+        <button class="btn-action" (click)="confirmarGuardado()" 
+                style="background: linear-gradient(135deg, #0fbf6a, #0a7c4a); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 20px rgba(15, 191, 106, 0.2);">
+          <i class="fa-solid fa-check"></i> Sí, guardar
+        </button>
+        <button class="btn-action" (click)="mostrarModalConfirmacion = false" 
+                style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; flex: 1;">
+          No, revisar
+        </button>
+      </div>
     </div>
   </div>
 

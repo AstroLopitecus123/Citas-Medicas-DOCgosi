@@ -227,4 +227,20 @@ export class GestionarDisponibilidadComponent implements OnInit {
     const faltantes = this.minimoHorasSemana - this.totalHorasSeleccionadas;
     return faltantes > 0 ? faltantes : 0;
   }
+
+  isDisponible(fecha: string, hora: number): boolean {
+    const isoFecha = this.fechaToISO(fecha);
+    return this.disponibilidades.some(d =>
+      d.fecha === isoFecha &&
+      parseInt(d.horaInicio.split(':')[0]) === hora &&
+      d.estado === EstadoDisponibilidad.DISPONIBLE
+    );
+  }
+
+  getLunesDeSemana(): Date {
+    const today = new Date();
+    const day = today.getDay() || 7;
+    const diff = today.getDate() - day + 1;
+    return new Date(today.setDate(diff));
+  }
 }

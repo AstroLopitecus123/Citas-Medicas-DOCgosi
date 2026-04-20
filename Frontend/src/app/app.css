@@ -1181,3 +1181,47 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
 }
+
+/* ============ PRELOADER PREMIUM (LOGO BLINK) ============ */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000000; /* Fondo negro puro solicitado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.4s ease;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loader-logo {
+  width: 180px; /* Tamaño del logo en el centro */
+  height: auto;
+  filter: brightness(0) invert(1); /* Logo blanco sobre fondo negro */
+  animation: logo-blink 1.8s ease-in-out infinite;
+}
+
+.loader-spinner {
+  display: none; /* Quitamos el círculo giratorio por solicitud */
+}
+
+@keyframes logo-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+}

@@ -109,6 +109,15 @@
                                                 title="Confirmar Cita">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
+                                        
+                                        <!-- TELECONSULTA: Ingresar a Sala Virtual -->
+                                        <button class="btn-table-action btn-confirm" 
+                                                *ngIf="cita.estado === 'CONFIRMADA'"
+                                                routerLink="/teleconsulta/{{cita.id}}" 
+                                                title="Ingresar a Sala Virtual"
+                                                style="background: rgba(15, 191, 106, 0.2); color: #0fbf6a;">
+                                            <i class="fa-solid fa-video"></i>
+                                        </button>
 
                                         <!-- Aprobar Reprogramación (Admin/Recepción/Médico) -->
                                         <button class="btn-table-action btn-confirm" 

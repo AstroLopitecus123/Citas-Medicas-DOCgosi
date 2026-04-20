@@ -64,6 +64,7 @@ export const routes: Routes = [
   { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent), title: 'Mi Perfil', canActivate: [AuthGuard] },
   { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Historial de Pagos', canActivate: [AuthGuard] },
   { path: 'notificaciones', loadComponent: () => import('./components/notificaciones/notificaciones').then(m => m.NotificacionesComponent), title: 'Mis Notificaciones', canActivate: [AuthGuard] },
+  { path: 'teleconsulta/:id', loadComponent: () => import('./components/teleconsulta/teleconsulta').then(m => m.TeleconsultaComponent), title: 'Sala de Teleconsulta', canActivate: [AuthGuard] },
   { path: 'checkout/:id', loadComponent: () => import('./components/checkout/checkout').then(m => m.CheckoutComponent), title: 'Checkout', canActivate: [AuthGuard] },
   { path: 'pagar-efectivo/:id', component: PagarEfectivoComponent, title: 'Pago en Efectivo', canActivate: [AuthGuard] },
   { path: 'pagar-tarjeta/:id', loadComponent: () => import('./components/pagar-tarjeta/pagar-tarjeta').then(m => m.PagarTarjetaComponent), title: 'Pago con Tarjeta', canActivate: [AuthGuard] },

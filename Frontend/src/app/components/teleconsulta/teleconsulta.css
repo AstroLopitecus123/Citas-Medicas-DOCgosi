@@ -1,0 +1,167 @@
+/* ==========================================================================
+   TELECONSULTA ENTERPRISE (AGORA + DEEPGRAM)
+   ========================================================================== */
+
+.teleconsulta-wrapper {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0f172a; /* Dark background para inmersión */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.teleconsulta-header {
+  height: 70px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.brand-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-title i { color: #0fbf6a; }
+
+.controls-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-control {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.btn-control:hover { background: rgba(255,255,255,0.2); }
+.btn-control.danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.btn-control.danger:hover { background: #ef4444; color: white; }
+.btn-control.active-sub { background: rgba(15, 191, 106, 0.2); color: #34d399; }
+.btn-control.active-sub:hover { background: #0fbf6a; color: white; }
+
+.video-grid {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+  position: relative;
+}
+
+.video-container {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  background: #1e293b;
+}
+
+.video-remote {
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 80vh;
+}
+
+.video-local {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 240px;
+  height: 160px;
+  border-radius: 15px;
+  border: 2px solid rgba(255,255,255,0.1);
+  z-index: 10;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.join-modal {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  text-align: center;
+  max-width: 400px;
+  margin: auto;
+}
+
+.smart-subtitles {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.subtitle-box {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px 30px;
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transition: all 0.3s;
+}
+
+.subtitle-box p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.badge-speaker {
+  display: inline-block;
+  background: rgba(15, 191, 106, 0.3);
+  color: #a7f3d0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* LOADING STATES */
+.loader-video {
+  color: white;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.loader-video i { font-size: 3rem; color: #0fbf6a; }
+
+@media (max-width: 768px) {
+  .video-local { width: 120px; height: 160px; top: 10px; right: 10px; }
+  .subtitle-box p { font-size: 1.1rem; }
+}

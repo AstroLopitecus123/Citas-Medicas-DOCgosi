@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { PagoService } from '../../services/pago.service';
 import { Pago } from '../../models/pago.model';
 import { RouterModule } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-mis-pagos',
@@ -29,7 +30,10 @@ export class MisPagosComponent implements OnInit {
   mostrandoConfirmarAnular = false;
   pagoAEliminarId: number | null = null;
 
-  constructor(private pagoService: PagoService) {}
+  constructor(
+    private pagoService: PagoService,
+    private ns: NotificationService
+  ) {}
 
   ngOnInit() {
     const usrString = localStorage.getItem('usuario');

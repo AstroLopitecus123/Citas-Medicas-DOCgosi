@@ -452,7 +452,7 @@ export class MisCitasController {
       this.citaService.solicitarCancelar(this.citaACancelar.id, this.motivoCancelacion).subscribe({
         next: () => {
           console.log('✅ Solicitud de cancelación enviada con éxito');
-          if (this.ns) this.ns.success('Solicitud de cancelación enviada. Pendiente de aprobación.');
+          if (this.ns) this.ns.success('Solicitud de cancelación confirmada. Su gestión de reembolso está en proceso de revisión.');
           this.cargarCitas();
           this.cerrarModalCancelar();
         },

@@ -162,12 +162,13 @@ public class CitaService {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
         cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
-        cita.setMotivo(motivo); // 👈 Guardamos el motivo proporcionado
+        cita.setMotivo(motivo);
         citaRepository.save(cita);
         
-        // Disparar Alerta a Administradores
-        String msg = "El paciente " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellido() + " solicita cancelar su cita. Motivo: " + motivo;
-        notificacionService.crearNotificacionParaRol("Solicitud de Cancelación", msg, "ADMIN");
+        // 📊 Disparar Alerta a Administradores con mención a Reembolso
+        String msg = String.format("PACIENTE: %s %s solicita cancelar su cita #%d. Motivo: %s. Acción requerida: Gestión de Reembolso.", 
+                        cita.getPaciente().getNombre(), cita.getPaciente().getApellido(), cita.getId(), motivo);
+        notificacionService.crearNotificacionParaRol("Solicitud de Cancelación y Reembolso", msg, "ADMIN");
         
         notificarCambioCita(cita, "solicitud de cancelación");
     }
@@ -335,22 +336,27 @@ public class CitaService {
         String fecha = cita.getFecha().toLocalDate().toString();
         String hora = cita.getFecha().toLocalTime().toString();
 
-        // 📧 Paciente
-        SimpleMailMessage mailPaciente = new SimpleMailMessage();
-        mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
-        mailPaciente.setTo(cita.getPaciente().getCorreo());
-        mailPaciente.setSubject("📅 Notificación de cambio en su cita médica");
-        mailPaciente.setText(String.format(
-                "Hola %s,\n\nSu cita con el Dr. %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                cita.getPaciente().getNombre(),
-                cita.getMedico().getUsuario().getNombre(),
-                accion,
-                fecha,
-                hora
-        ));
-        mailSender.send(mailPaciente);
+        try {
+            // 📧 Correo al Paciente
+            SimpleMailMessage mailPaciente = new SimpleMailMessage();
+            mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
+            mailPaciente.setTo(cita.getPaciente().getCorreo());
+            mailPaciente.setSubject("📅 Notificación de cambio en su cita médica");
+            mailPaciente.setText(String.format(
+                    "Hola %s,\n\nSu cita con el Dr. %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
+                    cita.getPaciente().getNombre(),
+                    cita.getMedico().getUsuario().getNombre(),
+                    accion,
+                    fecha,
+                    hora
+            ));
+            mailSender.send(mailPaciente);
+        } catch (Exception e) {
+            System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
+        }
 
-        // 📱 WhatsApp
+        // 📱 WhatsApp (Desactivado temporalmente por solicitud del usuario)
+        /*
         String mensajeWssp = String.format(
             "Cita %s ✅\nHola %s, tu cita con el Dr. %s ha sido %s para el %s a las %s en R.E.T.O Salud.",
             accion.toUpperCase(),
@@ -358,26 +364,30 @@ public class CitaService {
             cita.getMedico().getUsuario().getNombre(),
             accion, fecha, hora
         );
-        // Validar si el paciente tiene un teléfono ingresado
         if(cita.getPaciente().getTelefono() != null && !cita.getPaciente().getTelefono().isEmpty()) {
             twilioService.enviarNotificacionWhatsApp(cita.getPaciente().getTelefono(), mensajeWssp);
         }
+        */
 
-        // 📧 Médico
-        SimpleMailMessage mailMedico = new SimpleMailMessage();
-        mailMedico.setFrom("clinicarealmadrid32@gmail.com");
-        mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
-        mailMedico.setSubject("📅 Notificación de cambio en su agenda");
-        mailMedico.setText(String.format(
-                "Hola Dr. %s,\n\nLa cita con el paciente %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                cita.getMedico().getUsuario().getNombre(),
-                cita.getPaciente().getNombre(),
-                accion,
-                fecha,
-                hora
-        ));
-        mailSender.send(mailMedico);
+        try {
+            // 📧 Correo al Médico
+            SimpleMailMessage mailMedico = new SimpleMailMessage();
+            mailMedico.setFrom("clinicarealmadrid32@gmail.com");
+            mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
+            mailMedico.setSubject("📅 Notificación de cambio en su agenda");
+            mailMedico.setText(String.format(
+                    "Hola Dr. %s,\n\nLa cita con el paciente %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
+                    cita.getMedico().getUsuario().getNombre(),
+                    cita.getPaciente().getNombre(),
+                    accion,
+                    fecha,
+                    hora
+            ));
+            mailSender.send(mailMedico);
+        } catch (Exception e) {
+            System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
+        }
 
-        System.out.println("✅ Notificación enviada: cita " + cita.getId() + " " + accion);
+        System.out.println("✅ Notificación gestionada (Email): cita " + cita.getId() + " " + accion);
     }
 }

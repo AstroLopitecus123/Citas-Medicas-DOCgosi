@@ -4,6 +4,7 @@ import com.clinica.real.madrid.backend_citas.dto.*;
 import com.clinica.real.madrid.backend_citas.service.PagoService;
 import com.stripe.exception.StripeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class PagoController {
     private PagoService pagoService;
 
     @PostMapping("/efectivo")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<PagoResponse> pagarEfectivo(@RequestBody PagoEfectivoRequest request) {
         PagoResponse response = pagoService.pagarEfectivo(request);
         return ResponseEntity.ok(response);
@@ -43,12 +45,14 @@ public class PagoController {
     }
 
     @PutMapping("/anular/{pagoId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PagoResponse> anularPago(@PathVariable Long pagoId) {
         PagoResponse response = pagoService.anularPago(pagoId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<List<PagoResponse>> obtenerTodosLosPagos() {
         return ResponseEntity.ok(pagoService.obtenerTodosLosPagos());
     }

@@ -2,6 +2,7 @@ package com.clinica.real.madrid.backend_citas.controller;
 
 import com.clinica.real.madrid.backend_citas.model.Disponibilidad;
 import com.clinica.real.madrid.backend_citas.service.DisponibilidadService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,6 +44,7 @@ public class DisponibilidadController {
 
     // 🔹 Registrar o actualizar disponibilidades
     @PostMapping("/medico/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MEDICO')")
     public List<Disponibilidad> guardarDisponibilidades(
             @PathVariable("id") Long medicoId,
             @RequestBody List<Disponibilidad> disponibilidades) {
@@ -52,6 +54,7 @@ public class DisponibilidadController {
 
     // 🔹 Eliminar disponibilidades en un rango de fechas
     @DeleteMapping("/medico/{id}/rango")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MEDICO')")
     public void eliminarPorRango(
             @PathVariable("id") Long medicoId,
             @RequestParam("inicio") String inicio,

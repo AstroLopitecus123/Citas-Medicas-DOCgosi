@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class CitaController {
     private CitaService citaService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> listar() {
         return ResponseEntity.ok(citaService.listar());
     }
@@ -36,6 +38,7 @@ public class CitaController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         citaService.eliminar(id);
         return ResponseEntity.ok("Cita eliminada correctamente");
@@ -60,6 +63,7 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/confirmar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> confirmarCita(@PathVariable Long id) {
         try {
             citaService.confirmarCita(id);
@@ -72,6 +76,7 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/cancelar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> cancelarCita(@PathVariable Long id) {
         try {
             citaService.cancelarCita(id);
@@ -84,6 +89,7 @@ public class CitaController {
     }
     
     @PutMapping("/{id}/reprogramar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> reprogramarCita(@PathVariable Long id, @RequestBody Cita nuevaCita) {
         try {
             citaService.reprogramarCita(id, nuevaCita.getFecha());
@@ -106,6 +112,7 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/confirmar-reprogramar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> confirmarReprogramar(@PathVariable Long id) {
         try {
             citaService.confirmarReprogramacion(id);
@@ -127,6 +134,7 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/confirmar-cancelar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> confirmarCancelar(@PathVariable Long id) {
         try {
             citaService.confirmarCancelacion(id);

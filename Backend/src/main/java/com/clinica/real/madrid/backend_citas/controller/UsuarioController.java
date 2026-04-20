@@ -7,6 +7,7 @@ import com.clinica.real.madrid.backend_citas.model.Usuario;
 import com.clinica.real.madrid.backend_citas.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ public class UsuarioController {
 
     // 🔹 Listar usuarios
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         usuarios.forEach(u -> u.setContrasena(null)); // no enviar contraseñas
@@ -45,6 +47,7 @@ public class UsuarioController {
 
     // 🔹 Obtener usuario por ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
         usuario.setContrasena(null);
@@ -62,6 +65,7 @@ public class UsuarioController {
 
  // 🔹 Eliminar usuario y sus citas
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional  // ⚡ Transacción activa para todo el proceso
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
@@ -71,6 +75,7 @@ public class UsuarioController {
     
     //AGREGADO EL 30/10
     @PutMapping("/{id}/estado")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizarEstado(
             @PathVariable Long id,
             @RequestBody Map<String, String> body) {
@@ -84,6 +89,7 @@ public class UsuarioController {
     }
     
     @PutMapping("/{id}/rol")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizarRol(@PathVariable Long id, @RequestBody Map<String, String> body) {
         String nuevoRol = body.get("rol");
         Usuario usuarioActualizado = usuarioService.actualizarRol(id, nuevoRol);

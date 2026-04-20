@@ -12,51 +12,60 @@ import { PagarEfectivoComponent } from './components/pagar-efectivo/pagar-efecti
 import { HomeComponent } from './components/home/home';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
 
+// 🔒 Guards de Seguridad
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { MedicoGuard } from './guards/medico.guard';
+import { RecepcionGuard } from './guards/recepcion.guard';
+import { PacienteGuard } from './guards/paciente.guard';
+
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'admin', component: AdminDashboardComponent },
-  { path: 'medico/dashboard', 
-    loadComponent: () => import('./components/medico-dashboard/medico-dashboard').then(m => m.MedicoDashboardComponent) 
-  },
-  { path: 'recepcion/dashboard', 
-    loadComponent: () => import('./components/recepcion-dashboard/recepcion-dashboard').then(m => m.RecepcionDashboardComponent) 
-  },
-  { path: 'paciente/dashboard', 
-    loadComponent: () => import('./components/paciente-dashboard/paciente-dashboard').then(m => m.PacienteDashboardComponent) 
-  },
-  { path: 'login', component: LoginComponent },
-  { path: 'registrar', component: RegistrarUsuarioComponent },
-  { path: 'usuarios', component: ListaUsuariosComponent },
-  { path: 'medicos', component: AdminMedicos },
-  { path: 'mis-citas', component: MisCitasComponent },
-  { path: 'mis-citas/:id', component: MisCitasComponent },
-  { path: 'recuperar', component: RecuperarComponent },
-  { path: 'restablecer', component: RestablecerComponent },
-  { path: 'especialidades', component: AdminEspecialidadesComponent },
-  { path: 'gestionar-disponibilidad/:id', component: GestionarDisponibilidadComponent },
-  { path: 'pagar-efectivo/:id', component: PagarEfectivoComponent },
-  { path: 'checkout/:id', 
-    loadComponent: () => import('./components/checkout/checkout').then(m => m.CheckoutComponent) 
-  },
 
-  {
-    path: 'gestionar-disponibilidad/:id',
-    loadComponent: () =>
-      import('./components/gestionar-disponibilidad/gestionar-disponibilidad')
-        .then(m => m.GestionarDisponibilidadComponent)
-  },
-  
-  { path: 'pagar-tarjeta/:id', 
-    loadComponent: () => import('./components/pagar-tarjeta/pagar-tarjeta').then(m => m.PagarTarjetaComponent) 
-  },
+  // ─── RUTAS PÚBLICAS ──────────────────────────────────────────────────────────
+  { path: '', component: HomeComponent, title: 'R.E.T.O Salud' },
+  { path: 'login', component: LoginComponent, title: 'Iniciar Sesión' },
+  { path: 'registrar', component: RegistrarUsuarioComponent, title: 'Registro' },
+  { path: 'recuperar', component: RecuperarComponent, title: 'Recuperar Contraseña' },
+  { path: 'restablecer', component: RestablecerComponent, title: 'Restablecer Contraseña' },
 
-  // Rutas para historial de pagos (para todos los roles)
-  { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
-  { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent) },
-  { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
-  { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent) },
-  { path: 'recepcion/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
-  { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+  // ─── PANEL DE ADMINISTRADOR ───────────────────────────────────────────────────
+  { path: 'admin', component: AdminDashboardComponent, title: 'Panel Administrador', canActivate: [AdminGuard] },
+  { path: 'usuarios', component: ListaUsuariosComponent, title: 'Gestión de Usuarios', canActivate: [AdminGuard] },
+  { path: 'medicos', component: AdminMedicos, title: 'Gestión de Médicos', canActivate: [AdminGuard] },
+  { path: 'especialidades', component: AdminEspecialidadesComponent, title: 'Especialidades', canActivate: [AdminGuard] },
+  { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Control de Pagos', canActivate: [AdminGuard] },
+  { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent), title: 'Avisos y Alertas', canActivate: [AdminGuard] },
 
+  // ─── PANEL DE MÉDICO ──────────────────────────────────────────────────────────
+  { path: 'medico/dashboard',
+    loadComponent: () => import('./components/medico-dashboard/medico-dashboard').then(m => m.MedicoDashboardComponent),
+    title: 'Panel Médico', canActivate: [MedicoGuard]
+  },
+  { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Mis Ingresos', canActivate: [MedicoGuard] },
+  { path: 'gestionar-disponibilidad/:id', component: GestionarDisponibilidadComponent, title: 'Disponibilidad', canActivate: [MedicoGuard] },
+
+  // ─── PANEL DE RECEPCIÓN ───────────────────────────────────────────────────────
+  { path: 'recepcion/dashboard',
+    loadComponent: () => import('./components/recepcion-dashboard/recepcion-dashboard').then(m => m.RecepcionDashboardComponent),
+    title: 'Panel Recepción', canActivate: [RecepcionGuard]
+  },
+  { path: 'recepcion/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Pagos Recepción', canActivate: [RecepcionGuard] },
+
+  // ─── PANEL DE PACIENTE ────────────────────────────────────────────────────────
+  { path: 'paciente/dashboard',
+    loadComponent: () => import('./components/paciente-dashboard/paciente-dashboard').then(m => m.PacienteDashboardComponent),
+    title: 'Mi Panel', canActivate: [PacienteGuard]
+  },
+  { path: 'mis-citas', component: MisCitasComponent, title: 'Mis Citas', canActivate: [PacienteGuard] },
+  { path: 'mis-citas/:id', component: MisCitasComponent, title: 'Detalle de Cita', canActivate: [PacienteGuard] },
+
+  // ─── RUTAS COMPARTIDAS (Cualquier usuario autenticado) ───────────────────────
+  { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent), title: 'Mi Perfil', canActivate: [AuthGuard] },
+  { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Historial de Pagos', canActivate: [AuthGuard] },
+  { path: 'checkout/:id', loadComponent: () => import('./components/checkout/checkout').then(m => m.CheckoutComponent), title: 'Checkout', canActivate: [AuthGuard] },
+  { path: 'pagar-efectivo/:id', component: PagarEfectivoComponent, title: 'Pago en Efectivo', canActivate: [AuthGuard] },
+  { path: 'pagar-tarjeta/:id', loadComponent: () => import('./components/pagar-tarjeta/pagar-tarjeta').then(m => m.PagarTarjetaComponent), title: 'Pago con Tarjeta', canActivate: [AuthGuard] },
+
+  // ─── FALLBACK ────────────────────────────────────────────────────────────────
   { path: '**', redirectTo: '' }
 ];

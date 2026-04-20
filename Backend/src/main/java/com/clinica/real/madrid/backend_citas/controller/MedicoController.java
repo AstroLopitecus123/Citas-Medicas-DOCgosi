@@ -4,6 +4,7 @@ import com.clinica.real.madrid.backend_citas.model.Medico;
 import com.clinica.real.madrid.backend_citas.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class MedicoController {
 
     // 🔹 Asignar o actualizar especialidad de un médico
     @PutMapping("/{id}/especialidad/{espId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Medico> asignarEspecialidad(
             @PathVariable("id") Long medicoId,
             @PathVariable("espId") Long especialidadId) {

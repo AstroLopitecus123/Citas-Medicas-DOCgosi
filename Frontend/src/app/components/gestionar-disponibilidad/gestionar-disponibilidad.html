@@ -67,7 +67,7 @@
   </div>
 
   <!-- ⚠️ Alerta de horas faltantes -->
-  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="margin: 20px; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
+  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
     <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem;"></i>
     <div>
       <span style="display: block;">Faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para alcanzar el mínimo mandatorio de {{ minimoHorasSemana }}h.</span>

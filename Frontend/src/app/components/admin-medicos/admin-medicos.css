@@ -109,6 +109,5 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .admin-layout { padding: 20px; }
   .badge-modern span { display: none; }
 }

@@ -1,5 +1,4 @@
-<div class="notifications-page-wrapper">
-    <div class="admin-layout" style="margin-top: 0; padding: 0;">
+﻿<div class="admin-layout">
         <!-- Header Premium (Ocultar en Dashboard) -->
         <header class="premium-welcome-banner" style="border-left: 6px solid #3b82f6;" *ngIf="!modoDashboard">
             <div class="welcome-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
@@ -8,23 +7,23 @@
             <div class="welcome-text">
                 <div class="badge-role" style="background: rgba(59, 130, 246, 0.1); color: #1d4ed8;">CENTRO DE AVISOS</div>
                 <h1>Mis Notificaciones</h1>
-                <p>Mantente al día con las actualizaciones de tus citas y servicios.</p>
+                <p>Mantente al dÃ­a con las actualizaciones de tus citas y servicios.</p>
             </div>
             <div class="header-actions">
                 <button class="btn-premium-notif" (click)="marcarTodasComoLeidas()" *ngIf="notificaciones.length > 0">
-                    <i class="fa-solid fa-check-double"></i> Marcar todas como leídas
+                    <i class="fa-solid fa-check-double"></i> Marcar todas como leÃ­das
                 </button>
             </div>
         </header>
 
-        <!-- Filtros Rápidos (Ocultar o Simplificar en Dashboard si es necesario) -->
+        <!-- Filtros RÃ¡pidos (Ocultar o Simplificar en Dashboard si es necesario) -->
         <div class="premium-card" style="padding: 15px 25px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center;" *ngIf="!modoDashboard">
             <span style="font-weight: 600; color: #64748b;">Filtrar:</span>
             <button class="filter-chip" [class.active]="filtro === 'TODAS'" (click)="filtro = 'TODAS'">
                 Todas ({{ notificaciones.length }})
             </button>
             <button class="filter-chip" [class.active]="filtro === 'NO_LEIDAS'" (click)="filtro = 'NO_LEIDAS'">
-                No leídas ({{ getCountNoLeidas() }})
+                No leÃ­das ({{ getCountNoLeidas() }})
             </button>
         </div>
 
@@ -36,7 +35,7 @@
                         <i class="fa-solid fa-bell-slash"></i>
                     </div>
                     <h4>No tienes notificaciones</h4>
-                    <p>Cuando haya novedades sobre tus citas, aparecerán aquí.</p>
+                    <p>Cuando haya novedades sobre tus citas, aparecerÃ¡n aquÃ­.</p>
                 </div>
 
                 <div class="notif-card-item" *ngFor="let notif of notificacionesFiltradas" 
@@ -57,4 +56,3 @@
             </div>
         </div>
     </div>
-</div>

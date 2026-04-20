@@ -88,6 +88,5 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .admin-layout { padding: 20px; }
   .desc-cell { max-width: 200px; }
 }

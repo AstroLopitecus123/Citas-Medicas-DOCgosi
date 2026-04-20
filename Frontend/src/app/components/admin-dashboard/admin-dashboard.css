@@ -56,16 +56,7 @@
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
 .module-card:hover .module-arrow { color: #0fbf6a; transform: translateX(5px); }
 
-.section-title-dash {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
-  margin-top: 20px;
-}
 
-.section-title-dash i { color: #0fbf6a; font-size: 1.1rem; }
-.section-title-dash h2 { margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b; }
 
 .quick-grid {
   display: grid;

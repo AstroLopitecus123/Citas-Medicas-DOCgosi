@@ -12,6 +12,11 @@ export class AdminEspecialidadesController {
   mensaje: string = '';
   error: string = '';
 
+  // Confirmación de eliminación
+  mostrandoConfirmarEliminar = false;
+  especialidadAEliminarId: number | null = null;
+  especialidadAEliminarNombre: string = '';
+
   constructor(private especialidadService: EspecialidadService) {}
 
   inicializar(): void {
@@ -74,16 +79,32 @@ export class AdminEspecialidadesController {
     this.error = '';
   }
 
-  eliminar(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar esta especialidad?')) {
-      this.especialidadService.eliminar(id).subscribe({
-        next: () => {
-          this.mensaje = '🗑️ Especialidad eliminada.';
-          this.listar();
-        },
-        error: () => this.error = '❌ No se pudo eliminar la especialidad.'
-      });
-    }
+  eliminar(esp: Especialidad): void {
+    this.especialidadAEliminarId = esp.id;
+    this.especialidadAEliminarNombre = esp.nombre;
+    this.mostrandoConfirmarEliminar = true;
+  }
+
+  confirmarEliminacionFinal(): void {
+    if (this.especialidadAEliminarId === null) return;
+
+    this.especialidadService.eliminar(this.especialidadAEliminarId).subscribe({
+      next: () => {
+        this.mensaje = '🗑️ Especialidad eliminada con éxito.';
+        this.mostrandoConfirmarEliminar = false;
+        this.especialidadAEliminarId = null;
+        this.listar();
+      },
+      error: () => {
+        this.error = '❌ No se pudo eliminar la especialidad activa.';
+        this.mostrandoConfirmarEliminar = false;
+      }
+    });
+  }
+
+  cerrarModalConfirmar(): void {
+    this.mostrandoConfirmarEliminar = false;
+    this.especialidadAEliminarId = null;
   }
 
   cambiarEstado(esp: Especialidad): void {

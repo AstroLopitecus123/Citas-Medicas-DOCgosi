@@ -25,6 +25,10 @@ export class MisPagosComponent implements OnInit {
   pagosCompletados = 0;
   pagosPendientes = 0;
 
+  // Confirmación de anulación
+  mostrandoConfirmarAnular = false;
+  pagoAEliminarId: number | null = null;
+
   constructor(private pagoService: PagoService) {}
 
   ngOnInit() {
@@ -92,18 +96,30 @@ export class MisPagosComponent implements OnInit {
   }
 
   anularPago(pagoId: number) {
-    if(confirm('¿Está seguro de anular esta transacción?')) {
-      this.pagoService.anularPago(pagoId).subscribe({
-        next: () => {
-          alert('Pago anulado exitosamente');
-          this.cargarPagos();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Hubo un error al anular el pago');
-        }
-      });
-    }
+    this.pagoAEliminarId = pagoId;
+    this.mostrandoConfirmarAnular = true;
+  }
+
+  confirmarAnularPagoFinal() {
+    if (!this.pagoAEliminarId) return;
+
+    this.pagoService.anularPago(this.pagoAEliminarId).subscribe({
+      next: () => {
+        this.ns.success('Transacción anulada correctamente');
+        this.cerrarModalConfirmar();
+        this.cargarPagos();
+      },
+      error: (err) => {
+        console.error(err);
+        this.ns.error('No se pudo anular la transacción');
+        this.cerrarModalConfirmar();
+      }
+    });
+  }
+
+  cerrarModalConfirmar() {
+    this.mostrandoConfirmarAnular = false;
+    this.pagoAEliminarId = null;
   }
 
   verComprobante(url: string) {

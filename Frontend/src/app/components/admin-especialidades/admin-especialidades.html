@@ -63,7 +63,7 @@
                         [title]="esp.estado === 'ACTIVA' ? 'Desactivar' : 'Activar'">
                   <i class="fa-solid" [class.fa-eye-slash]="esp.estado === 'ACTIVA'" [class.fa-eye]="esp.estado !== 'ACTIVA'"></i>
                 </button>
-                <button class="btn-table-action btn-delete" (click)="ctrl.eliminar(esp.id)" title="Eliminar">
+                <button class="btn-table-action btn-delete" (click)="ctrl.eliminar(esp)" title="Eliminar">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -132,6 +132,39 @@
         <button class="btn-cancel-glass" (click)="ctrl.cerrarModal()">Cancelar</button>
         <button class="btn-confirm-glass" (click)="ctrl.guardar()">
           <i class="fa-solid fa-floppy-disk"></i> {{ ctrl.modoEdicion ? 'Actualizar Cambios' : 'Guardar Especialidad' }}
+        </button>
+      </div>
+    </div>
+  <!-- 🗑️ MODAL GLASS: CONFIRMAR ELIMINACIÓN -->
+  <div class="glass-overlay" *ngIf="ctrl.mostrandoConfirmarEliminar" (click)="ctrl.cerrarModalConfirmar()">
+    <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
+      <div class="modal-header-glass">
+        <div class="header-info">
+          <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+            <i class="fa-solid fa-trash-can"></i>
+          </div>
+          <div>
+            <h3>¿Eliminar Especialidad?</h3>
+            <p>Confirma que deseas remover esta rama médica.</p>
+          </div>
+        </div>
+        <button class="btn-close-glass" (click)="ctrl.cerrarModalConfirmar()">&times;</button>
+      </div>
+
+      <div class="modal-body-glass">
+        <div class="alert-box-modern warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>Se eliminará: <strong>{{ ctrl.especialidadAEliminarNombre }}</strong></p>
+        </div>
+        <p class="mt-15" style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
+          Esta acción no se puede deshacer si la especialidad no tiene citas activas.
+        </p>
+      </div>
+
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="ctrl.cerrarModalConfirmar()">Cancelar</button>
+        <button class="btn-confirm-glass" style="background: #ef4444 !important;" (click)="ctrl.confirmarEliminacionFinal()">
+          <i class="fa-solid fa-trash"></i> Eliminar Especialidad
         </button>
       </div>
     </div>

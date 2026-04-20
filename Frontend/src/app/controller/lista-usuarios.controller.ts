@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
 import { UsuarioFull } from '../models/usuario-full.model';
 import { Router } from '@angular/router';
+import { NotificationService } from '../services/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,14 @@ export class ListaUsuariosController {
   totalPaginas: number = 1;                        // Total de páginas
   menuAbierto: number | null = null;               // ID del usuario con menú abierto
 
-  constructor(private usuarioService: UsuarioService,
-    private router: Router
+  // Confirmación de eliminación
+  mostrandoConfirmarEliminar = false;
+  usuarioSeleccionadoAEliminar: UsuarioFull | null = null;
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private ns: NotificationService
   ) { }
 
   cargarUsuarios(): void {
@@ -89,26 +96,43 @@ export class ListaUsuariosController {
     this.menuAbierto = this.menuAbierto === usuario.id ? null : usuario.id;
   }
 
+  /** Gestión de Eliminación Premium */
   eliminarUsuario(usuario: UsuarioFull | null): void {
     if (!usuario) return;
+    this.usuarioSeleccionadoAEliminar = usuario;
+    this.mostrandoConfirmarEliminar = true;
+  }
 
-    const confirmacion = confirm(`¿Eliminar a ${usuario.nombre} ${usuario.apellido}?`);
-    if (!confirmacion) return;
+  confirmarEliminacionFinal(): void {
+    if (!this.usuarioSeleccionadoAEliminar) return;
+    const u = this.usuarioSeleccionadoAEliminar;
 
-    this.menuAbierto = null;
-
-    this.usuarioService.eliminarUsuario(usuario.id).subscribe({
+    this.usuarioService.eliminarUsuario(u.id).subscribe({
       next: () => {
-        this.usuarios = this.usuarios.filter(u => u.id !== usuario.id);
+        this.usuarios = this.usuarios.filter(user => user.id !== u.id);
         this.aplicarFiltroYPaginacion();
-        alert(`Usuario ${usuario.nombre} eliminado correctamente.`);
+        this.ns.success('Usuario eliminado correctamente');
+        this.cerrarModalConfirmar();
       },
       error: (err) => {
         console.error('Error al eliminar usuario:', err);
-        alert('No se pudo eliminar el usuario. Puede tener citas asociadas.');
+        this.ns.error('No se pudo eliminar el usuario. Puede tener citas asociadas.');
+        this.cerrarModalConfirmar();
       }
     });
   }
+
+  cerrarModalConfirmar(): void {
+    this.mostrandoConfirmarEliminar = false;
+    this.usuarioSeleccionadoAEliminar = null;
+  }
+
+  /** Alternar estado rpido (Ojo) */
+  toggleEstado(usuario: UsuarioFull): void {
+    const nuevoEstado = usuario.estado === 'ACTIVADO' ? 'DESACTIVADO' : 'ACTIVADO';
+    this.actualizarEstado(usuario, nuevoEstado);
+  }
+
   actualizarEstado(usuario: any, nuevoEstado: string): void {
     if (!usuario) return;
 

@@ -53,44 +53,49 @@
                   <span><i class="fa-solid fa-phone"></i> {{ usuario!.telefono || '-' }}</span>
                 </div>
               </td>
+              
+              <!-- 🏷️ Badge de Rol -->
               <td>
-                <select [ngModel]="usuario!.rol" (ngModelChange)="ctrl.actualizarRol(usuario!, $event)" class="form-control rol-select-mini">
-                  <option value="ADMIN">Admin</option>
-                  <option value="MEDICO">Medico</option>
-                  <option value="PACIENTE">Paciente</option>
-                  <option value="RECEPCION">Recepción</option>
-                </select>
+                <span class="badge-modern info" style="min-width: 100px; justify-content: center;">
+                  <i class="fa-solid fa-user-tag"></i> {{ usuario!.rol }}
+                </span>
               </td>
 
-              <!-- ✅ Selector de estado -->
+              <!-- ✅ Badge de estado Dinámico -->
               <td>
                 <div class="status-pill-container">
-                    <select [ngModel]="usuario!.estado" (ngModelChange)="ctrl.actualizarEstado(usuario!, $event)" 
-                        [class]="usuario!.estado === 'ACTIVADO' ? 'badge badge-success' : 'badge badge-danger'">
-                        <option value="ACTIVADO">Activado</option>
-                        <option value="DESACTIVADO">Desactivado</option>
-                    </select>
+                    <span class="badge-modern" 
+                          [class.success]="usuario!.estado === 'ACTIVADO'" 
+                          [class.danger]="usuario!.estado !== 'ACTIVADO'">
+                        <i class="fa-solid" [class.fa-circle-check]="usuario!.estado === 'ACTIVADO'" [class.fa-circle-xmark]="usuario!.estado !== 'ACTIVADO'"></i>
+                        {{ usuario!.estado }}
+                    </span>
                 </div>
               </td>
 
               <td>
                 <div class="meta-info">
-                  <span>{{ usuario!.pais!.nombre }}</span>
+                  <span style="font-weight: 700; color: #0f4a2b;">{{ usuario!.pais!.nombre }}</span>
                   <span class="dni-text">DNI: {{ usuario!.dni || '-' }}</span>
                 </div>
               </td>
               
               <td class="date-cell">
+                <i class="fa-solid fa-calendar-day" style="color: #64748b; margin-right: 5px;"></i>
                 {{ usuario!.fechaRegistro ? (usuario!.fechaRegistro | date:'dd MMM yyyy') : '-' }}
               </td>
 
-              <!-- ✅ Acciones Modernizadas -->
+              <!-- ✅ Acciones Premium Unificadas -->
               <td>
-                <div class="actions-flex">
-                  <button class="btn-icon" (click)="ctrl.editarUsuario(usuario!)" title="Editar">
+                <div class="actions-flex justify-center">
+                  <button class="btn-table-action btn-edit" (click)="ctrl.editarUsuario(usuario!)" title="Editar / Ver Citas">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
-                  <button class="btn-icon delete" (click)="ctrl.eliminarUsuario(usuario!)" title="Eliminar">
+                  <button class="btn-table-action btn-status" (click)="ctrl.toggleEstado(usuario!)" 
+                          [title]="usuario!.estado === 'ACTIVADO' ? 'Desactivar' : 'Activar'">
+                    <i class="fa-solid" [class.fa-eye-slash]="usuario!.estado === 'ACTIVADO'" [class.fa-eye]="usuario!.estado !== 'ACTIVADO'"></i>
+                  </button>
+                  <button class="btn-table-action btn-delete" (click)="ctrl.eliminarUsuario(usuario!)" title="Eliminar">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -124,6 +129,41 @@
       <button class="btn-page next" (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
+    </div>
+  </div>
+
+  <!-- 🗑️ MODAL GLASS: CONFIRMAR ELIMINACIÓN USUARIO -->
+  <div class="glass-overlay" *ngIf="ctrl.mostrandoConfirmarEliminar" (click)="ctrl.cerrarModalConfirmar()">
+    <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
+      <div class="modal-header-glass">
+        <div class="header-info">
+          <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+            <i class="fa-solid fa-user-minus"></i>
+          </div>
+          <div>
+            <h3>¿Eliminar Usuario?</h3>
+            <p>Se retirará el acceso al sistema definitivamente.</p>
+          </div>
+        </div>
+        <button class="btn-close-glass" (click)="ctrl.cerrarModalConfirmar()">&times;</button>
+      </div>
+
+      <div class="modal-body-glass">
+        <div class="alert-box-modern danger">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>¿Estás seguro de eliminar a <strong>{{ ctrl.usuarioSeleccionadoAEliminar?.nombre }} {{ ctrl.usuarioSeleccionadoAEliminar?.apellido }}</strong>?</p>
+        </div>
+        <p class="mt-15" style="font-size: 0.9rem; color: #64748b; font-weight: 500;">
+          Los pacientes con citas activas o historial clínico no deben ser eliminados sin revisión previa del staff administrativo.
+        </p>
+      </div>
+
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="ctrl.cerrarModalConfirmar()">Cancelar</button>
+        <button class="btn-confirm-glass" style="background: #ef4444 !important;" (click)="ctrl.confirmarEliminacionFinal()">
+          <i class="fa-solid fa-trash"></i> Eliminar Definitivamente
+        </button>
+      </div>
     </div>
   </div>
 </div>

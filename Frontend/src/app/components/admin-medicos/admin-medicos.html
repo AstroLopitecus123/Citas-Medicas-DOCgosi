@@ -1,25 +1,22 @@
 <div class="admin-layout">
   
   <!-- 🔍 Banner de Bienvenida Premium -->
-  <section class="premium-welcome-banner">
-    <div class="banner-content">
-      <div class="banner-text">
-        <div class="badge-role">ADMINISTRADOR</div>
-        <h1>Configuración de Cuerpo Médico 👨‍⚕️</h1>
-        <p>Gestiona el staff de doctores, asigna especialidades y administra sus horarios institucionales.</p>
-        
-        <div class="banner-stats">
-          <div class="stat-pill">
-            <span class="label">Médicos Activos:</span>
-            <span class="value">{{ ctrl.medicos.length }}</span>
-          </div>
-        </div>
-      </div>
+  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-user-doctor"></i>
     </div>
-    <div class="banner-visual">
-       <i class="fa-solid fa-user-doctor floating-icon"></i>
+    <div class="welcome-text">
+       <div class="badge-role">ADMINISTRADOR</div>
+       <h1>Configuración de Cuerpo Médico 👨‍⚕️</h1>
+       <p>Gestiona el staff de doctores, asigna especialidades y administra sus horarios institucionales.</p>
     </div>
-  </section>
+    <div class="header-actions">
+        <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-users-gear" style="color: #0fbf6a;"></i>
+            {{ ctrl.medicos.length }} Médicos Activos
+        </span>
+    </div>
+  </header>
 
   <!-- 📊 Listado de Médicos (Full Width) -->
   <div class="premium-card table-card animation-slide-up">
@@ -79,12 +76,14 @@
   <div class="glass-overlay" *ngIf="ctrl.mostrandoModalAsignar" (click)="ctrl.cerrarModal()">
     <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
-        <div class="header-icon-box">
-          <i class="fa-solid fa-id-card-clip"></i>
-        </div>
-        <div>
-          <h3>Asignar Especialidad</h3>
-          <p>Vincula al profesional con una rama médica.</p>
+        <div class="header-info">
+          <div class="header-icon-box">
+            <i class="fa-solid fa-id-card-clip"></i>
+          </div>
+          <div>
+            <h3>Asignar Especialidad</h3>
+            <p>Vincula al profesional con una rama médica.</p>
+          </div>
         </div>
         <button class="btn-close-glass" (click)="ctrl.cerrarModal()">&times;</button>
       </div>

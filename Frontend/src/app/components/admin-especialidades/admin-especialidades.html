@@ -1,30 +1,21 @@
 <div class="admin-layout">
   
   <!-- 🔍 Banner de Bienvenida Premium -->
-  <section class="premium-welcome-banner">
-    <div class="banner-content">
-      <div class="banner-text">
-        <div class="badge-role">ADMINISTRADOR</div>
-        <h1>Gestión de Especialidades 🌿</h1>
-        <p>Configura y administra el catálogo de especialidades médicas de la clínica.</p>
-        
-        <div class="banner-stats">
-          <div class="stat-pill">
-            <span class="label">Total Especialidades:</span>
-            <span class="value">{{ ctrl.especialidades.length }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="banner-actions">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-briefcase-medical"></i>
+    </div>
+    <div class="welcome-text">
+       <div class="badge-role">ADMINISTRADOR</div>
+       <h1>Gestión de Especialidades 🌿</h1>
+       <p>Configura y administra el catálogo de especialidades médicas de la clínica.</p>
+    </div>
+    <div class="header-actions">
         <button class="btn-premium-action" (click) = "ctrl.abrirModalNuevo()">
           <i class="fa-solid fa-plus"></i> Nueva Especialidad
         </button>
-      </div>
     </div>
-    <div class="banner-visual">
-       <i class="fa-solid fa-stethoscope floating-icon"></i>
-    </div>
-  </section>
+  </header>
 
   <!-- 📊 Listado de Especialidades (Full Width) -->
   <div class="premium-card table-card animation-slide-up">
@@ -87,12 +78,14 @@
   <div class="glass-overlay" *ngIf="ctrl.mostrandoModal" (click)="ctrl.cerrarModal()">
     <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
-        <div class="header-icon-box">
-          <i class="fa-solid" [ngClass]="ctrl.modoEdicion ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
-        </div>
-        <div>
-          <h3>{{ ctrl.modoEdicion ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h3>
-          <p>Completa la información técnica de la rama médica.</p>
+        <div class="header-info">
+          <div class="header-icon-box">
+            <i class="fa-solid" [ngClass]="ctrl.modoEdicion ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
+          </div>
+          <div>
+            <h3>{{ ctrl.modoEdicion ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h3>
+            <p>Completa la información técnica de la rama médica.</p>
+          </div>
         </div>
         <button class="btn-close-glass" (click)="ctrl.cerrarModal()">&times;</button>
       </div>

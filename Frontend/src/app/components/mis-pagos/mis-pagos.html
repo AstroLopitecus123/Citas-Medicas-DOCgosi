@@ -1,13 +1,21 @@
 <div class="admin-layout">
   <div class="mis-pagos-full" *ngIf="usuario; else sinUsuario">
     
-    <header class="section-header">
-      <div class="header-main">
-        <h2><i class="fa-solid fa-file-invoice-dollar"></i> Gestión Financiera</h2>
-        <p class="subtitle">Consulta tu historial de pagos y transacciones realizadas en la plataforma.</p>
+    <!-- 🔍 Banner de Bienvenida Premium -->
+    <header class="premium-welcome-banner" style="border-left: 6px solid #00c0a3;">
+      <div class="welcome-icon-box" style="background: linear-gradient(135deg, #00c0a3 0%, #007664 100%);">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+      </div>
+      <div class="welcome-text">
+         <div class="badge-role" style="color: #00c0a3; background: rgba(0, 192, 163, 0.1);">FINANZAS</div>
+         <h1>Gestión Financiera 💰</h1>
+         <p>Historial detallado de transacciones e ingresos institucionales.</p>
       </div>
       <div class="header-actions">
-        <span class="date-badge"><i class="fa-solid fa-calendar"></i> {{ today | date:'fullDate' }}</span>
+          <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-calendar" style="color: #00c0a3;"></i>
+              {{ today | date:'EEEE, d MMMM' }}
+          </span>
       </div>
     </header>
 

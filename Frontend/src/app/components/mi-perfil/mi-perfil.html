@@ -1,26 +1,23 @@
 <div class="admin-layout" *ngIf="!cargando; else loader">
     
-    <header class="section-header">
-        <div class="header-main">
-            <h2><i class="fa-solid fa-user-gear"></i> Mi Perfil de Usuario</h2>
-            <p class="subtitle">Gestiona tu información personal y preferencias de seguridad.</p>
-        </div>
-        <div class="header-actions">
-            <button class="btn-action glass-btn" (click)="abrirModalPassword()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                Seguridad
-            </button>
-            <button class="btn-action glass-btn primary" (click)="activarEdicion()" *ngIf="!editando">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-                Editar Datos
-            </button>
-        </div>
+    <!-- 🔍 Banner de Bienvenida Premium -->
+    <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+      <div class="welcome-icon-box">
+        <i class="fa-solid fa-user-gear"></i>
+      </div>
+      <div class="welcome-text">
+         <div class="badge-role">MI CUENTA</div>
+         <h1>Mi Perfil de Usuario 👤</h1>
+         <p>Gestiona tu información personal y preferencias de seguridad institucional.</p>
+      </div>
+      <div class="header-actions">
+          <button class="btn-premium-action" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;" (click)="abrirModalPassword()">
+            <i class="fa-solid fa-shield-halved"></i> Seguridad
+          </button>
+          <button class="btn-premium-action" (click)="activarEdicion()" *ngIf="!editando">
+            <i class="fa-solid fa-user-pen"></i> Editar Datos
+          </button>
+      </div>
     </header>
 
     <div class="profile-container">
@@ -109,15 +106,14 @@
 <div class="glass-overlay" *ngIf="editando" (click)="cancelarEdicion()">
     <div class="glass-modal premium-card animation-pop-in" (click)="$event.stopPropagation()">
         <div class="modal-header-glass">
-            <div class="header-icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-            <div>
-                <h3>Actualizar mis Datos</h3>
-                <p>Mantén tu información al día</p>
+            <div class="header-info">
+                <div class="header-icon-box">
+                    <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <div>
+                    <h3>Actualizar mis Datos</h3>
+                    <p>Mantén tu información personal al día</p>
+                </div>
             </div>
             <button class="btn-close-glass" (click)="cancelarEdicion()">&times;</button>
         </div>
@@ -168,15 +164,14 @@
 <div class="glass-overlay" *ngIf="mostrarModalPassword" (click)="cerrarModalPassword()">
     <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
         <div class="modal-header-glass security">
-            <div class="header-icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-            </div>
-            <div>
-                <h3>Actualizar Seguridad</h3>
-                <p>Protege el acceso a tu cuenta</p>
+            <div class="header-info">
+                <div class="header-icon-box" style="background: rgba(30, 41, 59, 0.1); color: #1e293b;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h3>Actualizar Seguridad</h3>
+                    <p>Protege el acceso a tu cuenta personal</p>
+                </div>
             </div>
             <button class="btn-close-glass" (click)="cerrarModalPassword()">&times;</button>
         </div>

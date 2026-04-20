@@ -1,14 +1,23 @@
 <div class="admin-layout">
   
-  <!-- 🔍 Cabecera de Sección -->
-  <div class="section-header">
-    <h2><i class="fa-solid fa-users"></i> Gestión de Usuarios</h2>
-    <div class="buscador-wrapper">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" class="form-control" placeholder="Buscar usuarios..." [(ngModel)]="ctrl.filtro"
-        (input)="ctrl.filtrarUsuarios()" />
+  <!-- 🔍 Banner de Bienvenida Premium -->
+  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-users"></i>
     </div>
-  </div>
+    <div class="welcome-text">
+       <div class="badge-role">ADMINISTRADOR</div>
+       <h1>Gestión de Usuarios 👥</h1>
+       <p>Control de accesos, roles y estados de los usuarios del sistema.</p>
+    </div>
+    <div class="header-actions">
+       <div class="buscador-wrapper" style="position: relative; min-width: 300px;">
+         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 15px; top: 12px; color: #94a3b8; z-index: 10;"></i>
+         <input type="text" class="form-control-text" placeholder="Buscar usuarios..." [(ngModel)]="ctrl.filtro"
+           (input)="ctrl.filtrarUsuarios()" style="padding-left: 45px; background: white;" />
+       </div>
+    </div>
+  </header>
 
   <!-- 🧾 Tarjeta Principal con Tabla -->
   <div class="premium-card">

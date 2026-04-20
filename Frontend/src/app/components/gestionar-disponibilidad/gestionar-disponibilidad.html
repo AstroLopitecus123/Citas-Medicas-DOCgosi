@@ -1,23 +1,31 @@
 <div class="admin-layout">
   
-  <!-- 🔍 Cabecera de Sección -->
-  <div class="section-header" *ngIf="medico; else cargando">
-    <h2><i class="fa-solid fa-calendar-check"></i> Agenda de Disponibilidad: {{ nombreMedico }}</h2>
-    
-    <!-- Navegación de Semanas -->
-    <div class="semana-nav-premium">
-      <button class="btn-icon" (click)="anteriorSemana()" [disabled]="semanaIndice === 0">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <div class="semana-indicator">
-        <strong>Semana {{ semanaIndice + 1 }}</strong>
-        <span>de 3</span>
-      </div>
-      <button class="btn-icon" (click)="siguienteSemana()" [disabled]="semanaIndice === 2">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
+  <!-- 🔍 Banner de Bienvenida Premium -->
+  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;" *ngIf="medico; else cargando">
+    <div class="welcome-icon-box">
+      <i class="fa-solid fa-calendar-days"></i>
     </div>
-  </div>
+    <div class="welcome-text">
+       <div class="badge-role">MÉDICO</div>
+       <h1>Agenda de Disponibilidad 📅</h1>
+       <p>Gestión de horarios semanales para el Dr. {{ nombreMedico }}</p>
+    </div>
+    <div class="header-actions">
+        <!-- Navegación de Semanas -->
+        <div class="semana-nav-premium" style="display: flex; align-items: center; gap: 15px; background: #f1f5f9; padding: 10px 20px; border-radius: 30px;">
+          <button class="btn-icon" (click)="anteriorSemana()" [disabled]="semanaIndice === 0" style="background: none; border: none; cursor: pointer; color: #475569;">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <div class="semana-indicator" style="display: flex; flex-direction: column; align-items: center; line-height: 1.1;">
+            <strong style="font-size: 0.9rem; color: #1e293b;">Semana {{ semanaIndice + 1 }}</strong>
+            <span style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 800;">de 3</span>
+          </div>
+          <button class="btn-icon" (click)="siguienteSemana()" [disabled]="semanaIndice === 2" style="background: none; border: none; cursor: pointer; color: #475569;">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+    </div>
+  </header>
 
   <!-- ⚠️ Alerta de horas faltantes -->
   <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger">

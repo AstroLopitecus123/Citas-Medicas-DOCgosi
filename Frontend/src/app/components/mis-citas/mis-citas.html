@@ -2,20 +2,21 @@
     <div class="mis-citas-full" *ngIf="ctrl.usuario; else sinUsuario">
         
         <!-- 📅 BIENVENIDA PREMIUM -->
-        <header class="premium-welcome-banner">
+        <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
             <div class="welcome-icon-box">
                 <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="welcome-text">
-                <h1>Mis Citas Médicas</h1>
-                <p>Gestiona todas tus consultas y revisa tu historial médico en un solo lugar.</p>
+                <div class="badge-role">PACIENTE / STAFF</div>
+                <h1>Mis Citas Médicas 📅</h1>
+                <p>Gestiona tus consultas y revisa tu historial médico institucional en un solo lugar.</p>
             </div>
             <div class="header-actions">
                 <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
                     <i class="fa-regular fa-clock" style="color: #0fbf6a;"></i>
                     {{ ctrl.fechaActual | date:'shortTime' }}
                 </span>
-                <button class="btn-action btn-add" style="margin-left: 15px;" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
+                <button class="btn-premium-action" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
                     <i class="fa-solid fa-plus"></i> Nueva Cita
                 </button>
             </div>
@@ -144,12 +145,14 @@
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCita" (click)="ctrl.cerrarModalCita()">
         <div class="glass-modal modal-large animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass">
-                <div class="header-icon-box">
-                    <i class="fa-solid" [ngClass]="ctrl.modoReprogramacion ? 'fa-calendar-day' : 'fa-calendar-plus'"></i>
-                </div>
-                <div>
-                    <h3>{{ ctrl.modoReprogramacion ? 'Solicitar Cambio de Cita' : 'Nueva Cita Médica' }}</h3>
-                    <p>{{ ctrl.modoReprogramacion ? 'Selecciona tu nuevo horario preferido' : 'Selecciona tu especialidad y horario preferido' }}</p>
+                <div class="header-info">
+                    <div class="header-icon-box">
+                        <i class="fa-solid" [ngClass]="ctrl.modoReprogramacion ? 'fa-calendar-day' : 'fa-calendar-plus'"></i>
+                    </div>
+                    <div>
+                        <h3>{{ ctrl.modoReprogramacion ? 'Solicitar Cambio de Cita' : 'Nueva Cita Médica' }}</h3>
+                        <p>{{ ctrl.modoReprogramacion ? 'Selecciona tu nuevo horario preferido' : 'Selecciona tu especialidad y horario preferido' }}</p>
+                    </div>
                 </div>
                 <button class="btn-close-glass" (click)="ctrl.cerrarModalCita()">&times;</button>
             </div>
@@ -246,12 +249,14 @@
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCancelar" (click)="ctrl.cerrarModalCancelar()">
         <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass warning-header">
-                <div class="header-icon-box bg-danger">
-                    <i class="fa-solid fa-calendar-xmark"></i>
-                </div>
-                <div>
-                    <h3>¿Cancelar esta cita?</h3>
-                    <p>Esta acción solicitará la anulación definitiva de tu consulta.</p>
+                <div class="header-info">
+                    <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+                    <div>
+                        <h3>¿Cancelar esta cita?</h3>
+                        <p>Esta acción solicitará la anulación definitiva de tu consulta.</p>
+                    </div>
                 </div>
                 <button class="btn-close-glass" (click)="ctrl.cerrarModalCancelar()">&times;</button>
             </div>
@@ -288,34 +293,36 @@
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalHistorial" (click)="ctrl.cerrarModalHistorial()">
         <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass">
-                <div class="header-icon-box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; height:24px;">
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h3>{{ ctrl.historialActual.id ? 'Ficha Médica' : 'Registrar Diagnóstico' }}</h3>
-                    <p>Detalles clínicos del paciente</p>
+                <div class="header-info">
+                    <div class="header-icon-box">
+                        <i class="fa-solid fa-file-medical"></i>
+                    </div>
+                    <div>
+                        <h3>{{ ctrl.historialActual.id ? 'Ficha Médica Digital' : 'Registrar Diagnóstico' }}</h3>
+                        <p>Detalles clínicos y prescripción institucional</p>
+                    </div>
                 </div>
                 <button class="btn-close-glass" (click)="ctrl.cerrarModalHistorial()">&times;</button>
             </div>
             <div class="modal-body-glass scroll-y">
                 <div class="form-group-modern">
                     <label>Diagnóstico Médico</label>
-                    <textarea class="form-control tall" [(ngModel)]="ctrl.historialActual.diagnostico" [readonly]="ctrl.vistaSoloLectura"></textarea>
+                    <textarea class="form-control-text tall" [(ngModel)]="ctrl.historialActual.diagnostico" [readonly]="ctrl.vistaSoloLectura" placeholder="Escriba el diagnóstico aquí..."></textarea>
                 </div>
                 <div class="form-group-modern">
                     <label>Receta / Medicamentos</label>
-                    <textarea class="form-control tall" [(ngModel)]="ctrl.historialActual.receta" [readonly]="ctrl.vistaSoloLectura"></textarea>
+                    <textarea class="form-control-text tall" [(ngModel)]="ctrl.historialActual.receta" [readonly]="ctrl.vistaSoloLectura" placeholder="Indique la medicación..."></textarea>
                 </div>
                 <div class="form-group-modern">
                     <label>Notas adicionales</label>
-                    <textarea class="form-control tall" [(ngModel)]="ctrl.historialActual.notas" [readonly]="ctrl.vistaSoloLectura"></textarea>
+                    <textarea class="form-control-text tall" [(ngModel)]="ctrl.historialActual.notas" [readonly]="ctrl.vistaSoloLectura" placeholder="Observaciones adicionales..."></textarea>
                 </div>
             </div>
             <div class="modal-footer-glass">
-                <button class="btn-action btn-add w-100" *ngIf="!ctrl.vistaSoloLectura && ctrl.usuario.rol === 'MEDICO'" (click)="ctrl.guardarHistorial()">Registrar Ficha</button>
-                <button class="btn-action btn-outline w-100 mt-2" (click)="ctrl.cerrarModalHistorial()">Cerrar</button>
+                <button class="btn-confirm-glass" style="flex: 1;" *ngIf="!ctrl.vistaSoloLectura && ctrl.usuario.rol === 'MEDICO'" (click)="ctrl.guardarHistorial()">
+                    <i class="fa-solid fa-floppy-disk"></i> Registrar Ficha
+                </button>
+                <button class="btn-cancel-glass" style="flex: 1;" (click)="ctrl.cerrarModalHistorial()">Cerrar</button>
             </div>
         </div>
     </div>

@@ -112,13 +112,24 @@ public class CitaController {
     }
 
     @PutMapping("/{id}/confirmar-reprogramar")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION') or hasRole('MEDICO')")
     public ResponseEntity<?> confirmarReprogramar(@PathVariable Long id) {
         try {
             citaService.confirmarReprogramacion(id);
             return ResponseEntity.ok(Map.of("mensaje", "Reprogramación confirmada correctamente"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/rechazar-reprogramar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION') or hasRole('MEDICO')")
+    public ResponseEntity<?> rechazarReprogramar(@PathVariable Long id) {
+        try {
+            citaService.rechazarReprogramacion(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Solicitud de reprogramación rechazada correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
         }
     }
 

@@ -86,8 +86,8 @@
                                 <td>
                                     <span class="badge" [ngClass]="{
                                         'badge-info': cita.estado === 'PENDIENTE',
-                                        'badge-success': cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA',
-                                        'badge-danger': cita.estado === 'CANCELADA',
+                                        'badge-success': cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA',
+                                        'badge-danger': cita.estado === 'CANCELADA' || cita.estado === 'REPROGRAMACION_RECHAZADA',
                                         'badge-warning': cita.estado === 'SOLICITUD_REPROGRAMACION' || cita.estado === 'SOLICITUD_CANCELACION'
                                     }">
                                         {{ cita?.estado?.replace('_', ' ') }}
@@ -110,12 +110,20 @@
                                             <i class="fa-solid fa-check"></i>
                                         </button>
 
-                                        <!-- Aprobar Reprogramación (Solo Admin/Recepcion/Medico) -->
+                                        <!-- Aprobar Reprogramación (Admin/Recepción/Médico) -->
                                         <button class="btn-table-action btn-confirm" 
                                                 *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.aprobarReprogramacion(cita)" 
                                                 title="Aprobar Cambio">
                                             <i class="fa-solid fa-calendar-check"></i>
+                                        </button>
+
+                                        <!-- Rechazar Reprogramación (Admin/Recepción/Médico) -->
+                                        <button class="btn-table-action btn-cancel" 
+                                                *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION' && ctrl.usuario.rol !== 'PACIENTE'"
+                                                (click)="ctrl.rechazarReprogramacion(cita)" 
+                                                title="Rechazar Cambio">
+                                            <i class="fa-solid fa-calendar-xmark"></i>
                                         </button>
 
                                         <!-- Confirmar Cancelación (Solo Admin/Recepcion/Medico) -->

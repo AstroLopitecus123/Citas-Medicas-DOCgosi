@@ -460,12 +460,28 @@ export class MisCitasController {
   }
 
   aprobarReprogramacion(cita: Cita) {
+    if (!cita?.id) return;
+    this.procesandoAccion = true;
     this.citaService.confirmarReprogramar(cita.id).subscribe({
       next: () => {
-        if (this.ns) this.ns.success('Reprogramación aprobada correctamente');
+        this.procesandoAccion = false;
+        if (this.ns) this.ns.success('Solicitud de reprogramación aprobada con éxito');
         this.cargarCitas();
       },
-      error: (err) => { if (this.ns) this.ns.error(err.error || 'Error al aprobar reprogramación'); }
+      error: (err) => { this.procesandoActionError(err, 'Error al aprobar reprogramación'); }
+    });
+  }
+
+  rechazarReprogramacion(cita: Cita) {
+    if (!cita?.id) return;
+    this.procesandoAccion = true;
+    this.citaService.rechazarReprogramar(cita.id).subscribe({
+      next: () => {
+        this.procesandoAccion = false;
+        if (this.ns) this.ns.success('Solicitud de reprogramación rechazada');
+        this.cargarCitas();
+      },
+      error: (err) => { this.procesandoActionError(err, 'Error al rechazar reprogramación'); }
     });
   }
 

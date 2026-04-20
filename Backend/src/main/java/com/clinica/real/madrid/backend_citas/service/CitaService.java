@@ -211,10 +211,23 @@ public class CitaService {
 
         cita.setFecha(nuevaFecha);
         cita.setFechaPropuesta(null);
-        cita.setEstado(EstadoCita.REPROGRAMADA);
+        cita.setEstado(EstadoCita.REPROGRAMACION_ACEPTADA);
         citaRepository.save(cita);
 
-        notificarCambioCita(cita, "reprogramada y confirmada");
+        notificarCambioCita(cita, "reprogramación aprobada");
+    }
+
+    @Transactional
+    public void rechazarReprogramacion(Long id) {
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        
+        cita.setFechaPropuesta(null);
+        // Marcamos como rechazada y se mantiene la fecha original
+        cita.setEstado(EstadoCita.REPROGRAMACION_RECHAZADA);
+        citaRepository.save(cita);
+
+        notificarCambioCita(cita, "solicitud de reprogramación rechazada");
     }
 
     @Transactional

@@ -81,20 +81,30 @@
       </div>
       
       <div class="appointment-list" *ngIf="!cargando">
-        <div class="apt-item">
-          <div class="apt-time">09:00 AM</div>
-          <div class="apt-patient">Juan Perez</div>
-          <div class="apt-status confirmed">Confirmada</div>
+        <!-- Renderizar cada cita dinámicamente -->
+        <div class="apt-item" *ngFor="let cita of proximasCitas">
+          <div class="apt-time" style="font-family: monospace; font-weight: 700; color: #0d9488;">
+            {{ cita.fecha | date:'h:mm a' }}
+          </div>
+          <div class="apt-patient" style="flex: 1; font-weight: 600; color: #1e293b;">
+            {{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}
+          </div>
+          <!-- Etiqueta de estado interactiva -->
+          <div class="apt-status" 
+               [ngClass]="{
+                 'confirmed': cita.estado === 'CONFIRMADA', 
+                 'pending': cita.estado === 'PENDIENTE',
+                 'in-progress': cita.estado === 'ESPERANDO'
+               }">
+            {{ cita.estado }}
+          </div>
         </div>
-        <div class="apt-item">
-          <div class="apt-time">10:30 AM</div>
-          <div class="apt-patient">Maria Lopez</div>
-          <div class="apt-status pending">Pendiente</div>
-        </div>
-        <div class="apt-item">
-          <div class="apt-time">12:00 PM</div>
-          <div class="apt-patient">Carlos Gomez</div>
-          <div class="apt-status confirmed">Confirmada</div>
+        
+        <!-- Estado Vacío -->
+        <div class="empty-state-card" *ngIf="proximasCitas.length === 0" style="text-align: center; padding: 40px 20px;">
+           <i class="fa-solid fa-mug-hot" style="font-size: 3rem; color: #e2e8f0; margin-bottom: 15px; display:block;"></i>
+           <p style="color: #64748b; margin: 0; font-weight: 500;">No tienes próximas citas.</p>
+           <small style="color: #94a3b8;">La agenda está despejada.</small>
         </div>
       </div>
       

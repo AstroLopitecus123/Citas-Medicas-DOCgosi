@@ -457,8 +457,9 @@ export class MisCitasController {
           this.cerrarModalCancelar();
         },
         error: (err) => { 
-          console.error('❌ Error al solicitar cancelación:', err);
-          if (this.ns) this.ns.error('Error al solicitar cancelación: ' + (err.error?.message || 'Error desconocido')); 
+          console.error('❌ Error completo capturado por Angular:', err);
+          const errorMsg = err.error?.message || err.error || 'Error desconocido del servidor';
+          if (this.ns) this.ns.error('Error al solicitar cancelación: ' + (errorMsg.toString().substring(0, 100))); 
         }
       });
     } else {

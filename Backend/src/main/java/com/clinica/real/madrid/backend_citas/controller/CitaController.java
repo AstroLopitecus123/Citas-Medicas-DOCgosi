@@ -107,7 +107,7 @@ public class CitaController {
             citaService.solicitarReprogramacion(id, nuevaCita.getFecha());
             return ResponseEntity.ok(Map.of("mensaje", "Solicitud de reprogramación enviada"));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al solicitar reprogramación");
+            return ResponseEntity.status(500).body("Error al solicitar reprogramación: " + e.getMessage());
         }
     }
 
@@ -129,7 +129,7 @@ public class CitaController {
             citaService.solicitarCancelacion(id, motivo);
             return ResponseEntity.ok(Map.of("mensaje", "Solicitud de cancelación enviada"));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al solicitar cancelación");
+            return ResponseEntity.status(500).body("Error al solicitar cancelación: " + e.getMessage());
         }
     }
 

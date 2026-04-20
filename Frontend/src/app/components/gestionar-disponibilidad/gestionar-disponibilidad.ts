@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MedicoService } from '../../services/medico.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-gestionar-disponibilidad',
@@ -25,6 +26,9 @@ export class GestionarDisponibilidadComponent implements OnInit {
   
   // Estado de Validación Flexible
   mostrarModalConfirmacion = false;
+  mostrarModalBloqueo = false;
+  mensajeBloqueo = '';
+
   resultadoValidacion = {
     totalValido: true,
     distribucionValida: true,
@@ -38,7 +42,8 @@ export class GestionarDisponibilidadComponent implements OnInit {
     private controller: GestionarDisponibilidadController,
     private route: ActivatedRoute,
     private router: Router,
-    private medicoService: MedicoService
+    private medicoService: MedicoService,
+    private ns: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -162,7 +167,8 @@ export class GestionarDisponibilidadComponent implements OnInit {
     this.validarHorario();
 
     if (!this.resultadoValidacion.totalValido) {
-      alert(`⚠️ Bloqueo Normativo: El sistema requiere un mínimo de ${this.minimoHorasSemana} horas asignadas por semana para poder guardar. Actualmente tiene ${this.totalHorasSeleccionadas}h.`);
+      this.mensajeBloqueo = `Bloqueo Normativo: El sistema requiere un mínimo de ${this.minimoHorasSemana}h semanales. Actualmente tienes ${this.totalHorasSeleccionadas}h.`;
+      this.mostrarModalBloqueo = true;
       return;
     }
 
@@ -189,7 +195,7 @@ export class GestionarDisponibilidadComponent implements OnInit {
         next: res => {
           this.disponibilidades = res.map(d => new Disponibilidad(d));
           this.mostrarModalConfirmacion = false;
-          alert('Agenda guardada con éxito');
+          this.ns.success('Agenda guardada con éxito');
 
           const usuarioStr = localStorage.getItem('usuario');
           const usuarioActual = usuarioStr ? JSON.parse(usuarioStr) : null;
@@ -205,7 +211,7 @@ export class GestionarDisponibilidadComponent implements OnInit {
         error: err => {
           console.error(err);
           this.mostrarModalConfirmacion = false;
-          alert('Error al guardar la disponibilidad');
+          this.ns.error('Error al guardar la disponibilidad');
         }
       });
   }

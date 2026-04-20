@@ -638,7 +638,7 @@ export class MisCitasController {
     if (this.medico && this.medico.id) {
       this.router.navigate(['/gestionar-disponibilidad', this.medico.id]);
     } else {
-      alert('No se encontró el médico asociado a este usuario.');
+      if (this.ns) this.ns.error('No se encontró el médico asociado a este usuario.');
     }
   }
 
@@ -688,11 +688,12 @@ export class MisCitasController {
       next: (respuesta) => {
         console.log('Historial registrado correctamente:', respuesta);
         this.mostrandoModalHistorial = false;
+        if (this.ns) this.ns.success('Historial médico guardado con éxito.');
         this.cargarCitas(); // refrescar tabla
       },
       error: (err) => {
         console.error('Error al registrar historial:', err);
-        alert('No se pudo guardar el historial. Ver consola.');
+        if (this.ns) this.ns.error('Error: No se pudo el guardar el diagnóstico.');
       }
     });
   }
@@ -707,7 +708,7 @@ export class MisCitasController {
       },
       error: (err) => {
         console.error('No se encontró historial para esta cita:', err);
-        alert('No hay diagnóstico ni receta registrados para esta cita.');
+        if (this.ns) this.ns.info('No hay diagnóstico ni receta registrados para esta cita actualmente.');
       }
     });
   }

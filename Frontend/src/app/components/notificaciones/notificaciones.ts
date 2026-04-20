@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificacionService, Notificacion } from '../../services/notificacion.service';
 import { NotificationService } from '../../services/notification.service';
@@ -14,6 +14,8 @@ export class NotificacionesComponent implements OnInit {
   notificaciones: Notificacion[] = [];
   filtro: 'TODAS' | 'NO_LEIDAS' = 'TODAS';
   loading = true;
+
+  @Input() modoDashboard = false;
 
   constructor(
     private notificacionService: NotificacionService,

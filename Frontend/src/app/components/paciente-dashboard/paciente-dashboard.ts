@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../../models/tipos';
 import { NotificacionService, Notificacion } from '../../services/notificacion.service';
 import { environment } from '../../../environments/environment';
+import { NotificacionesComponent } from '../notificaciones/notificaciones';
 
 @Component({
   selector: 'app-paciente-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificacionesComponent],
   templateUrl: './paciente-dashboard.html',
   styleUrls: ['./paciente-dashboard.css']
 })

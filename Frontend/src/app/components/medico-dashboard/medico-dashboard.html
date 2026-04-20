@@ -41,6 +41,12 @@
   </div>
 
   <div class="dashboard-grid">
+    <!-- NOTIFICACIONES -->
+    <div class="premium-card notif-panel">
+      <h3 class="card-title"><i class="fa-solid fa-bell"></i> Mis Avisos</h3>
+      <app-notificaciones [modoDashboard]="true"></app-notificaciones>
+    </div>
+
     <!-- ACCIONES RÁPIDAS -->
     <div class="premium-card">
       <h3 class="card-title">Operaciones Rápidas</h3>
@@ -63,6 +69,7 @@
         </button>
       </div>
     </div>
+  </div>
 
     <!-- PRÓXIMAS CITAS (Placeholder interactivo) -->
     <div class="premium-card appointment-preview">

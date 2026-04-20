@@ -71,28 +71,15 @@
 
     <!-- RECIENTES Y RECOMENDACIONES -->
     <div class="dashboard-side-panels">
-        <!-- NOTIFICACIONES RECIENTES -->
+        <!-- NOTIFICACIONES INTEGRADAS -->
         <div class="premium-card notif-panel">
             <div class="card-header-flex">
-                <h3 class="card-title">Avisos Recientes</h3>
-                <a routerLink="/notificaciones" class="view-all-link">Ver todo</a>
+                <h3 class="card-title">Mis Notificaciones</h3>
+                <a routerLink="/notificaciones" class="view-all-link">Centro de Avisos</a>
             </div>
             
-            <div class="notif-mini-list">
-                <div *ngIf="notificacionesRecientes.length === 0" class="empty-mini">
-                    <p>No hay avisos nuevos</p>
-                </div>
-                
-                <div class="notif-mini-item" *ngFor="let n of notificacionesRecientes" [class.unread]="!n.leida">
-                    <div class="mini-icon" [style.background]="n.titulo.includes('Cancel') ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'">
-                        <i class="fa-solid" [class.fa-calendar-xmark]="n.titulo.includes('Cancel')" [class.fa-bell]="!n.titulo.includes('Cancel')"></i>
-                    </div>
-                    <div class="mini-content">
-                        <strong>{{ n.titulo }}</strong>
-                        <span>{{ n.fechaCreacion | date:'dd/MM HH:mm' }}</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Usamos el componente real embebido -->
+            <app-notificaciones [modoDashboard]="true"></app-notificaciones>
         </div>
 
         <!-- RECOMENDACIONES -->

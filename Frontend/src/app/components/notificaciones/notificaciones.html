@@ -1,7 +1,7 @@
-<div class="panel-layout-container">
-    <div class="admin-layout" style="margin-top: 0; padding: 0;">
-        <!-- Header Premium -->
-        <header class="premium-welcome-banner" style="border-left: 6px solid #3b82f6;">
+<div [class.panel-layout-container]="!modoDashboard">
+    <div [class.admin-layout]="!modoDashboard" style="margin-top: 0; padding: 0;">
+        <!-- Header Premium (Ocultar en Dashboard) -->
+        <header class="premium-welcome-banner" style="border-left: 6px solid #3b82f6;" *ngIf="!modoDashboard">
             <div class="welcome-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
                 <i class="fa-solid fa-bell"></i>
             </div>
@@ -17,8 +17,8 @@
             </div>
         </header>
 
-        <!-- Filtros Rápidos -->
-        <div class="premium-card" style="padding: 15px 25px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+        <!-- Filtros Rápidos (Ocultar o Simplificar en Dashboard si es necesario) -->
+        <div class="premium-card" style="padding: 15px 25px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center;" *ngIf="!modoDashboard">
             <span style="font-weight: 600; color: #64748b;">Filtrar:</span>
             <button class="filter-chip" [class.active]="filtro === 'TODAS'" (click)="filtro = 'TODAS'">
                 Todas ({{ notificaciones.length }})
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Lista de Notificaciones -->
-        <div class="premium-card" style="padding: 0; overflow: hidden;">
+        <div [class.premium-card]="!modoDashboard" [style.padding]="modoDashboard ? '0' : '0'" style="overflow: hidden; border: none; box-shadow: none; background: transparent;">
             <div class="notif-list-container">
                 <div *ngIf="notificacionesFiltradas.length === 0" class="empty-notif">
                     <div class="empty-icon">

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { NotificacionesComponent } from '../notificaciones/notificaciones';
 
 @Component({
   selector: 'app-medico-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificacionesComponent],
   templateUrl: './medico-dashboard.html',
   styleUrls: ['./medico-dashboard.css']
 })

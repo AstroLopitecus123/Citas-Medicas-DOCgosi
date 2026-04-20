@@ -514,7 +514,15 @@ export class MisCitasController {
   }
 
   private procesandoActionError(err: any, defaultMsg: string) {
-    this.procesandoAccion = false;
+    console.error('🔥 Error crítico capturado:', err);
+    this.procesandoAccion = false; // 🔄 SIEMPRE liberar el estado
+    
+    // Si es un error de CORS o Red (status 0), dar mensaje claro
+    if (err.status === 0) {
+      if (this.ns) this.ns.error('Error de conexión con el servidor. Por favor, reintente en unos momentos.');
+      return;
+    }
+
     const errorBody = err.error?.error || err.error?.mensaje || err.error || defaultMsg;
     if (this.ns) this.ns.error(errorBody.toString().substring(0, 100));
   }

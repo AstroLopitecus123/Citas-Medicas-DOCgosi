@@ -67,6 +67,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(java.util.List.of(
             "https://frontend-citas-production.up.railway.app",
             "https://*.railway.app",
+            "https://*.up.railway.app",
             "http://localhost:4200",
             "http://localhost:3000"
         ));

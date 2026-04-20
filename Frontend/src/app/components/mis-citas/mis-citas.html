@@ -48,7 +48,8 @@
                                         <span class="time-txt">{{ cita?.fecha | date:'shortTime' }}</span>
                                     </div>
                                 </td>
-                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">
+                                <td *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">
+                                    <div class="user-info-stack">
                                         <strong style="color: #0fbf6a;">{{ cita?.paciente?.nombre }} {{ cita?.paciente?.apellido }}</strong>
                                         <span class="sub-txt">ID: {{ cita?.paciente?.id }}</span>
                                     </div>

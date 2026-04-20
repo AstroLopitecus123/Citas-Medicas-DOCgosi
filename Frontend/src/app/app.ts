@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { ChatbotComponent } from './components/chatbot/chatbot';
 import { ToastComponent } from './components/toast/toast';
 import { NotificationService } from './services/notification.service';
+import { NotificacionService } from './services/notificacion.service';
 
 @Component({
   selector: 'app-root',
@@ -26,12 +27,14 @@ export class AppComponent {
   isMenuOpen = false;
   loginActualizado$ = new Subject<void>();
   isPanelRoute = false;
+  notificacionesNoLeidas = 0;
 
 
   constructor(
     private router: Router, 
     private http: HttpClient,
-    private ns: NotificationService
+    private ns: NotificationService,
+    private notificacionService: NotificacionService
   ) {
     this.verificarLogin();
     
@@ -67,7 +70,15 @@ export class AppComponent {
     this.loginActualizado$.subscribe(() => {
       console.log("🔥 Login detectado — actualizando header sin recargar");
       this.verificarLogin();
+      this.cargarConteoNotificaciones();
     });
+
+    // 🔔 Polling de notificaciones cada 30 segundos
+    setInterval(() => {
+      if (this.isLoggedIn && this.isPanelRoute) {
+        this.cargarConteoNotificaciones();
+      }
+    }, 30000);
   }
 
 
@@ -209,5 +220,13 @@ export class AppComponent {
         this.verificarLogin();
       });
     }
+  }
+
+  cargarConteoNotificaciones() {
+    if (!this.isLoggedIn) return;
+    this.notificacionService.contarNoLeidas().subscribe({
+      next: (res) => { this.notificacionesNoLeidas = res.cantidad; },
+      error: () => { /* silenciar errores de red */ }
+    });
   }
 }

@@ -30,7 +30,10 @@ public class CitaService {
     
     @Autowired
     private HistorialRepository historialRepository;
-    
+
+    @Autowired
+    private NotificacionService notificacionService;
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -146,6 +149,11 @@ public class CitaService {
         cita.setFechaPropuesta(nuevaFecha);
         cita.setEstado(EstadoCita.SOLICITUD_REPROGRAMACION);
         citaRepository.save(cita);
+        
+        // Disparar Alerta a Administradores
+        String msg = "El paciente " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellido() + " solicita reprogramar su cita.";
+        notificacionService.crearNotificacionParaRol("Solicitud de Reprogramación", msg, "ADMIN");
+        
         notificarCambioCita(cita, "solicitud de reprogramación");
     }
 
@@ -156,6 +164,11 @@ public class CitaService {
         cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
         cita.setMotivo(motivo); // 👈 Guardamos el motivo proporcionado
         citaRepository.save(cita);
+        
+        // Disparar Alerta a Administradores
+        String msg = "El paciente " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellido() + " solicita cancelar su cita. Motivo: " + motivo;
+        notificacionService.crearNotificacionParaRol("Solicitud de Cancelación", msg, "ADMIN");
+        
         notificarCambioCita(cita, "solicitud de cancelación");
     }
 

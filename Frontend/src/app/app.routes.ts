@@ -54,6 +54,7 @@ export const routes: Routes = [
   { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
   { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent) },
   { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
+  { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent) },
   { path: 'recepcion/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
   { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent) },
 

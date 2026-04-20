@@ -1,0 +1,81 @@
+<div class="admin-layout">
+
+  <!-- Header Premium -->
+  <header class="premium-welcome-banner" style="border-left: 6px solid #f59e0b;">
+    <div class="welcome-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+      <i class="fa-solid fa-bell"></i>
+    </div>
+    <div class="welcome-text">
+      <div class="badge-role" style="background: rgba(245,158,11,0.1); color: #b45309;">ADMINISTRADOR</div>
+      <h1>Centro de Avisos</h1>
+      <p>Solicitudes de pacientes, alertas del sistema y notificaciones del staff.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-confirm-glass" (click)="marcarTodasLeidas()" style="background: #0fbf6a !important;">
+        <i class="fa-solid fa-check-double"></i> Marcar todas leídas
+      </button>
+    </div>
+  </header>
+
+  <!-- Filtros -->
+  <div class="premium-card" style="padding: 16px 24px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
+    <span style="font-weight: 700; color: #64748b; font-size: 0.9rem;">Filtrar:</span>
+    <button class="btn-table-action" [class.btn-edit]="filtro === 'TODAS'" [class.btn-status]="filtro !== 'TODAS'"
+      (click)="filtro = 'TODAS'" style="border-radius: 30px; padding: 8px 20px;">
+      Todas ({{ notificaciones.length }})
+    </button>
+    <button class="btn-table-action" [class.btn-delete]="filtro === 'NO_LEIDAS'" [class.btn-status]="filtro !== 'NO_LEIDAS'"
+      (click)="filtro = 'NO_LEIDAS'" style="border-radius: 30px; padding: 8px 20px;">
+      No leídas ({{ noLeidasCount }})
+    </button>
+  </div>
+
+  <!-- Lista de Notificaciones -->
+  <div class="premium-card" *ngIf="!loading">
+
+    <!-- Empty State -->
+    <div *ngIf="notificacionesFiltradas.length === 0" style="text-align:center; padding: 60px 20px; color: #94a3b8;">
+      <i class="fa-solid fa-bell-slash" style="font-size: 3rem; margin-bottom: 16px; display:block; color: #cbd5e1;"></i>
+      <p style="font-weight: 600; font-size: 1.1rem;">No hay avisos pendientes</p>
+      <p style="font-size: 0.9rem; margin-top: 6px;">Cuando los pacientes soliciten cambios en sus citas, aparecerán aquí.</p>
+    </div>
+
+    <!-- Notificación Item -->
+    <div class="notif-item" *ngFor="let notif of notificacionesFiltradas"
+      (click)="marcarLeida(notif)"
+      [class.notif-leida]="notif.leida"
+      style="display:flex; gap:18px; padding:20px 24px; border-bottom: 1px solid #f1f5f9; cursor:pointer; align-items:flex-start; transition: background 0.2s ease;"
+      [style.background]="notif.leida ? 'white' : 'rgba(245,158,11,0.04)'">
+
+      <!-- Icono -->
+      <div style="width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;"
+        [style.background]="'rgba(0,0,0,0.05)'" [style.color]="getColor(notif.titulo)">
+        <i class="fa-solid" [class]="getIcono(notif.titulo)" style="font-size: 1.2rem;"></i>
+      </div>
+
+      <!-- Contenido -->
+      <div style="flex: 1;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <strong style="font-size: 0.95rem; color: #1e293b;">{{ notif.titulo }}</strong>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <span *ngIf="!notif.leida" style="width:10px; height:10px; background:#f59e0b; border-radius:50%; display:inline-block;"></span>
+            <span style="font-size:0.8rem; color:#94a3b8;">{{ notif.fechaCreacion | date:'d MMM, HH:mm' }}</span>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.5;">{{ notif.mensaje }}</p>
+        <div style="margin-top: 10px;">
+          <a routerLink="/admin/gestion-citas" class="btn-table-action btn-edit" style="font-size: 0.8rem; padding: 6px 14px; text-decoration: none;">
+            <i class="fa-solid fa-calendar-check"></i> Ver en Gestión de Citas
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" style="text-align:center; padding: 60px 0; color: #94a3b8;">
+    <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem;"></i>
+  </div>
+
+</div>

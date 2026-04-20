@@ -1,0 +1,50 @@
+package com.clinica.real.madrid.backend_citas.controller;
+
+import com.clinica.real.madrid.backend_citas.model.Notificacion;
+import com.clinica.real.madrid.backend_citas.model.Usuario;
+import com.clinica.real.madrid.backend_citas.service.NotificacionService;
+import com.clinica.real.madrid.backend_citas.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/notificaciones")
+public class NotificacionController {
+
+    @Autowired
+    private NotificacionService notificacionService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @GetMapping
+    public ResponseEntity<List<Notificacion>> getMisNotificaciones(Authentication auth) {
+        String correo = auth.getName();
+        Usuario r = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                
+        List<Notificacion> notificaciones = notificacionService.obtenerMisNotificaciones(r.getId(), r.getRol().name());
+        return ResponseEntity.ok(notificaciones);
+    }
+
+    @GetMapping("/no-leidas")
+    public ResponseEntity<Map<String, Long>> contarNoLeidas(Authentication auth) {
+        String correo = auth.getName();
+        Usuario r = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        long conteo = notificacionService.contarNoLeidas(r.getId(), r.getRol().name());
+        return ResponseEntity.ok(Map.of("cantidad", conteo));
+    }
+
+    @PutMapping("/{id}/leer")
+    public ResponseEntity<Notificacion> marcarComoLeida(@PathVariable Long id) {
+        Notificacion notificacion = notificacionService.marcarComoLeida(id);
+        return ResponseEntity.ok(notificacion);
+    }
+}

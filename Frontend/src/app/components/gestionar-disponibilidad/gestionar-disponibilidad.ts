@@ -132,13 +132,18 @@ export class GestionarDisponibilidadComponent implements OnInit {
         this.disponibilidades = res.map(d => new Disponibilidad(d));
         alert('Disponibilidades guardadas correctamente');
 
-        // ============================================
-        // 🔥 REDIRECCIÓN AUTOMÁTICA A /mis-citas/{id}
-        // ============================================
+        const usuarioStr = localStorage.getItem('usuario');
+        const usuarioActual = usuarioStr ? JSON.parse(usuarioStr) : null;
+        const rol = usuarioActual?.rol?.toUpperCase();
 
-        const usuarioId = this.medico.usuario.id;   // ← usa el ID real
-
-        this.router.navigate(['/mis-citas', usuarioId]);
+        if (rol === 'ADMIN') {
+          // Si es Admin, vuelve a la gestión de médicos
+          this.router.navigate(['/medicos']);
+        } else {
+          // Si es Médico o cualquier otro, vuelve a sus citas
+          const usuarioId = this.medico.usuario.id;
+          this.router.navigate(['/mis-citas', usuarioId]);
+        }
       },
       error: err => {
         console.error(err);

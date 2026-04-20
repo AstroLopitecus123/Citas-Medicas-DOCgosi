@@ -23,9 +23,11 @@ export class MedicoGuard implements CanActivate {
     try {
       const usuario = JSON.parse(usuarioStr);
       const rol = usuario?.rol?.toUpperCase();
-      if (rol === 'MEDICO') return true;
+      
+      // Permitimos acceso a MEDICOS y ADMINS
+      if (rol === 'MEDICO' || rol === 'ADMIN') return true;
 
-      console.log('⛔ No es MEDICO → redirigiendo');
+      console.log('⛔ No tiene permiso de Médico/Admin → redirigiendo');
       this.redirigirPorRol(rol);
       return false;
     } catch {

@@ -414,6 +414,22 @@ public class CitaService {
             System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
         }
 
-        System.out.println("✅ Notificación gestionada (Email): cita " + cita.getId() + " " + accion);
+        // 🔔 PERSISTENCIA EN DB (Para el Centro de Notificaciones)
+        try {
+            String tituloNotif = "Cita " + accion.toUpperCase();
+            String mensajeNotif = String.format("Tu cita con el Dr. %s para el %s a las %s ha sido %s.",
+                    cita.getMedico().getUsuario().getNombre(), fecha, hora, accion);
+            
+            notificacionService.crearNotificacionParaUsuario(tituloNotif, mensajeNotif, cita.getPaciente());
+            
+            // También al médico
+            notificacionService.crearNotificacionParaUsuario("Cambio en Agenda: " + accion.toUpperCase(), 
+                    "La cita con el paciente " + cita.getPaciente().getNombre() + " ha sido " + accion, 
+                    cita.getMedico().getUsuario());
+                    
+            System.out.println("✅ Notificación guardada en DB: cita " + cita.getId());
+        } catch (Exception e) {
+            System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
+        }
     }
 }

@@ -286,3 +286,56 @@
   .mis-citas-full { padding: 20px; }
   .profile-sidebar { position: static; }
 }
+
+/* 💎 BOTONES DE ACCIÓN PREMIUM - ADMIN GESTIÓN */
+.btn-action-premium {
+    padding: 14px 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-action-premium:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-aprobar-premium {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    flex: 2;
+}
+
+.btn-aprobar-premium:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px -10px rgba(16, 185, 129, 0.6);
+}
+
+.btn-rechazar-premium {
+    background: rgba(239, 68, 68, 0.08) !important;
+    color: #ef4444 !important;
+    border: 2px solid rgba(239, 68, 68, 0.2) !important;
+    flex: 1;
+}
+
+.btn-rechazar-premium:hover:not(:disabled) {
+    background: #ef4444 !important;
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -10px rgba(239, 68, 68, 0.4);
+}
+
+.btn-action-premium i {
+    font-size: 1.1rem;
+}

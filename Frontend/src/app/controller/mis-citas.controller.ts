@@ -42,6 +42,7 @@ export class MisCitasController {
   citas: Cita[] = [];
   filtroEstado: string = 'TODAS';
   textoBusqueda: string = '';
+  procesandoAccion: boolean = false;
 
   get citasFiltradas() {
     let lista = this.citas;
@@ -477,6 +478,8 @@ export class MisCitasController {
     // Normalizamos el rol para la comparación
     const rol = this.usuario?.rol?.toUpperCase();
 
+    this.procesandoAccion = true;
+
     if (rol === 'PACIENTE') {
       console.log('📩 Enviando solicitud de cancelación (Paciente)...');
       this.citaService.solicitarCancelar(this.citaACancelar.id, this.motivoCancelacion).subscribe({
@@ -485,11 +488,11 @@ export class MisCitasController {
           if (this.ns) this.ns.success('Solicitud de cancelación confirmada. Su gestión de reembolso está en proceso de revisión.');
           this.cargarCitas();
           this.cerrarModalCancelar();
+          this.procesandoAccion = false;
         },
         error: (err) => { 
-          console.error('❌ Error completo capturado por Angular:', err);
-          const errorMsg = err.error?.message || err.error || 'Error desconocido del servidor';
-          if (this.ns) this.ns.error('Error al solicitar cancelación: ' + (errorMsg.toString().substring(0, 100))); 
+          console.error('❌ Error al solicitar cancelación:', err);
+          this.procesandoActionError(err, 'Error al solicitar cancelación');
         }
       });
     } else {
@@ -500,27 +503,36 @@ export class MisCitasController {
           if (this.ns) this.ns.success('Cancelación aprobada y reembolso procesado exitosamente.');
           this.cargarCitas();
           this.cerrarModalCancelar();
+          this.procesandoAccion = false;
         },
         error: (err) => { 
           console.error('❌ Error al confirmar cancelación:', err);
-          if (this.ns) this.ns.error('Error al confirmar cancelación'); 
+          this.procesandoActionError(err, 'Error al confirmar cancelación e iniciar reembolso');
         }
       });
     }
   }
 
+  private procesandoActionError(err: any, defaultMsg: string) {
+    this.procesandoAccion = false;
+    const errorBody = err.error?.error || err.error?.mensaje || err.error || defaultMsg;
+    if (this.ns) this.ns.error(errorBody.toString().substring(0, 100));
+  }
+
   rechazarCancelacionProceso() {
     if (!this.citaACancelar) return;
+    this.procesandoAccion = true;
 
     this.citaService.rechazarCancelar(this.citaACancelar.id).subscribe({
       next: () => {
         if (this.ns) this.ns.success('Solicitud de cancelación rechazada. El paciente ha sido notificado.');
         this.cargarCitas();
         this.cerrarModalCancelar();
+        this.procesandoAccion = false;
       },
       error: (err) => {
         console.error('Error al rechazar solicitud:', err);
-        if (this.ns) this.ns.error('No se pudo procesar el rechazo.');
+        this.procesandoActionError(err, 'No se pudo procesar el rechazo de la solicitud.');
       }
     });
   }

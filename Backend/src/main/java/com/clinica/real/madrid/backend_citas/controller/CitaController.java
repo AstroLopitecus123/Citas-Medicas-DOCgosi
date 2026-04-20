@@ -140,7 +140,7 @@ public class CitaController {
             citaService.confirmarCancelacion(id);
             return ResponseEntity.ok(Map.of("mensaje", "Cancelación aprobada y reembolso procesado"));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
         }
     }
 
@@ -151,7 +151,7 @@ public class CitaController {
             citaService.rechazarCancelacion(id);
             return ResponseEntity.ok(Map.of("mensaje", "Solicitud de cancelación rechazada correctamente"));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
         }
     }
 

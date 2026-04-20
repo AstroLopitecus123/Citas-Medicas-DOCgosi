@@ -1,0 +1,60 @@
+<div class="panel-layout-container">
+    <div class="admin-layout" style="margin-top: 0; padding: 0;">
+        <!-- Header Premium -->
+        <header class="premium-welcome-banner" style="border-left: 6px solid #3b82f6;">
+            <div class="welcome-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <div class="welcome-text">
+                <div class="badge-role" style="background: rgba(59, 130, 246, 0.1); color: #1d4ed8;">CENTRO DE AVISOS</div>
+                <h1>Mis Notificaciones</h1>
+                <p>Mantente al día con las actualizaciones de tus citas y servicios.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-action btn-add" (click)="marcarTodasComoLeidas()" *ngIf="notificaciones.length > 0">
+                    <i class="fa-solid fa-check-double"></i> Marcar todas como leídas
+                </button>
+            </div>
+        </header>
+
+        <!-- Filtros Rápidos -->
+        <div class="premium-card" style="padding: 15px 25px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+            <span style="font-weight: 600; color: #64748b;">Filtrar:</span>
+            <button class="filter-chip" [class.active]="filtro === 'TODAS'" (click)="filtro = 'TODAS'">
+                Todas ({{ notificaciones.length }})
+            </button>
+            <button class="filter-chip" [class.active]="filtro === 'NO_LEIDAS'" (click)="filtro = 'NO_LEIDAS'">
+                No leídas ({{ getCountNoLeidas() }})
+            </button>
+        </div>
+
+        <!-- Lista de Notificaciones -->
+        <div class="premium-card" style="padding: 0; overflow: hidden;">
+            <div class="notif-list-container">
+                <div *ngIf="notificacionesFiltradas.length === 0" class="empty-notif">
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-bell-slash"></i>
+                    </div>
+                    <h4>No tienes notificaciones</h4>
+                    <p>Cuando haya novedades sobre tus citas, aparecerán aquí.</p>
+                </div>
+
+                <div class="notif-card-item" *ngFor="let notif of notificacionesFiltradas" 
+                     [class.unread]="!notif.leida" 
+                     (click)="marcarLeida(notif)">
+                    <div class="notif-icon-status" [style.background]="getIconBackground(notif.titulo)">
+                        <i class="fa-solid" [class]="getIconClass(notif.titulo)"></i>
+                    </div>
+                    <div class="notif-content">
+                        <div class="notif-header">
+                            <h4 class="notif-title">{{ notif.titulo }}</h4>
+                            <span class="notif-time">{{ notif.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </div>
+                        <p class="notif-message">{{ notif.mensaje }}</p>
+                    </div>
+                    <div class="notif-indicator" *ngIf="!notif.leida"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

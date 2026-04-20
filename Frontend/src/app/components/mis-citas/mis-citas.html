@@ -307,21 +307,24 @@
             <div class="modal-footer-glass">
                 <!-- VISTA PACIENTE O CANCELACIÓN DIRECTA ADMIN -->
                 <ng-container *ngIf="ctrl.usuario.rol === 'PACIENTE' || ctrl.citaACancelar?.estado !== 'SOLICITUD_CANCELACION'">
-                    <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()">Mantener Cita</button>
+                    <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()" [disabled]="ctrl.procesandoAccion">Mantener Cita</button>
                     <button class="btn-confirm-glass bg-gradient-danger" 
-                            [disabled]="ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion"
+                            [disabled]="(ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion) || ctrl.procesandoAccion"
                             (click)="ctrl.confirmarCancelacionProceso()">
-                        {{ ctrl.usuario.rol === 'PACIENTE' ? 'Enviar Solicitud' : 'Confirmar Cancelación' }}
+                        <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion" [class.fa-paper-plane]="!ctrl.procesandoAccion && ctrl.usuario.rol === 'PACIENTE'" [class.fa-check]="!ctrl.procesandoAccion && ctrl.usuario.rol !== 'PACIENTE'"></i>
+                        {{ ctrl.procesandoAccion ? 'Procesando...' : (ctrl.usuario.rol === 'PACIENTE' ? 'Enviar Solicitud' : 'Confirmar Cancelación') }}
                     </button>
                 </ng-container>
 
                 <!-- VISTA GESTIÓN ADMIN (PARA SOLICITUDES) -->
                 <ng-container *ngIf="ctrl.usuario.rol !== 'PACIENTE' && ctrl.citaACancelar?.estado === 'SOLICITUD_CANCELACION'">
-                    <button class="btn-cancel-glass" (click)="ctrl.rechazarCancelacionProceso()" style="border-color: #ef4444; color: #ef4444;">
-                        <i class="fa-solid fa-ban"></i> Rechazar Solicitud
+                    <button class="btn-action-premium btn-rechazar-premium" (click)="ctrl.rechazarCancelacionProceso()" [disabled]="ctrl.procesandoAccion">
+                        <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion" [class.fa-ban]="!ctrl.procesandoAccion"></i>
+                        {{ ctrl.procesandoAccion ? 'Espera...' : 'Rechazar Solicitud' }}
                     </button>
-                    <button class="btn-confirm-glass" (click)="ctrl.confirmarCancelacionProceso()" style="background: #0fbf6a !important; flex: 2;">
-                        <i class="fa-solid fa-check"></i> Aprobar y Reembolsar
+                    <button class="btn-action-premium btn-aprobar-premium" (click)="ctrl.confirmarCancelacionProceso()" [disabled]="ctrl.procesandoAccion">
+                        <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion" [class.fa-check-double]="!ctrl.procesandoAccion"></i>
+                        {{ ctrl.procesandoAccion ? 'Reembolsando...' : 'Aprobar y Reembolsar' }}
                     </button>
                 </ng-container>
             </div>

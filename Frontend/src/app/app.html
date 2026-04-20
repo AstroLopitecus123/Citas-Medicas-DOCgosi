@@ -84,7 +84,7 @@
       <a class="nav-item" routerLink="/medico/dashboard" routerLinkActive="active">
         <i class="fa-solid fa-house-medical-circle-check"></i> <span>Mi Agenda</span>
       </a>
-      <a class="nav-item" routerLink="/gestionar-disponibilidad" routerLinkActive="active">
+      <a class="nav-item" [routerLink]="['/gestionar-disponibilidad', usuario?.id]" routerLinkActive="active">
         <i class="fa-solid fa-clock"></i> <span>Disponibilidad</span>
       </a>
       <a class="nav-item" routerLink="/medico/pagos" routerLinkActive="active">

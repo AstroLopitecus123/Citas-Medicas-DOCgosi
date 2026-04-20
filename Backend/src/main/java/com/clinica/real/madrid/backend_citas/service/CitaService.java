@@ -146,16 +146,26 @@ public class CitaService {
     }
     
     @Transactional
-    public void solicitarReprogramacion(Long id, LocalDateTime nuevaFecha) {
+    public void solicitarReprogramacion(Long id, LocalDateTime nuevaFecha, String motivo) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
         cita.setFechaPropuesta(nuevaFecha);
         cita.setEstado(EstadoCita.SOLICITUD_REPROGRAMACION);
+        
+        // Guardar motivo si se proporciona
+        if (motivo != null && !motivo.trim().isEmpty()) {
+            cita.setMotivo(motivo);
+        }
+        
         citaRepository.save(cita);
         
-        // Disparar Alerta a Administradores
-        String msg = "El paciente " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellido() + " solicita reprogramar su cita.";
+        // Disparar Alerta a Administradores con el motivo
+        String msg = String.format("PACIENTE: %s %s solicita reprogramar su cita #%d. Propuesta: %s. Motivo: %s", 
+                        cita.getPaciente().getNombre(), cita.getPaciente().getApellido(), 
+                        cita.getId(), nuevaFecha.toLocalDate().toString(), (motivo != null ? motivo : "Sin motivo"));
+        
         notificacionService.crearNotificacionParaRol("Solicitud de Reprogramación", msg, "ADMIN");
+        notificacionService.crearNotificacionParaRol("Solicitud de Reprogramación", msg, "RECEPCION");
         
         notificarCambioCita(cita, "solicitud de reprogramación");
     }

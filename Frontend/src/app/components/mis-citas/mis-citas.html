@@ -263,9 +263,10 @@
             </div>
 
             <div class="modal-footer-glass flex-row">
-                <button class="btn-action btn-cancel-glass" (click)="ctrl.cerrarModalCita()">Cerrar</button>
-                <button class="btn-action btn-confirm-glass" (click)="ctrl.registrarCita()">
-                    {{ ctrl.modoReprogramacion ? (ctrl.usuario.rol === 'PACIENTE' ? 'Solicitar Cambio' : 'Reprogramar Cita') : 'Confirmar Reserva' }}
+                <button class="btn-action btn-cancel-glass" (click)="ctrl.cerrarModalCita()" [disabled]="ctrl.procesandoAccion">Cerrar</button>
+                <button class="btn-action btn-confirm-glass" (click)="ctrl.registrarCita()" [disabled]="ctrl.procesandoAccion">
+                    <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion"></i>
+                    {{ ctrl.procesandoAccion ? 'Procesando...' : (ctrl.modoReprogramacion ? (ctrl.usuario.rol === 'PACIENTE' ? 'Solicitar Cambio' : 'Reprogramar Cita') : 'Confirmar Reserva') }}
                 </button>
             </div>
         </div>

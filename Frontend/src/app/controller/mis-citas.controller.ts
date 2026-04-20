@@ -377,32 +377,47 @@ export class MisCitasController {
       return;
     }
 
+    this.procesandoAccion = true;
+
     const fecha = this.horarioSeleccionado.fecha;
     const hora = this.horarioSeleccionado.horaInicio || '00:00:00';
     const fechaCompleta = `${fecha}T${hora}`;
 
     if (this.modoReprogramacion && this.citaEnReprogramacion) {
-      const citaActualizada = { ...this.citaEnReprogramacion, fecha: fechaCompleta };
+      // 📝 Combinamos la cita base con la nueva fecha y el nuevo motivo del textarea
+      const citaActualizada = { 
+        ...this.citaEnReprogramacion, 
+        fecha: fechaCompleta,
+        motivo: this.motivoCita
+      };
 
       if (this.usuario.rol === 'PACIENTE') {
         // El paciente solicita reprogramar
         this.citaService.solicitarReprogramar(citaActualizada.id, citaActualizada).subscribe({
           next: () => {
+            this.procesandoAccion = false;
             if (this.ns) this.ns.success('Solicitud de reprogramación enviada. Pendiente de aprobación.');
             this.cargarCitas();
             this.cerrarModalCita();
           },
-          error: () => { if (this.ns) this.ns.error('Error al solicitar reprogramación'); }
+          error: (err) => { 
+            this.procesandoAccion = false;
+            this.procesandoActionError(err, 'Error al solicitar reprogramación'); 
+          }
         });
       } else {
         // Admin/Medico reprograma directamente
         this.citaService.reprogramarCita(citaActualizada.id, citaActualizada).subscribe({
           next: () => {
+            this.procesandoAccion = false;
             if (this.ns) this.ns.success('Cita reprogramada correctamente');
             this.cargarCitas();
             this.cerrarModalCita();
           },
-          error: () => { if (this.ns) this.ns.error('Error al reprogramar la cita'); }
+          error: (err) => { 
+            this.procesandoAccion = false;
+            this.procesandoActionError(err, 'Error al reprogramar la cita'); 
+          }
         });
       }
 
@@ -417,6 +432,7 @@ export class MisCitasController {
 
       this.citaService.crear(nuevaCita).subscribe({
         next: (citaCreada) => {
+          this.procesandoAccion = false;
           if (this.ns) this.ns.success('Reserva realizada. Redirigiendo al pago...');
           this.cargarCitas();
           this.cerrarModalCita();
@@ -425,6 +441,7 @@ export class MisCitasController {
           }
         },
         error: (err) => {
+          this.procesandoAccion = false;
           const msg = err.error?.message || 'Error al registrar la cita';
           if (this.ns) this.ns.error(msg);
         }

@@ -104,7 +104,7 @@ public class CitaController {
     @PutMapping("/{id}/solicitar-reprogramar")
     public ResponseEntity<?> solicitarReprogramar(@PathVariable Long id, @RequestBody Cita nuevaCita) {
         try {
-            citaService.solicitarReprogramacion(id, nuevaCita.getFecha());
+            citaService.solicitarReprogramacion(id, nuevaCita.getFecha(), nuevaCita.getMotivo());
             return ResponseEntity.ok(Map.of("mensaje", "Solicitud de reprogramación enviada"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al solicitar reprogramación: " + e.getMessage());

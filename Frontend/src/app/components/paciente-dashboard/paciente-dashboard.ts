@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../../models/tipos';
+import { NotificacionService, Notificacion } from '../../services/notificacion.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-paciente-dashboard',
@@ -17,12 +18,16 @@ export class PacienteDashboardComponent implements OnInit {
   today = new Date();
   
   stats = {
-    proximaCita: 'Ninguna agendada',
     totalCitas: 0,
     historiasClinicas: 0
   };
 
-  constructor(private http: HttpClient) {}
+  notificacionesRecientes: Notificacion[] = [];
+
+  constructor(
+    private http: HttpClient,
+    private notificacionService: NotificacionService
+  ) {}
 
   ngOnInit() {
     const usuarioStr = localStorage.getItem('usuario');
@@ -30,6 +35,19 @@ export class PacienteDashboardComponent implements OnInit {
       this.usuario = JSON.parse(usuarioStr);
     }
     this.cargarResumen();
+    this.cargarNotificaciones();
+  }
+
+  cargarNotificaciones() {
+    this.notificacionService.getMisNotificaciones().subscribe({
+      next: (notifs) => {
+        // Tomamos las últimas 3
+        this.notificacionesRecientes = notifs
+          .sort((a,b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime())
+          .slice(0, 3);
+      },
+      error: (err) => console.error('Error al cargar notifs en dashboard:', err)
+    });
   }
 
   cargarResumen() {

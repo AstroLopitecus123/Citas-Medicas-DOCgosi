@@ -95,6 +95,90 @@
   color: #0a7c4a;
 }
 
+.dashboard-side-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.view-all-link {
+    font-size: 0.85rem;
+    color: #3b82f6;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.view-all-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.notif-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notif-mini-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.2s;
+}
+
+.notif-mini-item.unread {
+    background: white;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.05);
+}
+
+.mini-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.mini-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.mini-content strong {
+    font-size: 0.85rem;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-content span {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.empty-mini {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
 @media (max-width: 1024px) {
   .dashboard-grid { grid-template-columns: 1fr; }
 }

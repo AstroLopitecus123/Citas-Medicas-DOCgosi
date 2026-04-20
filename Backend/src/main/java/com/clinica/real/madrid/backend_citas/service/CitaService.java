@@ -219,10 +219,33 @@ public class CitaService {
 
     @Transactional
     public void confirmarCancelacion(Long id) {
-        cancelarCita(id); // Reutilizamos la lógica existente de cancelación final
-        // Notificar que se ha confirmado por el admin
-        Cita cita = citaRepository.findById(id).orElseThrow();
-        notificarCambioCita(cita, "cancelación aprobada");
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        
+        // 1. Ejecutar cancelación (liberar horario y cambiar estado)
+        cancelarCita(id); 
+
+        // 2. Procesar Reembolso Automático
+        try {
+            pagoService.reembolsarPago(id);
+        } catch (Exception e) {
+            System.err.println("⚠️ Error en reembolso automático para cita " + id + ": " + e.getMessage());
+        }
+
+        // 3. Notificación personalizada
+        notificarCambioCita(cita, "cancelación aprobada y reembolso gestionado");
+    }
+
+    @Transactional
+    public void rechazarCancelacion(Long id) {
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+        
+        // Volver al estado previa (Asumimos CONFIRMADA si venía de una solicitud)
+        cita.setEstado(EstadoCita.CONFIRMADA);
+        citaRepository.save(cita);
+
+        notificarCambioCita(cita, "solicitud de cancelación rechazada. Su cita sigue vigente.");
     }
 
     @Transactional

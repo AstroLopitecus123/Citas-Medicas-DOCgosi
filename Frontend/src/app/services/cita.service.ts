@@ -85,6 +85,12 @@ export class CitaService {
     });
   }
 
+  rechazarCancelar(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/citas/${id}/rechazar-cancelar`, {}, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
   // MÉDICOS Y ESPECIALIDADES
   listarMedicosPorEspecialidad(especialidadId: number): Observable<Medico[]> {
     return this.http.get<Medico[]>(`${this.apiUrl}/medicos/especialidad/${especialidadId}`, { headers: this.getAuthHeaders() });

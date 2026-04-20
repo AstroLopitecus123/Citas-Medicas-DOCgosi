@@ -138,7 +138,18 @@ public class CitaController {
     public ResponseEntity<?> confirmarCancelar(@PathVariable Long id) {
         try {
             citaService.confirmarCancelacion(id);
-            return ResponseEntity.ok(Map.of("mensaje", "Cancelación confirmada correctamente"));
+            return ResponseEntity.ok(Map.of("mensaje", "Cancelación aprobada y reembolso procesado"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/rechazar-cancelar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
+    public ResponseEntity<?> rechazarCancelar(@PathVariable Long id) {
+        try {
+            citaService.rechazarCancelacion(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Solicitud de cancelación rechazada correctamente"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

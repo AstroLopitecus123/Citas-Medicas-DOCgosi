@@ -26,8 +26,24 @@
 
         <section class="main-content">
 
+            <!-- 🔍 BARRA DE FILTROS Y BÚSQUEDA -->
+            <div class="premium-card filters-bar-premium">
+                <div class="search-box-modern">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" [(ngModel)]="ctrl.textoBusqueda" placeholder="Buscar por paciente, médico o especialidad...">
+                </div>
+                
+                <div class="status-tabs-modern">
+                    <button [class.active-tab]="ctrl.filtroEstado === 'TODAS'" (click)="ctrl.filtroEstado = 'TODAS'">Todas</button>
+                    <button [class.active-tab]="ctrl.filtroEstado === 'PENDIENTE'" (click)="ctrl.filtroEstado = 'PENDIENTE'">Pendientes</button>
+                    <button [class.active-tab]="ctrl.filtroEstado === 'CONFIRMADA'" (click)="ctrl.filtroEstado = 'CONFIRMADA'">Confirmadas</button>
+                    <button [class.active-tab]="ctrl.filtroEstado === 'SOLICITUD_CANCELACION'" (click)="ctrl.filtroEstado = 'SOLICITUD_CANCELACION'">Solicitudes</button>
+                    <button [class.active-tab]="ctrl.filtroEstado === 'CANCELADA'" (click)="ctrl.filtroEstado = 'CANCELADA'">Canceladas</button>
+                </div>
+            </div>
+
             <div class="premium-card">
-                <div class="modern-table-container" *ngIf="ctrl.citas.length; else noCitas">
+                <div class="modern-table-container" *ngIf="ctrl.citasFiltradas.length; else noCitas">
                     <table class="modern-table">
                         <thead>
                             <tr>
@@ -41,7 +57,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let cita of ctrl.citas">
+                            <tr *ngFor="let cita of ctrl.citasFiltradas">
                                 <td class="date-cell">
                                     <div class="date-stack">
                                         <strong>{{ cita?.fecha | date:'dd/MM/yyyy' }}</strong>
@@ -289,12 +305,25 @@
             </div>
 
             <div class="modal-footer-glass">
-                <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()">Mantener Cita</button>
-                <button class="btn-confirm-glass bg-gradient-danger" 
-                        [disabled]="ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion"
-                        (click)="ctrl.confirmarCancelacionProceso()">
-                    Confirmar Cancelación
-                </button>
+                <!-- VISTA PACIENTE O CANCELACIÓN DIRECTA ADMIN -->
+                <ng-container *ngIf="ctrl.usuario.rol === 'PACIENTE' || ctrl.citaACancelar?.estado !== 'SOLICITUD_CANCELACION'">
+                    <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()">Mantener Cita</button>
+                    <button class="btn-confirm-glass bg-gradient-danger" 
+                            [disabled]="ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion"
+                            (click)="ctrl.confirmarCancelacionProceso()">
+                        {{ ctrl.usuario.rol === 'PACIENTE' ? 'Enviar Solicitud' : 'Confirmar Cancelación' }}
+                    </button>
+                </ng-container>
+
+                <!-- VISTA GESTIÓN ADMIN (PARA SOLICITUDES) -->
+                <ng-container *ngIf="ctrl.usuario.rol !== 'PACIENTE' && ctrl.citaACancelar?.estado === 'SOLICITUD_CANCELACION'">
+                    <button class="btn-cancel-glass" (click)="ctrl.rechazarCancelacionProceso()" style="border-color: #ef4444; color: #ef4444;">
+                        <i class="fa-solid fa-ban"></i> Rechazar Solicitud
+                    </button>
+                    <button class="btn-confirm-glass" (click)="ctrl.confirmarCancelacionProceso()" style="background: #0fbf6a !important; flex: 2;">
+                        <i class="fa-solid fa-check"></i> Aprobar y Reembolsar
+                    </button>
+                </ng-container>
             </div>
         </div>
     </div>

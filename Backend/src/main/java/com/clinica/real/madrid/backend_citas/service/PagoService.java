@@ -7,7 +7,9 @@ import com.clinica.real.madrid.backend_citas.repository.PagoRepository;
 import com.clinica.real.madrid.backend_citas.repository.UsuarioRepository;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.Refund;
 import com.stripe.param.PaymentIntentCreateParams;
+import com.stripe.param.RefundCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,6 +155,40 @@ public class PagoService {
         pago.setEstadoPago(EstadoPago.ANULADO);
         Pago savedPago = pagoRepository.save(pago);
         return mapToResponse(savedPago);
+    }
+
+    /**
+     * 💳 Reembolsa todos los pagos asociados a una cita en Stripe o los anula si son efectivo.
+     */
+    @Transactional
+    public void reembolsarPago(Long citaId) {
+        List<Pago> pagos = pagoRepository.findByCitaId(citaId);
+        if (pagos.isEmpty()) {
+            System.out.println("⚠️ No se encontraron pagos para reembolsar en la cita #" + citaId);
+            return;
+        }
+
+        for (Pago pago : pagos) {
+            if (pago.getEstadoPago() == EstadoPago.REEMBOLSADO || pago.getEstadoPago() == EstadoPago.ANULADO) continue;
+
+            if (pago.getMetodo() == MetodoPago.TARJETA && pago.getTransaccionId() != null) {
+                try {
+                    RefundCreateParams params = RefundCreateParams.builder()
+                            .setPaymentIntent(pago.getTransaccionId())
+                            .build();
+                    Refund refund = Refund.create(params);
+                    System.out.println("✅ Reembolso exitoso en Stripe. ID: " + refund.getId());
+                    pago.setEstadoPago(EstadoPago.REEMBOLSADO);
+                } catch (StripeException e) {
+                    System.err.println("❌ Error de Stripe al reembolsar pago #" + pago.getId() + ": " + e.getMessage());
+                    // No lanzamos excepción para no bloquear el flujo si un pago falla, pero lo logueamos
+                }
+            } else {
+                // Pago en efectivo o sin referencia
+                pago.setEstadoPago(EstadoPago.ANULADO);
+            }
+            pagoRepository.save(pago);
+        }
     }
 
     private PagoResponse mapToResponse(Pago pago) {

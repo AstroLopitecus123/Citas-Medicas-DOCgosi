@@ -40,6 +40,27 @@ export class MisCitasController {
 
   // Citas
   citas: Cita[] = [];
+  filtroEstado: string = 'TODAS';
+  textoBusqueda: string = '';
+
+  get citasFiltradas() {
+    let lista = this.citas;
+    if (this.filtroEstado !== 'TODAS') {
+      lista = lista.filter(c => c.estado === this.filtroEstado);
+    }
+    if (this.textoBusqueda) {
+      const b = this.textoBusqueda.toLowerCase();
+      lista = lista.filter(c => 
+        c.paciente?.nombre?.toLowerCase().includes(b) ||
+        c.paciente?.apellido?.toLowerCase().includes(b) ||
+        c.medico?.usuario?.nombre?.toLowerCase().includes(b) ||
+        c.medico?.usuario?.apellido?.toLowerCase().includes(b) ||
+        c.medico?.especialidad?.nombre?.toLowerCase().includes(b) ||
+        c.id.toString() === b
+      );
+    }
+    return lista;
+  }
 
   // Modal nueva cita
   mostrandoModalCita = false;
@@ -476,7 +497,7 @@ export class MisCitasController {
       this.citaService.confirmarCancelar(this.citaACancelar.id).subscribe({
         next: () => {
           console.log('✅ Cancelación confirmada con éxito');
-          if (this.ns) this.ns.success('Cancelación confirmada exitosamente');
+          if (this.ns) this.ns.success('Cancelación aprobada y reembolso procesado exitosamente.');
           this.cargarCitas();
           this.cerrarModalCancelar();
         },
@@ -486,6 +507,22 @@ export class MisCitasController {
         }
       });
     }
+  }
+
+  rechazarCancelacionProceso() {
+    if (!this.citaACancelar) return;
+
+    this.citaService.rechazarCancelar(this.citaACancelar.id).subscribe({
+      next: () => {
+        if (this.ns) this.ns.success('Solicitud de cancelación rechazada. El paciente ha sido notificado.');
+        this.cargarCitas();
+        this.cerrarModalCancelar();
+      },
+      error: (err) => {
+        console.error('Error al rechazar solicitud:', err);
+        if (this.ns) this.ns.error('No se pudo procesar el rechazo.');
+      }
+    });
   }
 
 

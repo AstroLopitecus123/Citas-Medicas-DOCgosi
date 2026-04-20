@@ -113,6 +113,7 @@ export class AppComponent {
 
   // Helper para verificar si una URL pertenece a la interfaz de paneles
   private checkIfUrlIsPanel(url: string): boolean {
+    const panelKeywords = [
       '/admin', '/medico', '/recepcion', '/paciente', 
       '/mis-citas', '/mi-historial', '/mi-perfil', '/notificaciones',
       '/usuarios', '/medicos', '/especialidades', 

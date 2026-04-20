@@ -59,6 +59,7 @@ export class NotificacionesComponent implements OnInit {
     this.notificacionService.marcarComoLeida(notif.id).subscribe({
       next: () => {
         notif.leida = true;
+        this.notificacionService.notificarCambio(); // 🔥 Sincronizar sidebar
       },
       error: () => {
         // Error silencioso para no interrumpir la experiencia

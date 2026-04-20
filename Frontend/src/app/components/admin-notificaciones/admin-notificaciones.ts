@@ -45,15 +45,23 @@ export class AdminNotificacionesComponent implements OnInit {
   marcarLeida(notif: Notificacion) {
     if (notif.leida) return;
     this.notificacionService.marcarComoLeida(notif.id).subscribe({
-      next: () => { notif.leida = true; }
+      next: () => { 
+        notif.leida = true; 
+        this.notificacionService.notificarCambio(); // 🔥 Refrescar contador global
+      }
     });
   }
 
   marcarTodasLeidas() {
     const noLeidas = this.notificaciones.filter(n => !n.leida);
+    if (noLeidas.length === 0) return;
+    
     noLeidas.forEach(n => {
       this.notificacionService.marcarComoLeida(n.id).subscribe({
-        next: () => { n.leida = true; }
+        next: () => { 
+          n.leida = true; 
+          this.notificacionService.notificarCambio(); // 🔥 Refrescar contador global
+        }
       });
     });
   }

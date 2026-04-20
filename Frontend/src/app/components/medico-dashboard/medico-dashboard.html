@@ -40,12 +40,16 @@
     </div>
   </div>
 
+  <!-- NOTIFICACIONES INTEGRADAS -->
+  <div class="section-title-dash" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: #0f172a;">
+    <i class="fa-solid fa-bell" style="color: #14b8a6; background: rgba(20, 184, 166, 0.1); padding: 10px; border-radius: 12px;"></i>
+    <h2 style="margin: 0; font-size: 1.4rem; font-weight: 800;">Centro de Avisos</h2>
+  </div>
+  <div class="premium-card" style="margin-bottom: 30px;">
+    <app-notificaciones [modoDashboard]="true"></app-notificaciones>
+  </div>
+
   <div class="dashboard-grid">
-    <!-- NOTIFICACIONES -->
-    <div class="premium-card notif-panel">
-      <h3 class="card-title"><i class="fa-solid fa-bell"></i> Mis Avisos</h3>
-      <app-notificaciones [modoDashboard]="true"></app-notificaciones>
-    </div>
 
     <!-- ACCIONES RÁPIDAS -->
     <div class="premium-card">

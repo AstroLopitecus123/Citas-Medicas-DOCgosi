@@ -426,8 +426,18 @@ public class CitaService {
             notificacionService.crearNotificacionParaUsuario("Cambio en Agenda: " + accion.toUpperCase(), 
                     "La cita con el paciente " + cita.getPaciente().getNombre() + " ha sido " + accion, 
                     cita.getMedico().getUsuario());
+
+            // 📢 Alerta al staff administrativo
+            String staffMsg = String.format("Aviso Staff: La cita con el Dr. %s (Paciente: %s %s) ha sido %s.",
+                    cita.getMedico().getUsuario().getNombre(), 
+                    cita.getPaciente().getNombre(), 
+                    cita.getPaciente().getApellido(), 
+                    accion);
+            
+            notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "RECEPCION");
+            notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "ADMIN");
                     
-            System.out.println("✅ Notificación guardada en DB: cita " + cita.getId());
+            System.out.println("✅ Notificación guardada en DB para todos los actores: cita " + cita.getId());
         } catch (Exception e) {
             System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
         }

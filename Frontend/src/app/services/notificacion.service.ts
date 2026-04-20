@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface Notificacion {
@@ -18,12 +18,23 @@ export interface Notificacion {
 export class NotificacionService {
 
   private apiUrl = `${environment.apiUrl}/api/notificaciones`;
+  private refresh$ = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
   private getHeaders() {
     const token = localStorage.getItem('token') || '';
     return { headers: { Authorization: `Bearer ${token}` } };
+  }
+
+  // Permite suscribirse a actualizaciones desde cualquier componente
+  get refreshObservable() {
+    return this.refresh$.asObservable();
+  }
+
+  // Notifica a los suscriptores que deben refrescar conteos
+  notificarCambio() {
+    this.refresh$.next();
   }
 
   getMisNotificaciones(): Observable<Notificacion[]> {

@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+import { NotificacionesComponent } from '../notificaciones/notificaciones';
+
 @Component({
   selector: 'app-recepcion-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificacionesComponent],
   templateUrl: './recepcion-dashboard.html',
   styleUrls: ['./recepcion-dashboard.css']
 })

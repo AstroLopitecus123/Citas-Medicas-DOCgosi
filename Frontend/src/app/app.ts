@@ -73,7 +73,11 @@ export class AppComponent {
       this.cargarConteoNotificaciones();
     });
 
-    // 🔔 Polling de notificaciones cada 30 segundos
+    // 🔔 Polling y Escucha Reactiva de notificaciones
+    this.notificacionService.refreshObservable.subscribe(() => {
+      this.cargarConteoNotificaciones();
+    });
+
     setInterval(() => {
       if (this.isLoggedIn && this.isPanelRoute) {
         this.cargarConteoNotificaciones();

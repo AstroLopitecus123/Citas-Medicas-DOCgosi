@@ -29,7 +29,11 @@ public class NotificacionController {
         Usuario r = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
                 
-        List<Notificacion> notificaciones = notificacionService.obtenerMisNotificaciones(r.getId(), r.getRol().name());
+        List<Notificacion> notificaciones = notificacionService.obtenerMisNotificaciones(
+            r.getId(), 
+            r.getRol().name(), 
+            r.getFechaRegistro()
+        );
         return ResponseEntity.ok(notificaciones);
     }
 
@@ -39,7 +43,11 @@ public class NotificacionController {
         Usuario r = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        long conteo = notificacionService.contarNoLeidas(r.getId(), r.getRol().name());
+        long conteo = notificacionService.contarNoLeidas(
+            r.getId(), 
+            r.getRol().name(), 
+            r.getFechaRegistro()
+        );
         return ResponseEntity.ok(Map.of("cantidad", conteo));
     }
 

@@ -6,6 +6,7 @@ import com.clinica.real.madrid.backend_citas.repository.NotificacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,12 +25,12 @@ public class NotificacionService {
         return notificacionRepository.save(notificacion);
     }
 
-    public List<Notificacion> obtenerMisNotificaciones(Long usuarioId, String rol) {
-        return notificacionRepository.findByUsuarioOrRolDestino(usuarioId, rol);
+    public List<Notificacion> obtenerMisNotificaciones(Long usuarioId, String rol, LocalDateTime fechaRegistro) {
+        return notificacionRepository.findByUsuarioOrRolDestino(usuarioId, rol, fechaRegistro);
     }
 
-    public long contarNoLeidas(Long usuarioId, String rol) {
-        return notificacionRepository.countUnreadByUsuarioOrRolDestino(usuarioId, rol);
+    public long contarNoLeidas(Long usuarioId, String rol, LocalDateTime fechaRegistro) {
+        return notificacionRepository.countUnreadByUsuarioOrRolDestino(usuarioId, rol, fechaRegistro);
     }
 
     public Notificacion marcarComoLeida(Long id) {

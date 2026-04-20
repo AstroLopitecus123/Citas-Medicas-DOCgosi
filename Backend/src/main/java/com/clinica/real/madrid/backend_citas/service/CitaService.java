@@ -159,14 +159,6 @@ public class CitaService {
         
         citaRepository.save(cita);
         
-        // Disparar Alerta a Administradores con el motivo
-        String msg = String.format("PACIENTE: %s %s solicita reprogramar su cita #%d. Propuesta: %s. Motivo: %s", 
-                        cita.getPaciente().getNombre(), cita.getPaciente().getApellido(), 
-                        cita.getId(), nuevaFecha.toLocalDate().toString(), (motivo != null ? motivo : "Sin motivo"));
-        
-        notificacionService.crearNotificacionParaRol("Solicitud de Reprogramación", msg, "ADMIN");
-        notificacionService.crearNotificacionParaRol("Solicitud de Reprogramación", msg, "RECEPCION");
-        
         notificarCambioCita(cita, "solicitud de reprogramación");
     }
 
@@ -177,11 +169,6 @@ public class CitaService {
         cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
         cita.setMotivo(motivo);
         citaRepository.save(cita);
-        
-        // 📊 Disparar Alerta a Administradores con mención a Reembolso
-        String msg = String.format("PACIENTE: %s %s solicita cancelar su cita #%d. Motivo: %s. Acción requerida: Gestión de Reembolso.", 
-                        cita.getPaciente().getNombre(), cita.getPaciente().getApellido(), cita.getId(), motivo);
-        notificacionService.crearNotificacionParaRol("Solicitud de Cancelación y Reembolso", msg, "ADMIN");
         
         notificarCambioCita(cita, "solicitud de cancelación");
     }

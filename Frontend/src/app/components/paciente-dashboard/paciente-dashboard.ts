@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../../models/tipos';
 import { NotificacionService, Notificacion } from '../../services/notificacion.service';
 import { environment } from '../../../environments/environment';
@@ -17,7 +18,8 @@ export class PacienteDashboardComponent implements OnInit {
   cargando = true;
   today = new Date();
   
-  stats = {
+  stats: any = {
+    proximaCita: 'Ninguna agendada',
     totalCitas: 0,
     historiasClinicas: 0
   };

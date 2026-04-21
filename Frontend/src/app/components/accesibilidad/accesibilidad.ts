@@ -54,6 +54,12 @@ export class AccesibilidadComponent implements OnInit {
   nivelZoom = 1; // 1 = 100%, 1.2 = 120%, etc.
   contrasteActivo = false;
 
+  // Estado del Test
+  mostrandoTest = false;
+  pasoTest = 0; // 0=intro, 1-5=placas, 6=resultado
+  diagnostico: TipoFiltro[] = [];
+  resultadoTest: { tipo: TipoFiltro; etiqueta: string; descripcion: string } | null = null;
+
   opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string; desc?: string }[] = [
     { 
       tipo: 'DEUTERANOPIA',   

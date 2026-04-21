@@ -5,11 +5,12 @@ import { RouterModule, Router } from '@angular/router';
 import { RegistrarUsuarioController } from '../../controller/registrar-usuario.controller';
 import { NotificationService } from '../../services/notification.service';
 import { AppComponent } from '../../app';
+import { NarratorDirective } from '../../directives/narrator.directive';
 
 @Component({
   selector: 'app-registrar-usuario',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, NarratorDirective],
   templateUrl: './registrar-usuario.html',
   styleUrls: ['./registrar-usuario.css'],
   providers: [RegistrarUsuarioController]

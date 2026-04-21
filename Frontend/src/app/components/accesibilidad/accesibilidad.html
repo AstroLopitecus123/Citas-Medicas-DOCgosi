@@ -63,9 +63,16 @@
         'fa-universal-access': vistaActual === 'PRINCIPAL',
         'fa-eye': vistaActual === 'VISION',
         'fa-magnifying-glass': vistaActual === 'ZOOM',
-        'fa-circle-half-stroke': vistaActual === 'CONTRASTE'
+        'fa-circle-half-stroke': vistaActual === 'CONTRASTE',
+        'fa-microphone': vistaActual === 'AUDIO',
+        'fa-keyboard': vistaActual === 'NAVEGACION'
       }"></i>
-      <span>{{ vistaActual === 'PRINCIPAL' ? 'Accesibilidad' : vistaActual }}</span>
+      <span>{{ 
+        vistaActual === 'PRINCIPAL' ? 'Accesibilidad' : 
+        vistaActual === 'AUDIO' ? 'Audio y Voz' :
+        vistaActual === 'NAVEGACION' ? 'Teclado' : 
+        vistaActual 
+      }}</span>
     </div>
 
     <!-- VISTA PRINCIPAL (CATEGORÍAS) -->
@@ -88,6 +95,20 @@
         <i class="fa-solid fa-circle-half-stroke"></i>
         <span>Contraste</span>
         <small>{{ contrasteActivo ? 'Activado' : 'Desactivado' }}</small>
+        <i class="fa-solid fa-chevron-right arrow-next"></i>
+      </button>
+
+      <button class="category-card" (click)="cambiarVista('AUDIO'); $event.stopPropagation()">
+        <i class="fa-solid fa-microphone"></i>
+        <span>Audio y Voz</span>
+        <small>{{ vozActiva ? 'Escuchando...' : 'Desactivado' }}</small>
+        <i class="fa-solid fa-chevron-right arrow-next"></i>
+      </button>
+
+      <button class="category-card" (click)="cambiarVista('NAVEGACION'); $event.stopPropagation()">
+        <i class="fa-solid fa-keyboard"></i>
+        <span>Teclado</span>
+        <small>{{ modoTeclado ? 'Modo Pro' : 'Estándar' }}</small>
         <i class="fa-solid fa-chevron-right arrow-next"></i>
       </button>
     </div>
@@ -168,6 +189,52 @@
         <button class="btn-reset-colors" *ngIf="esPersonalizado" (click)="resetearColores()" [@fadeIn]>
           <i class="fa-solid fa-rotate-left"></i> Restablecer original
         </button>
+      </div>
+    </div>
+
+    <!-- VISTA SUB-MENÚ: AUDIO Y VOZ -->
+    <div class="view-submenu-pro" *ngIf="vistaActual === 'AUDIO'">
+      <div class="pro-toggle-box" [class.active]="vozActiva">
+        <div class="toggle-info">
+          <strong>Comandos de Voz (Deepgram)</strong>
+          <span>Habla para navegar o dictar datos.</span>
+        </div>
+        <button class="acc-switch" [class.on]="vozActiva" (click)="toggleVoz()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
+
+      <div class="pro-toggle-box" [class.active]="narradorActivo">
+        <div class="toggle-info">
+          <strong>Narrador de Imágenes</strong>
+          <span>Oye descripciones de fotos y elementos.</span>
+        </div>
+        <button class="acc-switch" [class.on]="narradorActivo" (click)="toggleNarrador()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
+      
+      <div class="voice-status-indicator" *ngIf="vozActiva">
+        <div class="pulse-ring"></div>
+        <i class="fa-solid fa-microphone"></i>
+        <span>Asistente siempre escuchando...</span>
+      </div>
+    </div>
+
+    <!-- VISTA SUB-MENÚ: NAVEGACIÓN TECLADO -->
+    <div class="view-submenu-pro" *ngIf="vistaActual === 'NAVEGACION'">
+      <div class="pro-toggle-box" [class.active]="modoTeclado">
+        <div class="toggle-info">
+          <strong>Modo Teclado Pro</strong>
+          <span>Resaltado de foco ultra-visible.</span>
+        </div>
+        <button class="acc-switch" [class.on]="modoTeclado" (click)="toggleTeclado()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
+
+      <div class="keyboard-tips">
+        <p><i class="fa-solid fa-circle-info"></i> Navega usando la tecla <strong>Tab</strong> y confirma con <strong>Enter</strong>.</p>
       </div>
     </div>
 

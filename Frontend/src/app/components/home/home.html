@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="hero-image">
-        <img src="assets/images/LogoFull2.png" alt="Logo R.E.T.O Salud">
+        <img src="assets/images/LogoFull2.png" alt="Logo R.E.T.O Salud" appNarrator>
       </div>
     </div>
   </section>
@@ -30,8 +30,8 @@
     <div class="section-container about-flex">
       <div class="about-images">
         <div class="img-collage">
-          <img src="assets/images/ServiceNurse.png" class="img-1" alt="Enfermera">
-          <img src="assets/images/HomeDoctor.png" class="img-2" alt="Equipo Medico">
+          <img src="assets/images/ServiceNurse.png" class="img-1" alt="Enfermera" appNarrator altText="Enfermera profesional brindando cuidados domiciliarios">
+          <img src="assets/images/HomeDoctor.png" class="img-2" alt="Equipo Medico" appNarrator altText="Equipo médico de R.E.T.O Salud colaborando para tu bienestar">
           <div class="experience-badge">
             <span class="years">20+</span>
             <span class="txt">Años de Calidad</span>
@@ -64,7 +64,7 @@
       <div class="services-grid">
         <div class="service-card" *ngFor="let e of especialidades">
           <div class="service-img-wrapper">
-            <img [src]="e.imagen" [alt]="e.titulo">
+            <img [src]="e.imagen" [alt]="e.titulo" appNarrator [altText]="'Especialidad de ' + e.titulo">
           </div>
           <div class="service-info">
             <h3>{{ e.titulo }}</h3>
@@ -85,7 +85,7 @@
       <div class="doctors-grid">
         <div class="doctor-card" *ngFor="let doc of doctores">
           <div class="doc-pic">
-            <img [src]="doc.foto" [alt]="doc.nombre">
+            <img [src]="doc.foto" [alt]="doc.nombre" appNarrator [altText]="'Foto del ' + doc.nombre">
           </div>
           <div class="doc-info">
             <h4>{{ doc.nombre }}</h4>

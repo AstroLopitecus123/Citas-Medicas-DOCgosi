@@ -49,7 +49,8 @@ public class SecurityConfig {
                     "/h2-console/**",
                     "/api/paises/**",
                     "/api/chatbot/**",
-                    "/api/especialidades"
+                    "/api/especialidades",
+                    "/api/teleconsulta/config"
                 ).permitAll()
                 .requestMatchers("/api/disponibilidades/medico/*/rango").permitAll()
                 .requestMatchers("/api/medicos").permitAll()

@@ -132,3 +132,52 @@ body.custom-colors textarea {
   color: var(--custom-text) !important;
   border: 2px solid var(--custom-text) !important;
 }
+
+/* ──────────────────────────────────────────────────────────
+   MODO NAVEGACIÓN PRO (Teclado)
+   ────────────────────────────────────────────────────────── */
+body.focus-pro *:focus-visible {
+  outline: 4px solid #facc15 !important; /* Amarillo brillante */
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.4) !important;
+  transition: outline 0.1s ease-in-out;
+}
+
+/* ──────────────────────────────────────────────────────────
+   NARRADOR DE IMÁGENES (Botón Overlay)
+   ────────────────────────────────────────────────────────── */
+.narrator-btn-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #4f46e5;
+  border: 2px solid #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: popIn 0.3s ease;
+}
+
+.narrator-btn-overlay:hover {
+  transform: scale(1.15);
+  background: #4f46e5;
+  color: white;
+}
+
+.narrator-btn-overlay i {
+  font-size: 1rem;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}

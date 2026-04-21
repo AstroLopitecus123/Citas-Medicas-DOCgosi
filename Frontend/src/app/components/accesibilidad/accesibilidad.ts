@@ -24,6 +24,8 @@ const LS_KEY = 'accesibilidad-filtro';
 
 import { HttpClient } from '@angular/common/http';
 import { AppComponent } from '../../app';
+import { VoiceAccessibilityService } from '../../services/voice-accessibility.service';
+import { NarratorService } from '../../services/narrator.service';
 
 @Component({
   selector: 'app-accesibilidad',
@@ -39,7 +41,12 @@ export class AccesibilidadComponent implements OnInit {
   @Output() confirmadoWizard = new EventEmitter<TipoFiltro>();
   esModoWizard = false;
 
-  constructor(private http: HttpClient, private app: AppComponent) {}
+  constructor(
+    private http: HttpClient, 
+    private app: AppComponent,
+    private voiceService: VoiceAccessibilityService,
+    private narratorService: NarratorService
+  ) {}
 
   // Modo preview temporal (barra flotante)
   modoPreview = false;
@@ -48,7 +55,7 @@ export class AccesibilidadComponent implements OnInit {
   private timerPreview: any;
 
   // Estados de Vista
-  vistaActual: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' = 'PRINCIPAL';
+  vistaActual: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' | 'AUDIO' | 'NAVEGACION' = 'PRINCIPAL';
 
   // Ajustes Visuales
   nivelZoom = 1; // 1 = 100%, 1.2 = 120%, etc.
@@ -58,6 +65,11 @@ export class AccesibilidadComponent implements OnInit {
   customBg = '#ffffff';
   customText = '#333333';
   esPersonalizado = false;
+
+  // Estados Accesibilidad Pro
+  vozActiva = false;
+  narradorActivo = false;
+  modoTeclado = false;
 
   // Estado del Test
   mostrandoTest = false;
@@ -101,6 +113,11 @@ export class AccesibilidadComponent implements OnInit {
     const customActivo = localStorage.getItem('DOCGOSI_CUSTOM_ACTIVE');
     const cBg = localStorage.getItem('DOCGOSI_CUSTOM_BG');
     const cText = localStorage.getItem('DOCGOSI_CUSTOM_TEXT');
+    
+    // Pro
+    const vActiva = localStorage.getItem('DOCGOSI_VOICE_ACTIVE') === 'true';
+    const nActivo = localStorage.getItem('DOCGOSI_NARRATOR_ACTIVE') === 'true';
+    const tModo = localStorage.getItem('DOCGOSI_KEYBOARD_MODE') === 'true';
 
     if (fActivo && fActivo !== 'NINGUNO') {
       this.filtroActivo = fActivo;
@@ -123,6 +140,15 @@ export class AccesibilidadComponent implements OnInit {
       this.esPersonalizado = true;
       this.aplicarColoresPersonalizados(true);
     }
+
+    if (vActiva) this.toggleVoz(true);
+    if (nActivo) this.toggleNarrador(true);
+    if (tModo) this.toggleTeclado(true);
+
+    // Suscripción a comandos de voz para feedback
+    this.voiceService.commandDetected.subscribe(msg => {
+      this.app.notificationService?.info(msg);
+    });
   }
 
   toggleMenu() { 
@@ -133,7 +159,7 @@ export class AccesibilidadComponent implements OnInit {
     }
   }
 
-  cambiarVista(nueva: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE') {
+  cambiarVista(nueva: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' | 'AUDIO' | 'NAVEGACION') {
     this.vistaActual = nueva;
   }
 
@@ -181,6 +207,37 @@ export class AccesibilidadComponent implements OnInit {
     localStorage.removeItem('DOCGOSI_CUSTOM_BG');
     localStorage.removeItem('DOCGOSI_CUSTOM_TEXT');
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
+  }
+
+    }
+  }
+
+  // Lógica Accesibilidad Pro
+  toggleVoz(forzar?: boolean) {
+    this.vozActiva = forzar !== undefined ? forzar : !this.vozActiva;
+    if (this.vozActiva) {
+      this.voiceService.startListening();
+    } else {
+      this.voiceService.stopListening();
+    }
+    localStorage.setItem('DOCGOSI_VOICE_ACTIVE', this.vozActiva.toString());
+  }
+
+  toggleNarrador(forzar?: boolean) {
+    this.narradorActivo = forzar !== undefined ? forzar : !this.narradorActivo;
+    // La directiva usará este estado, el servicio solo provee la capacidad de hablar.
+    if (!this.narradorActivo) this.narratorService.stop();
+    localStorage.setItem('DOCGOSI_NARRATOR_ACTIVE', this.narradorActivo.toString());
+  }
+
+  toggleTeclado(forzar?: boolean) {
+    this.modoTeclado = forzar !== undefined ? forzar : !this.modoTeclado;
+    if (this.modoTeclado) {
+      document.body.classList.add('focus-pro');
+    } else {
+      document.body.classList.remove('focus-pro');
+    }
+    localStorage.setItem('DOCGOSI_KEYBOARD_MODE', this.modoTeclado.toString());
   }
 
   private aplicarColoresPersonalizados(activo: boolean) {

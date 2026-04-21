@@ -1,7 +1,8 @@
 <div class="login-layout">
   <!-- IMAGEN DEL DOCTOR (Foreground) -->
   <div class="doctor-container">
-    <img src="/assets/images/DoctorCrear.png" alt="Doctor" class="doctor-img">
+    <img src="/assets/images/DoctorCrear.png" alt="Doctor" class="doctor-img" 
+         appNarrator altText="Médico amigable dándote la bienvenida al sistema de salud R.E.T.O">
   </div>
 
   <!-- COLUMNA IZQUIERDA (Texto) -->
@@ -13,21 +14,21 @@
         
         <div class="hero-features">
           <div class="feature-item">
-            <i class="fa-solid fa-calendar-check"></i>
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
             <div>
               <strong>Citas en 24h</strong>
               <span>Acceso rápido a especialistas</span>
             </div>
           </div>
           <div class="feature-item">
-            <i class="fa-solid fa-file-medical"></i>
+            <i class="fa-solid fa-file-medical" aria-hidden="true"></i>
             <div>
               <strong>Historia Digital</strong>
               <span>Tus documentos siempre contigo</span>
             </div>
           </div>
           <div class="feature-item">
-            <i class="fa-solid fa-shield-heart"></i>
+            <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
             <div>
               <strong>Atención Segura</strong>
               <span>Protocolos de alta calidad</span>
@@ -42,24 +43,26 @@
   <div class="login-form-wrapper">
     <div class="login-card anim-slide-up registrar-card-wide">
       <div class="back-link">
-        <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
+        <a routerLink="/login" aria-label="Volver a la pantalla de inicio de sesión"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
       </div>
 
       <h2 class="card-title">Crear Cuenta</h2>
       <p class="instructor-text">Completa tus datos para empezar a cuidar tu salud.</p>
 
-      <form (ngSubmit)="ctrl.registrar()" class="registrar-form">
+      <form (ngSubmit)="ctrl.registrar()" class="registrar-form" aria-label="Formulario de registro de usuario">
         
         <div class="form-grid">
           <div class="input-group">
             <label for="nombre">Nombre</label>
             <input id="nombre" type="text" [(ngModel)]="ctrl.usuario.nombre" name="nombre"
-              placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')" required>
+              placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')" required
+              aria-label="Escribe tu nombre">
           </div>
           <div class="input-group">
             <label for="apellido">Apellido</label>
             <input id="apellido" type="text" [(ngModel)]="ctrl.usuario.apellido" name="apellido"
-              placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')" required>
+              placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')" required
+              aria-label="Escribe tu apellido">
           </div>
         </div>
 
@@ -68,8 +71,8 @@
           <label for="correo">Correo Electrónico</label>
           <div class="input-with-domain">
             <input id="correo" type="text" [(ngModel)]="ctrl.usuario.correoUsuario" name="correoUsuario"
-              placeholder="usuario" required>
-            <span class="domain-tag">&#64;gmail.com</span>
+              placeholder="usuario" required aria-label="Nombre de usuario del correo">
+            <span class="domain-tag" aria-hidden="true">&#64;gmail.com</span>
           </div>
         </div>
 
@@ -78,12 +81,14 @@
           <div class="input-group">
             <label for="contrasena">Contraseña</label>
             <input id="contrasena" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
-                [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••" required>
+                [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••" required
+                aria-label="Crea una contraseña segura">
           </div>
           <div class="input-group">
             <label for="confirmar">Confirmación</label>
             <input id="confirmar" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
-                [(ngModel)]="ctrl.confirmarContrasena" name="confirmar" placeholder="Repite tu contraseña" required>
+                [(ngModel)]="ctrl.confirmarContrasena" name="confirmar" placeholder="Repite tu contraseña" required
+                aria-label="Confirma tu contraseña escribiéndola de nuevo">
           </div>
         </div>
 
@@ -91,24 +96,28 @@
           <!-- DNI -->
           <div class="input-group">
             <label for="dni">DNI / ID</label>
-            <input id="dni" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" required>
+            <input id="dni" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" required
+                   aria-label="Número de documento de identidad">
           </div>
 
           <!-- Teléfono -->
           <div class="input-group">
             <label for="telefono">Teléfono</label>
-            <input id="telefono" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono" required>
+            <input id="telefono" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono" required
+                   aria-label="Número de teléfono celular">
           </div>
         </div>
 
         <div class="form-grid">
           <div class="input-group">
             <label for="fecha">Nacimiento</label>
-            <input id="fecha" type="date" [(ngModel)]="ctrl.usuario.fechaNacimiento" name="fecha" required>
+            <input id="fecha" type="date" [(ngModel)]="ctrl.usuario.fechaNacimiento" name="fecha" required
+                   aria-label="Fecha de nacimiento">
           </div>
           <div class="input-group">
             <label for="pais">País</label>
-            <select id="pais" [(ngModel)]="ctrl.usuario.paisId" name="pais" required>
+            <select id="pais" [(ngModel)]="ctrl.usuario.paisId" name="pais" required
+                    aria-label="Selecciona tu país de residencia">
               <option value="" disabled>Selecciona...</option>
               <option *ngFor="let p of ctrl.paises" [value]="p.id">{{ p.nombre }}</option>
             </select>
@@ -121,14 +130,15 @@
             <h4><i class="fa-solid fa-universal-access"></i> Apoyo visual</h4>
             <p>Personaliza colores y contraste si lo necesitas.</p>
           </div>
-          <button type="button" class="btn-config-visual" (click)="ctrl.abrirAsistenteVisual()">
+          <button type="button" class="btn-config-visual" (click)="ctrl.abrirAsistenteVisual()"
+                  aria-label="Abrir asistente de configuración visual y daltonismo">
             <i class="fa-solid" [class.fa-gear]="ctrl.usuario.configuracionVisual === 'NINGUNO'" 
                [class.fa-circle-check]="ctrl.usuario.configuracionVisual !== 'NINGUNO'"></i>
             {{ ctrl.usuario.configuracionVisual !== 'NINGUNO' ? ctrl.getEtiquetaVisual() : 'Configurar' }}
           </button>
         </div>
 
-        <button type="submit" class="btn-submit w-100 mt-15">
+        <button type="submit" class="btn-submit w-100 mt-25" aria-label="Finalizar registro y crear cuenta">
           <i class="fa-solid fa-user-check"></i> Finalizar Registro
         </button>
 

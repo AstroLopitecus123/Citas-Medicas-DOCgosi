@@ -155,11 +155,6 @@ export class RegistrarUsuarioController {
     });
   }
 
-  setUtils(router: Router, ns: NotificationService) {
-    this.router = router;
-    this.ns = ns;
-  }
-
   togglePassword() {
     this.mostrarContrasena = !this.mostrarContrasena;
   }

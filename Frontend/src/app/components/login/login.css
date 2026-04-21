@@ -368,7 +368,42 @@
 @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideFadeIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
 
-/* RESPONSIVE */
+/* SEPARADOR GOOGLE */
+.google-login-separator {
+  position: relative;
+  text-align: center;
+  margin: 25px 0;
+}
+
+.google-login-separator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.google-login-separator span {
+  position: relative;
+  background: #ffffff;
+  padding: 0 15px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.google-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Ajustes responsive adicionales */
 @media (max-width: 1150px) {
   .doctor-container { opacity: 0.15; }
   .login-hero { justify-content: center; }

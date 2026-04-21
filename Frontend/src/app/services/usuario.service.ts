@@ -119,4 +119,25 @@ export class UsuarioService {
     const body = { actualPassword, nuevaPassword };
     return this.http.put(`${this.usuariosUrl}/${id}/password`, body, { headers, responseType: 'text' });
   }
+
+  loginConGoogle(idToken: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.authUrl}/google`, { idToken })
+      .pipe(
+        tap(res => {
+          if (res.token) {
+            localStorage.setItem('token', res.token);
+          }
+          if (res.usuario) {
+            const rolBackend = res.usuario.rol?.toUpperCase();
+            if (rolBackend === 'ADMIN' || rolBackend === 'MEDICO' || rolBackend === 'RECEPCION') {
+              res.usuario.rol = rolBackend;
+            } else {
+              res.usuario.rol = 'PACIENTE';
+            }
+            localStorage.setItem('usuario', JSON.stringify(res.usuario));
+            this.usuarioSubject.next(res.usuario);
+          }
+        })
+      );
+  }
 }

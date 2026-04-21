@@ -23,8 +23,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class UsuarioService {
@@ -40,6 +47,9 @@ public class UsuarioService {
 
     @Autowired
     private EspecialidadRepository especialidadRepository;
+
+    @Value("${google.client.id}")
+    private String googleClientId;
 
     private final JavaMailSender mailSender;
 
@@ -133,6 +143,34 @@ public class UsuarioService {
         return usuarioRepository.findByCorreo(correo)
                 .filter(u -> passwordEncoder.matches(contrasenaPlain, u.getContrasena()))
                 .orElseThrow(() -> new BadRequestException("Correo o contraseña incorrectos"));
+    }
+
+    public Usuario loginConGoogle(String idToken) throws Exception {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(googleClientId))
+                .build();
+
+        GoogleIdToken token = verifier.verify(idToken);
+        if (token == null) {
+            throw new BadRequestException("Token de Google inválido");
+        }
+
+        GoogleIdToken.Payload payload = token.getPayload();
+        String email = payload.getEmail();
+        String nombre = (String) payload.get("given_name");
+        String apellido = (String) payload.get("family_name");
+
+        return usuarioRepository.findByCorreo(email)
+                .orElseGet(() -> {
+                    Usuario nuevo = new Usuario();
+                    nuevo.setCorreo(email);
+                    nuevo.setNombre(nombre != null ? nombre : "Usuario");
+                    nuevo.setApellido(apellido != null ? apellido : "Google");
+                    nuevo.setRol(Rol.PACIENTE);
+                    nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
+                    nuevo.setEstado(EstadoUsuario.ACTIVO);
+                    return usuarioRepository.save(nuevo);
+                });
     }
 
 

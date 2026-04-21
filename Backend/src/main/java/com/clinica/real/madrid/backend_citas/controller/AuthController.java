@@ -73,6 +73,18 @@ public class AuthController {
                     .body(null); // Angular recibirá 401 y puede mostrar mensaje
         }
     }
+
+    @PostMapping("/google")
+    public ResponseEntity<UsuarioResponse> loginGoogle(@RequestBody Map<String, String> body) {
+        try {
+            String idToken = body.get("idToken");
+            Usuario usuario = usuarioService.loginConGoogle(idToken);
+            String token = jwtUtil.generateToken(usuario.getCorreo());
+            return ResponseEntity.ok(new UsuarioResponse(token, usuario));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
     
  // 🔹 Paso 1: Solicitar recuperación
     @PostMapping("/recuperar")

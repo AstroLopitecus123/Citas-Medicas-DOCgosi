@@ -79,6 +79,14 @@
         <button type="submit" class="btn-submit w-100">
           <i class="fa-solid fa-right-to-bracket" style="margin-right: 8px;"></i> Iniciar sesión
         </button>
+
+        <div class="google-login-separator">
+          <span>O continúa con</span>
+        </div>
+
+        <div class="google-btn-container">
+          <div id="googleBtn"></div>
+        </div>
       </form>
 
       <div class="status-messages" *ngIf="ctrl.mensaje || ctrl.error">

@@ -40,13 +40,13 @@ public class Usuario {
     @Column(nullable = false, length = 255)
     private String contrasena;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = true, unique = true, length = 20)
     private String dni;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = true, length = 20)
     private String telefono;
 
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fecha_nacimiento", nullable = true)
     private LocalDate fechaNacimiento;
 
     @Enumerated(EnumType.STRING)
@@ -62,7 +62,7 @@ public class Usuario {
     private LocalDateTime fechaRegistro;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pais_id", nullable = false)
+    @JoinColumn(name = "pais_id", nullable = true)
     private Pais pais;
     
     //AGREGADO EL 30/10

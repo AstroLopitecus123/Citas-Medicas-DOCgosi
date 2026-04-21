@@ -1,5 +1,10 @@
 import { Component, OnInit, HostListener, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../../app';
+import { VoiceAccessibilityService } from '../../services/voice-accessibility.service';
+import { NarratorService } from '../../services/narrator.service';
+import { NotificationService } from '../../services/notification.service';
 
 export type TipoFiltro =
   | 'NINGUNO'
@@ -22,11 +27,6 @@ const FILTROS: Record<TipoFiltro, string> = {
 
 const LS_KEY = 'accesibilidad-filtro';
 
-import { HttpClient } from '@angular/common/http';
-import { AppComponent } from '../../app';
-import { VoiceAccessibilityService } from '../../services/voice-accessibility.service';
-import { NarratorService } from '../../services/narrator.service';
-
 @Component({
   selector: 'app-accesibilidad',
   standalone: true,
@@ -42,10 +42,10 @@ export class AccesibilidadComponent implements OnInit {
   esModoWizard = false;
 
   constructor(
-    private http: HttpClient, 
     private app: AppComponent,
     private voiceService: VoiceAccessibilityService,
-    private narratorService: NarratorService
+    private narratorService: NarratorService,
+    private notificationService: NotificationService
   ) {}
 
   // Modo preview temporal (barra flotante)
@@ -58,7 +58,7 @@ export class AccesibilidadComponent implements OnInit {
   vistaActual: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' | 'AUDIO' | 'NAVEGACION' = 'PRINCIPAL';
 
   // Ajustes Visuales
-  nivelZoom = 1; // 1 = 100%, 1.2 = 120%, etc.
+  nivelZoom = 1; 
   contrasteActivo = false;
 
   // Colores personalizados
@@ -73,40 +73,39 @@ export class AccesibilidadComponent implements OnInit {
 
   // Estado del Test
   mostrandoTest = false;
-  pasoTest = 0; // 0=intro, 1-5=placas, 6=resultado
+  pasoTest = 0; 
   diagnostico: TipoFiltro[] = [];
   resultadoTest: { tipo: TipoFiltro; etiqueta: string; descripcion: string } | null = null;
 
-  opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string; desc?: string }[] = [
+  opciones = [
     { 
-      tipo: 'DEUTERANOPIA',   
+      tipo: 'DEUTERANOPIA' as TipoFiltro,   
       etiqueta: 'Deuteranopia',    
       icono: '🟢', 
       color: '#16a34a',
-      desc: 'Dificultad progresiva para distinguir el color verde. Es el tipo más común de daltonismo.'
+      desc: 'Dificultad progresiva para distinguir el color verde.'
     },
     { 
-      tipo: 'PROTANOPIA',     
+      tipo: 'PROTANOPIA' as TipoFiltro,     
       etiqueta: 'Protanopia',      
       icono: '🔴', 
       color: '#dc2626',
-      desc: 'Dificultad para percibir la luz roja, haciendo que los rojos parezcan más oscuros o grises.'
+      desc: 'Dificultad para percibir la luz roja.'
     },
     { 
-      tipo: 'TRITANOPIA',     
+      tipo: 'TRITANOPIA' as TipoFiltro,     
       etiqueta: 'Tritanopia',      
       icono: '🔵', 
       color: '#2563eb',
       desc: 'Dificultad rara para distinguir los colores azules y amarillos.'
     },
-    { tipo: 'DEUTERANOMALIA', etiqueta: 'Deuteranomalía',  icono: '🟡', color: '#ca8a04', desc: 'Versión leve de la deuteranopia.' },
-    { tipo: 'PROTANOMALIA',   etiqueta: 'Protanomalía',    icono: '🟠', color: '#ea580c', desc: 'Versión leve de la protanopia.' },
-    { tipo: 'ACROMATOPSIA',   etiqueta: 'Escala Grises',   icono: '⚫', color: '#475569', desc: 'Visión en blanco y negro (ausencia total de color).' },
-    { tipo: 'NINGUNO',        etiqueta: 'Sin filtro',      icono: '✖',  color: '#94a3b8', desc: 'Visión estándar sin alteraciones cromáticas.' },
+    { tipo: 'DEUTERANOMALIA' as TipoFiltro, etiqueta: 'Deuteranomalía',  icono: '🟡', color: '#ca8a04', desc: 'Versión leve de la deuteranopia.' },
+    { tipo: 'PROTANOMALIA' as TipoFiltro,   etiqueta: 'Protanomalía',    icono: '🟠', color: '#ea580c', desc: 'Versión leve de la protanopia.' },
+    { tipo: 'ACROMATOPSIA' as TipoFiltro,   etiqueta: 'Escala Grises',   icono: '⚫', color: '#475569', desc: 'Visión en blanco y negro.' },
+    { tipo: 'NINGUNO' as TipoFiltro,        etiqueta: 'Sin filtro',      icono: '✖',  color: '#94a3b8', desc: 'Visión estándar.' },
   ];
 
   ngOnInit() {
-    // Cargar todas las preferencias
     const fActivo = localStorage.getItem(LS_KEY) as TipoFiltro | null;
     const zNivel = localStorage.getItem('DOCGOSI_ZOOM');
     const cActivo = localStorage.getItem('DOCGOSI_CONTRASTE');
@@ -145,9 +144,8 @@ export class AccesibilidadComponent implements OnInit {
     if (nActivo) this.toggleNarrador(true);
     if (tModo) this.toggleTeclado(true);
 
-    // Suscripción a comandos de voz para feedback
     this.voiceService.commandDetected.subscribe(msg => {
-      this.app.notificationService?.info(msg);
+      this.notificationService.info(msg);
     });
   }
 
@@ -163,18 +161,16 @@ export class AccesibilidadComponent implements OnInit {
     this.vistaActual = nueva;
   }
 
-  // Lógica de Zoom
   ajustarZoom(delta: number) {
     this.nivelZoom = Math.min(Math.max(this.nivelZoom + delta, 0.8), 1.5);
     this.aplicarZoom(this.nivelZoom);
     localStorage.setItem('DOCGOSI_ZOOM', this.nivelZoom.toString());
   }
 
-  // Lógica de Contraste
   toggleContraste() {
     this.contrasteActivo = !this.contrasteActivo;
     if (this.contrasteActivo) {
-      this.esPersonalizado = false; // Desactivar personalizado si activa alto contraste
+      this.esPersonalizado = false;
       this.aplicarColoresPersonalizados(false);
     }
     this.aplicarContraste(this.contrasteActivo);
@@ -182,16 +178,14 @@ export class AccesibilidadComponent implements OnInit {
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
   }
 
-  // Lógica de Colores Personalizados
   actualizarColor(tipo: 'BG' | 'TEXT', event: Event) {
     const val = (event.target as HTMLInputElement).value;
     if (tipo === 'BG') this.customBg = val;
     else this.customText = val;
     
     this.esPersonalizado = true;
-    this.contrasteActivo = false; // Desactivar alto contraste si personaliza
+    this.contrasteActivo = false;
     this.aplicarContraste(false);
-    
     this.aplicarColoresPersonalizados(true);
     localStorage.setItem('DOCGOSI_CUSTOM_BG', this.customBg);
     localStorage.setItem('DOCGOSI_CUSTOM_TEXT', this.customText);
@@ -209,10 +203,6 @@ export class AccesibilidadComponent implements OnInit {
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
   }
 
-    }
-  }
-
-  // Lógica Accesibilidad Pro
   toggleVoz(forzar?: boolean) {
     this.vozActiva = forzar !== undefined ? forzar : !this.vozActiva;
     if (this.vozActiva) {
@@ -225,7 +215,6 @@ export class AccesibilidadComponent implements OnInit {
 
   toggleNarrador(forzar?: boolean) {
     this.narradorActivo = forzar !== undefined ? forzar : !this.narradorActivo;
-    // La directiva usará este estado, el servicio solo provee la capacidad de hablar.
     if (!this.narradorActivo) this.narratorService.stop();
     localStorage.setItem('DOCGOSI_NARRATOR_ACTIVE', this.narradorActivo.toString());
   }
@@ -252,7 +241,6 @@ export class AccesibilidadComponent implements OnInit {
 
   private aplicarZoom(nivel: number) {
     document.documentElement.style.setProperty('--app-zoom', nivel.toString());
-    // Aplicamos al elemento raíz para que afecte a los REM
     document.documentElement.style.fontSize = `${nivel * 100}%`;
   }
 
@@ -276,7 +264,6 @@ export class AccesibilidadComponent implements OnInit {
     if (!veBien) {
       this.diagnostico.push(tipoSugerido);
     }
-    
     this.pasoTest++;
     if (this.pasoTest > 5) {
       this.finalizarTest();
@@ -285,24 +272,18 @@ export class AccesibilidadComponent implements OnInit {
 
   finalizarTest() {
     let tipoDetectado: TipoFiltro = 'NINGUNO';
-    
     if (this.diagnostico.length > 0) {
-      // Contar frecuencias de cada tipo de error
       const counts: { [key: string]: number } = {};
       this.diagnostico.forEach(t => counts[t] = (counts[t] || 0) + 1);
-      
-      // El tipo con más errores es el detectado
       tipoDetectado = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b) as TipoFiltro;
     }
-    
     const info = this.opciones.find(o => o.tipo === tipoDetectado);
     this.resultadoTest = {
       tipo: tipoDetectado,
       etiqueta: info?.etiqueta || 'Normal',
-      descripcion: info?.desc || 'No se han detectado anomalías significativas en tu visión del color.'
+      descripcion: info?.desc || 'No se han detectado anomalías significativas.'
     };
-    
-    this.pasoTest = 6; // Mostrar pantalla de resultados (Paso único para resultados)
+    this.pasoTest = 6;
   }
 
   probarResultado() {
@@ -311,6 +292,7 @@ export class AccesibilidadComponent implements OnInit {
       this.iniciarPreview(this.resultadoTest.tipo);
     }
   }
+
   seleccionar(tipo: TipoFiltro) {
     this.abierto = false;
     if (tipo === 'NINGUNO') {
@@ -324,8 +306,7 @@ export class AccesibilidadComponent implements OnInit {
     this.filtroPreview = tipo;
     this.modoPreview = true;
     this.cuentaRegresiva = 10;
-    this.aplicarFiltro(tipo); // aplicar temporalmente a toda la página
-
+    this.aplicarFiltro(tipo);
     this.timerPreview = setInterval(() => {
       this.cuentaRegresiva--;
       if (this.cuentaRegresiva <= 0) this.cancelarPreview();
@@ -333,7 +314,7 @@ export class AccesibilidadComponent implements OnInit {
   }
 
   abrirAsistente(esNuevoUsuario = false) {
-    this.esModoWizard = true;
+    this.esModoWizard = esNuevoUsuario;
     this.iniciarTest();
   }
 
@@ -342,20 +323,16 @@ export class AccesibilidadComponent implements OnInit {
     this.filtroActivo = this.filtroPreview;
     localStorage.setItem(LS_KEY, this.filtroActivo);
     this.modoPreview = false;
-    
-    // Si estamos en modo wizard, avisamos al padre
     if (this.esModoWizard) {
       this.confirmadoWizard.emit(this.filtroActivo);
       this.esModoWizard = false;
     }
-
-    // Guardar en Backend si está logueado
     if (this.app.isLoggedIn && this.app.usuario?.id) {
       this.http.put(`/api/usuarios/${this.app.usuario.id}/configuracion-visual`, {
         configuracionVisual: this.filtroActivo
       }).subscribe({
-        next: () => console.log('✅ Configuración visual guardada en perfil'),
-        error: (err) => console.error('❌ Error al guardar config visual:', err)
+        next: () => console.log('✅ Configuración visual guardada'),
+        error: (err) => console.error('❌ Error:', err)
       });
     }
   }
@@ -363,7 +340,6 @@ export class AccesibilidadComponent implements OnInit {
   cancelarPreview() {
     clearInterval(this.timerPreview);
     this.modoPreview = false;
-    // Revertir al filtro anterior
     this.aplicarFiltro(this.filtroActivo);
   }
 

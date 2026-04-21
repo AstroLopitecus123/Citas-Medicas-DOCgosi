@@ -1,0 +1,96 @@
+<!-- Filtros SVG ocultos — requeridos para la corrección de daltonismo -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+  <defs>
+    <!-- Deuteranopia (no ve verde) -->
+    <filter id="deuteranopia">
+      <feColorMatrix type="matrix" values="
+        0.625 0.375 0     0 0
+        0.7   0.3   0     0 0
+        0     0.3   0.7   0 0
+        0     0     0     1 0"/>
+    </filter>
+    <!-- Protanopia (no ve rojo) -->
+    <filter id="protanopia">
+      <feColorMatrix type="matrix" values="
+        0.567 0.433 0     0 0
+        0.558 0.442 0     0 0
+        0     0.242 0.758 0 0
+        0     0     0     1 0"/>
+    </filter>
+    <!-- Tritanopia (no ve azul) -->
+    <filter id="tritanopia">
+      <feColorMatrix type="matrix" values="
+        0.95  0.05  0     0 0
+        0     0.433 0.567 0 0
+        0     0.475 0.525 0 0
+        0     0     0     1 0"/>
+    </filter>
+    <!-- Deuteranomalía (verde reducido) -->
+    <filter id="deuteranomalia">
+      <feColorMatrix type="matrix" values="
+        0.8   0.2   0     0 0
+        0.258 0.742 0     0 0
+        0     0.142 0.858 0 0
+        0     0     0     1 0"/>
+    </filter>
+    <!-- Protanomalía (rojo reducido) -->
+    <filter id="protanomalia">
+      <feColorMatrix type="matrix" values="
+        0.817 0.183 0     0 0
+        0.333 0.667 0     0 0
+        0     0.125 0.875 0 0
+        0     0     0     1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- Botón FAB de Accesibilidad -->
+<div class="acc-fab-wrapper">
+
+  <!-- Menú desplegable (speed dial) -->
+  <div class="acc-menu" [class.open]="abierto">
+    <div class="acc-menu-header">
+      <i class="fa-solid fa-eye"></i>
+      <span>Visión</span>
+    </div>
+
+    <button
+      *ngFor="let op of opciones"
+      class="acc-option"
+      [class.active]="filtroActivo === op.tipo"
+      (click)="seleccionar(op.tipo)"
+      [title]="op.etiqueta">
+      <span class="acc-option-icon">{{ op.icono }}</span>
+      <span class="acc-option-label">{{ op.etiqueta }}</span>
+      <i class="fa-solid fa-check acc-check" *ngIf="filtroActivo === op.tipo"></i>
+    </button>
+  </div>
+
+  <!-- Botón principal -->
+  <button
+    class="acc-fab"
+    [class.activo]="filtroActivo !== 'NINGUNO'"
+    (click)="toggleMenu()"
+    [title]="filtroActivo !== 'NINGUNO' ? ('Filtro activo: ' + etiquetaActiva()) : 'Accesibilidad Visual'">
+    <i class="fa-solid fa-universal-access"></i>
+    <span class="acc-dot" *ngIf="filtroActivo !== 'NINGUNO'"></span>
+  </button>
+
+</div>
+
+<!-- Barra flotante de Preview -->
+<div class="acc-preview-bar" *ngIf="modoPreview">
+  <div class="preview-info">
+    <i class="fa-solid fa-eye"></i>
+    <span>Modo prueba: <strong>{{ etiquetaPreview() }}</strong></span>
+    <span class="preview-timer">{{ cuentaRegresiva }}s</span>
+  </div>
+  <div class="preview-actions">
+    <button class="btn-preview-confirm" (click)="confirmarPreview()">
+      <i class="fa-solid fa-check"></i> Sí, funciona
+    </button>
+    <button class="btn-preview-cancel" (click)="cancelarPreview()">
+      <i class="fa-solid fa-xmark"></i> Cancelar
+    </button>
+  </div>
+</div>

@@ -7,13 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { ChatbotComponent } from './components/chatbot/chatbot';
 import { ToastComponent } from './components/toast/toast';
+import { AccesibilidadComponent } from './components/accesibilidad/accesibilidad';
 import { NotificationService } from './services/notification.service';
 import { NotificacionService } from './services/notificacion.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent, ToastComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, ChatbotComponent, ToastComponent, AccesibilidadComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
   encapsulation: ViewEncapsulation.None

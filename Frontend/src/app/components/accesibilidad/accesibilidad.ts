@@ -108,7 +108,7 @@ export class AccesibilidadComponent implements OnInit {
     }
     
     this.pasoTest++;
-    if (this.pasoTest > 3) {
+    if (this.pasoTest > 5) {
       this.finalizarTest();
     }
   }
@@ -117,7 +117,12 @@ export class AccesibilidadComponent implements OnInit {
     let tipoDetectado: TipoFiltro = 'NINGUNO';
     
     if (this.diagnostico.length > 0) {
-      tipoDetectado = this.diagnostico[0];
+      // Contar frecuencias de cada tipo de error
+      const counts: { [key: string]: number } = {};
+      this.diagnostico.forEach(t => counts[t] = (counts[t] || 0) + 1);
+      
+      // El tipo con más errores es el detectado
+      tipoDetectado = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b) as TipoFiltro;
     }
     
     const info = this.opciones.find(o => o.tipo === tipoDetectado);

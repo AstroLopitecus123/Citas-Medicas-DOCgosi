@@ -150,7 +150,7 @@
     </div>
 
     <div class="test-step" *ngIf="pasoTest === 1">
-      <span class="step-counter">1 / 3</span>
+      <span class="step-counter">1 / 5</span>
       <h3>¿Qué número ves?</h3>
       <div class="ishihara-container protan">
         <div class="ishihara-plate">
@@ -167,7 +167,7 @@
     </div>
 
     <div class="test-step" *ngIf="pasoTest === 2">
-      <span class="step-counter">2 / 3</span>
+      <span class="step-counter">2 / 5</span>
       <h3>¿Qué número ves?</h3>
       <div class="ishihara-container deuteran">
         <div class="ishihara-plate">
@@ -184,7 +184,7 @@
     </div>
 
     <div class="test-step" *ngIf="pasoTest === 3">
-      <span class="step-counter">3 / 3</span>
+      <span class="step-counter">3 / 5</span>
       <h3>¿Qué número ves?</h3>
       <div class="ishihara-container tritan">
         <div class="ishihara-plate">
@@ -197,6 +197,40 @@
       <div class="test-options">
         <button (click)="respuestaTest(true, 'TRITANOPIA')">Veo un 12</button>
         <button (click)="respuestaTest(false, 'TRITANOPIA')">No veo ningún número</button>
+      </div>
+    </div>
+
+    <div class="test-step" *ngIf="pasoTest === 4">
+      <span class="step-counter">4 / 5</span>
+      <h3>¿Qué número ves?</h3>
+      <div class="ishihara-container deuteran">
+        <div class="ishihara-plate">
+           <svg viewBox="0 0 100 100" class="ishihara-svg">
+             <circle cx="50" cy="50" r="48" fill="url(#dots)" class="plate-base" />
+             <text x="50" y="65" text-anchor="middle" class="plate-number-svg">29</text>
+           </svg>
+        </div>
+      </div>
+      <div class="test-options">
+        <button (click)="respuestaTest(true, 'DEUTERANOPIA')">Veo un 29</button>
+        <button (click)="respuestaTest(false, 'DEUTERANOPIA')">No veo ningún número</button>
+      </div>
+    </div>
+
+    <div class="test-step" *ngIf="pasoTest === 5">
+      <span class="step-counter">5 / 5</span>
+      <h3>¿Qué número ves?</h3>
+      <div class="ishihara-container protan">
+        <div class="ishihara-plate">
+           <svg viewBox="0 0 100 100" class="ishihara-svg">
+             <circle cx="50" cy="50" r="48" fill="url(#dots)" class="plate-base" />
+             <text x="50" y="65" text-anchor="middle" class="plate-number-svg">74</text>
+           </svg>
+        </div>
+      </div>
+      <div class="test-options">
+        <button (click)="respuestaTest(true, 'PROTANOPIA')">Veo un 74</button>
+        <button (click)="respuestaTest(false, 'PROTANOPIA')">No veo ningún número</button>
       </div>
     </div>
 

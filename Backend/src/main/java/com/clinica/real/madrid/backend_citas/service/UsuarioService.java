@@ -97,11 +97,22 @@ public class UsuarioService {
         usuario.setCorreo(request.getCorreo());
         usuario.setTelefono(request.getTelefono());
         usuario.setFechaNacimiento(request.getFechaNacimiento());
-        usuario.setDni(request.getDni());
         usuario.setPais(pais);
         usuario.setContrasena(passwordEncoder.encode(request.getContrasena()));
         usuario.setRol(Rol.PACIENTE);
+        
+        if (request.getConfiguracionVisual() != null) {
+            usuario.setConfiguracionVisual(request.getConfiguracionVisual());
+        }
 
+        return usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public Usuario actualizarConfiguracionVisual(Long id, String config) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        usuario.setConfiguracionVisual(config);
         return usuarioRepository.save(usuario);
     }
 

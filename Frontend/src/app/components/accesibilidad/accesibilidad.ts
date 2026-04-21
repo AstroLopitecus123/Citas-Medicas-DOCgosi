@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type TipoFiltro =
@@ -22,6 +22,9 @@ const FILTROS: Record<TipoFiltro, string> = {
 
 const LS_KEY = 'accesibilidad-filtro';
 
+import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../../app';
+
 @Component({
   selector: 'app-accesibilidad',
   standalone: true,
@@ -33,11 +36,21 @@ export class AccesibilidadComponent implements OnInit {
   abierto = false;
   filtroActivo: TipoFiltro = 'NINGUNO';
 
+  @Output() confirmadoWizard = new EventEmitter<TipoFiltro>();
+  esModoWizard = false;
+
+  constructor(private http: HttpClient, private app: AppComponent) {}
+
   // Modo preview temporal (barra flotante)
   modoPreview = false;
   filtroPreview: TipoFiltro = 'NINGUNO';
   cuentaRegresiva = 10;
   private timerPreview: any;
+
+  // Estado del Test
+  mostrandoTest = false;
+  pasoTest = 0; // 0=intro, 1=placa1, 2=placa2, 3=placa3, 4=resultado
+  diagnostico: TipoFiltro[] = [];
 
   opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string }[] = [
     { tipo: 'DEUTERANOPIA',   etiqueta: 'Deuteranopia',    icono: '🟢', color: '#16a34a' },
@@ -57,7 +70,40 @@ export class AccesibilidadComponent implements OnInit {
     }
   }
 
-  toggleMenu() { this.abierto = !this.abierto; }
+  toggleMenu() { 
+    this.abierto = !this.abierto; 
+    if (this.abierto) this.mostrandoTest = false; // reset test si abre menú
+  }
+
+  iniciarTest() {
+    this.abierto = false;
+    this.mostrandoTest = true;
+    this.pasoTest = 0;
+    this.diagnostico = [];
+  }
+
+  respuestaTest(veBien: boolean, tipoSugerido: TipoFiltro) {
+    if (!veBien) {
+      this.diagnostico.push(tipoSugerido);
+    }
+    
+    this.pasoTest++;
+    if (this.pasoTest > 3) {
+      this.finalizarTest();
+    }
+  }
+
+  finalizarTest() {
+    // Lógica simple: si falló en rojo -> Protanopia, etc.
+    let resultado: TipoFiltro = 'NINGUNO';
+    if (this.diagnostico.length > 0) {
+      resultado = this.diagnostico[0]; // tomar el primero detectado
+    }
+    
+    this.filtroPreview = resultado;
+    this.iniciarPreview(resultado);
+    this.mostrandoTest = false;
+  }
 
   seleccionar(tipo: TipoFiltro) {
     this.abierto = false;
@@ -80,12 +126,32 @@ export class AccesibilidadComponent implements OnInit {
     }, 1000);
   }
 
+  abrirAsistente(esNuevoUsuario = false) {
+    this.esModoWizard = true;
+    this.iniciarTest();
+  }
+
   confirmarPreview() {
     clearInterval(this.timerPreview);
     this.filtroActivo = this.filtroPreview;
     localStorage.setItem(LS_KEY, this.filtroActivo);
     this.modoPreview = false;
-    // El filtro ya está aplicado — solo guardamos
+    
+    // Si estamos en modo wizard, avisamos al padre
+    if (this.esModoWizard) {
+      this.confirmadoWizard.emit(this.filtroActivo);
+      this.esModoWizard = false;
+    }
+
+    // Guardar en Backend si está logueado
+    if (this.app.isLoggedIn && this.app.usuario?.id) {
+      this.http.put(`/api/usuarios/${this.app.usuario.id}/configuracion-visual`, {
+        configuracionVisual: this.filtroActivo
+      }).subscribe({
+        next: () => console.log('✅ Configuración visual guardada en perfil'),
+        error: (err) => console.error('❌ Error al guardar config visual:', err)
+      });
+    }
   }
 
   cancelarPreview() {

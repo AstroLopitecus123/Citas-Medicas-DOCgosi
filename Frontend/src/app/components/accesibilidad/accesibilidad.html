@@ -64,6 +64,12 @@
       <span class="acc-option-label">{{ op.etiqueta }}</span>
       <i class="fa-solid fa-check acc-check" *ngIf="filtroActivo === op.tipo"></i>
     </button>
+
+    <div class="acc-menu-footer">
+      <button class="btn-start-test" (click)="iniciarTest()">
+        <i class="fa-solid fa-vial"></i> ¿No sabes tu tipo? Test rápido
+      </button>
+    </div>
   </div>
 
   <!-- Botón principal -->
@@ -76,6 +82,85 @@
     <span class="acc-dot" *ngIf="filtroActivo !== 'NINGUNO'"></span>
   </button>
 
+</div>
+
+<!-- Modal del Test Visual -->
+<div class="acc-test-overlay" *ngIf="mostrandoTest">
+  <div class="acc-test-card">
+    
+    <div class="test-step" *ngIf="pasoTest === 0">
+      <div class="wizard-premium-header">
+        <i class="fa-solid fa-universal-access"></i>
+        <h3>Asistente de Configuración Visual</h3>
+      </div>
+      <p>Para una experiencia óptima, podemos ajustar los colores del sitio según tu visión.</p>
+      
+      <div class="wizard-options">
+        <button class="wizard-opt-card" (click)="pasoTest = 1">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <strong>Realizar test rápido</strong>
+          <span>Identificaremos tu tipo de daltonismo en 3 pasos.</span>
+        </button>
+        
+        <button class="wizard-opt-card" (click)="pasoTest = 10">
+          <i class="fa-solid fa-list-check"></i>
+          <strong>Seleccionar manualmente</strong>
+          <span>Ya conozco mi configuración o quiero ver opciones.</span>
+        </button>
+      </div>
+
+      <button class="btn-test-cancel" (click)="mostrandoTest = false">Configurar más tarde</button>
+    </div>
+
+    <!-- Selección Manual (Paso especial) -->
+    <div class="test-step" *ngIf="pasoTest === 10">
+      <h3>Elige tu Ajuste Visual</h3>
+      <div class="manual-grid">
+        <button *ngFor="let op of opciones" class="manual-opt" (click)="seleccionar(op.tipo); mostrandoTest = false">
+          <span>{{ op.icono }}</span>
+          <strong>{{ op.etiqueta }}</strong>
+        </button>
+      </div>
+      <button class="btn-test-cancel" (click)="pasoTest = 0">Volver atrás</button>
+    </div>
+
+    <div class="test-step" *ngIf="pasoTest === 1">
+      <span class="step-counter">1 / 3</span>
+      <h3>¿Qué número ves?</h3>
+      <div class="ishihara-plate protan">
+        <div class="plate-number">8</div>
+      </div>
+      <div class="test-options">
+        <button (click)="respuestaTest(true, 'PROTANOPIA')">Veo un 8</button>
+        <button (click)="respuestaTest(false, 'PROTANOPIA')">No veo ningún número</button>
+      </div>
+    </div>
+
+    <div class="test-step" *ngIf="pasoTest === 2">
+      <span class="step-counter">2 / 3</span>
+      <h3>¿Qué número ves?</h3>
+      <div class="ishihara-plate deuteran">
+        <div class="plate-number">5</div>
+      </div>
+      <div class="test-options">
+        <button (click)="respuestaTest(true, 'DEUTERANOPIA')">Veo un 5</button>
+        <button (click)="respuestaTest(false, 'DEUTERANOPIA')">No veo ningún número</button>
+      </div>
+    </div>
+
+    <div class="test-step" *ngIf="pasoTest === 3">
+      <span class="step-counter">3 / 3</span>
+      <h3>¿Qué número ves?</h3>
+      <div class="ishihara-plate tritan">
+        <div class="plate-number">12</div>
+      </div>
+      <div class="test-options">
+        <button (click)="respuestaTest(true, 'TRITANOPIA')">Veo un 12</button>
+        <button (click)="respuestaTest(false, 'TRITANOPIA')">No veo ningún número</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- Barra flotante de Preview -->

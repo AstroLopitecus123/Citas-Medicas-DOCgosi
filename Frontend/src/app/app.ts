@@ -11,6 +11,8 @@ import { AccesibilidadComponent } from './components/accesibilidad/accesibilidad
 import { NotificationService } from './services/notification.service';
 import { NotificacionService } from './services/notificacion.service';
 
+import { ViewChild } from '@angular/core';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -20,6 +22,7 @@ import { NotificacionService } from './services/notificacion.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+  @ViewChild(AccesibilidadComponent) accesibilidad!: AccesibilidadComponent;
   title = 'RETO Salud';
   usuario: Usuario | null = null;
   isLoggedIn = false;
@@ -157,6 +160,11 @@ export class AppComponent {
 
         this.usuario = parsedUsuario;
         this.isLoggedIn = true;
+
+        // ♿ Aplicar configuración visual del usuario
+        if (this.usuario['configuracionVisual']) {
+          this.aplicarFiltroGlobal(this.usuario['configuracionVisual']);
+        }
       } catch (e) {
         console.error('❌ Error al parsear usuario desde localStorage', e);
         this.usuario = null;
@@ -166,7 +174,24 @@ export class AppComponent {
       console.log('⚠️ No hay usuario en localStorage');
       this.usuario = null;
       this.isLoggedIn = false;
+      
+      // ♿ Intentar aplicar filtro desde localStorage anónimo
+      const filtroAnon = localStorage.getItem('accesibilidad-filtro');
+      if (filtroAnon) this.aplicarFiltroGlobal(filtroAnon);
     }
+  }
+
+  private aplicarFiltroGlobal(tipo: string) {
+    const filters: any = {
+      'DEUTERANOPIA': 'url(#deuteranopia)',
+      'PROTANOPIA': 'url(#protanopia)',
+      'TRITANOPIA': 'url(#tritanopia)',
+      'DEUTERANOMALIA': 'url(#deuteranomalia)',
+      'PROTANOMALIA': 'url(#protanomalia)',
+      'ACROMATOPSIA': 'grayscale(100%)',
+      'NINGUNO': 'none'
+    };
+    document.documentElement.style.filter = filters[tipo] || 'none';
   }
 
   private normalizarRol(rol?: string): RolUsuario {
@@ -211,6 +236,16 @@ export class AppComponent {
 
         // 🔥 EMITIR QUE SE LOGGEÓ (EL HEADER SE ACTUALIZA SIN RECARGAR)
         this.loginActualizado$.next();
+
+        // ♿ SUGERENCIA PROACTIVA DE ACCESIBILIDAD PARA NUEVOS USUARIOS
+        if (!res.usuario['configuracionVisual'] || res.usuario['configuracionVisual'] === 'NINGUNO') {
+          setTimeout(() => {
+            if (this.accesibilidad) {
+              console.log('✨ Sugiriendo Asistente de Accesibilidad a nuevo usuario');
+              this.accesibilidad.abrirAsistente(true);
+            }
+          }, 2000);
+        }
       }
     })
   );

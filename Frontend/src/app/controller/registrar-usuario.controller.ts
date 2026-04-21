@@ -5,6 +5,7 @@ import { Usuario } from '../models/usuario.model';
 import { Pais } from '../models/pais.model';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
+import { AppComponent } from '../app';
 
 @Injectable()
 export class RegistrarUsuarioController {
@@ -45,6 +46,9 @@ export class RegistrarUsuarioController {
   usuario: Usuario = new Usuario(this.defaultUsuario);
   mostrarContrasena = false;
   mostrarConfirmarContrasena = false;
+  
+  // Pasos del registro
+  pasoActual: number = 1;
 
   touched: typeof this.defaultTouched = { ...this.defaultTouched };
 
@@ -61,6 +65,7 @@ export class RegistrarUsuarioController {
   // Utilidades inyectadas vía setUtils
   private router?: Router;
   private ns?: NotificationService;
+  private app?: AppComponent;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -167,8 +172,48 @@ export class RegistrarUsuarioController {
     this.touched[field] = true;
   }
 
+  setUtils(router: Router, ns: NotificationService, app: AppComponent) {
+    this.router = router;
+    this.ns = ns;
+    this.app = app;
+  }
+
+  abrirAsistenteVisual() {
+    if (this.app?.accesibilidad) {
+      this.app.accesibilidad.abrirAsistente();
+      const sub = this.app.accesibilidad.confirmadoWizard.subscribe((tipo: any) => {
+        this.usuario['configuracionVisual'] = tipo;
+        if (this.ns) this.ns.info(`Configuración aplicada: ${tipo}`);
+        sub.unsubscribe();
+      });
+    }
+  }
+
+  irAPaso1() {
+    this.pasoActual = 1;
+  }
+
+  setFiltro(tipo: string) {
+    this.usuario.configuracionVisual = tipo;
+    // Aplicar filtro temporal en el DOM para preview real si el usuario quiere
+    document.documentElement.style.filter = this.getFiltroStyle(tipo);
+  }
+
+  private getFiltroStyle(tipo: string): string {
+    const filters: any = {
+      'DEUTERANOPIA': 'url(#deuteranopia)',
+      'PROTANOPIA': 'url(#protanopia)',
+      'TRITANOPIA': 'url(#tritanopia)',
+      'DEUTERANOMALIA': 'url(#deuteranomalia)',
+      'PROTANOMALIA': 'url(#protanomalia)',
+      'ACROMATOPSIA': 'grayscale(100%)',
+      'NINGUNO': 'none'
+    };
+    return filters[tipo] || 'none';
+  }
+
   registrar(): void {
-    // Concatenar @gmail.com antes de enviar
+    // Concatenar &#64;gmail.com antes de enviar
     if (this.usuario.correoUsuario) {
       this.usuario.correo = this.usuario.correoUsuario + '@gmail.com';
     }

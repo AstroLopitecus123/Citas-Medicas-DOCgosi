@@ -16,6 +16,7 @@ export class Usuario {
   fechaNacimiento?: string;
   dni?: string;
   correoUsuario?: string; // Propiedad extra para el formulario
+  configuracionVisual?: string;
   constructor(data?: any) {
     if (data) {
       Object.assign(this, data);

@@ -391,6 +391,77 @@
   .login-hero { justify-content: center; }
 }
 
+/* ─── TARJETA DE PROMO ACCESIBILIDAD ───────────────── */
+.accessibility-promo-card {
+  background: #f8fafc;
+  border: 2px dashed #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accessibility-promo-card.activated {
+  background: #f0fdf4;
+  border: 2px solid #0fbf6a;
+  border-style: solid;
+  box-shadow: 0 10px 25px rgba(15, 191, 106, 0.1);
+}
+
+.promo-text h4 {
+  margin: 0 0 5px 0;
+  color: #1e293b;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.promo-text h4 i { color: #3b82f6; }
+
+.promo-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.btn-config-visual {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  color: #1e293b;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.btn-config-visual:hover {
+  border-color: #0fbf6a;
+  color: #0fbf6a;
+  box-shadow: 0 4px 12px rgba(15, 191, 106, 0.1);
+}
+
+.accessibility-promo-card.activated .btn-config-visual {
+  background: #0fbf6a;
+  border-color: #0fbf6a;
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .accessibility-promo-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 @media (max-width: 850px) {
   .form-grid { grid-template-columns: 1fr; }
   .registrar-card-wide { max-width: 440px !important; padding: 30px !important; }
@@ -399,4 +470,115 @@
 @media (max-width: 768px) {
   .login-layout { flex-direction: column; overflow-y: auto; }
   .doctor-container { display: none; }
+}
+
+/* ─── PASOS DE REGISTRO (Accesibilidad) ───────────────── */
+.step-header-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-back-step {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.btn-back-step:hover { color: #0fbf6a; }
+
+.step-desc {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.acc-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.acc-card-btn {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.acc-card-btn:hover {
+  border-color: #0fbf6a;
+  transform: translateY(-3px);
+  background: white;
+  box-shadow: 0 10px 20px rgba(15, 191, 106, 0.1);
+}
+
+.acc-card-btn.active {
+  border-color: #0fbf6a;
+  background: #f0fdf4;
+  box-shadow: 0 10px 25px rgba(15, 191, 106, 0.15);
+}
+
+.acc-card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.acc-card-btn strong {
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.acc-card-btn span:last-child {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.test-reminder-box {
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.test-reminder-box i { color: #3b82f6; margin-top: 3px; }
+
+.test-reminder-box p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #1e40af;
+  line-height: 1.4;
+}
+
+/* Animación de entrada de paso */
+.anim-fade-in {
+  animation: fadeInStep 0.5s ease-out forwards;
+}
+
+@keyframes fadeInStep {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

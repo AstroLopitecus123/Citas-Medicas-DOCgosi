@@ -12,6 +12,7 @@ public class UsuarioRegistroRequest {
     private LocalDate fechaNacimiento;
     private String dni;
     private Long paisId; // ID del país asociado
+    private String configuracionVisual;
 
     // Getters y Setters
     public String getNombre() { return nombre; }
@@ -37,4 +38,7 @@ public class UsuarioRegistroRequest {
 
     public Long getPaisId() { return paisId; }
     public void setPaisId(Long paisId) { this.paisId = paisId; }
+
+    public String getConfiguracionVisual() { return configuracionVisual; }
+    public void setConfiguracionVisual(String configuracionVisual) { this.configuracionVisual = configuracionVisual; }
 }

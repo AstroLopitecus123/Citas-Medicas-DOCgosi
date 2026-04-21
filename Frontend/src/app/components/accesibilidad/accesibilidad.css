@@ -226,3 +226,261 @@
   .preview-actions { width: 100%; }
   .btn-preview-confirm, .btn-preview-cancel { flex: 1; justify-content: center; }
 }
+
+/* ─── TEST VISUAL OVERLAY ────────────────────────────── */
+.acc-test-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  animation: fadeIn 0.3s ease;
+}
+
+.acc-test-card {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.test-step h3 {
+  margin: 0 0 10px 0;
+  color: #1e293b;
+  font-size: 1.4rem;
+}
+
+.test-step p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* ─── LÁMINAS ISHIHARA (CSS MAGIC) ────────────────────── */
+.ishihara-plate {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto 25px auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* El efecto de puntos se logra con radial-gradients repetitivos */
+  background-image: radial-gradient(circle, var(--dot-color) 2px, transparent 3px);
+  background-size: 10px 10px;
+  border: 8px solid #f1f5f9;
+}
+
+.plate-number {
+  font-size: 100px;
+  font-weight: 900;
+  letter-spacing: -5px;
+  filter: blur(0.5px);
+  user-select: none;
+}
+
+/* Protan: Fondo verde, número rojo */
+.ishihara-plate.protan { 
+  --dot-color: #4ade80; 
+  background-color: #f0fdf4;
+}
+.ishihara-plate.protan .plate-number { color: #f87171; }
+
+/* Deuteran: Fondo rojo/marrón, número verde */
+.ishihara-plate.deuteran { 
+  --dot-color: #fb923c; 
+  background-color: #fffaf5;
+}
+.ishihara-plate.deuteran .plate-number { color: #4ade80; }
+
+/* Tritan: Fondo azul, número lila */
+.ishihara-plate.tritan { 
+  --dot-color: #60a5fa; 
+  background-color: #eff6ff;
+}
+.ishihara-plate.tritan .plate-number { color: #c084fc; }
+
+
+.test-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.test-options button, .btn-test-next {
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  background: white;
+  color: #1e293b;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.test-options button:hover, .btn-test-next:hover {
+  border-color: #6366f1;
+  background: #f5f3ff;
+  color: #4f46e5;
+}
+
+.btn-test-next {
+  width: 100%;
+  background: #6366f1;
+  color: white;
+  border: none;
+  margin-bottom: 10px;
+}
+.btn-test-next:hover { background: #4f46e5; color: white; }
+
+.btn-test-cancel {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.step-counter {
+  display: block;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.acc-menu-footer {
+  padding: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-start-test {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-start-test:hover {
+  background: #f1f5f9;
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── ASISTENTE MODAL PREMIUM ───────────────── */
+.wizard-premium-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.wizard-premium-header i {
+  font-size: 2.5rem;
+  color: #3b82f6;
+  margin-bottom: 10px;
+}
+
+.wizard-premium-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1e293b;
+}
+
+.wizard-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.wizard-opt-card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+
+.wizard-opt-card:hover {
+  background: white;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+}
+
+.wizard-opt-card i {
+  font-size: 1.3rem;
+  color: #3b82f6;
+  margin-bottom: 8px;
+}
+
+.wizard-opt-card strong {
+  display: block;
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.wizard-opt-card span {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Grilla manual */
+.manual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.manual-opt {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.manual-opt:hover {
+  border-color: #0fbf6a;
+  background: #f0fdf4;
+}
+
+.manual-opt span { font-size: 1.5rem; }
+.manual-opt strong { font-size: 0.85rem; color: #334155; }
+
+@media (max-width: 480px) {
+  .manual-grid { grid-template-columns: 1fr; }
+}
+

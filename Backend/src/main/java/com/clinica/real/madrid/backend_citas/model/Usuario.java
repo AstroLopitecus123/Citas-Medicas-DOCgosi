@@ -79,6 +79,9 @@ public class Usuario {
 
     @Column(name = "token_expira")
     private LocalDateTime tokenExpira;
+
+    @Column(name = "configuracion_visual", length = 50)
+    private String configuracionVisual = "NINGUNO";
     
     // ---------------------
     // GETTERS Y SETTERS
@@ -135,6 +138,9 @@ public class Usuario {
 	public void setTokenExpira(LocalDateTime tokenExpira) {
 		this.tokenExpira = tokenExpira;
 	}
+
+    public String getConfiguracionVisual() { return configuracionVisual; }
+    public void setConfiguracionVisual(String configuracionVisual) { this.configuracionVisual = configuracionVisual; }
     
 }
 

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { RegistrarUsuarioController } from '../../controller/registrar-usuario.controller';
 import { NotificationService } from '../../services/notification.service';
+import { AppComponent } from '../../app';
 
 @Component({
   selector: 'app-registrar-usuario',
@@ -18,8 +19,9 @@ export class RegistrarUsuarioComponent {
   constructor(
     public ctrl: RegistrarUsuarioController,
     private router: Router,
-    private ns: NotificationService
+    private ns: NotificationService,
+    private app: AppComponent
   ) {
-    this.ctrl.setUtils(this.router, this.ns);
+    this.ctrl.setUtils(this.router, this.ns, this.app);
   }
 }

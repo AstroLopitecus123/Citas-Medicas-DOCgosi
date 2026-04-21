@@ -105,6 +105,16 @@ public class UsuarioController {
         return ResponseEntity.ok(actualizado);
     }
 
+    @PutMapping("/{id}/configuracion-visual")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public ResponseEntity<Usuario> actualizarConfiguracionVisual(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+        String config = body.get("configuracionVisual");
+        Usuario usuario = usuarioService.actualizarConfiguracionVisual(id, config);
+        return ResponseEntity.ok(usuario);
+    }
+
     @PutMapping("/{id}/password")
     @PreAuthorize("#id == authentication.principal.id")
     public ResponseEntity<String> cambiarPassword(

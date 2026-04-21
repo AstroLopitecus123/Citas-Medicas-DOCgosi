@@ -19,6 +19,7 @@ declare var google: any;
 export class LoginComponent implements OnInit {
   @Output() loginExitoso = new EventEmitter<void>();
   ctrl: LoginController;
+  tabSeleccionada: 'ESTANDAR' | 'GOOGLE' = 'ESTANDAR';
 
   constructor(
     private usuarioService: UsuarioService,

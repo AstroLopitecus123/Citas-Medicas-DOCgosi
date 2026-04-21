@@ -39,11 +39,12 @@
       <p class="instructor-text">Ingresa tus credenciales para acceder al portal.</p>
 
       <div class="login-tabs">
-        <button class="tab active">Inicio estándar</button>
-        <button class="tab">Inicio alternativo</button>
+        <button class="tab" [class.active]="tabSeleccionada === 'ESTANDAR'" (click)="tabSeleccionada = 'ESTANDAR'">Inicio estándar</button>
+        <button class="tab" [class.active]="tabSeleccionada === 'GOOGLE'" (click)="tabSeleccionada = 'GOOGLE'">Google Auth</button>
       </div>
 
-      <form (ngSubmit)="ctrl.iniciarSesion()" class="login-form">
+      <!-- FORMULARIO ESTÁNDAR -->
+      <form [hidden]="tabSeleccionada !== 'ESTANDAR'" (ngSubmit)="ctrl.iniciarSesion()" class="login-form">
         <!-- Campo Correo Electrónico -->
         <div class="input-group">
           <label for="correo">Usuario (Correo electrónico)</label>
@@ -79,15 +80,20 @@
         <button type="submit" class="btn-submit w-100">
           <i class="fa-solid fa-right-to-bracket" style="margin-right: 8px;"></i> Iniciar sesión
         </button>
-
-        <div class="google-login-separator">
-          <span>O continúa con</span>
-        </div>
-
-        <div class="google-btn-container">
-          <div id="googleBtn"></div>
-        </div>
       </form>
+
+      <!-- SECCIÓN GOOGLE AUTH -->
+      <div [hidden]="tabSeleccionada !== 'GOOGLE'" class="google-auth-tab-content anim-fade-in">
+        <div class="google-info-card">
+          <i class="fa-brands fa-google google-large-icon"></i>
+          <h3>Acceso Seguro con Google</h3>
+          <p>Utiliza tu cuenta personal para acceder sin contraseñas adicionales.</p>
+          
+          <div class="google-btn-container-centered">
+            <div id="googleBtn"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="status-messages" *ngIf="ctrl.mensaje || ctrl.error">
         <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">

@@ -36,6 +36,7 @@ export const routes: Routes = [
   { path: 'admin/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Control de Pagos', canActivate: [AdminGuard] },
   { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent), title: 'Avisos y Alertas', canActivate: [AdminGuard] },
   { path: 'admin/gestion-citas', component: MisCitasComponent, title: 'Gestión de Citas', canActivate: [AdminGuard] },
+  { path: 'admin/nominas', loadComponent: () => import('./components/mi-nomina/mi-nomina').then(m => m.MiNominaComponent), title: 'Gestión de Nóminas', canActivate: [AdminGuard] },
 
   // ─── PANEL DE MÉDICO ──────────────────────────────────────────────────────────
   { path: 'medico/dashboard',
@@ -43,6 +44,7 @@ export const routes: Routes = [
     title: 'Panel Médico', canActivate: [MedicoGuard]
   },
   { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Mis Ingresos', canActivate: [MedicoGuard] },
+  { path: 'medico/nomina', loadComponent: () => import('./components/mi-nomina/mi-nomina').then(m => m.MiNominaComponent), title: 'Mi Nómina', canActivate: [MedicoGuard] },
   { path: 'gestionar-disponibilidad/:id', component: GestionarDisponibilidadComponent, title: 'Disponibilidad', canActivate: [MedicoGuard] },
 
   // ─── PANEL DE RECEPCIÓN ───────────────────────────────────────────────────────
@@ -51,6 +53,7 @@ export const routes: Routes = [
     title: 'Panel Recepción', canActivate: [RecepcionGuard]
   },
   { path: 'recepcion/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Pagos Recepción', canActivate: [RecepcionGuard] },
+  { path: 'recepcion/nomina', loadComponent: () => import('./components/mi-nomina/mi-nomina').then(m => m.MiNominaComponent), title: 'Mi Nómina', canActivate: [RecepcionGuard] },
 
   // ─── PANEL DE PACIENTE ────────────────────────────────────────────────────────
   { path: 'paciente/dashboard',

@@ -1,0 +1,190 @@
+<div class="admin-layout">
+  <div class="nomina-page" *ngIf="usuario">
+
+    <!-- BANNER -->
+    <header class="premium-welcome-banner" [style.border-left-color]="esAdmin ? '#6366f1' : '#0fbf6a'">
+      <div class="welcome-icon-box" [style.background]="esAdmin ? 'linear-gradient(135deg,#6366f1,#4f46e5)' : 'linear-gradient(135deg,#0fbf6a,#0d9488)'">
+        <i class="fa-solid fa-money-check-dollar"></i>
+      </div>
+      <div class="welcome-text">
+        <div class="badge-role" [style.color]="esAdmin ? '#6366f1' : '#0fbf6a'" [style.background]="esAdmin ? 'rgba(99,102,241,0.1)' : 'rgba(15,191,106,0.1)'">
+          {{ esAdmin ? 'GESTIÓN DE NÓMINAS' : 'MIS INGRESOS' }}
+        </div>
+        <h1>{{ esAdmin ? 'Nóminas del Personal' : 'Mi Nómina' }}</h1>
+        <p>{{ esAdmin ? 'Gestiona los sueldos quincenales y mensuales de médicos y recepcionistas.' : 'Consulta el historial de tus pagos de sueldo emitidos por la clínica.' }}</p>
+      </div>
+      <div class="header-actions" *ngIf="esAdmin">
+        <button class="btn-nueva-nomina" (click)="abrirModal()">
+          <i class="fa-solid fa-plus"></i> Nueva Nómina
+        </button>
+      </div>
+    </header>
+
+    <!-- STATS KPIs -->
+    <div class="stats-grid">
+      <div class="stat-card kpi-success">
+        <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-info">
+          <h3>S/. {{ totalPagado | number:'1.2-2' }}</h3>
+          <p>{{ esAdmin ? 'Total Pagado (Personal)' : 'Sueldo Recibido' }}</p>
+        </div>
+      </div>
+      <div class="stat-card kpi-warning">
+        <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="stat-info">
+          <h3>S/. {{ totalPendiente | number:'1.2-2' }}</h3>
+          <p>Pendiente de Pago</p>
+        </div>
+      </div>
+      <div class="stat-card kpi-info">
+        <div class="stat-icon"><i class="fa-solid fa-receipt"></i></div>
+        <div class="stat-info">
+          <h3>{{ nominas.length }}</h3>
+          <p>Registros de Nómina</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA -->
+    <section class="main-content">
+      <div class="premium-card">
+        <div class="card-header-flex">
+          <h3><i class="fa-solid fa-list-ul"></i> Historial de Nóminas</h3>
+        </div>
+
+        <div *ngIf="cargando" class="text-center p-5">
+          <i class="fa-solid fa-spinner fa-spin fa-2x text-success"></i>
+          <p class="mt-2">Cargando nóminas...</p>
+        </div>
+
+        <div class="modern-table-container" *ngIf="!cargando && nominas.length; else sinNominas">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Periodo</th>
+                <th *ngIf="esAdmin">Empleado</th>
+                <th *ngIf="esAdmin">Rol</th>
+                <th>Tipo</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Fecha Pago</th>
+                <th>Descripción</th>
+                <th *ngIf="esAdmin" style="text-align:center;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let n of nominas">
+                <td>
+                  <div class="date-stack">
+                    <strong>{{ n.fechaInicioPeriodo | date:'dd/MM/yy' }}</strong>
+                    <span class="time-txt">→ {{ n.fechaFinPeriodo | date:'dd/MM/yy' }}</span>
+                  </div>
+                </td>
+                <td *ngIf="esAdmin">{{ n.empleadoNombre }}</td>
+                <td *ngIf="esAdmin">
+                  <span class="badge" [ngClass]="n.empleadoRol === 'MEDICO' ? 'badge-info' : 'badge-success'">
+                    {{ n.empleadoRol }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-info">
+                    <i class="fa-solid fa-calendar-days"></i> {{ n.tipoPeriodo }}
+                  </span>
+                </td>
+                <td><span class="money-highlight">S/. {{ n.monto | number:'1.2-2' }}</span></td>
+                <td>
+                  <span class="badge" [ngClass]="n.estado === 'PAGADO' ? 'badge-success' : 'badge-warning'">
+                    <i class="fa-solid" [ngClass]="n.estado === 'PAGADO' ? 'fa-circle-check' : 'fa-hourglass-half'"></i>
+                    {{ n.estado }}
+                  </span>
+                </td>
+                <td>
+                  <small class="text-muted">{{ n.fechaPago ? (n.fechaPago | date:'dd/MM/yyyy') : '—' }}</small>
+                </td>
+                <td><small class="text-muted">{{ n.descripcion || '—' }}</small></td>
+                <td *ngIf="esAdmin" style="text-align:center;">
+                  <button *ngIf="n.estado === 'PENDIENTE'"
+                          class="btn-table-action btn-pagar-nomina"
+                          (click)="pagarNomina(n.id)"
+                          title="Marcar como Pagado">
+                    <i class="fa-solid fa-money-bill-transfer"></i> Pagar
+                  </button>
+                  <span *ngIf="n.estado === 'PAGADO'" style="color:#10b981; font-weight:700; font-size:0.85rem;">
+                    ✓ Pagado
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #sinNominas>
+          <div *ngIf="!cargando" class="empty-state">
+            <i class="fa-solid fa-money-check-dollar"></i>
+            <p>Sin registros de nómina</p>
+            <span>{{ esAdmin ? 'Crea la primera nómina con el botón superior.' : 'Aún no tienes registros de nómina. El área de administración los generará pronto.' }}</span>
+          </div>
+        </ng-template>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL CREAR NÓMINA (Admin) -->
+  <div class="glass-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
+    <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
+      <div class="modal-header-glass">
+        <div class="header-info">
+          <div class="header-icon-box" style="background:rgba(99,102,241,0.12); color:#6366f1;">
+            <i class="fa-solid fa-money-check-dollar"></i>
+          </div>
+          <div>
+            <h3>Nueva Nómina</h3>
+            <p>Registra el pago de sueldo para un empleado.</p>
+          </div>
+        </div>
+        <button class="btn-close-glass" (click)="cerrarModal()">&times;</button>
+      </div>
+
+      <div class="modal-body-glass">
+        <div class="form-grid-2col">
+          <div class="form-group-premium full-width">
+            <label>ID del Empleado *</label>
+            <input type="number" [(ngModel)]="form.empleadoId" placeholder="Ej: 3" class="input-premium">
+            <small class="hint">Ve a Usuarios para encontrar el ID del médico o recepcionista.</small>
+          </div>
+          <div class="form-group-premium">
+            <label>Monto (S/.) *</label>
+            <input type="number" [(ngModel)]="form.monto" placeholder="1200.00" class="input-premium">
+          </div>
+          <div class="form-group-premium">
+            <label>Tipo de Periodo *</label>
+            <select [(ngModel)]="form.tipoPeriodo" class="input-premium">
+              <option value="QUINCENAL">Quincenal</option>
+              <option value="MENSUAL">Mensual</option>
+            </select>
+          </div>
+          <div class="form-group-premium">
+            <label>Inicio del Periodo *</label>
+            <input type="date" [(ngModel)]="form.fechaInicioPeriodo" class="input-premium">
+          </div>
+          <div class="form-group-premium">
+            <label>Fin del Periodo *</label>
+            <input type="date" [(ngModel)]="form.fechaFinPeriodo" class="input-premium">
+          </div>
+          <div class="form-group-premium full-width">
+            <label>Descripción</label>
+            <input type="text" [(ngModel)]="form.descripcion" placeholder="Ej: Quincena 1 Abril 2026" class="input-premium">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn-confirm-glass" (click)="crearNomina()" [disabled]="procesando">
+          <i class="fa-solid fa-paper-plane"></i>
+          {{ procesando ? 'Creando...' : 'Crear Nómina' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

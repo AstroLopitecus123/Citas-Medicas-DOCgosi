@@ -62,7 +62,7 @@
   border-radius: 16px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  width: 200px;
+  width: 230px;
   max-height: 0;
   opacity: 0;
   pointer-events: none;
@@ -266,51 +266,116 @@
   margin-bottom: 25px;
 }
 
-/* ─── LÁMINAS ISHIHARA (CSS MAGIC) ────────────────────── */
-.ishihara-plate {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+/* ─── LÁMINAS ISHIHARA (VERSION MODERNA SVG) ────────── */
+.ishihara-container {
+  width: 220px;
+  height: 220px;
   margin: 0 auto 25px auto;
-  position: relative;
+  padding: 10px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* El efecto de puntos se logra con radial-gradients repetitivos */
-  background-image: radial-gradient(circle, var(--dot-color) 2px, transparent 3px);
-  background-size: 10px 10px;
-  border: 8px solid #f1f5f9;
 }
 
-.plate-number {
-  font-size: 100px;
+.ishihara-plate {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 4px solid #f1f5f9;
+}
+
+.ishihara-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.plate-base { color: #e2e8f0; }
+
+.plate-number-svg {
+  font-size: 45px;
   font-weight: 900;
-  letter-spacing: -5px;
-  filter: blur(0.5px);
-  user-select: none;
+  fill: currentColor;
+  letter-spacing: -2px;
 }
 
-/* Protan: Fondo verde, número rojo */
-.ishihara-plate.protan { 
-  --dot-color: #4ade80; 
-  background-color: #f0fdf4;
-}
-.ishihara-plate.protan .plate-number { color: #f87171; }
+/* Paletas de Colores por Deficiencia */
+.ishihara-container.protan  { color: #4ade80; } /* Fondo verde */
+.ishihara-container.protan .plate-number-svg { color: #f87171; } /* Num rojo */
 
-/* Deuteran: Fondo rojo/marrón, número verde */
-.ishihara-plate.deuteran { 
-  --dot-color: #fb923c; 
-  background-color: #fffaf5;
-}
-.ishihara-plate.deuteran .plate-number { color: #4ade80; }
+.ishihara-container.deuteran { color: #fb923c; } /* Fondo naranja */
+.ishihara-container.deuteran .plate-number-svg { color: #22c55e; } /* Num verde */
 
-/* Tritan: Fondo azul, número lila */
-.ishihara-plate.tritan { 
-  --dot-color: #60a5fa; 
-  background-color: #eff6ff;
-}
-.ishihara-plate.tritan .plate-number { color: #c084fc; }
+.ishihara-container.tritan   { color: #60a5fa; } /* Fondo azul */
+.ishihara-container.tritan .plate-number-svg { color: #c084fc; } /* Num lila */
 
+/* ─── PANTALLA DE RESULTADOS ────────────────────────── */
+.result-icon-success {
+  width: 60px;
+  height: 60px;
+  background: #f0fdf4;
+  color: #10b981;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  margin: 0 auto 20px auto;
+}
+
+.detected-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 2px solid;
+  border-radius: 30px;
+  margin: 15px 0;
+  background: #f8fafc;
+}
+
+.badge-type {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #1e293b;
+}
+
+.result-desc {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 10px 0 25px 0;
+  line-height: 1.5;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-test-confirm {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.btn-test-confirm:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
 
 .test-options {
   display: flex;

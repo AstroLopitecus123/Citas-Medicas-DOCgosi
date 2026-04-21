@@ -51,15 +51,34 @@ export class AccesibilidadComponent implements OnInit {
   mostrandoTest = false;
   pasoTest = 0; // 0=intro, 1=placa1, 2=placa2, 3=placa3, 4=resultado
   diagnostico: TipoFiltro[] = [];
+  resultadoTest: { tipo: TipoFiltro; etiqueta: string; descripcion: string } | null = null;
 
-  opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string }[] = [
-    { tipo: 'DEUTERANOPIA',   etiqueta: 'Deuteranopia',    icono: '🟢', color: '#16a34a' },
-    { tipo: 'PROTANOPIA',     etiqueta: 'Protanopia',      icono: '🔴', color: '#dc2626' },
-    { tipo: 'TRITANOPIA',     etiqueta: 'Tritanopia',      icono: '🔵', color: '#2563eb' },
-    { tipo: 'DEUTERANOMALIA', etiqueta: 'Deuteranomalía',  icono: '🟡', color: '#ca8a04' },
-    { tipo: 'PROTANOMALIA',   etiqueta: 'Protanomalía',    icono: '🟠', color: '#ea580c' },
-    { tipo: 'ACROMATOPSIA',   etiqueta: 'Escala Grises',   icono: '⚫', color: '#475569' },
-    { tipo: 'NINGUNO',        etiqueta: 'Sin filtro',      icono: '✖',  color: '#94a3b8' },
+  opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string; desc?: string }[] = [
+    { 
+      tipo: 'DEUTERANOPIA',   
+      etiqueta: 'Deuteranopia',    
+      icono: '🟢', 
+      color: '#16a34a',
+      desc: 'Dificultad progresiva para distinguir el color verde. Es el tipo más común de daltonismo.'
+    },
+    { 
+      tipo: 'PROTANOPIA',     
+      etiqueta: 'Protanopia',      
+      icono: '🔴', 
+      color: '#dc2626',
+      desc: 'Dificultad para percibir la luz roja, haciendo que los rojos parezcan más oscuros o grises.'
+    },
+    { 
+      tipo: 'TRITANOPIA',     
+      etiqueta: 'Tritanopia',      
+      icono: '🔵', 
+      color: '#2563eb',
+      desc: 'Dificultad rara para distinguir los colores azules y amarillos.'
+    },
+    { tipo: 'DEUTERANOMALIA', etiqueta: 'Deuteranomalía',  icono: '🟡', color: '#ca8a04', desc: 'Versión leve de la deuteranopia.' },
+    { tipo: 'PROTANOMALIA',   etiqueta: 'Protanomalía',    icono: '🟠', color: '#ea580c', desc: 'Versión leve de la protanopia.' },
+    { tipo: 'ACROMATOPSIA',   etiqueta: 'Escala Grises',   icono: '⚫', color: '#475569', desc: 'Visión en blanco y negro (ausencia total de color).' },
+    { tipo: 'NINGUNO',        etiqueta: 'Sin filtro',      icono: '✖',  color: '#94a3b8', desc: 'Visión estándar sin alteraciones cromáticas.' },
   ];
 
   ngOnInit() {
@@ -80,6 +99,7 @@ export class AccesibilidadComponent implements OnInit {
     this.mostrandoTest = true;
     this.pasoTest = 0;
     this.diagnostico = [];
+    this.resultadoTest = null;
   }
 
   respuestaTest(veBien: boolean, tipoSugerido: TipoFiltro) {
@@ -94,17 +114,28 @@ export class AccesibilidadComponent implements OnInit {
   }
 
   finalizarTest() {
-    // Lógica simple: si falló en rojo -> Protanopia, etc.
-    let resultado: TipoFiltro = 'NINGUNO';
+    let tipoDetectado: TipoFiltro = 'NINGUNO';
+    
     if (this.diagnostico.length > 0) {
-      resultado = this.diagnostico[0]; // tomar el primero detectado
+      tipoDetectado = this.diagnostico[0];
     }
     
-    this.filtroPreview = resultado;
-    this.iniciarPreview(resultado);
-    this.mostrandoTest = false;
+    const info = this.opciones.find(o => o.tipo === tipoDetectado);
+    this.resultadoTest = {
+      tipo: tipoDetectado,
+      etiqueta: info?.etiqueta || 'Normal',
+      descripcion: info?.desc || 'No se han detectado anomalías significativas en tu visión del color.'
+    };
+    
+    this.pasoTest = 4; // Mostrar pantalla de resultados
   }
 
+  probarResultado() {
+    if (this.resultadoTest) {
+      this.mostrandoTest = false;
+      this.iniciarPreview(this.resultadoTest.tipo);
+    }
+  }
   seleccionar(tipo: TipoFiltro) {
     this.abierto = false;
     if (tipo === 'NINGUNO') {

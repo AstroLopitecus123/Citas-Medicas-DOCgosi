@@ -439,12 +439,15 @@ export class AccesibilidadComponent implements OnInit {
 
       if (esValido) {
         const distancia = Math.sqrt(dx * dx + dy * dy);
-        // Priorizar la dirección principal (menor desviación perpendicular)
-        const factorPenalizacion = (tecla === 'ArrowUp' || tecla === 'ArrowDown') 
-          ? Math.abs(dx) * 2 // Penalizar desvío horizontal en movimiento vertical
-          : Math.abs(dy) * 2; // Penalizar desvío vertical en movimiento horizontal
         
-        const distanciaTotal = distancia + factorPenalizacion;
+        // --- REFINAMIENTO DE PRIORIDAD ---
+        // Aumentamos drásticamente la penalización por desviación lateral al movernos arriba/abajo
+        // Esto evita que al estar en el form, "Down" nos mande al FAB del chatbot a la derecha.
+        const penalizacionLateral = (tecla === 'ArrowUp' || tecla === 'ArrowDown') 
+          ? Math.abs(dx) * 8 // Penalización ultra alta para evitar fugas laterales
+          : Math.abs(dy) * 5;
+        
+        const distanciaTotal = distancia + penalizacionLateral;
 
         if (distanciaTotal < minimaDistancia) {
           minimaDistancia = distanciaTotal;

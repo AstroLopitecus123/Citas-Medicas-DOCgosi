@@ -262,6 +262,12 @@ export class AppComponent {
     }
   }
 
+  irAHome(e: Event) {
+    e.preventDefault();
+    this.isMenuOpen = false;
+    this.router.navigate(['/']);
+  }
+
   cargarConteoNotificaciones() {
     if (!this.isLoggedIn) return;
     this.notificacionService.contarNoLeidas().subscribe({

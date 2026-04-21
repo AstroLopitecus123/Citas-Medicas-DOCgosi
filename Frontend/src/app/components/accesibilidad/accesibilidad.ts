@@ -453,6 +453,20 @@ export class AccesibilidadComponent implements OnInit {
       }
     }
 
+    // Si no encontró nada cercano, intentar buscar el primer elemento visible en esa dirección sin penalización
+    if (!mejorCandidato) {
+       // Re-intento relajado para saltos largos (ej: del form al FAB)
+       for (const cand of candidatos) {
+          if (cand === actual) continue;
+          const rectCand = cand.getBoundingClientRect();
+          const dy = (rectCand.top + rectCand.height/2) - centroActual.y;
+          if (tecla === 'ArrowDown' && dy > 0 && rectCand.top < minimaDistancia) {
+             mejorCandidato = cand;
+             minimaDistancia = rectCand.top;
+          }
+       }
+    }
+
     if (mejorCandidato) {
       mejorCandidato.focus();
       mejorCandidato.scrollIntoView({ behavior: 'smooth', block: 'center' });

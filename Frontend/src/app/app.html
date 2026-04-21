@@ -7,13 +7,13 @@
 
 <header class="header" *ngIf="!isPanelRoute">
   <div class="header-container">
-    <h1 class="titulo" routerLink="/" tabindex="0" role="link" (keydown.enter)="isMenuOpen = false" aria-label="R.E.T.O Salud - Volver al Inicio">
+    <a class="titulo" routerLink="/" tabindex="0" role="link" (keydown.enter)="isMenuOpen = false" aria-label="R.E.T.O Salud - Volver al Inicio">
       <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo" style="height: 48px; width: auto;">
       <div class="logo-text-stack">
         <span class="reto-text">R.E.T.O.</span>
         <span class="salud-text">Salud</span>
       </div>
-    </h1>
+    </a>
 
     <!-- Botón Hamburguesa (Móviles) -->
     <button class="menu-toggle" (click)="toggleMenu()">

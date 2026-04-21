@@ -7,9 +7,11 @@
         <i class="fa-solid fa-file-invoice-dollar"></i>
       </div>
       <div class="welcome-text">
-         <div class="badge-role" style="color: #00c0a3; background: rgba(0, 192, 163, 0.1);">FINANZAS</div>
-         <h1>Gestión Financiera</h1>
-         <p>Historial detallado de transacciones e ingresos institucionales.</p>
+         <div class="badge-role" style="color: #00c0a3; background: rgba(0, 192, 163, 0.1);">
+           {{ usuario.rol === 'MEDICO' ? 'MIS HONORARIOS' : 'FINANZAS' }}
+         </div>
+         <h1>{{ usuario.rol === 'MEDICO' ? 'Liquidación Médica' : 'Gestión Financiera' }}</h1>
+         <p>{{ usuario.rol === 'MEDICO' ? 'Historial de atenciones completadas y liquidación de servicios.' : 'Historial detallado de transacciones e ingresos institucionales.' }}</p>
       </div>
       <div class="header-actions">
           <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
@@ -41,7 +43,7 @@
         <div class="stat-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
         <div class="stat-info">
           <h3 class="money-highlight-kpi">S/. {{ totalIngresos | number:'1.2-2' }}</h3>
-          <p>Ingresos Recaudados</p>
+          <p>{{ usuario.rol === 'MEDICO' ? 'Liquidación Total' : 'Ingresos Recaudados' }}</p>
         </div>
       </div>
 
@@ -77,7 +79,7 @@
                 <th>Método</th>
                 <th>Estado</th>
                 <th>Cita Asoc.</th>
-                <th *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'" style="text-align: center;">Acciones</th>
+                <th *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'" style="text-align: center; width: 15%;">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -115,7 +117,20 @@
                         <button *ngIf="p.estadoPago !== 'ANULADO'" class="btn-table-action btn-delete" (click)="$event.stopPropagation(); anularPago(p.id)" title="Anular Pago">
                           <i class="fa-solid fa-ban"></i>
                         </button>
-                        <button *ngIf="p.comprobante?.archivoUrl" class="btn-table-action btn-edit" (click)="$event.stopPropagation(); verComprobante(p.comprobante?.archivoUrl || '')" title="Ver Recibo">
+                        <!-- Botón Cobrar Efectivo (Recepcion) -->
+                        <button *ngIf="p.estadoPago === 'PENDIENTE' && p.metodo === 'EFECTIVO'" 
+                                class="btn-table-action" 
+                                style="background-color: #e0f2fe; color: #0284c7; width: auto; padding: 0 12px; border-radius: 8px; font-weight: 700; gap: 6px; display: inline-flex;" 
+                                (click)="$event.stopPropagation(); confirmarCobroFisico(p.id)" 
+                                title="Cobrar Efectivo Físico">
+                          <i class="fa-solid fa-hand-holding-dollar"></i> Cobrar
+                        </button>
+                        
+                        <!-- Botón Ver Recibo -->
+                        <button *ngIf="p.estadoPago === 'COMPLETADO' && p.comprobante?.archivoUrl" 
+                                class="btn-table-action btn-edit" 
+                                (click)="$event.stopPropagation(); verComprobante(p.comprobante?.archivoUrl || '')" 
+                                title="Ver Recibo">
                            <i class="fa-solid fa-file-pdf"></i>
                         </button>
                     </div>

@@ -60,6 +60,52 @@ public class PagoService {
     }
 
     @Transactional
+    public PagoResponse prometerPagoEfectivo(PagoEfectivoRequest request) {
+        Cita cita = citaRepository.findById(request.getCitaId())
+                .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Pago pago = new Pago();
+        pago.setCita(cita);
+        pago.setUsuario(usuario);
+        pago.setMonto(request.getMonto());
+        pago.setMetodo(MetodoPago.EFECTIVO);
+        pago.setEstadoPago(EstadoPago.PENDIENTE); // La recepcionista lo confirmará
+        pago.setFechaPago(null);
+
+        Pago savedPago = pagoRepository.save(pago);
+
+        return mapToResponse(savedPago);
+    }
+
+    @Transactional
+    public PagoResponse completarPago(Long pagoId) {
+        Pago pago = pagoRepository.findById(pagoId)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+                
+        pago.setEstadoPago(EstadoPago.COMPLETADO);
+        pago.setFechaPago(LocalDateTime.now());
+
+        if (pago.getComprobante() == null) {
+            Comprobante comprobante = new Comprobante();
+            comprobante.setNumero("FACT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+            comprobante.setFecha(LocalDateTime.now());
+            comprobante.setPago(pago);
+            pago.setComprobante(comprobante);
+        }
+
+        // Sincronizar Cita
+        if (pago.getCita() != null) {
+            pago.getCita().setEstado(EstadoCita.CONFIRMADA);
+            citaRepository.save(pago.getCita());
+        }
+
+        Pago savedPago = pagoRepository.save(pago);
+        return mapToResponse(savedPago);
+    }
+
+    @Transactional
     public PagoResponse pagarEfectivo(PagoEfectivoRequest request) {
         Cita cita = citaRepository.findById(request.getCitaId())
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));

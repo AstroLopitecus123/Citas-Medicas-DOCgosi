@@ -121,6 +121,21 @@ export class MisPagosComponent implements OnInit {
     });
   }
 
+  confirmarCobroFisico(pagoId: number) {
+    this.cargando = true;
+    this.pagoService.completarPago(pagoId).subscribe({
+      next: () => {
+        this.ns.success('✅ Efectivo recibido. Pago Completado.');
+        this.cargarPagos();
+      },
+      error: (err) => {
+        console.error(err);
+        this.ns.error('❌ Error al registrar el cobro');
+        this.cargando = false;
+      }
+    });
+  }
+
   cerrarModalConfirmar() {
     this.mostrandoConfirmarAnular = false;
     this.pagoAEliminarId = null;

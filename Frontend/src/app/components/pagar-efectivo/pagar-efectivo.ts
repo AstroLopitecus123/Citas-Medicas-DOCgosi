@@ -60,7 +60,7 @@ export class PagarEfectivoComponent implements OnInit {
 
     // Simular procesamiento para feedback visual
     setTimeout(() => {
-      this.pagoService.pagarEfectivo(body).subscribe({
+      this.pagoService.prometerEfectivo(body).subscribe({
         next: () => {
           this.ns.success('Voucher generado y Cita Confirmada correctamente');
           this.procesandoPago = false;

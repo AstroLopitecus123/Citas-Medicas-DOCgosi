@@ -139,6 +139,14 @@ export class PagoService {
     return this.http.post(`${this.apiUrl}/efectivo`, body, { headers: this.getHeaders() });
   }
 
+  prometerEfectivo(body: { citaId: number; usuarioId: number; monto: number }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/promesa-efectivo`, body, { headers: this.getHeaders() });
+  }
+
+  completarPago(pagoId: number): Observable<Pago> {
+    return this.http.put<Pago>(`${this.apiUrl}/completar/${pagoId}`, {}, { headers: this.getHeaders() });
+  }
+
   pagarTarjeta(body: {
     citaId: number;
     usuarioId: number;

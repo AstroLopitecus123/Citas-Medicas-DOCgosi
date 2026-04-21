@@ -26,6 +26,20 @@ public class PagoController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/promesa-efectivo")
+    @PreAuthorize("hasRole('PACIENTE')")
+    public ResponseEntity<PagoResponse> prometerEfectivo(@RequestBody PagoEfectivoRequest request) {
+        PagoResponse response = pagoService.prometerPagoEfectivo(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/completar/{pagoId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
+    public ResponseEntity<PagoResponse> completarPagoFisico(@PathVariable Long pagoId) {
+        PagoResponse response = pagoService.completarPago(pagoId);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/crear-intent")
     public ResponseEntity<PaymentIntentResponse> crearPaymentIntent(@RequestBody PaymentIntentRequest request) throws StripeException {
         PaymentIntentResponse response = pagoService.crearPaymentIntent(request);

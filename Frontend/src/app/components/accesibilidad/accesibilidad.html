@@ -56,7 +56,7 @@
     
     <!-- CABECERA DINÁMICA -->
     <div class="acc-menu-header">
-      <button class="btn-back" *ngIf="vistaActual !== 'PRINCIPAL'" (click)="cambiarVista('PRINCIPAL')">
+      <button class="btn-back" *ngIf="vistaActual !== 'PRINCIPAL'" (click)="cambiarVista('PRINCIPAL'); $event.stopPropagation()">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
       <i class="fa-solid" [ngClass]="{
@@ -70,21 +70,21 @@
 
     <!-- VISTA PRINCIPAL (CATEGORÍAS) -->
     <div class="view-categories" *ngIf="vistaActual === 'PRINCIPAL'">
-      <button class="category-card" (click)="cambiarVista('VISION')">
+      <button class="category-card" (click)="cambiarVista('VISION'); $event.stopPropagation()">
         <i class="fa-solid fa-eye"></i>
         <span>Visión</span>
         <small>{{ etiquetaActiva() }}</small>
         <i class="fa-solid fa-chevron-right arrow-next"></i>
       </button>
       
-      <button class="category-card" (click)="cambiarVista('ZOOM')">
+      <button class="category-card" (click)="cambiarVista('ZOOM'); $event.stopPropagation()">
         <i class="fa-solid fa-magnifying-glass"></i>
         <span>Zoom</span>
         <small>{{ (nivelZoom * 100).toFixed(0) }}%</small>
         <i class="fa-solid fa-chevron-right arrow-next"></i>
       </button>
 
-      <button class="category-card" (click)="cambiarVista('CONTRASTE')">
+      <button class="category-card" (click)="cambiarVista('CONTRASTE'); $event.stopPropagation()">
         <i class="fa-solid fa-circle-half-stroke"></i>
         <span>Contraste</span>
         <small>{{ contrasteActivo ? 'Activado' : 'Desactivado' }}</small>

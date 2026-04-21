@@ -12,7 +12,7 @@ export class VoiceAccessibilityService implements OnDestroy {
   private deepgramApiKey: string = '';
   private deepgramSocket: any = null;
   private mediaRecorder: MediaRecorder | null = null;
-  private isListening: boolean = false;
+  public isListening: boolean = false;
 
   // Notificamos cuando se detecta un comando para feedback visual si se desea
   commandDetected = new Subject<string>();

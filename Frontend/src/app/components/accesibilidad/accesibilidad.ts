@@ -44,7 +44,7 @@ export class AccesibilidadComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private app: AppComponent,
-    private voiceService: VoiceAccessibilityService,
+    public voiceService: VoiceAccessibilityService,
     private narratorService: NarratorService,
     private notificationService: NotificationService
   ) {}

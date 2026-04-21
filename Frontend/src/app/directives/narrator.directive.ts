@@ -39,7 +39,11 @@ export class NarratorDirective implements OnInit, OnDestroy {
     // Posicionamiento relativo al padre de la imagen
     const parent = this.el.nativeElement.parentNode;
     if (parent) {
-      this.renderer.setStyle(parent, 'position', 'relative');
+      const currentPos = window.getComputedStyle(parent).position;
+      if (currentPos === 'static') {
+        this.renderer.setStyle(parent, 'position', 'relative');
+      }
+      
       this.renderer.appendChild(parent, this.btnNarrator);
       
       this.renderer.listen(this.btnNarrator, 'click', (event) => {

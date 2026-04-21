@@ -132,7 +132,7 @@ export class AccesibilidadComponent implements OnInit {
       descripcion: info?.desc || 'No se han detectado anomalías significativas en tu visión del color.'
     };
     
-    this.pasoTest = 4; // Mostrar pantalla de resultados
+    this.pasoTest = 6; // Mostrar pantalla de resultados (Paso único para resultados)
   }
 
   probarResultado() {

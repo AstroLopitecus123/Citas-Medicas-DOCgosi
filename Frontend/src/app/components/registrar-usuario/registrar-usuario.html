@@ -116,17 +116,19 @@
         </div>
 
         <!-- SECCIÓN DE ACCESIBILIDAD (Nueva experiencia fluida) -->
-        <div class="accessibility-promo-card" [class.activated]="ctrl.usuario['configuracionVisual'] !== 'NINGUNO'">
+        <div class="accessibility-promo-card" [class.activated]="ctrl.usuario.configuracionVisual !== 'NINGUNO'">
           <div class="promo-text">
-            <h4><i class="fa-solid fa-universal-access"></i> ¿Necesitas apoyo visual?</h4>
-            <p>Si tienes daltonismo o prefieres mayor contraste, personaliza tu vista ahora.</p>
+            <h4><i class="fa-solid fa-universal-access"></i> Apoyo visual</h4>
+            <p>Personaliza colores y contraste si lo necesitas.</p>
           </div>
           <button type="button" class="btn-config-visual" (click)="ctrl.abrirAsistenteVisual()">
-            {{ ctrl.usuario['configuracionVisual'] !== 'NINGUNO' ? 'Configurado: ' + ctrl.usuario['configuracionVisual'] : 'Configurar Visión' }}
+            <i class="fa-solid" [class.fa-gear]="ctrl.usuario.configuracionVisual === 'NINGUNO'" 
+               [class.fa-circle-check]="ctrl.usuario.configuracionVisual !== 'NINGUNO'"></i>
+            {{ ctrl.usuario.configuracionVisual !== 'NINGUNO' ? ctrl.getEtiquetaVisual() : 'Configurar' }}
           </button>
         </div>
 
-        <button type="submit" class="btn-submit w-100 mt-20">
+        <button type="submit" class="btn-submit w-100 mt-15">
           <i class="fa-solid fa-user-check"></i> Finalizar Registro
         </button>
 

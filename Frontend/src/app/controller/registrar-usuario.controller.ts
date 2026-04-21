@@ -27,7 +27,8 @@ export class RegistrarUsuarioController {
     paisId: undefined,
     fechaNacimiento: '',
     dni: '',
-    telefono: ''
+    telefono: '',
+    configuracionVisual: 'NINGUNO' as const
   };
 
   private readonly defaultTouched = {
@@ -177,11 +178,25 @@ export class RegistrarUsuarioController {
     if (this.app?.accesibilidad) {
       this.app.accesibilidad.abrirAsistente();
       const sub = this.app.accesibilidad.confirmadoWizard.subscribe((tipo: any) => {
-        this.usuario['configuracionVisual'] = tipo;
-        if (this.ns) this.ns.info(`Configuración aplicada: ${tipo}`);
+        this.usuario.configuracionVisual = tipo;
+        if (this.ns) this.ns.info(`Configuración aplicada: ${this.getEtiquetaVisual(tipo)}`);
         sub.unsubscribe();
       });
     }
+  }
+
+  getEtiquetaVisual(tipo?: string): string {
+    const t = tipo || this.usuario.configuracionVisual || 'NINGUNO';
+    const mapping: any = {
+      'DEUTERANOPIA': 'Deuteranopia',
+      'PROTANOPIA': 'Protanopia',
+      'TRITANOPIA': 'Tritanopia',
+      'DEUTERANOMALIA': 'Deuteranomalía',
+      'PROTANOMALIA': 'Protanomalía',
+      'ACROMATOPSIA': 'Escala de Grises',
+      'NINGUNO': 'Sin filtro'
+    };
+    return mapping[t] || 'Sin filtro';
   }
 
   irAPaso1() {

@@ -150,22 +150,22 @@ body.focus-pro *:focus-visible {
    ────────────────────────────────────────────────────────── */
 .narrator-btn-overlay {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 36px;
-  height: 36px;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  color: #4f46e5;
-  border: 2px solid #4f46e5;
+  background: white;
+  color: #0fbf6a;
+  border: 3px solid #0fbf6a;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: popIn 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: popIn 0.4s ease;
 }
 
 .narrator-btn-overlay:hover {

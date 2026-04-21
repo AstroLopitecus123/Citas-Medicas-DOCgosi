@@ -37,14 +37,21 @@ export class NarratorDirective implements OnInit, OnDestroy {
     this.renderer.setAttribute(this.btnNarrator, 'title', 'Escuchar descripción de imagen');
     
     // Posicionamiento relativo al padre de la imagen
-    const parent = this.el.nativeElement.parentNode;
-    if (parent) {
-      const currentPos = window.getComputedStyle(parent).position;
+    let host = this.el.nativeElement.parentNode;
+    if (host) {
+      // Si el padre inmediato tiene overflow hidden (común en avatares circulares),
+      // buscamos el siguiente ancestro para evitar recortes (clipping).
+      const style = window.getComputedStyle(host);
+      if (style.overflow === 'hidden' && host.parentNode) {
+        host = host.parentNode;
+      }
+
+      const currentPos = window.getComputedStyle(host).position;
       if (currentPos === 'static') {
-        this.renderer.setStyle(parent, 'position', 'relative');
+        this.renderer.setStyle(host, 'position', 'relative');
       }
       
-      this.renderer.appendChild(parent, this.btnNarrator);
+      this.renderer.appendChild(host, this.btnNarrator);
       
       this.renderer.listen(this.btnNarrator, 'click', (event) => {
         event.stopPropagation();

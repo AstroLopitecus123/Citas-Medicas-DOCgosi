@@ -168,7 +168,7 @@ public class UsuarioService {
                     nuevo.setApellido(apellido != null ? apellido : "Google");
                     nuevo.setRol(Rol.PACIENTE);
                     nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
-                    nuevo.setEstado(EstadoUsuario.ACTIVO);
+                    nuevo.setEstado(EstadoUsuario.ACTIVADO);
                     return usuarioRepository.save(nuevo);
                 });
     }

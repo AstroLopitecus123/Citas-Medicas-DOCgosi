@@ -236,7 +236,7 @@
       <div class="keyboard-tips">
         <p>
           <i class="fa-solid fa-circle-info"></i> 
-          <span>Navega usando la tecla <kbd class="kbd-key">Tab</kbd> y confirma con <kbd class="kbd-key">Enter</kbd>.</span>
+          <span>Navega con <kbd class="kbd-key"><i class="fa-solid fa-arrows-up-down-left-right"></i> Flechas</kbd> o <kbd class="kbd-key">Tab</kbd> y confirma con <kbd class="kbd-key">Enter</kbd>.</span>
         </p>
       </div>
     </div>
@@ -248,7 +248,12 @@
     class="acc-fab"
     [class.activo]="filtroActivo !== 'NINGUNO'"
     (click)="toggleMenu()"
-    [title]="filtroActivo !== 'NINGUNO' ? ('Filtro activo: ' + etiquetaActiva()) : 'Accesibilidad Visual'">
+    (keydown.enter)="toggleMenu()"
+    tabindex="0"
+    role="button"
+    [attr.aria-expanded]="abierto"
+    [title]="filtroActivo !== 'NINGUNO' ? ('Filtro activo: ' + etiquetaActiva()) : 'Accesibilidad Visual'"
+    aria-label="Asistente de Accesibilidad">
     <i class="fa-solid fa-universal-access"></i>
     <span class="acc-dot" *ngIf="filtroActivo !== 'NINGUNO'"></span>
   </button>

@@ -1,5 +1,11 @@
 <!-- BOTÓN FLOTANTE -->
-<div class="chatbot-fab" (click)="toggleChat()" [class.hidden]="isOpen">
+<div class="chatbot-fab" 
+     (click)="toggleChat()" 
+     (keydown.enter)="toggleChat()"
+     [class.hidden]="isOpen"
+     tabindex="0" 
+     role="button" 
+     aria-label="Abrir asistente de chat">
   <i class="fa-solid fa-comment-medical"></i>
 </div>
 

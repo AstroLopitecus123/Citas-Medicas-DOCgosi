@@ -378,4 +378,91 @@ export class AccesibilidadComponent implements OnInit {
     const el = (e.target as HTMLElement).closest('app-accesibilidad');
     if (!el && this.abierto) this.abierto = false;
   }
+
+  // ━━━ MOTOR DE NAVEGACIÓN ESPACIAL (FLECHAS) ━━━
+  @HostListener('document:keydown', ['$event'])
+  manejarTecladoGlobal(e: KeyboardEvent) {
+    if (!this.modoTeclado) return;
+
+    const teclasNavegacion = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (teclasNavegacion.includes(e.key)) {
+      e.preventDefault();
+      this.moverFoco(e.key as 'ArrowUp' | 'ArrowDown' | 'ArrowLeft' | 'ArrowRight');
+    }
+  }
+
+  private moverFoco(tecla: 'ArrowUp' | 'ArrowDown' | 'ArrowLeft' | 'ArrowRight') {
+    const selector = 'button, a, input, select, textarea, [tabindex="0"]';
+    const candidatos = Array.from(document.querySelectorAll(selector))
+      .filter(el => {
+        const rect = el.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && (el as HTMLElement).tabIndex >= 0;
+      }) as HTMLElement[];
+
+    const actual = document.activeElement as HTMLElement;
+    if (!actual || actual === document.body) {
+      candidatos[0]?.focus();
+      return;
+    }
+
+    const rectActual = actual.getBoundingClientRect();
+    const centroActual = {
+      x: rectActual.left + rectActual.width / 2,
+      y: rectActual.top + rectActual.height / 2
+    };
+
+    let mejorCandidato: HTMLElement | null = null;
+    let minimaDistancia = Infinity;
+
+    candidatos.forEach(cand => {
+      if (cand === actual) return;
+
+      const rectCand = cand.getBoundingClientRect();
+      const centroCand = {
+        x: rectCand.left + rectCand.width / 2,
+        y: rectCand.top + rectCand.height / 2
+      };
+
+      const dx = centroCand.x - centroActual.x;
+      const dy = centroCand.y - centroActual.y;
+
+      // Filtrado por dirección
+      let esValido = false;
+      const margen = 5; // Tolerancia para alineaciones imperfectas
+
+      switch (tecla) {
+        case 'ArrowUp':    if (dy < -margen) esValido = true; break;
+        case 'ArrowDown':  if (dy > margen)  esValido = true; break;
+        case 'ArrowLeft':  if (dx < -margen) esValido = true; break;
+        case 'ArrowRight': if (dx > margen)  esValido = true; break;
+      }
+
+      if (esValido) {
+        const distancia = Math.sqrt(dx * dx + dy * dy);
+        // Priorizar la dirección principal (menor desviación perpendicular)
+        const factorPenalizacion = (tecla === 'ArrowUp' || tecla === 'ArrowDown') 
+          ? Math.abs(dx) * 2 // Penalizar desvío horizontal en movimiento vertical
+          : Math.abs(dy) * 2; // Penalizar desvío vertical en movimiento horizontal
+        
+        const distanciaTotal = distancia + factorPenalizacion;
+
+        if (distanciaTotal < minimaDistancia) {
+          minimaDistancia = distanciaTotal;
+          mejorCandidato = cand;
+        }
+      }
+    });
+
+    if (mejorCandidato) {
+      mejorCandidato.focus();
+      mejorCandidato.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      // Si no hay nada en esa dirección, intentar un salto circular o hacia el extremo
+      this.notificarFinDireccion();
+    }
+  }
+
+  private notificarFinDireccion() {
+    // Podríamos añadir un sonido sutil o vibración visual
+  }
 }

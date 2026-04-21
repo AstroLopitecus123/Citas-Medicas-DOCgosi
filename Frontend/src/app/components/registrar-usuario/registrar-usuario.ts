@@ -52,14 +52,30 @@ export class RegistrarUsuarioComponent implements OnInit {
   private handleGoogleCredential(response: any) {
     this.usuarioService.loginConGoogle(response.credential).subscribe({
       next: (res) => {
-        this.usuarioService.guardarSesion(res.token, res.usuario);
-        this.ns.showSuccess('¡Registro exitoso con Google!');
-        this.app.redirigirPorRol(res.usuario.rol);
+        if (res.usuario) {
+          this.ns.success('¡Registro exitoso con Google!');
+          // Notificar al AppComponent que el login cambió
+          this.app.loginActualizado$.next();
+          this.redirigirPorRol(res.usuario);
+        }
       },
       error: (err) => {
         console.error('Error Google Register:', err);
-        this.ns.showError('Error al registrar con Google');
+        this.ns.error('Error al registrar con Google');
       }
     });
+  }
+
+  private redirigirPorRol(usuario: any) {
+    const rol = usuario.rol?.toUpperCase();
+    if (rol === 'ADMIN') {
+      this.router.navigate(['/admin']);
+    } else if (rol === 'MEDICO') {
+      this.router.navigate(['/medico/dashboard']);
+    } else if (rol === 'RECEPCION') {
+      this.router.navigate(['/recepcion/dashboard']);
+    } else {
+      this.router.navigate(['/paciente/dashboard']);
+    }
   }
 }

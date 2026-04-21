@@ -140,10 +140,34 @@
           <span class="switch-ball"></span>
         </button>
       </div>
-      <div class="contrast-preview">
-        <div class="preview-dot black"></div>
-        <div class="preview-dot white"></div>
-        <div class="preview-dot yellow"></div>
+
+      <!-- SECCIÓN PERSONALIZACIÓN -->
+      <div class="custom-colors-section">
+        <div class="section-divider">
+          <span>O BIEN PERSONALIZA</span>
+        </div>
+        
+        <div class="color-picker-grid">
+          <div class="picker-card">
+            <i class="fa-solid fa-fill-drip"></i>
+            <div class="picker-info">
+              <label>Color Fondo</label>
+              <input type="color" [value]="customBg" (input)="actualizarColor('BG', $event)">
+            </div>
+          </div>
+
+          <div class="picker-card">
+            <i class="fa-solid fa-font"></i>
+            <div class="picker-info">
+              <label>Color Texto</label>
+              <input type="color" [value]="customText" (input)="actualizarColor('TEXT', $event)">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-reset-colors" *ngIf="esPersonalizado" (click)="resetearColores()" [@fadeIn]>
+          <i class="fa-solid fa-rotate-left"></i> Restablecer original
+        </button>
       </div>
     </div>
 

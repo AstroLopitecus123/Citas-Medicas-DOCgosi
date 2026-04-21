@@ -54,6 +54,11 @@ export class AccesibilidadComponent implements OnInit {
   nivelZoom = 1; // 1 = 100%, 1.2 = 120%, etc.
   contrasteActivo = false;
 
+  // Colores personalizados
+  customBg = '#ffffff';
+  customText = '#333333';
+  esPersonalizado = false;
+
   // Estado del Test
   mostrandoTest = false;
   pasoTest = 0; // 0=intro, 1-5=placas, 6=resultado
@@ -93,6 +98,9 @@ export class AccesibilidadComponent implements OnInit {
     const fActivo = localStorage.getItem(LS_KEY) as TipoFiltro | null;
     const zNivel = localStorage.getItem('DOCGOSI_ZOOM');
     const cActivo = localStorage.getItem('DOCGOSI_CONTRASTE');
+    const customActivo = localStorage.getItem('DOCGOSI_CUSTOM_ACTIVE');
+    const cBg = localStorage.getItem('DOCGOSI_CUSTOM_BG');
+    const cText = localStorage.getItem('DOCGOSI_CUSTOM_TEXT');
 
     if (fActivo && fActivo !== 'NINGUNO') {
       this.filtroActivo = fActivo;
@@ -107,6 +115,13 @@ export class AccesibilidadComponent implements OnInit {
     if (cActivo === 'true') {
       this.contrasteActivo = true;
       this.aplicarContraste(true);
+    }
+
+    if (cBg) this.customBg = cBg;
+    if (cText) this.customText = cText;
+    if (customActivo === 'true') {
+      this.esPersonalizado = true;
+      this.aplicarColoresPersonalizados(true);
     }
   }
 
@@ -132,8 +147,50 @@ export class AccesibilidadComponent implements OnInit {
   // Lógica de Contraste
   toggleContraste() {
     this.contrasteActivo = !this.contrasteActivo;
+    if (this.contrasteActivo) {
+      this.esPersonalizado = false; // Desactivar personalizado si activa alto contraste
+      this.aplicarColoresPersonalizados(false);
+    }
     this.aplicarContraste(this.contrasteActivo);
     localStorage.setItem('DOCGOSI_CONTRASTE', this.contrasteActivo.toString());
+    localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
+  }
+
+  // Lógica de Colores Personalizados
+  actualizarColor(tipo: 'BG' | 'TEXT', event: Event) {
+    const val = (event.target as HTMLInputElement).value;
+    if (tipo === 'BG') this.customBg = val;
+    else this.customText = val;
+    
+    this.esPersonalizado = true;
+    this.contrasteActivo = false; // Desactivar alto contraste si personaliza
+    this.aplicarContraste(false);
+    
+    this.aplicarColoresPersonalizados(true);
+    localStorage.setItem('DOCGOSI_CUSTOM_BG', this.customBg);
+    localStorage.setItem('DOCGOSI_CUSTOM_TEXT', this.customText);
+    localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'true');
+    localStorage.setItem('DOCGOSI_CONTRASTE', 'false');
+  }
+
+  resetearColores() {
+    this.customBg = '#ffffff';
+    this.customText = '#333333';
+    this.esPersonalizado = false;
+    this.aplicarColoresPersonalizados(false);
+    localStorage.removeItem('DOCGOSI_CUSTOM_BG');
+    localStorage.removeItem('DOCGOSI_CUSTOM_TEXT');
+    localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
+  }
+
+  private aplicarColoresPersonalizados(activo: boolean) {
+    if (activo) {
+      document.documentElement.style.setProperty('--custom-bg', this.customBg);
+      document.documentElement.style.setProperty('--custom-text', this.customText);
+      document.body.classList.add('custom-colors');
+    } else {
+      document.body.classList.remove('custom-colors');
+    }
   }
 
   private aplicarZoom(nivel: number) {

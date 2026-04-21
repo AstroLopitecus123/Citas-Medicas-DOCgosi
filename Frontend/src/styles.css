@@ -82,3 +82,53 @@ body.high-contrast .panel,
 body.high-contrast div[class*="container"] {
   border: 1px solid #fff !important;
 }
+
+/* ──────────────────────────────────────────────────────────
+   MODO PERSONALIZACIÓN DE COLORES (Global)
+   ────────────────────────────────────────────────────────── */
+:root {
+  --custom-bg: #ffffff;
+  --custom-text: #333333;
+}
+
+body.custom-colors {
+  background: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+}
+
+body.custom-colors *:not(.acc-fab-wrapper *) {
+  background-color: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+  border-color: var(--custom-text) !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+body.custom-colors a:not(.acc-fab-wrapper *), 
+body.custom-colors button:not(.acc-fab-wrapper *),
+body.custom-colors .btn:not(.acc-fab-wrapper *) {
+  color: var(--custom-text) !important;
+  border: 2px solid var(--custom-text) !important;
+  background: var(--custom-bg) !important;
+  text-decoration: underline !important;
+}
+
+body.custom-colors h1, 
+body.custom-colors h2, 
+body.custom-colors h3, 
+body.high-contrast h4, 
+body.custom-colors h5, 
+body.custom-colors h6, 
+body.custom-colors strong {
+  color: var(--custom-text) !important;
+  filter: brightness(1.2); /* Un poco más de brillo para títulos */
+}
+
+body.custom-colors input, 
+body.custom-colors select, 
+body.custom-colors textarea {
+  background: var(--custom-bg) !important;
+  color: var(--custom-text) !important;
+  border: 2px solid var(--custom-text) !important;
+}

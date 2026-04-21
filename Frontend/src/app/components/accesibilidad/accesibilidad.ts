@@ -47,11 +47,12 @@ export class AccesibilidadComponent implements OnInit {
   cuentaRegresiva = 10;
   private timerPreview: any;
 
-  // Estado del Test
-  mostrandoTest = false;
-  pasoTest = 0; // 0=intro, 1=placa1, 2=placa2, 3=placa3, 4=resultado
-  diagnostico: TipoFiltro[] = [];
-  resultadoTest: { tipo: TipoFiltro; etiqueta: string; descripcion: string } | null = null;
+  // Estados de Vista
+  vistaActual: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' = 'PRINCIPAL';
+
+  // Ajustes Visuales
+  nivelZoom = 1; // 1 = 100%, 1.2 = 120%, etc.
+  contrasteActivo = false;
 
   opciones: { tipo: TipoFiltro; etiqueta: string; icono: string; color: string; desc?: string }[] = [
     { 
@@ -82,16 +83,65 @@ export class AccesibilidadComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const guardado = localStorage.getItem(LS_KEY) as TipoFiltro | null;
-    if (guardado && guardado !== 'NINGUNO') {
-      this.filtroActivo = guardado;
-      this.aplicarFiltro(guardado);
+    // Cargar todas las preferencias
+    const fActivo = localStorage.getItem(LS_KEY) as TipoFiltro | null;
+    const zNivel = localStorage.getItem('DOCGOSI_ZOOM');
+    const cActivo = localStorage.getItem('DOCGOSI_CONTRASTE');
+
+    if (fActivo && fActivo !== 'NINGUNO') {
+      this.filtroActivo = fActivo;
+      this.aplicarFiltro(fActivo);
+    }
+
+    if (zNivel) {
+      this.nivelZoom = parseFloat(zNivel);
+      this.aplicarZoom(this.nivelZoom);
+    }
+
+    if (cActivo === 'true') {
+      this.contrasteActivo = true;
+      this.aplicarContraste(true);
     }
   }
 
   toggleMenu() { 
     this.abierto = !this.abierto; 
-    if (this.abierto) this.mostrandoTest = false; // reset test si abre menú
+    if (this.abierto) {
+      this.mostrandoTest = false;
+      this.vistaActual = 'PRINCIPAL';
+    }
+  }
+
+  cambiarVista(nueva: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE') {
+    this.vistaActual = nueva;
+  }
+
+  // Lógica de Zoom
+  ajustarZoom(delta: number) {
+    this.nivelZoom = Math.min(Math.max(this.nivelZoom + delta, 0.8), 1.5);
+    this.aplicarZoom(this.nivelZoom);
+    localStorage.setItem('DOCGOSI_ZOOM', this.nivelZoom.toString());
+  }
+
+  // Lógica de Contraste
+  toggleContraste() {
+    this.contrasteActivo = !this.contrasteActivo;
+    this.aplicarContraste(this.contrasteActivo);
+    localStorage.setItem('DOCGOSI_CONTRASTE', this.contrasteActivo.toString());
+  }
+
+  private aplicarZoom(nivel: number) {
+    document.documentElement.style.setProperty('--app-zoom', nivel.toString());
+    // Aplicamos al elemento raíz para que afecte a los REM
+    document.documentElement.style.fontSize = `${nivel * 100}%`;
+  }
+
+  private aplicarContraste(activo: boolean) {
+    if (activo) {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
   }
 
   iniciarTest() {

@@ -53,27 +53,100 @@
 
   <!-- Menú desplegable (speed dial) -->
   <div class="acc-menu" [class.open]="abierto">
+    
+    <!-- CABECERA DINÁMICA -->
     <div class="acc-menu-header">
-      <i class="fa-solid fa-eye"></i>
-      <span>Visión</span>
+      <button class="btn-back" *ngIf="vistaActual !== 'PRINCIPAL'" (click)="cambiarVista('PRINCIPAL')">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <i class="fa-solid" [ngClass]="{
+        'fa-universal-access': vistaActual === 'PRINCIPAL',
+        'fa-eye': vistaActual === 'VISION',
+        'fa-magnifying-glass': vistaActual === 'ZOOM',
+        'fa-circle-half-stroke': vistaActual === 'CONTRASTE'
+      }"></i>
+      <span>{{ vistaActual === 'PRINCIPAL' ? 'Accesibilidad' : vistaActual }}</span>
     </div>
 
-    <button
-      *ngFor="let op of opciones"
-      class="acc-option"
-      [class.active]="filtroActivo === op.tipo"
-      (click)="seleccionar(op.tipo)"
-      [title]="op.etiqueta">
-      <span class="acc-option-icon">{{ op.icono }}</span>
-      <span class="acc-option-label">{{ op.etiqueta }}</span>
-      <i class="fa-solid fa-check acc-check" *ngIf="filtroActivo === op.tipo"></i>
-    </button>
+    <!-- VISTA PRINCIPAL (CATEGORÍAS) -->
+    <div class="view-categories" *ngIf="vistaActual === 'PRINCIPAL'">
+      <button class="category-card" (click)="cambiarVista('VISION')">
+        <i class="fa-solid fa-eye"></i>
+        <span>Visión</span>
+        <small>{{ etiquetaActiva() }}</small>
+        <i class="fa-solid fa-chevron-right arrow-next"></i>
+      </button>
+      
+      <button class="category-card" (click)="cambiarVista('ZOOM')">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Zoom</span>
+        <small>{{ (nivelZoom * 100).toFixed(0) }}%</small>
+        <i class="fa-solid fa-chevron-right arrow-next"></i>
+      </button>
 
-    <div class="acc-menu-footer">
-      <button class="btn-start-test" (click)="iniciarTest()">
-        <i class="fa-solid fa-vial"></i> ¿No sabes tu tipo? Test rápido
+      <button class="category-card" (click)="cambiarVista('CONTRASTE')">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+        <span>Contraste</span>
+        <small>{{ contrasteActivo ? 'Activado' : 'Desactivado' }}</small>
+        <i class="fa-solid fa-chevron-right arrow-next"></i>
       </button>
     </div>
+
+    <!-- VISTA SUB-MENÚ: VISIÓN (DALTONISMO) -->
+    <div class="view-submenu" *ngIf="vistaActual === 'VISION'">
+      <button
+        *ngFor="let op of opciones"
+        class="acc-option"
+        [class.active]="filtroActivo === op.tipo"
+        (click)="seleccionar(op.tipo)"
+        [title]="op.etiqueta">
+        <span class="acc-option-icon">{{ op.icono }}</span>
+        <span class="acc-option-label">{{ op.etiqueta }}</span>
+        <i class="fa-solid fa-check acc-check" *ngIf="filtroActivo === op.tipo"></i>
+      </button>
+
+      <div class="acc-menu-footer">
+        <button class="btn-start-test" (click)="iniciarTest()">
+          <i class="fa-solid fa-vial"></i> ¿No sabes tu tipo? Test rápido
+        </button>
+      </div>
+    </div>
+
+    <!-- VISTA SUB-MENÚ: ZOOM -->
+    <div class="view-submenu-zoom" *ngIf="vistaActual === 'ZOOM'">
+      <div class="zoom-controls">
+        <button class="btn-zoom" (click)="ajustarZoom(-0.1)" [disabled]="nivelZoom <= 0.8">
+          <i class="fa-solid fa-minus"></i>
+        </button>
+        <div class="zoom-indicator">
+          <span>{{ (nivelZoom * 100).toFixed(0) }}%</span>
+          <small>Tamaño Interfaz</small>
+        </div>
+        <button class="btn-zoom" (click)="ajustarZoom(0.1)" [disabled]="nivelZoom >= 1.5">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+      <button class="btn-reset-zoom" (click)="nivelZoom = 1; ajustarZoom(0)">Restablecer</button>
+    </div>
+
+    <!-- VISTA SUB-MENÚ: CONTRASTE -->
+    <div class="view-submenu-contrast" *ngIf="vistaActual === 'CONTRASTE'">
+      <div class="contrast-toggle-box">
+        <div class="toggle-info">
+          <strong>Modo Alto Contraste</strong>
+          <span>Mejora la legibilidad de textos y bordes.</span>
+        </div>
+        <button class="acc-switch" [class.on]="contrasteActivo" (click)="toggleContraste()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
+      <div class="contrast-preview">
+        <div class="preview-dot black"></div>
+        <div class="preview-dot white"></div>
+        <div class="preview-dot yellow"></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Botón principal -->

@@ -414,8 +414,8 @@ export class AccesibilidadComponent implements OnInit {
     let mejorCandidato: HTMLElement | null = null;
     let minimaDistancia = Infinity;
 
-    candidatos.forEach(cand => {
-      if (cand === actual) return;
+    for (const cand of candidatos) {
+      if (cand === actual) continue;
 
       const rectCand = cand.getBoundingClientRect();
       const centroCand = {
@@ -451,7 +451,7 @@ export class AccesibilidadComponent implements OnInit {
           mejorCandidato = cand;
         }
       }
-    });
+    }
 
     if (mejorCandidato) {
       mejorCandidato.focus();

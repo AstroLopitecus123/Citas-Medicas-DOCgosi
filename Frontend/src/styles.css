@@ -30,3 +30,55 @@ input, select, textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: #0a7c4a;
 }
+
+/* ──────────────────────────────────────────────────────────
+   MODO ALTO CONTRASTE GLOBAL (Accesibilidad)
+   ────────────────────────────────────────────────────────── */
+body.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* Forzar colores en todos los elementos (excepto el menú de accesibilidad) */
+body.high-contrast *:not(.acc-fab-wrapper *) {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #ffff00 !important; /* Bordes amarillos para visibilidad */
+  box-shadow: none !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+body.high-contrast a:not(.acc-fab-wrapper *), 
+body.high-contrast button:not(.acc-fab-wrapper *),
+body.high-contrast .btn:not(.acc-fab-wrapper *) {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+  border: 2px solid #ffff00 !important;
+  background: #000 !important;
+}
+
+body.high-contrast h1, 
+body.high-contrast h2, 
+body.high-contrast h3, 
+body.high-contrast h4, 
+body.high-contrast h5, 
+body.high-contrast h6, 
+body.high-contrast strong,
+body.high-contrast b {
+  color: #ffff00 !important;
+}
+
+body.high-contrast input, 
+body.high-contrast select, 
+body.high-contrast textarea {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+body.high-contrast .card,
+body.high-contrast .panel,
+body.high-contrast div[class*="container"] {
+  border: 1px solid #fff !important;
+}

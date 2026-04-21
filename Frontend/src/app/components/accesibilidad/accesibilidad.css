@@ -326,33 +326,6 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* ─── ALTO CONTRASTE GLOBAL ────────────────────────── */
-body.high-contrast {
-  background-color: #000 !important;
-  color: #fff !important;
-}
-
-body.high-contrast *:not(.acc-fab-wrapper *) {
-  background-color: #000 !important;
-  color: #fff !important;
-  border-color: #fff !important;
-  box-shadow: none !important;
-}
-
-body.high-contrast button:not(.acc-fab-wrapper *), 
-body.high-contrast a:not(.acc-fab-wrapper *) {
-  border: 2px solid #fff !important;
-  padding: 10px !important;
-  color: #ffff00 !important; /* Texto amarillo para resaltar */
-}
-
-body.high-contrast h1, 
-body.high-contrast h2, 
-body.high-contrast h3, 
-body.high-contrast h4 {
-  color: #ffff00 !important;
-}
-
 /* ─── OPCIONES (GENERAL) ────────────────────────────── */
 .acc-option {
   width: 100%;

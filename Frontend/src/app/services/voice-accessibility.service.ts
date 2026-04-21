@@ -30,9 +30,17 @@ export class VoiceAccessibilityService implements OnDestroy {
     this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config`).subscribe({
       next: (config) => {
         this.deepgramApiKey = config.deepgramApiKey;
-        this.connectDeepgram();
+        if (this.deepgramApiKey && this.deepgramApiKey.trim().length > 0) {
+          this.connectDeepgram();
+        } else {
+          console.error("⚠️ No se recibió una API Key válida de Deepgram.");
+          this.isListening = false;
+        }
       },
-      error: (err) => console.error("Error al obtener credenciales de voz", err)
+      error: (err) => {
+        console.error("Error al obtener credenciales de voz", err);
+        this.isListening = false;
+      }
     });
   }
 

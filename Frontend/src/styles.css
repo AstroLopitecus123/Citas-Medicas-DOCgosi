@@ -58,14 +58,14 @@ body.high-contrast .btn:not(.acc-fab-wrapper *) {
   background: #000 !important;
 }
 
-body.high-contrast h1, 
-body.high-contrast h2, 
-body.high-contrast h3, 
-body.high-contrast h4, 
-body.high-contrast h5, 
-body.high-contrast h6, 
-body.high-contrast strong,
-body.high-contrast b {
+body.high-contrast h1:not(.acc-fab-wrapper *), 
+body.high-contrast h2:not(.acc-fab-wrapper *), 
+body.high-contrast h3:not(.acc-fab-wrapper *), 
+body.high-contrast h4:not(.acc-fab-wrapper *), 
+body.high-contrast h5:not(.acc-fab-wrapper *), 
+body.high-contrast h6:not(.acc-fab-wrapper *), 
+body.high-contrast strong:not(.acc-fab-wrapper *),
+body.high-contrast b:not(.acc-fab-wrapper *) {
   color: #ffff00 !important;
 }
 
@@ -114,13 +114,13 @@ body.custom-colors .btn:not(.acc-fab-wrapper *) {
   text-decoration: underline !important;
 }
 
-body.custom-colors h1, 
-body.custom-colors h2, 
-body.custom-colors h3, 
-body.high-contrast h4, 
-body.custom-colors h5, 
-body.custom-colors h6, 
-body.custom-colors strong {
+body.custom-colors h1:not(.acc-fab-wrapper *), 
+body.custom-colors h2:not(.acc-fab-wrapper *), 
+body.custom-colors h3:not(.acc-fab-wrapper *), 
+body.high-contrast h4:not(.acc-fab-wrapper *), 
+body.custom-colors h5:not(.acc-fab-wrapper *), 
+body.custom-colors h6:not(.acc-fab-wrapper *), 
+body.custom-colors strong:not(.acc-fab-wrapper *) {
   color: var(--custom-text) !important;
   filter: brightness(1.2); /* Un poco más de brillo para títulos */
 }

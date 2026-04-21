@@ -170,13 +170,21 @@ export class AccesibilidadComponent implements OnInit {
 
   toggleContraste() {
     this.contrasteActivo = !this.contrasteActivo;
-    if (this.contrasteActivo) {
+    
+    // Si desactivamos, limpiamos todo (Preset y Personalizado)
+    if (!this.contrasteActivo) {
       this.esPersonalizado = false;
       this.aplicarColoresPersonalizados(false);
+      this.aplicarContraste(false);
+    } else {
+      // Si activamos desde el toggle (sin estar en personalizado), aplicamos Preset
+      if (!this.esPersonalizado) {
+        this.aplicarContraste(true);
+      }
     }
-    this.aplicarContraste(this.contrasteActivo);
+    
     localStorage.setItem('DOCGOSI_CONTRASTE', this.contrasteActivo.toString());
-    localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
+    localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', this.esPersonalizado.toString());
   }
 
   actualizarColor(tipo: 'BG' | 'TEXT', event: Event) {
@@ -185,23 +193,26 @@ export class AccesibilidadComponent implements OnInit {
     else this.customText = val;
     
     this.esPersonalizado = true;
-    this.contrasteActivo = false;
-    this.aplicarContraste(false);
+    this.contrasteActivo = true; // Forzar ON para indicar que hay contraste aplicado
+    this.aplicarContraste(false); // El preset cede ante el personalizado
     this.aplicarColoresPersonalizados(true);
+    
     localStorage.setItem('DOCGOSI_CUSTOM_BG', this.customBg);
     localStorage.setItem('DOCGOSI_CUSTOM_TEXT', this.customText);
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'true');
-    localStorage.setItem('DOCGOSI_CONTRASTE', 'false');
+    localStorage.setItem('DOCGOSI_CONTRASTE', 'true');
   }
 
   resetearColores() {
     this.customBg = '#ffffff';
     this.customText = '#333333';
     this.esPersonalizado = false;
+    this.contrasteActivo = false;
     this.aplicarColoresPersonalizados(false);
     localStorage.removeItem('DOCGOSI_CUSTOM_BG');
     localStorage.removeItem('DOCGOSI_CUSTOM_TEXT');
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'false');
+    localStorage.setItem('DOCGOSI_CONTRASTE', 'false');
   }
 
   toggleVoz(forzar?: boolean) {

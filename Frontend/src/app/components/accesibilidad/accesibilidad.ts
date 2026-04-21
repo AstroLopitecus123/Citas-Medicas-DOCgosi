@@ -42,6 +42,7 @@ export class AccesibilidadComponent implements OnInit {
   esModoWizard = false;
 
   constructor(
+    private http: HttpClient,
     private app: AppComponent,
     private voiceService: VoiceAccessibilityService,
     private narratorService: NarratorService,
@@ -332,7 +333,7 @@ export class AccesibilidadComponent implements OnInit {
         configuracionVisual: this.filtroActivo
       }).subscribe({
         next: () => console.log('✅ Configuración visual guardada'),
-        error: (err) => console.error('❌ Error:', err)
+        error: (err: any) => console.error('❌ Error:', err)
       });
     }
   }

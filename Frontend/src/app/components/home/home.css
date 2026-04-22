@@ -300,43 +300,30 @@
 .honeycomb {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  /* 3 celdas de 220px + 2 gaps de 12px = 684px */
-  width: 684px;
-  /* Importante: alinear filas al centro */
+  width: 720px; /* Suficiente para 3 hexágonos + gaps */
   justify-content: flex-start;
 }
 
-/* ─── CADA CELDA ─── */
 .honeycomb-cell {
   width: 220px;
-  height: 220px;          /* Alto del bounding-box (cuadrado) */
-  margin: 6px;            /* Separación uniforme entre celdas */
+  height: 220px;
+  margin: 10px; /* Separación más limpia */
   position: relative;
   z-index: 1;
 }
 
-/*
-  OFFSET DE FILA PAR:
-  Las celdas 4,5,6 (2ª fila) deben bajar y desplazarse 110px (W/2) a la derecha,
-  pero con flex-wrap esto se consigue con margin-top negativo + padding-left en el
-  primer elemento de la fila par.
-
-  Aquí usamos la misma estrategia que MMI: nth-child(3n+1) de la segunda fila
-  tiene margin-left de W/2.
-*/
-/* Celdas 4, 7, 10 … (inicio de fila par) */
-.honeycomb-cell:nth-child(n+4):nth-child(-n+6),
-.honeycomb-cell:nth-child(n+10):nth-child(-n+12) {
-  margin-top: calc(-220px * 0.134); /* = -(W - h)/2 para encajar vértice en vértice */
+/* OFFSET FILAS PARES (Celdas 4, 5, 6) */
+.honeycomb-cell:nth-child(4),
+.honeycomb-cell:nth-child(5),
+.honeycomb-cell:nth-child(6) {
+  margin-top: -50px; /* Sube para encajar */
 }
 
-/* Desplazamiento horizontal de filas pares */
-.honeycomb-cell:nth-child(4),
-.honeycomb-cell:nth-child(10) {
-  margin-left: 115px; /* W/2 + gap */
+.honeycomb-cell:nth-child(4) {
+  margin-left: 130px; /* Offset horizontal de media celda */
 }
 
 /* ─── FLIP CARD WRAPPER ─── */

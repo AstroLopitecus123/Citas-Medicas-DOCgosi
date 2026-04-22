@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { NarratorDirective } from '../../directives/narrator.directive';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -30,5 +31,28 @@ export class HomeComponent {
     { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical' }
   ];
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private usuarioService: UsuarioService
+  ) {}
+
+  sacarCita() {
+    const usuarioJson = localStorage.getItem('usuario');
+    if (usuarioJson) {
+      const usuario = JSON.parse(usuarioJson);
+      // Redirigir según el rol
+      if (usuario.rol === 'PACIENTE') {
+        this.router.navigate(['/paciente-dashboard']);
+      } else if (usuario.rol === 'MEDICO') {
+        this.router.navigate(['/medico-dashboard']);
+      } else if (usuario.rol === 'ADMIN') {
+        this.router.navigate(['/admin-dashboard']);
+      } else if (usuario.rol === 'RECEPCION') {
+        this.router.navigate(['/recepcion-dashboard']);
+      }
+    } else {
+      // Si no hay sesión, al login
+      this.router.navigate(['/login']);
+    }
+  }
 }

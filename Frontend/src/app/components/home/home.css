@@ -262,43 +262,29 @@
   font-size: 1.2rem;
 }
 
-/* ESPECIALIDADES (REFINED HEX LAYOUT) */
+/* ESPECIALIDADES (FLIP HONEYCOMB LAYOUT) */
 .services {
   background: #ffffff;
   padding: 120px 0;
-  overflow: visible;
 }
 
 .services-flex {
   display: flex;
   align-items: center;
-  gap: 80px;
-  max-width: 1300px;
+  gap: 100px;
+  max-width: 1400px;
 }
 
 .services-content {
   flex: 1;
 }
 
-.expertise-tag {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #f4fdf7;
-  padding: 12px 20px;
-  border-radius: 12px;
-  width: fit-content;
-  color: #0fbf6a;
-  font-weight: 700;
-  margin-top: 30px;
-}
-
-/* HONEYCOMB GRID CONTAINER */
+/* HONEYCOMB GRID SYSTEM */
 .hex-grid-container {
-  flex: 1.5;
+  flex: 1.4;
   display: flex;
   justify-content: center;
-  perspective: 1000px;
+  padding: 60px 0;
 }
 
 .honeycomb {
@@ -308,66 +294,66 @@
   padding: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   justify-content: center;
+  perspective: 2000px; /* Base para el efecto 3D */
 }
 
 .honeycomb-cell {
-  flex: 0 1 200px;
-  max-width: 200px;
-  height: 115.47px; /* (200 / sqrt(3)) */
-  background-color: #1a2a3a;
-  margin: 58px 5px; /* Offset to allow vertical stacking */
+  flex: 0 1 220px;
+  max-width: 220px;
+  height: 127px; /* Ajuste proporcional */
+  margin: 75px 15px; /* MÁS ESPACIO entre hexágonos */
   position: relative;
-  transition: all 0.5s ease;
+  transition: transform 0.8s ease;
   z-index: 1;
 }
 
-.honeycomb-cell::before,
-.honeycomb-cell::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-}
-
-.honeycomb-cell::before {
-  bottom: 100%;
-  border-bottom: 57.74px solid #1a2a3a;
-}
-
-.honeycomb-cell::after {
-  top: 100%;
-  width: 0;
-  border-top: 57.74px solid #1a2a3a;
-}
-
+/* Estructura del Flip Card */
 .honeycomb-cell__wrapper {
   position: absolute;
-  top: -57.74px;
+  top: -63.5px;
   left: 0;
-  width: 200px;
-  height: 230.94px;
-  overflow: hidden;
+  width: 220px;
+  height: 254px;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.honeycomb-cell:hover .honeycomb-cell__wrapper {
+  transform: rotateY(180deg);
+}
+
+.honeycomb-cell__front,
+.honeycomb-cell__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* LADO FRONTAL */
+.honeycomb-cell__front {
+  background: #1a2a3a;
   z-index: 2;
+  transform: rotateY(0deg);
 }
 
 .honeycomb-cell__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
-  filter: brightness(0.7);
+  filter: brightness(0.85);
 }
 
 .honeycomb-cell__overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to bottom, transparent, rgba(15, 191, 106, 0.9));
-  opacity: 0.3;
-  transition: opacity 0.5s;
+  background: linear-gradient(to bottom, transparent, rgba(15, 191, 106, 0.4));
 }
 
 .honeycomb-cell__title {
@@ -376,97 +362,76 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
   text-align: center;
   width: 90%;
-  z-index: 5;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  transition: all 0.4s ease;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
 
-.honeycomb-cell__description {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 30px 15px;
-  background: rgba(15, 191, 106, 0.95);
+/* LADO TRASERO (LA INFORMACIÓN) */
+.honeycomb-cell__back {
+  background: linear-gradient(135deg, #0a7c4a 0%, #0fbf6a 100%);
   color: white;
-  transform: translateY(100%);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
-  z-index: 6;
-}
-
-.honeycomb-cell__description p {
-  font-size: 0.85rem;
-  line-height: 1.4;
-  margin-bottom: 10px;
-}
-
-.honeycomb-btn {
-  width: 35px;
-  height: 35px;
-  background: white;
-  color: #0fbf6a;
-  border-radius: 50%;
+  transform: rotateY(180deg);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  padding: 30px;
+  z-index: 1;
+}
+
+.back-content {
+  text-align: center;
+}
+
+.back-content p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.honeycomb-btn-flip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: #0a7c4a;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-decoration: none;
-  font-size: 0.9rem;
+  transition: 0.3s;
 }
 
-/* HOVER EFFECTS */
-.honeycomb-cell:hover {
-  z-index: 10;
+.honeycomb-btn-flip:hover {
   transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.honeycomb-cell:hover .honeycomb-cell__image {
-  transform: scale(1.15);
-}
-
-.honeycomb-cell:hover .honeycomb-cell__overlay {
-  opacity: 1;
-}
-
-.honeycomb-cell:hover .honeycomb-cell__title {
-  opacity: 0;
-  transform: translate(-50%, -100%);
-}
-
-.honeycomb-cell:hover .honeycomb-cell__description {
-  transform: translateY(0);
-}
-
-/* SPECIALS */
-.honeycomb__more .honeycomb-cell__wrapper {
+/* HONEYCOMB MORE */
+.honeycomb__more .honeycomb-cell__front {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
 
-.more-bg {
-  background: url('https://images.unsplash.com/photo-1576091160550-2173dad99901?auto=format&fit=crop&q=80&w=400') center/cover;
-  opacity: 0.2;
-}
-
+/* HONEYCOMB PLACEHOLDER */
 .honeycomb__placeholder {
   visibility: hidden;
+  height: 0;
+  margin: 0;
 }
 
-/* OFFSET FOR TRUE HONEYCOMB EFFECT */
-@media (min-width: 630px) {
+/* OFFSET PARA EFECTO PANAL (SOLO EN DESKTOP) */
+@media (min-width: 768px) {
   .honeycomb {
-    justify-content: flex-start;
-    padding-left: 100px;
+    justify-content: center;
   }
-  .honeycomb-cell:nth-child(3n+2) {
-    margin-top: 173.41px; /* 115.47 * 1.5 approx */
-    margin-bottom: -58px;
-    margin-left: -105px;
-    margin-right: -105px;
+  .honeycomb-cell:nth-child(even) {
+    margin-top: 200px; /* Desplazamiento para encajar */
+    margin-left: -110px;
+    margin-right: -110px;
   }
 }
 
@@ -475,31 +440,15 @@
   .services-flex {
     flex-direction: column;
     text-align: center;
-    gap: 40px;
   }
-  .section-underline.left {
-    margin: 0 auto 30px;
-  }
-  .expertise-tag {
-    margin: 30px auto;
-  }
-  .honeycomb {
-    padding-left: 0;
-    justify-content: center;
-  }
-  .honeycomb-cell:nth-child(3n+2) {
-    margin: 58px 5px;
+  .honeycomb-cell:nth-child(even) {
+    margin: 75px 15px;
   }
 }
 
 /* ANIMATIONS */
-.anim-slide-in-left {
-  animation: slideInLeft 1s ease-out;
-}
-
-.anim-slide-in-right {
-  animation: slideInRight 1s ease-out;
-}
+.anim-slide-in-left { animation: slideInLeft 1s ease-out; }
+.anim-slide-in-right { animation: slideInRight 1s ease-out; }
 
 @keyframes slideInLeft {
   from { opacity: 0; transform: translateX(-50px); }

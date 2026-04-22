@@ -73,30 +73,41 @@
         </div>
       </div>
 
-      <!-- Columna Derecha: Honeycomb Grid -->
+      <!-- Columna Derecha: Honeycomb Grid con Efecto Flip -->
       <div class="hex-grid-container anim-slide-in-right">
         <ul class="honeycomb">
           <li class="honeycomb-cell" *ngFor="let e of especialidades">
             <div class="honeycomb-cell__wrapper">
-              <img [src]="e.imagen" class="honeycomb-cell__image" [alt]="e.titulo">
-              <div class="honeycomb-cell__overlay"></div>
-              <h4 class="honeycomb-cell__title">{{ e.titulo }}</h4>
-              <div class="honeycomb-cell__description">
-                <p>{{ e.descripcion }}</p>
-                <a href="#" class="honeycomb-btn">
-                  <i class="fa-solid fa-plus"></i>
-                </a>
+              <!-- Lado Frontal: Imagen y Título -->
+              <div class="honeycomb-cell__front">
+                <img [src]="e.imagen" class="honeycomb-cell__image" [alt]="e.titulo">
+                <div class="honeycomb-cell__overlay"></div>
+                <h4 class="honeycomb-cell__title">{{ e.titulo }}</h4>
+              </div>
+              <!-- Lado Trasero: Descripción y Acción -->
+              <div class="honeycomb-cell__back">
+                <div class="back-content">
+                  <p>{{ e.descripcion }}</p>
+                  <a href="#" class="honeycomb-btn-flip">
+                    Saber más <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </li>
-          <!-- Celda de "And more" -->
+          
+          <!-- Celda de "And more" con Flip -->
           <li class="honeycomb-cell honeycomb__more">
             <div class="honeycomb-cell__wrapper">
-              <div class="honeycomb-cell__image more-bg"></div>
-              <h4 class="honeycomb-cell__title">¡Y mucho más!</h4>
-              <div class="honeycomb-cell__description">
-                <p>Descubre todas nuestras coberturas médicas.</p>
-                <a href="#" class="honeycomb-btn"><i class="fa-solid fa-angles-right"></i></a>
+              <div class="honeycomb-cell__front">
+                <div class="honeycomb-cell__image more-bg"></div>
+                <h4 class="honeycomb-cell__title">¡Y mucho más!</h4>
+              </div>
+              <div class="honeycomb-cell__back">
+                <div class="back-content">
+                  <p>Descubre todas nuestras coberturas médicas y convenios institucionales.</p>
+                  <a href="#" class="honeycomb-btn-flip">Explorar <i class="fa-solid fa-angles-right"></i></a>
+                </div>
               </div>
             </div>
           </li>

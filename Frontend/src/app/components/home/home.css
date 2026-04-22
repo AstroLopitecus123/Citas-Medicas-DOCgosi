@@ -262,17 +262,191 @@
   font-size: 1.2rem;
 }
 
-/* ESPECIALIDADES */
-.services { background: #f8fafc; padding: 100px 0; }
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-.service-card { background: white; border-radius: 22px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: 0.4s; border: 1px solid #f0f0f0; }
-.service-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
-.service-img-wrapper { height: 220px; overflow: hidden; }
-.service-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-.service-card:hover img { transform: scale(1.1); }
-.service-info { padding: 30px; text-align: center; }
-.service-info h3 { margin-bottom: 12px; color: #1a2a3a; font-size: 1.5rem; }
-.service-info p { font-size: 1rem; color: #666; line-height: 1.6; }
+/* ESPECIALIDADES (HEX GRID) */
+.services {
+  background: #ffffff;
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.sub-title.center {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+.section-desc {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* HEX GRID LOGIC */
+.hex-grid-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.hex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 900px;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hex-card {
+  width: 260px;
+  height: 300px;
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.hex-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #1a2a3a;
+  overflow: hidden;
+}
+
+.hex-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hex-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+  filter: brightness(0.7) contrast(1.1);
+}
+
+.hex-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(15, 191, 106, 0.8) 100%);
+  opacity: 0.4;
+  transition: opacity 0.5s;
+}
+
+.hex-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 25px;
+  color: white;
+  z-index: 5;
+  text-align: center;
+  transform: translateY(40px);
+  transition: transform 0.5s ease;
+}
+
+.hex-text h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hex-desc {
+  font-size: 0.95rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.hex-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.7;
+}
+
+/* HOVER EFFECTS */
+.hex-card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.hex-card:hover .hex-image img {
+  transform: scale(1.2);
+}
+
+.hex-card:hover .hex-overlay {
+  opacity: 0.9;
+}
+
+.hex-card:hover .hex-text {
+  transform: translateY(0);
+}
+
+.hex-card:hover .hex-desc {
+  opacity: 1;
+}
+
+/* SPECIAL CASE: HEX MORE */
+.hex-more .hex-content {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hex-more .hex-text {
+  transform: none;
+  position: relative;
+  padding: 0;
+}
+
+.hex-plus {
+  font-size: 2.5rem;
+  margin-top: 20px;
+  color: #0fbf6a;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* AJUSTE PARA EL ESCALONAMIENTO (HONEYCOMB EFFECT) */
+/* En desktop, podemos mover los hexágonos de la segunda fila si el contenedor es fijo */
+/* Pero para un grid responsive, el diseño de clip-path con gap suele bastar. 
+   Si queremos el efecto "offset", podemos usar margin-top negativo en elementos pares */
+
+@media (min-width: 900px) {
+  .hex-grid {
+    gap: 15px;
+  }
+  /* Offset para crear el panal real */
+  .hex-card:nth-child(even) {
+    margin-top: 80px;
+  }
+}
 
 /* DOCTORES */
 .doctors { background: white; padding: 100px 0; }

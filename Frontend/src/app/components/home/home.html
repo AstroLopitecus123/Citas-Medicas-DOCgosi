@@ -55,21 +55,40 @@
     </div>
   </section>
 
-  <!-- 3. ESPECIALIDADES -->
+  <!-- 3. ESPECIALIDADES (HEX GRID STYLE) -->
   <section class="services">
     <div class="section-container">
-      <h2 class="section-title">Nuestras Especialidades</h2>
-      <div class="section-underline"></div>
+      <div class="services-header">
+        <span class="sub-title center">Nuestra Experiencia</span>
+        <h2 class="section-title">Especialidades Médicas</h2>
+        <div class="section-underline"></div>
+        <p class="section-desc">Contamos con tecnología de punta y especialistas de renombre en cada área de la salud.</p>
+      </div>
       
-      <div class="services-grid">
-        <div class="service-card" *ngFor="let e of especialidades">
-          <div class="service-img-wrapper">
-            <img [src]="e.imagen" [alt]="e.titulo" appNarrator [altText]="'Especialidad de ' + e.titulo">
+      <div class="hex-grid-wrapper">
+        <div class="hex-grid">
+          <div class="hex-card" *ngFor="let e of especialidades">
+            <div class="hex-content">
+              <div class="hex-image">
+                <img [src]="e.imagen" [alt]="e.titulo">
+                <div class="hex-overlay"></div>
+              </div>
+              <div class="hex-text">
+                <h3>{{ e.titulo }}</h3>
+                <p class="hex-desc">{{ e.descripcion }}</p>
+                <span class="hex-link">VER MÁS <i class="fa-solid fa-arrow-right"></i></span>
+              </div>
+            </div>
           </div>
-          <div class="service-info">
-            <h3>{{ e.titulo }}</h3>
-            <p>{{ e.descripcion }}</p>
-            <a href="#" class="view-more">VER MÁS <i class="fa-solid fa-angles-right"></i></a>
+          <!-- Hexágono decorativo o "Ver todas" -->
+          <div class="hex-card hex-more">
+            <div class="hex-content">
+              <div class="hex-text">
+                <h3>Y más...</h3>
+                <p>Explora todas nuestras áreas</p>
+                <div class="hex-plus"><i class="fa-solid fa-plus"></i></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

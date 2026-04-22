@@ -278,4 +278,11 @@ export class RegistrarUsuarioController {
   trackByPaisId(index: number, pais: Pais): number {
     return pais.id;
   }
+
+  soloNumeros(event: KeyboardEvent) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+    }
+  }
 }

@@ -104,14 +104,16 @@
           <!-- DNI -->
           <div class="input-group">
             <label for="dni">DNI / ID</label>
-            <input id="dni" type="number" [(ngModel)]="ctrl.usuario.dni" name="dni" required
+            <input id="dni" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.dni" name="dni" 
+                   required placeholder="Solo números" (keypress)="ctrl.soloNumeros($event)"
                    aria-label="Número de documento de identidad">
           </div>
 
           <!-- Teléfono -->
           <div class="input-group">
             <label for="telefono">Teléfono</label>
-            <input id="telefono" type="number" [(ngModel)]="ctrl.usuario.telefono" name="telefono" required
+            <input id="telefono" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.telefono" name="telefono" 
+                   required placeholder="9 dígitos" (keypress)="ctrl.soloNumeros($event)"
                    aria-label="Número de teléfono celular">
           </div>
         </div>

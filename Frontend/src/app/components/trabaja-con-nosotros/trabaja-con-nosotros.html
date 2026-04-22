@@ -73,13 +73,15 @@
               </div>
               <div class="input-group">
                 <label>DNI / ID</label>
-                <input type="text" [(ngModel)]="solicitud.dni" name="dni" placeholder="ID" required>
+                <input type="text" inputmode="numeric" [(ngModel)]="solicitud.dni" name="dni" 
+                       placeholder="Solo números" (keypress)="soloNumeros($event)" required>
               </div>
             </div>
 
             <div class="input-group">
               <label>Teléfono</label>
-              <input type="text" [(ngModel)]="solicitud.telefono" name="telefono" placeholder="+51 999 999 999" required>
+              <input type="text" inputmode="numeric" [(ngModel)]="solicitud.telefono" name="telefono" 
+                     placeholder="9 dígitos" (keypress)="soloNumeros($event)" required>
             </div>
 
             <div class="input-group">

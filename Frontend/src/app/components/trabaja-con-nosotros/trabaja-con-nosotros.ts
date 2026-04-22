@@ -59,4 +59,11 @@ export class TrabajaConNosotrosComponent implements OnInit {
     }
     return true;
   }
+
+  soloNumeros(event: KeyboardEvent) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+    }
+  }
 }

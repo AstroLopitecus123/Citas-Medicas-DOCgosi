@@ -11,6 +11,8 @@ import { GestionarDisponibilidadComponent } from './components/gestionar-disponi
 import { PagarEfectivoComponent } from './components/pagar-efectivo/pagar-efectivo';
 import { HomeComponent } from './components/home/home';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
+import { TrabajaConNosotrosComponent } from './components/trabaja-con-nosotros/trabaja-con-nosotros';
+import { AdminSolicitudesComponent } from './components/admin-solicitudes/admin-solicitudes';
 
 // 🔒 Guards de Seguridad
 import { AuthGuard } from './guards/auth.guard';
@@ -27,6 +29,7 @@ export const routes: Routes = [
   { path: 'registrar', component: RegistrarUsuarioComponent, title: 'Registro' },
   { path: 'recuperar', component: RecuperarComponent, title: 'Recuperar Contraseña' },
   { path: 'restablecer', component: RestablecerComponent, title: 'Restablecer Contraseña' },
+  { path: 'trabaja-con-nosotros', component: TrabajaConNosotrosComponent, title: 'Trabaja con Nosotros' },
 
   // ─── PANEL DE ADMINISTRADOR ───────────────────────────────────────────────────
   { path: 'admin', component: AdminDashboardComponent, title: 'Panel Administrador', canActivate: [AdminGuard] },
@@ -37,6 +40,7 @@ export const routes: Routes = [
   { path: 'admin/notificaciones', loadComponent: () => import('./components/admin-notificaciones/admin-notificaciones').then(m => m.AdminNotificacionesComponent), title: 'Avisos y Alertas', canActivate: [AdminGuard] },
   { path: 'admin/gestion-citas', component: MisCitasComponent, title: 'Gestión de Citas', canActivate: [AdminGuard] },
   { path: 'admin/nominas', loadComponent: () => import('./components/mi-nomina/mi-nomina').then(m => m.MiNominaComponent), title: 'Gestión de Nóminas', canActivate: [AdminGuard] },
+  { path: 'admin/solicitudes', component: AdminSolicitudesComponent, title: 'Gestión de Aspirantes', canActivate: [AdminGuard] },
 
   // ─── PANEL DE MÉDICO ──────────────────────────────────────────────────────────
   { path: 'medico/dashboard',

@@ -1,0 +1,70 @@
+<div class="admin-page">
+  <header class="page-header">
+    <div class="header-content">
+      <i class="fa-solid fa-id-card-clip header-icon"></i>
+      <div>
+        <h1>Solicitudes de Empleo</h1>
+        <p>Gestiona los perfiles de aspirantes a Médicos y Recepcionistas.</p>
+      </div>
+    </div>
+    <button class="btn-refresh" (click)="cargarSolicitudes()" [class.spinning]="cargando">
+      <i class="fa-solid fa-sync-alt"></i> Actualizar
+    </button>
+  </header>
+
+  <div class="solicitudes-container anim-fade-in">
+    <div *ngIf="cargando" class="loading-state">
+      <i class="fa-solid fa-circle-notch fa-spin"></i>
+      <p>Cargando aspirantes...</p>
+    </div>
+
+    <div *ngIf="!cargando && solicitudes.length === 0" class="empty-state">
+      <i class="fa-solid fa-folder-open"></i>
+      <p>No hay solicitudes pendientes en este momento.</p>
+    </div>
+
+    <div class="solicitud-grid" *ngIf="!cargando && solicitudes.length > 0">
+      <div class="solicitud-card" *ngFor="let s of solicitudes" [class]="s.estado?.toLowerCase()">
+        <div class="card-status-badge">{{ s.estado }}</div>
+        
+        <div class="card-main">
+          <div class="user-avatar">
+            <i class="fa-solid" [class.fa-user-doctor]="s.puesto === 'MEDICO'" [class.fa-headset]="s.puesto === 'RECEPCION'"></i>
+          </div>
+          <div class="user-info">
+            <h3>{{ s.nombre }} {{ s.apellido }}</h3>
+            <span class="role-tag">{{ s.puesto }}</span>
+          </div>
+        </div>
+
+        <div class="card-details">
+          <div class="detail-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span>{{ s.correo }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>{{ s.telefono }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-address-card"></i>
+            <span>DNI: {{ s.dni }}</span>
+          </div>
+          <div class="detail-message" *ngIf="s.mensaje">
+             <strong>Mensaje:</strong>
+             <p>"{{ s.mensaje }}"</p>
+          </div>
+        </div>
+
+        <div class="card-footer" *ngIf="s.estado === 'PENDIENTE'">
+          <button class="btn-action reject" (click)="procesar(s.id!, 'RECHAZADA')">
+            <i class="fa-solid fa-xmark"></i> Rechazar
+          </button>
+          <button class="btn-action approve" (click)="procesar(s.id!, 'APROBADA')">
+            <i class="fa-solid fa-check"></i> Aprobar y Crear Cuenta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

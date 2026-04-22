@@ -1,0 +1,89 @@
+<div class="job-layout">
+  <div class="job-container anim-fade-in">
+    <div class="back-link">
+      <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+    </div>
+
+    <div class="job-card">
+      <div class="card-header">
+        <i class="fa-solid fa-briefcase header-icon"></i>
+        <h1>Únete a nuestro equipo</h1>
+        <p>En DOCgosi buscamos talento comprometido con la salud y la excelencia.</p>
+      </div>
+
+      <div *ngIf="!exito; else successTpl">
+        <form (ngSubmit)="enviarSolicitud()" class="job-form">
+          <div class="form-section">
+            <h3><i class="fa-solid fa-user"></i> Información Personal</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Nombre</label>
+                <input type="text" [(ngModel)]="solicitud.nombre" name="nombre" placeholder="Ej: Juan" required>
+              </div>
+              <div class="input-group">
+                <label>Apellido</label>
+                <input type="text" [(ngModel)]="solicitud.apellido" name="apellido" placeholder="Ej: Pérez" required>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Correo Electrónico</label>
+                <input type="email" [(ngModel)]="solicitud.correo" name="correo" placeholder="juan.perez@gmail.com" required>
+              </div>
+              <div class="input-group">
+                <label>DNI / ID</label>
+                <input type="text" [(ngModel)]="solicitud.dni" name="dni" placeholder="Número de documento" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Teléfono de contacto</label>
+              <input type="text" [(ngModel)]="solicitud.telefono" name="telefono" placeholder="+51 999 999 999" required>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fa-solid fa-hospital-user"></i> Puesto Solicitado</h3>
+            <div class="role-selector">
+              <div class="role-option" [class.active]="solicitud.puesto === 'MEDICO'" (click)="solicitud.puesto = 'MEDICO'">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>Médico Especialista</span>
+              </div>
+              <div class="role-option" [class.active]="solicitud.puesto === 'RECEPCION'" (click)="solicitud.puesto = 'RECEPCION'">
+                <i class="fa-solid fa-headset"></i>
+                <span>Recepcionista / Admin</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fa-solid fa-message"></i> Mensaje Adicional (Opcional)</h3>
+            <div class="input-group">
+              <textarea [(ngModel)]="solicitud.mensaje" name="mensaje" rows="3" placeholder="Cuéntanos un poco sobre tu experiencia..."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit-job" [disabled]="enviando">
+            <span *ngIf="!enviando">Enviar Postulación <i class="fa-solid fa-paper-plane"></i></span>
+            <span *ngIf="enviando"><i class="fa-solid fa-circle-notch fa-spin"></i> Procesando...</span>
+          </button>
+        </form>
+      </div>
+
+      <ng-template #successTpl>
+        <div class="success-screen anim-bounce-in">
+          <div class="success-icon">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h2>¡Postulación Recibida!</h2>
+          <p>Hemos recibido tus datos correctamente. El equipo de administración revisará tu perfil y se pondrá en contacto contigo muy pronto.</p>
+          <div class="loading-bar">
+            <div class="bar-progress"></div>
+          </div>
+          <p class="redirect-text">Redirigiendo al inicio...</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

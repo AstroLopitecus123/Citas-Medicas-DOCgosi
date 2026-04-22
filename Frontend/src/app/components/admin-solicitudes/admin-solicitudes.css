@@ -1,0 +1,202 @@
+.admin-page {
+  padding: 30px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 25px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-icon {
+  font-size: 2.5rem;
+  color: #0fbf6a;
+  background: #f0fdf4;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.header-content p {
+  color: #64748b;
+  margin: 5px 0 0 0;
+}
+
+.btn-refresh {
+  background: #f1f5f9;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.btn-refresh:hover { background: #e2e8f0; }
+.btn-refresh.spinning i { animation: spin 1s linear infinite; }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.solicitud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.solicitud-card {
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.solicitud-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.card-status-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pendiente .card-status-badge { background: #fef3c7; color: #92400e; }
+.aprobada .card-status-badge { background: #dcfce7; color: #166534; }
+.rechazada .card-status-badge { background: #fee2e2; color: #991b1b; }
+
+.card-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  background: #f8fafc;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #3b82f6;
+}
+
+.user-info h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.role-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 3px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.card-details {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.detail-item i { color: #94a3b8; width: 15px; }
+
+.detail-message {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.detail-message strong { font-size: 0.8rem; color: #1e293b; display: block; margin-bottom: 5px; }
+.detail-message p { font-size: 0.85rem; color: #64748b; font-style: italic; margin: 0; }
+
+.card-footer {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 10px;
+}
+
+.btn-action {
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.btn-action.reject { background: #fee2e2; color: #dc2626; }
+.btn-action.reject:hover { background: #fecaca; }
+
+.btn-action.approve { background: #0fbf6a; color: white; }
+.btn-action.approve:hover { background: #0a7c4a; box-shadow: 0 10px 20px rgba(15, 191, 106, 0.2); }
+
+/* ESTADOS */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 100px 0;
+  background: white;
+  border-radius: 32px;
+}
+
+.loading-state i { font-size: 3rem; color: #0fbf6a; margin-bottom: 20px; }
+.empty-state i { font-size: 4rem; color: #e2e8f0; margin-bottom: 20px; }
+
+.anim-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

@@ -71,6 +71,15 @@ export class AdminDashboardComponent implements OnInit {
       color: 'card-teal',
       stat: 'totalUsuarios',
       label: 'transacciones'
+    },
+    {
+      titulo: 'Talento Humano',
+      descripcion: 'Gestión de solicitudes de empleo y aspirantes',
+      icono: 'fa-id-card-clip',
+      ruta: '/admin/solicitudes',
+      color: 'card-green',
+      stat: 'totalUsuarios',
+      label: 'solicitudes'
     }
   ];
 

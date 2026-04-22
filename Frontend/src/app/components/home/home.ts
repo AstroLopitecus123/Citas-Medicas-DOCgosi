@@ -27,7 +27,7 @@ export class HomeComponent {
 
   sedes = [
     { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital' },
-    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building-medical' },
+    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building' },
     { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical' }
   ];
 

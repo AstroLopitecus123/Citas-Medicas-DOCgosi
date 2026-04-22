@@ -491,26 +491,60 @@
    ═══════════════════════════════════════════════════ */
 
 .sedes {
-  background: #0a2e1f; /* Verde muy oscuro y elegante */
-  background-image: 
-    radial-gradient(circle at 50% 50%, rgba(15, 191, 106, 0.15) 0%, transparent 80%),
-    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDEwMDAgNTAwIj48ZyBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjIiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSIxNTAiIHI9IjIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIxMjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI0MDAiIGN5PSIxODAiIHI9IjIiLz48Y2lyY2xlIGN4PSI1MDAiIGN5PSIxMTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIxNjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI3MDAiIGN5PSIxNDAiIHI9IjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSIxOTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI5MDAiIGN5PSIxNzAiIHI9IjIiLz48Y2lyY2xlIGN4PSIxNTAiIGN5PSIyMDAiIHI9IjIiLz48Y2lyY2xlIGN4PSIyNTAiIGN5PSIyNTAiIHI9IjIiLz48Y2lyY2xlIGN4PSIzNTAiIGN5PSIyMjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI0NTAiIGN5PSIyODAiIHI9IjIiLz48Y2lyY2xlIGN4PSI1NTAiIGN5PSIyMTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI2NTAiIGN5PSIyNjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI3NTAiIGN5PSIyNDAiIHI9IjIiLz48Y2lyY2xlIGN4PSI4NTAiIGN5PSIyOTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI5NTAiIGN5PSIyNzAiIHI9IjIiLz48L2c+PC9zdmc+'); /* Simplified map pattern placeholder */
-  background-size: cover;
-  background-position: center;
+  background: #0a2e1f; /* Verde oscuro */
   padding: 140px 0;
   position: relative;
   overflow: hidden;
   color: #fff;
 }
 
-/* Efecto de puntos de mapa (puedes usar una imagen real de mapa punteado si la tienes) */
-.sedes::before {
-  content: '';
+/* CONTENEDOR DEL MAPA Y PUNTOS */
+.map-background {
   position: absolute;
-  inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/pinstripe-dark.png');
-  opacity: 0.1;
-  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+  background-size: 80% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15; /* Sutil en el fondo */
+  filter: invert(1) sepia(1) hue-rotate(100deg) saturate(3) brightness(1.2);
+  z-index: 1;
+}
+
+/* PUNTOS BRILLANTES ANIMADOS */
+.glow-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #0fbf6a;
+  border-radius: 50%;
+  box-shadow: 0 0 15px 4px rgba(15, 191, 106, 0.6);
+  animation: pulse-glow 2.5s infinite alternate;
+}
+
+/* Posiciones aproximadas de ciudades clave sobre el mapa */
+.dot-1 { top: 38%; left: 24%; animation-delay: 0s; }    /* Norteamérica */
+.dot-2 { top: 65%; left: 30%; animation-delay: 1.2s; }  /* Sudamérica (Perú) */
+.dot-3 { top: 32%; left: 52%; animation-delay: 0.5s; }  /* Europa */
+.dot-4 { top: 45%; left: 75%; animation-delay: 1.8s; }  /* Asia */
+.dot-5 { top: 75%; left: 85%; animation-delay: 0.9s; }  /* Oceanía */
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 10px 2px rgba(15, 191, 106, 0.4);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.5);
+    box-shadow: 0 0 25px 8px rgba(15, 191, 106, 0.9);
+    opacity: 1;
+  }
 }
 
 .sedes .section-title {

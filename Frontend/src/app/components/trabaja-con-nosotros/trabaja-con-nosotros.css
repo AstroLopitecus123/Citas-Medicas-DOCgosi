@@ -25,7 +25,7 @@
 .doctor-container {
   position: absolute;
   bottom: 0;
-  left: -80px; /* Movido más a la izquierda */
+  left: -140px; /* Movido más a la izquierda */
   height: 95%;
   z-index: 2;
   display: flex;

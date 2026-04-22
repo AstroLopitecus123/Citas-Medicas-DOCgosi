@@ -262,190 +262,253 @@
   font-size: 1.2rem;
 }
 
-/* ESPECIALIDADES (HEX GRID) */
+/* ESPECIALIDADES (REFINED HEX LAYOUT) */
 .services {
   background: #ffffff;
   padding: 120px 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
-.services-header {
-  text-align: center;
-  margin-bottom: 80px;
+.services-flex {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  max-width: 1300px;
 }
 
-.sub-title.center {
-  margin-left: auto;
-  margin-right: auto;
+.services-content {
+  flex: 1;
+}
+
+.expertise-tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f4fdf7;
+  padding: 12px 20px;
+  border-radius: 12px;
   width: fit-content;
+  color: #0fbf6a;
+  font-weight: 700;
+  margin-top: 30px;
 }
 
-.section-desc {
-  max-width: 700px;
-  margin: 0 auto;
-  color: #64748b;
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
-
-/* HEX GRID LOGIC */
-.hex-grid-wrapper {
+/* HONEYCOMB GRID CONTAINER */
+.hex-grid-container {
+  flex: 1.5;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
+  perspective: 1000px;
 }
 
-.hex-grid {
+.honeycomb {
   display: flex;
   flex-wrap: wrap;
-  width: 900px;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 700px;
   justify-content: center;
-  gap: 20px;
 }
 
-.hex-card {
-  width: 260px;
-  height: 300px;
+.honeycomb-cell {
+  flex: 0 1 200px;
+  max-width: 200px;
+  height: 115.47px; /* (200 / sqrt(3)) */
+  background-color: #1a2a3a;
+  margin: 58px 5px; /* Offset to allow vertical stacking */
   position: relative;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+  transition: all 0.5s ease;
+  z-index: 1;
 }
 
-.hex-content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background: #1a2a3a;
-  overflow: hidden;
-}
-
-.hex-image {
-  width: 100%;
-  height: 100%;
+.honeycomb-cell::before,
+.honeycomb-cell::after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  width: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
 }
 
-.hex-image img {
+.honeycomb-cell::before {
+  bottom: 100%;
+  border-bottom: 57.74px solid #1a2a3a;
+}
+
+.honeycomb-cell::after {
+  top: 100%;
+  width: 0;
+  border-top: 57.74px solid #1a2a3a;
+}
+
+.honeycomb-cell__wrapper {
+  position: absolute;
+  top: -57.74px;
+  left: 0;
+  width: 200px;
+  height: 230.94px;
+  overflow: hidden;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: 2;
+}
+
+.honeycomb-cell__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
-  filter: brightness(0.7) contrast(1.1);
+  transition: transform 0.6s ease;
+  filter: brightness(0.7);
 }
 
-.hex-overlay {
+.honeycomb-cell__overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(15, 191, 106, 0.8) 100%);
-  opacity: 0.4;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(15, 191, 106, 0.9));
+  opacity: 0.3;
   transition: opacity 0.5s;
 }
 
-.hex-text {
+.honeycomb-cell__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  width: 90%;
+  z-index: 5;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: all 0.4s ease;
+}
+
+.honeycomb-cell__description {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 40px 25px;
+  padding: 30px 15px;
+  background: rgba(15, 191, 106, 0.95);
   color: white;
-  z-index: 5;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
-  transform: translateY(40px);
-  transition: transform 0.5s ease;
+  z-index: 6;
 }
 
-.hex-text h3 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-.hex-desc {
-  font-size: 0.95rem;
-  opacity: 0;
-  transition: opacity 0.4s;
+.honeycomb-cell__description p {
+  font-size: 0.85rem;
   line-height: 1.4;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.hex-link {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #fff;
-  opacity: 0.7;
-}
-
-/* HOVER EFFECTS */
-.hex-card:hover {
-  transform: scale(1.05);
-  z-index: 10;
-}
-
-.hex-card:hover .hex-image img {
-  transform: scale(1.2);
-}
-
-.hex-card:hover .hex-overlay {
-  opacity: 0.9;
-}
-
-.hex-card:hover .hex-text {
-  transform: translateY(0);
-}
-
-.hex-card:hover .hex-desc {
-  opacity: 1;
-}
-
-/* SPECIAL CASE: HEX MORE */
-.hex-more .hex-content {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+.honeycomb-btn {
+  width: 35px;
+  height: 35px;
+  background: white;
+  color: #0fbf6a;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
-.hex-more .hex-text {
-  transform: none;
-  position: relative;
-  padding: 0;
+/* HOVER EFFECTS */
+.honeycomb-cell:hover {
+  z-index: 10;
+  transform: scale(1.1);
 }
 
-.hex-plus {
-  font-size: 2.5rem;
-  margin-top: 20px;
-  color: #0fbf6a;
-  animation: pulse 2s infinite;
+.honeycomb-cell:hover .honeycomb-cell__image {
+  transform: scale(1.15);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+.honeycomb-cell:hover .honeycomb-cell__overlay {
+  opacity: 1;
 }
 
-/* AJUSTE PARA EL ESCALONAMIENTO (HONEYCOMB EFFECT) */
-/* En desktop, podemos mover los hexágonos de la segunda fila si el contenedor es fijo */
-/* Pero para un grid responsive, el diseño de clip-path con gap suele bastar. 
-   Si queremos el efecto "offset", podemos usar margin-top negativo en elementos pares */
+.honeycomb-cell:hover .honeycomb-cell__title {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}
 
-@media (min-width: 900px) {
-  .hex-grid {
-    gap: 15px;
+.honeycomb-cell:hover .honeycomb-cell__description {
+  transform: translateY(0);
+}
+
+/* SPECIALS */
+.honeycomb__more .honeycomb-cell__wrapper {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.more-bg {
+  background: url('https://images.unsplash.com/photo-1576091160550-2173dad99901?auto=format&fit=crop&q=80&w=400') center/cover;
+  opacity: 0.2;
+}
+
+.honeycomb__placeholder {
+  visibility: hidden;
+}
+
+/* OFFSET FOR TRUE HONEYCOMB EFFECT */
+@media (min-width: 630px) {
+  .honeycomb {
+    justify-content: flex-start;
+    padding-left: 100px;
   }
-  /* Offset para crear el panal real */
-  .hex-card:nth-child(even) {
-    margin-top: 80px;
+  .honeycomb-cell:nth-child(3n+2) {
+    margin-top: 173.41px; /* 115.47 * 1.5 approx */
+    margin-bottom: -58px;
+    margin-left: -105px;
+    margin-right: -105px;
   }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .services-flex {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+  .section-underline.left {
+    margin: 0 auto 30px;
+  }
+  .expertise-tag {
+    margin: 30px auto;
+  }
+  .honeycomb {
+    padding-left: 0;
+    justify-content: center;
+  }
+  .honeycomb-cell:nth-child(3n+2) {
+    margin: 58px 5px;
+  }
+}
+
+/* ANIMATIONS */
+.anim-slide-in-left {
+  animation: slideInLeft 1s ease-out;
+}
+
+.anim-slide-in-right {
+  animation: slideInRight 1s ease-out;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* DOCTORES */

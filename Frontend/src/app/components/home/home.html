@@ -55,42 +55,53 @@
     </div>
   </section>
 
-  <!-- 3. ESPECIALIDADES (HEX GRID STYLE) -->
+  <!-- 3. ESPECIALIDADES (TWO COLUMN HEX LAYOUT) -->
   <section class="services">
-    <div class="section-container">
-      <div class="services-header">
-        <span class="sub-title center">Nuestra Experiencia</span>
-        <h2 class="section-title">Especialidades Médicas</h2>
-        <div class="section-underline"></div>
-        <p class="section-desc">Contamos con tecnología de punta y especialistas de renombre en cada área de la salud.</p>
-      </div>
-      
-      <div class="hex-grid-wrapper">
-        <div class="hex-grid">
-          <div class="hex-card" *ngFor="let e of especialidades">
-            <div class="hex-content">
-              <div class="hex-image">
-                <img [src]="e.imagen" [alt]="e.titulo">
-                <div class="hex-overlay"></div>
-              </div>
-              <div class="hex-text">
-                <h3>{{ e.titulo }}</h3>
-                <p class="hex-desc">{{ e.descripcion }}</p>
-                <span class="hex-link">VER MÁS <i class="fa-solid fa-arrow-right"></i></span>
-              </div>
-            </div>
-          </div>
-          <!-- Hexágono decorativo o "Ver todas" -->
-          <div class="hex-card hex-more">
-            <div class="hex-content">
-              <div class="hex-text">
-                <h3>Y más...</h3>
-                <p>Explora todas nuestras áreas</p>
-                <div class="hex-plus"><i class="fa-solid fa-plus"></i></div>
-              </div>
-            </div>
-          </div>
+    <div class="section-container services-flex">
+      <!-- Columna Izquierda: Texto Informativo -->
+      <div class="services-content anim-slide-in-left">
+        <span class="sub-title">Nuestra Experiencia</span>
+        <h2 class="main-title">Áreas Terapéuticas</h2>
+        <div class="section-underline left"></div>
+        <p class="section-desc">
+          Desde chequeos preventivos hasta intervenciones especializadas, R.E.T.O Salud cuenta con la experiencia 
+          necesaria en todo el cuerpo humano. Explore nuestro conocimiento en las distintas áreas de la medicina digital.
+        </p>
+        <div class="expertise-tag">
+          <i class="fa-solid fa-award"></i>
+          <span>Líderes en medicina domiciliaria tecnológica</span>
         </div>
+      </div>
+
+      <!-- Columna Derecha: Honeycomb Grid -->
+      <div class="hex-grid-container anim-slide-in-right">
+        <ul class="honeycomb">
+          <li class="honeycomb-cell" *ngFor="let e of especialidades">
+            <div class="honeycomb-cell__wrapper">
+              <img [src]="e.imagen" class="honeycomb-cell__image" [alt]="e.titulo">
+              <div class="honeycomb-cell__overlay"></div>
+              <h4 class="honeycomb-cell__title">{{ e.titulo }}</h4>
+              <div class="honeycomb-cell__description">
+                <p>{{ e.descripcion }}</p>
+                <a href="#" class="honeycomb-btn">
+                  <i class="fa-solid fa-plus"></i>
+                </a>
+              </div>
+            </div>
+          </li>
+          <!-- Celda de "And more" -->
+          <li class="honeycomb-cell honeycomb__more">
+            <div class="honeycomb-cell__wrapper">
+              <div class="honeycomb-cell__image more-bg"></div>
+              <h4 class="honeycomb-cell__title">¡Y mucho más!</h4>
+              <div class="honeycomb-cell__description">
+                <p>Descubre todas nuestras coberturas médicas.</p>
+                <a href="#" class="honeycomb-btn"><i class="fa-solid fa-angles-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="honeycomb-cell honeycomb__placeholder"></li>
+        </ul>
       </div>
     </div>
   </section>

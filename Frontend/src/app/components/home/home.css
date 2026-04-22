@@ -486,20 +486,123 @@
 .doc-info h4 { font-size: 1.5rem; color: #1a2a3a; margin-bottom: 8px; font-weight: 800; }
 .doc-info .cargo { color: #0fbf6a; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SEDES */
-.sedes { background: #f4fdf7; padding: 100px 0; }
-.sedes-flex { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-.sede-item { 
-  background: white; padding: 40px; border-radius: 25px; 
-  display: flex; align-items: center; gap: 25px; min-width: 350px;
-  border-bottom: 6px solid transparent; transition: 0.4s;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+/* ═══════════════════════════════════════════════════
+   SEDES — WORLD MAP DESIGN (RÉPLICA PREMIUM)
+   ═══════════════════════════════════════════════════ */
+
+.sedes {
+  background: #0a2e1f; /* Verde muy oscuro y elegante */
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(15, 191, 106, 0.15) 0%, transparent 80%),
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDEwMDAgNTAwIj48ZyBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjIiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSIxNTAiIHI9IjIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIxMjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI0MDAiIGN5PSIxODAiIHI9IjIiLz48Y2lyY2xlIGN4PSI1MDAiIGN5PSIxMTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIxNjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI3MDAiIGN5PSIxNDAiIHI9IjIiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSIxOTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI5MDAiIGN5PSIxNzAiIHI9IjIiLz48Y2lyY2xlIGN4PSIxNTAiIGN5PSIyMDAiIHI9IjIiLz48Y2lyY2xlIGN4PSIyNTAiIGN5PSIyNTAiIHI9IjIiLz48Y2lyY2xlIGN4PSIzNTAiIGN5PSIyMjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI0NTAiIGN5PSIyODAiIHI9IjIiLz48Y2lyY2xlIGN4PSI1NTAiIGN5PSIyMTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI2NTAiIGN5PSIyNjAiIHI9IjIiLz48Y2lyY2xlIGN4PSI3NTAiIGN5PSIyNDAiIHI9IjIiLz48Y2lyY2xlIGN4PSI4NTAiIGN5PSIyOTAiIHI9IjIiLz48Y2lyY2xlIGN4PSI5NTAiIGN5PSIyNzAiIHI9IjIiLz48L2c+PC9zdmc+'); /* Simplified map pattern placeholder */
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
 }
-.sede-item:hover { border-bottom-color: #0fbf6a; transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0,0,0,0.1); }
-.sede-icon { width: 70px; height: 70px; background: #f4fdf7; border-radius: 18px; display:flex; align-items:center; justify-content:center; }
-.sede-icon i { font-size: 2.2rem; color: #0fbf6a; }
-.sede-info h5 { font-size: 1.4rem; color: #1a2a3a; margin-bottom: 8px; font-weight: 800; }
-.sede-info p { font-size: 1rem; color: #666; font-weight: 500; }
+
+/* Efecto de puntos de mapa (puedes usar una imagen real de mapa punteado si la tienes) */
+.sedes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/pinstripe-dark.png');
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.sedes .section-title {
+  color: #fff;
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.sedes .section-underline {
+  background: #0fbf6a;
+  margin-bottom: 60px;
+}
+
+.sedes-flex {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* TARJETAS GLASSMORPHISM */
+.sede-item {
+  flex: 1;
+  min-width: 320px;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px 30px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, box-shadow 0.3s;
+}
+
+.sede-item:hover {
+  transform: translateY(-15px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(15, 191, 106, 0.2);
+  border-color: rgba(15, 191, 106, 0.3);
+}
+
+.sede-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(15, 191, 106, 0.15);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  transition: transform 0.3s;
+}
+
+.sede-item:hover .sede-icon {
+  transform: scale(1.1) rotate(5deg);
+  background: #0fbf6a;
+}
+
+.sede-icon i {
+  font-size: 2.2rem;
+  color: #0fbf6a;
+  transition: color 0.3s;
+}
+
+.sede-item:hover .sede-icon i {
+  color: #fff;
+}
+
+.sede-info h5 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.sede-info p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .sedes { padding: 80px 0; }
+  .sedes .section-title { font-size: 2.2rem; }
+  .sede-item { padding: 30px 20px; }
+}
 
 /* RESPONSIVE */
 @media (max-width: 1100px) {

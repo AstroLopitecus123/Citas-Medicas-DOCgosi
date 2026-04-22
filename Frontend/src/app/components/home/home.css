@@ -427,11 +427,12 @@
 @media (min-width: 768px) {
   .honeycomb {
     justify-content: center;
+    gap: 40px; /* Gap horizontal base */
   }
   .honeycomb-cell:nth-child(even) {
-    margin-top: 200px; /* Desplazamiento para encajar */
-    margin-left: -110px;
-    margin-right: -110px;
+    margin-top: 210px; /* Desplazamiento vertical */
+    margin-left: -70px;  /* Reducido de -110px para SEPARARLOS horizontalmente */
+    margin-right: -70px; /* Reducido de -110px para SEPARARLOS horizontalmente */
   }
 }
 
@@ -442,7 +443,7 @@
     text-align: center;
   }
   .honeycomb-cell:nth-child(even) {
-    margin: 75px 15px;
+    margin: 85px 15px; /* Más espacio en móvil también */
   }
 }
 

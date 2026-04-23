@@ -213,6 +213,16 @@
           <span class="switch-ball"></span>
         </button>
       </div>
+
+      <div class="pro-toggle-box" [class.active]="narradorPaginaActivo">
+        <div class="toggle-info">
+          <strong>Narrador de Página</strong>
+          <span>Lee lo que señalas con mouse o teclado.</span>
+        </div>
+        <button class="acc-switch" [class.on]="narradorPaginaActivo" (click)="toggleNarradorPagina()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
       
       <div class="voice-status-indicator" *ngIf="vozActiva" [class.listening]="voiceService.isListening">
         <div class="pulse-ring" *ngIf="voiceService.isListening"></div>

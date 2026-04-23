@@ -61,10 +61,10 @@ export class VoiceAccessibilityService implements OnDestroy {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      // Simplificamos a 'es' para mayor compatibilidad y usamos nova-2
-      const deepgramUrl = 'wss://api.deepgram.com/v1/listen?model=nova-2&language=es&smart_format=true&interim_results=true';
+      // Probamos pasando el token directamente en la URL para máxima compatibilidad con proxies
+      const deepgramUrl = `wss://api.deepgram.com/v1/listen?model=nova-2&language=es&smart_format=true&interim_results=true&token=${this.deepgramApiKey}`;
       
-      this.deepgramSocket = new WebSocket(deepgramUrl, ['token', this.deepgramApiKey]);
+      this.deepgramSocket = new WebSocket(deepgramUrl);
 
       this.deepgramSocket.onopen = () => {
         console.log('Asistente de Voz DOCgosi: Activo');

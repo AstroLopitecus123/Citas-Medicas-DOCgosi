@@ -70,6 +70,7 @@ export class AccesibilidadComponent implements OnInit {
   // Estados Accesibilidad Pro
   vozActiva = false;
   narradorActivo = false;
+  narradorPaginaActivo = false;
   modoTeclado = false;
 
   // Estado del Test
@@ -117,6 +118,7 @@ export class AccesibilidadComponent implements OnInit {
     // Pro
     const vActiva = localStorage.getItem('DOCGOSI_VOICE_ACTIVE') === 'true';
     const nActivo = localStorage.getItem('DOCGOSI_NARRATOR_ACTIVE') === 'true';
+    const npActivo = localStorage.getItem('DOCGOSI_PAGE_NARRATOR_ACTIVE') === 'true';
     const tModo = localStorage.getItem('DOCGOSI_KEYBOARD_MODE') === 'true';
 
     if (fActivo && fActivo !== 'NINGUNO') {
@@ -143,6 +145,7 @@ export class AccesibilidadComponent implements OnInit {
 
     if (vActiva) this.toggleVoz(true);
     if (nActivo) this.toggleNarrador(true);
+    if (npActivo) this.toggleNarradorPagina(true);
     if (tModo) this.toggleTeclado(true);
 
     this.voiceService.commandDetected.subscribe(msg => {
@@ -229,6 +232,16 @@ export class AccesibilidadComponent implements OnInit {
     this.narradorActivo = forzar !== undefined ? forzar : !this.narradorActivo;
     if (!this.narradorActivo) this.narratorService.stop();
     localStorage.setItem('DOCGOSI_NARRATOR_ACTIVE', this.narradorActivo.toString());
+  }
+
+  toggleNarradorPagina(forzar?: boolean) {
+    this.narradorPaginaActivo = forzar !== undefined ? forzar : !this.narradorPaginaActivo;
+    if (this.narradorPaginaActivo) {
+      this.narratorService.activateGlobalNarrator();
+    } else {
+      this.narratorService.deactivateGlobalNarrator();
+    }
+    localStorage.setItem('DOCGOSI_PAGE_NARRATOR_ACTIVE', this.narradorPaginaActivo.toString());
   }
 
   toggleTeclado(forzar?: boolean) {

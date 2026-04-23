@@ -13,10 +13,10 @@ import java.util.Map;
 @RequestMapping("/api/teleconsulta")
 public class TeleconsultaController {
 
-    @Value("${agora.appId}")
+    @Value("${AGORA_APP_ID:}")
     private String agoraAppId;
 
-    @Value("${deepgram.apiKey}")
+    @Value("${DEEPGRAM_API_KEY:}")
     private String deepgramApiKey;
 
     @GetMapping("/config")

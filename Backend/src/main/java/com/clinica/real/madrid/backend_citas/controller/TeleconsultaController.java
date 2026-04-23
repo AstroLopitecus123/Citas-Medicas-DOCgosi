@@ -22,11 +22,9 @@ public class TeleconsultaController {
     @GetMapping("/config")
     public ResponseEntity<Map<String, String>> getConfig() {
         Map<String, String> config = new HashMap<>();
-        config.put("agoraAppId", agoraAppId);
-        config.put("deepgramApiKey", deepgramApiKey);
+        config.put("agoraAppId", (agoraAppId != null && !agoraAppId.isEmpty()) ? agoraAppId : "AGORA_NOT_FOUND");
+        config.put("deepgramApiKey", (deepgramApiKey != null && !deepgramApiKey.isEmpty()) ? deepgramApiKey : "DEEPGRAM_NOT_FOUND");
         
-        // No enviamos en texto claro el certificado de Agora a la web por seguridad principal.
-        // Solo enviamos appId y la llave de Deepgram que usaremos para WebSockets.
         return ResponseEntity.ok(config);
     }
 }

@@ -473,7 +473,7 @@
 
 
 /* DOCTORES */
-.doctors { background: white; padding: 100px 0 40px; }
+.doctors { background: white; padding: 100px 0 20px; }
 .doctors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 50px; }
 .doctor-card { text-align: center; }
 .doc-pic { 
@@ -492,7 +492,7 @@
 
 .sedes {
   background: #0a2e1f; /* Verde oscuro */
-  padding: 80px 0 140px;
+  padding: 40px 0 140px;
   position: relative;
   overflow: hidden;
   color: #fff;

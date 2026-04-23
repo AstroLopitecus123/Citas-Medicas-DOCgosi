@@ -61,7 +61,8 @@ export class VoiceAccessibilityService implements OnDestroy {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const deepgramUrl = 'wss://api.deepgram.com/v1/listen?model=nova-2&language=es-419&smart_format=true&interim_results=true';
+      // Simplificamos a 'es' para mayor compatibilidad y usamos nova-2
+      const deepgramUrl = 'wss://api.deepgram.com/v1/listen?model=nova-2&language=es&smart_format=true&interim_results=true';
       
       this.deepgramSocket = new WebSocket(deepgramUrl, ['token', this.deepgramApiKey]);
 

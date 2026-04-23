@@ -34,16 +34,22 @@ public class AuthController {
     // Registro de usuario
     // ---------------------------
     @PostMapping("/registro")
-    public ResponseEntity<UsuarioResponse> registro(@RequestBody UsuarioRegistroRequest request) {
-        // Registrar usuario en DB
-        Usuario usuario = usuarioService.registrarUsuario(request);
+    public ResponseEntity<?> registro(@RequestBody UsuarioRegistroRequest request) {
+        try {
+            // Registrar usuario en DB
+            Usuario usuario = usuarioService.registrarUsuario(request);
 
-        // Generar token JWT
-        String token = jwtUtil.generateToken(usuario.getCorreo());
+            // Generar token JWT
+            String token = jwtUtil.generateToken(usuario.getCorreo());
 
-        // Retornar DTO de respuesta
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new UsuarioResponse(token, usuario));
+            // Retornar DTO de respuesta
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new UsuarioResponse(token, usuario));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Error interno al registrar: " + e.getMessage()));
+        }
     }
 
     // ---------------------------

@@ -61,8 +61,8 @@ export class NarratorService {
     this.processElement(event.target as HTMLElement);
   };
 
-  private processElement(el: HTMLElement) {
-    if (!el || !this.isGlobalActive) return;
+  private processElement(el: any) {
+    if (!el || !this.isGlobalActive || !(el instanceof HTMLElement)) return;
 
     // Evitar leer el panel de accesibilidad mismo para no saturar
     if (el.closest('.acc-fab-wrapper')) return;

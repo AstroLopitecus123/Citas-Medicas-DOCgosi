@@ -12,6 +12,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/teleconsulta")
 public class TeleconsultaController {
+    // Heartbeat for redeploy - Fix DNI & Environment Vars
 
     @Value("${AGORA_APP_ID:}")
     private String agoraAppId;

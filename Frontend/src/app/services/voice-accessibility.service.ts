@@ -29,8 +29,8 @@ export class VoiceAccessibilityService implements OnDestroy {
 
     this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config`).subscribe({
       next: (config) => {
-        this.deepgramApiKey = config.deepgramApiKey;
-        if (this.deepgramApiKey && this.deepgramApiKey.trim().length > 0) {
+        this.deepgramApiKey = config.deepgramApiKey ? config.deepgramApiKey.trim() : '';
+        if (this.deepgramApiKey && this.deepgramApiKey.length > 0) {
           this.connectDeepgram();
         } else {
           console.error("⚠️ No se recibió una API Key válida de Deepgram.");

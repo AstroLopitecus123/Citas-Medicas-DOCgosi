@@ -267,9 +267,10 @@ export class RegistrarUsuarioController {
           
           if (this.ns) this.ns.error(`${msg}`);
         } else {
-          const errMsg = err.error?.message || err.message;
-          this.error = 'Error al registrar: ' + errMsg;
-          if (this.ns) this.ns.error('Error al procesar el registro');
+          const errMsg = err.error?.message || err.message || 'Error desconocido';
+          this.error = 'Error del servidor: ' + errMsg;
+          if (this.ns) this.ns.error(`Error 500: ${errMsg}`);
+          console.error('DETALLE ERROR 500:', err);
         }
       }
     });

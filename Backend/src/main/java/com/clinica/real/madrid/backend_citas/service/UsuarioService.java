@@ -106,6 +106,7 @@ public class UsuarioService {
         usuario.setApellido(request.getApellido());
         usuario.setCorreo(request.getCorreo());
         usuario.setTelefono(request.getTelefono());
+        usuario.setDni(request.getDni());
         usuario.setFechaNacimiento(request.getFechaNacimiento());
         usuario.setPais(pais);
         usuario.setContrasena(passwordEncoder.encode(request.getContrasena()));

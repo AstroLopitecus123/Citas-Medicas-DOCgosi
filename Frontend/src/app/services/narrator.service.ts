@@ -62,10 +62,14 @@ export class NarratorService {
   };
 
   private processElement(el: any) {
-    if (!el || !this.isGlobalActive || !(el instanceof HTMLElement)) return;
+    if (!el || !this.isGlobalActive) return;
+    
+    // Asegurarnos de que sea un elemento HTML antes de usar closest
+    const htmlEl = el as HTMLElement;
+    if (!htmlEl.closest) return;
 
     // Evitar leer el panel de accesibilidad mismo para no saturar
-    if (el.closest('.acc-fab-wrapper')) return;
+    if (htmlEl.closest('.acc-fab-wrapper')) return;
 
     let text = '';
 

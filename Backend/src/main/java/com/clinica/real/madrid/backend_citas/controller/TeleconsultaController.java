@@ -22,8 +22,20 @@ public class TeleconsultaController {
     @GetMapping("/config")
     public ResponseEntity<Map<String, String>> getConfig() {
         Map<String, String> config = new HashMap<>();
-        config.put("agoraAppId", (agoraAppId != null && !agoraAppId.isEmpty()) ? agoraAppId : "AGORA_NOT_FOUND");
-        config.put("deepgramApiKey", (deepgramApiKey != null && !deepgramApiKey.isEmpty()) ? deepgramApiKey : "DEEPGRAM_NOT_FOUND");
+        
+        // Refuerzo: buscar en variables de entorno directamente si @Value falla
+        String dKey = deepgramApiKey;
+        if (dKey == null || dKey.isEmpty() || dKey.equals("DEEPGRAM_NOT_FOUND")) {
+            dKey = System.getenv("DEEPGRAM_API_KEY");
+        }
+        
+        String aId = agoraAppId;
+        if (aId == null || aId.isEmpty() || aId.equals("AGORA_NOT_FOUND")) {
+            aId = System.getenv("AGORA_APP_ID");
+        }
+
+        config.put("agoraAppId", (aId != null && !aId.isEmpty()) ? aId : "AGORA_NOT_FOUND");
+        config.put("deepgramApiKey", (dKey != null && !dKey.isEmpty()) ? dKey : "DEEPGRAM_NOT_FOUND");
         
         return ResponseEntity.ok(config);
     }

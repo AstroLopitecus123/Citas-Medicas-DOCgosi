@@ -36,13 +36,9 @@ export class LoginComponent implements OnInit {
         google.accounts.id.initialize({
           client_id: '473447043826-0d5crfghn3m7cug1ibfefnr24lsmp5g8.apps.googleusercontent.com',
           callback: (response: any) => {
-            // Asegurarse de que Angular detecte el cambio de contexto
-            if (this.ngZone) {
-               this.ngZone.run(() => this.handleGoogleLogin(response));
-            } else {
-               this.handleGoogleLogin(response);
-            }
-          }
+            this.ngZone.run(() => this.handleGoogleLogin(response));
+          },
+          use_fedcm_for_prompt: true
         });
 
         google.accounts.id.renderButton(
@@ -50,9 +46,13 @@ export class LoginComponent implements OnInit {
           { 
             theme: 'outline', 
             size: 'large', 
-            width: 280, // El ancho debe ser un número, no '100%'
+            width: 280,
             text: 'continue_with',
-            shape: 'pill'
+            shape: 'pill',
+            click_listener: () => {
+              // Si el popup falla, usar prompt nativo de Google (FedCM)
+              google.accounts.id.prompt();
+            }
           }
         );
       }

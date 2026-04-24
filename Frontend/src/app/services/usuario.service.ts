@@ -67,21 +67,22 @@ export class UsuarioService {
           }
 
           // Guardar usuario y enviar al observable global
-          if (res.usuario) {
-
+          if (res && res.token) {
+            const usuario = new Usuario(res);
+            
             // Normalizar rol
-            const rolBackend = res.usuario.rol?.toUpperCase();
+            const rolBackend = res.rol?.toUpperCase();
             if (rolBackend === 'ADMIN' || rolBackend === 'MEDICO' || rolBackend === 'RECEPCION') {
-              res.usuario.rol = rolBackend;
+              usuario.rol = rolBackend as any;
             } else {
-              res.usuario.rol = 'PACIENTE';
+              usuario.rol = 'PACIENTE' as any;
             }
 
             // Guardar localmente
-            localStorage.setItem('usuario', JSON.stringify(res.usuario));
+            localStorage.setItem('usuario', JSON.stringify(usuario));
 
             // 🆕 Notificar a toda la app
-            this.usuarioSubject.next(res.usuario);
+            this.usuarioSubject.next(usuario);
           }
         })
       );
@@ -127,15 +128,16 @@ export class UsuarioService {
           if (res.token) {
             localStorage.setItem('token', res.token);
           }
-          if (res.usuario) {
-            const rolBackend = res.usuario.rol?.toUpperCase();
+          if (res && res.token) {
+            const usuario = new Usuario(res);
+            const rolBackend = res.rol?.toUpperCase();
             if (rolBackend === 'ADMIN' || rolBackend === 'MEDICO' || rolBackend === 'RECEPCION') {
-              res.usuario.rol = rolBackend;
+              usuario.rol = rolBackend as any;
             } else {
-              res.usuario.rol = 'PACIENTE';
+              usuario.rol = 'PACIENTE' as any;
             }
-            localStorage.setItem('usuario', JSON.stringify(res.usuario));
-            this.usuarioSubject.next(res.usuario);
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            this.usuarioSubject.next(usuario);
           }
         })
       );

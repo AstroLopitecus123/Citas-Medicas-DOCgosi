@@ -27,10 +27,20 @@ export class Usuario {
 
 export class LoginResponse {
   token?: string;
-  usuario?: Usuario;
+  id?: number;
+  nombre?: string;
+  apellido?: string;
+  correo?: string;
+  telefono?: string;
+  fechaNacimiento?: string;
+  dni?: string;
+  paisNombre?: string;
+  rol?: string;
+
   constructor(data?: any) {
     if (data) {
       Object.assign(this, data);
     }
   }
 }
+

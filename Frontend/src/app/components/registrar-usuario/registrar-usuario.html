@@ -158,12 +158,6 @@
         <p>¿Ya tienes una cuenta? <a routerLink="/login" class="crear-cuenta-link">Inicia sesión aquí</a></p>
       </div>
 
-      <!-- Mensajes globales -->
-      <div class="status-messages" *ngIf="ctrl.mensaje || (ctrl.error && !ctrl.formularioValido)">
-        <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">
-          {{ ctrl.mensaje || ctrl.error }}
-        </p>
-      </div>
     </div>
   </div>
 </div>

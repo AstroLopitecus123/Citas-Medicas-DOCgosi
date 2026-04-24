@@ -241,7 +241,7 @@ export class RegistrarUsuarioController {
       this.usuario.correo = this.usuario.correoUsuario + '@gmail.com';
     }
 
-    // Marcar todos los campos como tocados
+    // Marcar todos los campos como tocados para que se pongan en rojo
     Object.keys(this.touched).forEach(k => this.touched[k as keyof typeof this.touched] = true);
 
     // Resetear errores de campo
@@ -252,7 +252,9 @@ export class RegistrarUsuarioController {
     this.mensaje = '';
 
     if (!this.formularioValido) {
-      this.error = this.MENSAJES.completarCampos;
+      if (this.ns) {
+        this.ns.error('Formulario incompleto: ' + this.MENSAJES.completarCampos);
+      }
       return;
     }
 

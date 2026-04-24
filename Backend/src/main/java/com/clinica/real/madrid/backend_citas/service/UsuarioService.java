@@ -165,15 +165,23 @@ public class UsuarioService {
                 .orElseGet(() -> {
                     Usuario nuevo = new Usuario();
                     nuevo.setCorreo(email);
+                    // Usar nombre y apellido reales de Google
                     nuevo.setNombre(nombre != null ? nombre : "Usuario");
                     nuevo.setApellido(apellido != null ? apellido : "Google");
                     nuevo.setRol(Rol.PACIENTE);
                     nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
                     nuevo.setEstado(EstadoUsuario.ACTIVADO);
-                    nuevo.setDni("00000000"); // DNI por defecto temporal
+                    
+                    // Dejar nulos para que el usuario los complete en su perfil
+                    nuevo.setDni(null); 
+                    nuevo.setTelefono(null);
+                    nuevo.setFechaNacimiento(null);
+                    nuevo.setPais(null);
+
                     return usuarioRepository.save(nuevo);
                 });
     }
+
 
 
     // 🔹 Actualizar estado de usuario

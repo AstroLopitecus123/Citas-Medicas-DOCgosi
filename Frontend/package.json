@@ -6,7 +6,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "npx -y serve -s browser -l $PORT --config browser/serve.json",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -25,6 +25,7 @@
   },
   "private": true,
   "dependencies": {
+    "express": "^4.18.2",
     "@angular/common": "~19.1.0",
     "@angular/compiler": "~19.1.0",
     "@angular/core": "~19.1.0",

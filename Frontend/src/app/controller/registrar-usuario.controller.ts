@@ -77,11 +77,22 @@ export class RegistrarUsuarioController {
 
   /** ------------------ GETTERS DE VALIDACIÓN ------------------ */
 
+  get nombreValido(): boolean {
+    const n = this.usuario.nombre?.trim() || '';
+    // No nulo, máximo 50 caracteres, sin números
+    return n.length > 0 && n.length <= 50 && !/\d/.test(n);
+  }
+
+  get apellidoValido(): boolean {
+    const a = this.usuario.apellido?.trim() || '';
+    // No nulo, máximo 50 caracteres, sin números
+    return a.length > 0 && a.length <= 50 && !/\d/.test(a);
+  }
+
   get emailValido(): boolean {
     const correoUsuario = this.usuario.correoUsuario?.trim() || '';
     return correoUsuario.length > 0 && /^[a-zA-Z0-9._-]+$/.test(correoUsuario);
   }
-
 
   get fechaFutura(): boolean {
     if (!this.usuario.fechaNacimiento) return false;
@@ -91,13 +102,15 @@ export class RegistrarUsuarioController {
   }
 
   get dniValido(): boolean {
-    const dniStr = (this.usuario.dni || '').toString();
-    return dniStr.length >= 8;
+    const dniStr = (this.usuario.dni || '').toString().trim();
+    // Solo números, sin espacios, máximo 8 dígitos, no vacío
+    return /^\d{1,8}$/.test(dniStr);
   }
 
   get telefonoValido(): boolean {
-    const telStr = (this.usuario.telefono || '').toString();
-    return telStr.length >= 9;
+    const telStr = (this.usuario.telefono || '').toString().trim();
+    // Solo números, sin espacios, máximo 9 dígitos, no vacío
+    return /^\d{1,9}$/.test(telStr);
   }
 
   get passwordChecks() {
@@ -116,8 +129,8 @@ export class RegistrarUsuarioController {
 
   get formularioValido(): boolean {
     return !!(
-      this.usuario.nombre &&
-      this.usuario.apellido &&
+      this.nombreValido &&
+      this.apellidoValido &&
       this.usuario.correoUsuario &&
       this.emailValido &&
       this.dniValido &&

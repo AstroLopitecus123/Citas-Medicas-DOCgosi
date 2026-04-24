@@ -63,13 +63,13 @@
           <div class="input-group">
             <label for="nombre">Nombre</label>
             <input id="nombre" type="text" [(ngModel)]="ctrl.usuario.nombre" name="nombre"
-              placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')" required
+              placeholder="Ej: Juan" (input)="ctrl.setTouched('nombre')" required maxlength="50"
               aria-label="Escribe tu nombre">
           </div>
           <div class="input-group">
             <label for="apellido">Apellido</label>
             <input id="apellido" type="text" [(ngModel)]="ctrl.usuario.apellido" name="apellido"
-              placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')" required
+              placeholder="Ej: Pérez" (input)="ctrl.setTouched('apellido')" required maxlength="50"
               aria-label="Escribe tu apellido">
           </div>
         </div>
@@ -105,7 +105,7 @@
           <div class="input-group">
             <label for="dni">DNI / ID</label>
             <input id="dni" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.dni" name="dni" 
-                   required placeholder="Solo números" (keypress)="ctrl.soloNumeros($event)"
+                   required placeholder="Solo números" maxlength="8" (keypress)="ctrl.soloNumeros($event)"
                    aria-label="Número de documento de identidad">
           </div>
 
@@ -113,7 +113,7 @@
           <div class="input-group">
             <label for="telefono">Teléfono</label>
             <input id="telefono" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.telefono" name="telefono" 
-                   required placeholder="9 dígitos" (keypress)="ctrl.soloNumeros($event)"
+                   required placeholder="9 dígitos" maxlength="9" (keypress)="ctrl.soloNumeros($event)"
                    aria-label="Número de teléfono celular">
           </div>
         </div>

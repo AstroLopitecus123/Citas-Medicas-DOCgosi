@@ -253,7 +253,27 @@ export class RegistrarUsuarioController {
 
     if (!this.formularioValido) {
       if (this.ns) {
-        this.ns.error('Formulario incompleto: ' + this.MENSAJES.completarCampos);
+        if (!this.nombreValido) {
+          this.ns.error('El nombre es obligatorio, no debe contener números y máximo 50 caracteres.');
+        } else if (!this.apellidoValido) {
+          this.ns.error('El apellido es obligatorio, no debe contener números y máximo 50 caracteres.');
+        } else if (!this.usuario.correoUsuario || !this.emailValido) {
+          this.ns.error('Por favor ingresa un nombre de correo válido.');
+        } else if (!this.passwordChecks.length || !this.passwordChecks.uppercase || !this.passwordChecks.number) {
+          this.ns.error('La contraseña debe tener 8 caracteres, mayúsculas y números.');
+        } else if (!this.passwordChecks.match) {
+          this.ns.error('Las contraseñas no coinciden.');
+        } else if (!this.dniValido) {
+          this.ns.error('El DNI debe contener exactamente 8 números, sin letras ni espacios.');
+        } else if (!this.telefonoValido) {
+          this.ns.error('El teléfono debe contener exactamente 9 números.');
+        } else if (!this.usuario.fechaNacimiento || this.fechaFutura) {
+          this.ns.error('La fecha de nacimiento ingresada no es válida.');
+        } else if (!this.usuario.paisId) {
+          this.ns.error('Debes seleccionar un país de residencia.');
+        } else {
+          this.ns.error('Por favor revisa que todos los campos estén correctos.');
+        }
       }
       return;
     }

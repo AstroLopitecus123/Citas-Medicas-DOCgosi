@@ -6,7 +6,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "npx -y serve -s browser -l $PORT",
+    "start": "npx -y serve -s browser -l $PORT --config browser/serve.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

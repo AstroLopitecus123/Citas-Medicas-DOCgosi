@@ -170,6 +170,7 @@ public class UsuarioService {
                     nuevo.setRol(Rol.PACIENTE);
                     nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
                     nuevo.setEstado(EstadoUsuario.ACTIVADO);
+                    nuevo.setDni("00000000"); // DNI por defecto temporal
                     return usuarioRepository.save(nuevo);
                 });
     }

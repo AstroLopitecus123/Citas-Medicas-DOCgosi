@@ -48,10 +48,17 @@ export class GoogleCallbackComponent implements OnInit {
     this.usuarioService.loginConGoogle(idToken).subscribe({
       next: (res) => {
         console.log('Respuesta del servidor exitosa:', res);
-        if (res.usuario) {
-          this.ns.success(`¡Bienvenido, ${res.usuario.nombre}!`);
+        
+        // El servidor devuelve una estructura plana (id, nombre, rol, token, etc.)
+        // No viene envuelto en un objeto "usuario"
+        if (res && res.token) {
+          const nombreUsuario = res.nombre || 'Usuario';
+          this.ns.success(`¡Bienvenido, ${nombreUsuario}!`);
+          
+          // Notificar al resto de la app que el login se completó
           this.app.loginActualizado$.next();
-          const rol = res.usuario.rol?.toUpperCase();
+          
+          const rol = res.rol?.toUpperCase();
           console.log('Redirigiendo a panel por rol:', rol);
           
           if (rol === 'ADMIN') this.router.navigate(['/admin']);
@@ -59,7 +66,9 @@ export class GoogleCallbackComponent implements OnInit {
           else if (rol === 'RECEPCION') this.router.navigate(['/recepcion/dashboard']);
           else this.router.navigate(['/paciente/dashboard']);
         } else {
-          console.error('El servidor respondió pero no incluyó datos de usuario');
+          console.error('El servidor respondió pero falta el token o datos esenciales');
+          this.ns.error('La sesión no pudo ser validada. Intenta de nuevo.');
+          this.router.navigate(['/login']);
         }
       },
       error: (err) => {

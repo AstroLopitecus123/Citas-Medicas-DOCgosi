@@ -8,8 +8,6 @@ import { AppComponent } from '../../app';
 import { NarratorDirective } from '../../directives/narrator.directive';
 import { UsuarioService } from '../../services/usuario.service';
 
-declare var google: any;
-
 @Component({
   selector: 'app-registrar-usuario',
   standalone: true,
@@ -19,6 +17,9 @@ declare var google: any;
   providers: [RegistrarUsuarioController]
 })
 export class RegistrarUsuarioComponent implements OnInit {
+
+  private readonly GOOGLE_CLIENT_ID = '473447043826-0d5crfghn3m7cug1ibfefnr24lsmp5g8.apps.googleusercontent.com';
+  private readonly REDIRECT_URI = `${window.location.origin}/auth/google/callback`;
 
   constructor(
     public ctrl: RegistrarUsuarioController,
@@ -31,51 +32,26 @@ export class RegistrarUsuarioComponent implements OnInit {
     this.ctrl.setUtils(this.router, this.ns, this.app);
   }
 
-  ngOnInit(): void {
-    this.renderizarBotonGoogle();
-  }
+  ngOnInit(): void {}
 
-  private renderizarBotonGoogle() {
-    if (typeof google !== 'undefined') {
-      google.accounts.id.initialize({
-        client_id: '473447043826-0d5crfghn3m7cug1ibfefnr24lsmp5g8.apps.googleusercontent.com',
-        callback: (resp: any) => this.ngZone.run(() => this.handleGoogleCredential(resp))
-      });
+  /**
+   * Redirige al usuario a Google OAuth sin popup.
+   * Evita completamente el error de Cross-Origin-Opener-Policy.
+   */
+  registrarConGoogle(): void {
+    const nonce = Math.random().toString(36).substring(2);
+    sessionStorage.setItem('google_nonce', nonce);
 
-      google.accounts.id.renderButton(
-        document.getElementById("googleBtnRegister"),
-        { theme: "outline", size: "large", text: "signup_with", width: 250, shape: "pill" }
-      );
-    }
-  }
-
-  private handleGoogleCredential(response: any) {
-    this.usuarioService.loginConGoogle(response.credential).subscribe({
-      next: (res) => {
-        if (res.usuario) {
-          this.ns.success('¡Registro exitoso con Google!');
-          // Notificar al AppComponent que el login cambió
-          this.app.loginActualizado$.next();
-          this.redirigirPorRol(res.usuario);
-        }
-      },
-      error: (err) => {
-        console.error('Error Google Register:', err);
-        this.ns.error('Error al registrar con Google');
-      }
+    const params = new URLSearchParams({
+      client_id: this.GOOGLE_CLIENT_ID,
+      redirect_uri: this.REDIRECT_URI,
+      response_type: 'id_token',
+      scope: 'openid email profile',
+      nonce: nonce,
+      prompt: 'select_account'
     });
-  }
 
-  private redirigirPorRol(usuario: any) {
-    const rol = usuario.rol?.toUpperCase();
-    if (rol === 'ADMIN') {
-      this.router.navigate(['/admin']);
-    } else if (rol === 'MEDICO') {
-      this.router.navigate(['/medico/dashboard']);
-    } else if (rol === 'RECEPCION') {
-      this.router.navigate(['/recepcion/dashboard']);
-    } else {
-      this.router.navigate(['/paciente/dashboard']);
-    }
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
   }
 }
+

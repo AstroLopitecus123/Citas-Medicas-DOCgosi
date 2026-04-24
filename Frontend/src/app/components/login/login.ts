@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -6,8 +6,6 @@ import { UsuarioService } from '../../services/usuario.service';
 import { LoginController } from '../../controller/login.controller';
 import { EventEmitter, Output } from '@angular/core';
 import { NotificationService } from '../../services/notification.service';
-
-declare var google: any;
 
 @Component({
   selector: 'app-login',
@@ -20,71 +18,37 @@ export class LoginComponent implements OnInit {
   @Output() loginExitoso = new EventEmitter<void>();
   ctrl: LoginController;
 
+  private readonly GOOGLE_CLIENT_ID = '473447043826-0d5crfghn3m7cug1ibfefnr24lsmp5g8.apps.googleusercontent.com';
+  private readonly REDIRECT_URI = `${window.location.origin}/auth/google/callback`;
+
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private ns: NotificationService,
-    private ngZone: NgZone
+    private ns: NotificationService
   ) {
     this.ctrl = new LoginController(this.usuarioService, this.router, this.loginExitoso, this.ns);
   }
 
-  ngOnInit() {
-    // Inicializar Google Sign-In
-    setTimeout(() => {
-      if (typeof google !== 'undefined') {
-        google.accounts.id.initialize({
-          client_id: '473447043826-0d5crfghn3m7cug1ibfefnr24lsmp5g8.apps.googleusercontent.com',
-          callback: (response: any) => {
-            this.ngZone.run(() => this.handleGoogleLogin(response));
-          },
-          use_fedcm_for_prompt: true
-        });
+  ngOnInit() {}
 
-        google.accounts.id.renderButton(
-          document.getElementById('googleBtn'),
-          { 
-            theme: 'outline', 
-            size: 'large', 
-            width: 280,
-            text: 'continue_with',
-            shape: 'pill',
-            click_listener: () => {
-              // Si el popup falla, usar prompt nativo de Google (FedCM)
-              google.accounts.id.prompt();
-            }
-          }
-        );
-      }
-    }, 500);
-  }
+  /**
+   * Redirige al usuario a Google OAuth sin popup.
+   * Evita completamente el error de Cross-Origin-Opener-Policy.
+   */
+  loginConGoogle(): void {
+    const nonce = Math.random().toString(36).substring(2);
+    sessionStorage.setItem('google_nonce', nonce);
 
-  handleGoogleLogin(response: any) {
-    const idToken = response.credential;
-    this.usuarioService.loginConGoogle(idToken).subscribe({
-      next: (res) => {
-        if (res.usuario) {
-          if (this.ns) this.ns.success(`¡Bienvenido, ${res.usuario.nombre}!`);
-          this.loginExitoso.emit();
-          this.redirigirPorRol(res.usuario);
-        }
-      },
-      error: (err) => {
-        if (this.ns) this.ns.error('Error al iniciar sesión con Google');
-      }
+    const params = new URLSearchParams({
+      client_id: this.GOOGLE_CLIENT_ID,
+      redirect_uri: this.REDIRECT_URI,
+      response_type: 'id_token',
+      scope: 'openid email profile',
+      nonce: nonce,
+      prompt: 'select_account'
     });
-  }
 
-  private redirigirPorRol(usuario: any) {
-    const rol = usuario.rol?.toUpperCase();
-    if (rol === 'ADMIN') {
-      this.router.navigate(['/admin']);
-    } else if (rol === 'MEDICO') {
-      this.router.navigate(['/medico/dashboard']);
-    } else if (rol === 'RECEPCION') {
-      this.router.navigate(['/recepcion/dashboard']);
-    } else {
-      this.router.navigate(['/paciente/dashboard']);
-    }
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
   }
 }
+

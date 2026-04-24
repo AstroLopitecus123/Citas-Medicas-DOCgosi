@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login';
 import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario';
+import { GoogleCallbackComponent } from './components/google-callback/google-callback';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios';
 import { MisCitasComponent } from './components/mis-citas/mis-citas';
 import { AdminMedicos } from './components/admin-medicos/admin-medicos';
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'R.E.T.O Salud' },
   { path: 'login', component: LoginComponent, title: 'Iniciar Sesión' },
   { path: 'registrar', component: RegistrarUsuarioComponent, title: 'Registro' },
+  { path: 'auth/google/callback', component: GoogleCallbackComponent, title: 'Google Auth' },
   { path: 'recuperar', component: RecuperarComponent, title: 'Recuperar Contraseña' },
   { path: 'restablecer', component: RestablecerComponent, title: 'Restablecer Contraseña' },
   { path: 'trabaja-con-nosotros', component: TrabajaConNosotrosComponent, title: 'Trabaja con Nosotros' },

@@ -26,31 +26,45 @@ export class GoogleCallbackComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // El id_token llega en el fragmento de la URL (#id_token=...)
+    console.log('--- Iniciando verificación de Google Callback ---');
+    
+    // Intentar capturar el token tanto del hash como de los parámetros normales
     const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const idToken = params.get('id_token');
+    const hashParams = new URLSearchParams(hash);
+    const queryParams = new URLSearchParams(window.location.search);
+    
+    const idToken = hashParams.get('id_token') || queryParams.get('id_token');
+
+    console.log('Token detectado:', idToken ? 'SÍ (oculto por seguridad)' : 'NO');
 
     if (!idToken) {
+      console.error('No se encontró id_token en la URL');
       this.ns.error('No se recibió respuesta de Google. Intenta de nuevo.');
       this.router.navigate(['/login']);
       return;
     }
 
+    console.log('Enviando token al servidor...');
     this.usuarioService.loginConGoogle(idToken).subscribe({
       next: (res) => {
+        console.log('Respuesta del servidor exitosa:', res);
         if (res.usuario) {
           this.ns.success(`¡Bienvenido, ${res.usuario.nombre}!`);
           this.app.loginActualizado$.next();
           const rol = res.usuario.rol?.toUpperCase();
+          console.log('Redirigiendo a panel por rol:', rol);
+          
           if (rol === 'ADMIN') this.router.navigate(['/admin']);
           else if (rol === 'MEDICO') this.router.navigate(['/medico/dashboard']);
           else if (rol === 'RECEPCION') this.router.navigate(['/recepcion/dashboard']);
           else this.router.navigate(['/paciente/dashboard']);
+        } else {
+          console.error('El servidor respondió pero no incluyó datos de usuario');
         }
       },
-      error: () => {
-        this.ns.error('Error al iniciar sesión con Google. Intenta de nuevo.');
+      error: (err) => {
+        console.error('Error en la llamada al servidor (loginConGoogle):', err);
+        this.ns.error('Error al conectar con el servidor de la clínica.');
         this.router.navigate(['/login']);
       }
     });

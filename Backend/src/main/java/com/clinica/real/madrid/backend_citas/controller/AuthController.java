@@ -81,16 +81,19 @@ public class AuthController {
     }
 
     @PostMapping("/google")
-    public ResponseEntity<UsuarioResponse> loginGoogle(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> loginGoogle(@RequestBody Map<String, String> body) {
         try {
             String idToken = body.get("idToken");
             Usuario usuario = usuarioService.loginConGoogle(idToken);
             String token = jwtUtil.generateToken(usuario.getCorreo());
             return ResponseEntity.ok(new UsuarioResponse(token, usuario));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            e.printStackTrace(); // Esto saldrá en los logs de Railway
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error en Google Auth: " + e.getMessage()));
         }
     }
+
     
  // 🔹 Paso 1: Solicitar recuperación
     @PostMapping("/recuperar")

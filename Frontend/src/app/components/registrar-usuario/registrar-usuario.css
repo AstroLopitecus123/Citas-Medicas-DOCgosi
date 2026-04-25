@@ -202,36 +202,45 @@
   margin-bottom: 15px; /* Reducido */
 }
 
-/* SECCIÓN REGISTRO RÁPIDO GOOGLE COMPACTA */
-.google-register-quick {
-  text-align: center;
-  margin-bottom: 15px; /* Reducido */
-  background: #f8fafc;
-  padding: 12px 15px; /* Reducido */
-  border-radius: 16px;
-  border: 1.5px dashed #cbd5e1;
-}
-
-.quick-text {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 8px; /* Reducido */
-}
-
-#googleBtnRegister {
+/* Botón de Google redirect (Premium) */
+.google-redirect-btn {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 8px; /* Reducido */
+  gap: 12px;
+  width: 100%;
+  background: white;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 12px;
 }
 
-.google-login-separator-register {
+.google-redirect-btn:hover {
+  background: #f8f9fa;
+  border-color: #d2d2d2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.google-redirect-btn svg {
+  flex-shrink: 0;
+}
+
+/* Separador Visual (Premium) */
+.google-login-separator {
   position: relative;
   text-align: center;
-  margin-top: 8px; /* Reducido */
+  margin: 15px 0;
 }
 
-.google-login-separator-register::before {
+.google-login-separator::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -242,12 +251,12 @@
   z-index: 1;
 }
 
-.google-login-separator-register span {
+.google-login-separator span {
   position: relative;
   background: #f8fafc;
-  padding: 0 10px;
+  padding: 0 15px;
   color: #94a3b8;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   z-index: 2;
 }

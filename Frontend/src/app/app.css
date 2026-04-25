@@ -1110,6 +1110,45 @@
 }
 
 /* ============ BADGE DE NOTIFICACIONES ============ */
+/* ============ ESTADOS VACÍOS (EMPTY STATES) PREMIUM UNIFICADOS ============ */
+.empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 100px 40px !important;
+  text-align: center !important;
+  color: #94a3b8 !important;
+  margin: 40px auto !important;
+  max-width: 650px !important;
+  background: white !important;
+  border-radius: 32px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06) !important;
+  border: 1px solid #f1f5f9 !important;
+}
+
+.empty-state i {
+  font-size: 5rem !important;
+  margin-bottom: 25px !important;
+  color: #cbd5e1 !important;
+  opacity: 0.8 !important;
+  display: block !important;
+}
+
+.empty-state p {
+  font-size: 1.6rem !important;
+  color: #1e293b !important;
+  font-weight: 800 !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.empty-state span {
+  font-size: 1.1rem !important;
+  color: #64748b !important;
+  max-width: 450px !important;
+  line-height: 1.6 !important;
+}
+
 .notif-badge {
   min-width: 20px;
   height: 20px;

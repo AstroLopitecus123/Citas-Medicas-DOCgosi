@@ -176,8 +176,8 @@ public class UsuarioService {
                     // Usamos un prefijo para que el usuario sepa que debe cambiarlo
                     nuevo.setDni("G-" + System.currentTimeMillis() / 1000); 
                     nuevo.setTelefono("000000000");
-                    nuevo.setFechaNacimiento(null);
-                    nuevo.setPais(null);
+                    nuevo.setFechaNacimiento(java.time.LocalDate.of(2000, 1, 1));
+                    nuevo.setPais(paisRepository.findById(1L).orElse(null));
 
                     return usuarioRepository.save(nuevo);
                 });

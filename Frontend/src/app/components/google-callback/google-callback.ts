@@ -73,9 +73,12 @@ export class GoogleCallbackComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error en la llamada al servidor (loginConGoogle):', err);
-        this.ns.error('Error al conectar con el servidor de la clínica.');
+        // Extraer el mensaje de error detallado que configuramos en el backend
+        const msgError = err.error?.error || 'Error desconocido al validar con Google';
+        this.ns.error('Error: ' + msgError);
         this.router.navigate(['/login']);
       }
+
     });
   }
 }

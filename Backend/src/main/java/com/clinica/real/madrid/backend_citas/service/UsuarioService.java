@@ -172,15 +172,17 @@ public class UsuarioService {
                     nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
                     nuevo.setEstado(EstadoUsuario.ACTIVADO);
                     
-                    // Dejar nulos para que el usuario los complete en su perfil
-                    nuevo.setDni(null); 
-                    nuevo.setTelefono(null);
+                    // Datos obligatorios en DB pero que Google no da
+                    // Usamos un prefijo para que el usuario sepa que debe cambiarlo
+                    nuevo.setDni("G-" + System.currentTimeMillis() / 1000); 
+                    nuevo.setTelefono("000000000");
                     nuevo.setFechaNacimiento(null);
                     nuevo.setPais(null);
 
                     return usuarioRepository.save(nuevo);
                 });
     }
+
 
 
 

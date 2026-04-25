@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    ESTILOS PREMIUM - DOCGOSI (RESTORATION 757c852)
    ========================================================================== */
 
@@ -1117,74 +1117,6 @@
   background: #ef4444;
   color: white;
   font-size: 0.7rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
-  animation: pulse-bell 2s infinite;
-}
-
-/* ============ ESTADOS VACÃOS (EMPTY STATES) PREMIUM ============ */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 40px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 24px;
-  border: 2px dashed rgba(15, 191, 106, 0.2);
-  margin: 30px auto;
-  max-width: 600px;
-  transition: all 0.3s ease;
-}
-
-.empty-state:hover {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: rgba(15, 191, 106, 0.4);
-  transform: translateY(-5px);
-}
-
-.empty-state i {
-  font-size: 5rem;
-  margin-bottom: 25px;
-  width: 140px;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-  color: #0fbf6a;
-  box-shadow: 0 15px 35px rgba(15, 191, 106, 0.1);
-  animation: float-icon 4s ease-in-out infinite;
-}
-
-.empty-state p {
-  font-size: 1.4rem;
-  color: #1e293b;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.empty-state span {
-  font-size: 1rem;
-  color: #64748b;
-  max-width: 350px;
-}
-
-@keyframes float-icon {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-
-/* ============ PRELOADER PREMIUM (LOGO BLINK) ============ */
-.page-loader {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

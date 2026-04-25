@@ -82,22 +82,7 @@
     box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
 }
 
-.empty-notif {
-    padding: 60px 40px;
-    text-align: center;
-    color: #94a3b8;
-}
-
-.empty-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    opacity: 0.3;
-}
-
-.empty-notif h4 {
-    color: #64748b;
-    margin-bottom: 8px;
-}
+/* Usando estados globales de app.css */
 
 .filter-chip {
     padding: 8px 18px;

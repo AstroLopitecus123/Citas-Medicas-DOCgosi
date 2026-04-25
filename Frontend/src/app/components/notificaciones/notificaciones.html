@@ -1,4 +1,4 @@
-﻿<div class="admin-layout">
+<div class="admin-layout">
         <!-- Header Premium (Ocultar en Dashboard) -->
         <header class="premium-welcome-banner" style="border-left: 6px solid #3b82f6;" *ngIf="!modoDashboard">
             <div class="welcome-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
@@ -30,12 +30,10 @@
         <!-- Lista de Notificaciones -->
         <div [class.premium-card]="!modoDashboard" [style.padding]="modoDashboard ? '0' : '0'" style="overflow: hidden; border: none; box-shadow: none; background: transparent;">
             <div class="notif-list-container">
-                <div *ngIf="notificacionesFiltradas.length === 0" class="empty-notif">
-                    <div class="empty-icon">
-                        <i class="fa-solid fa-bell-slash"></i>
-                    </div>
-                    <h4>No tienes notificaciones</h4>
-                    <p>Cuando haya novedades sobre tus citas, aparecerÃ¡n aquÃ­.</p>
+                <div *ngIf="notificacionesFiltradas.length === 0" class="empty-state">
+                    <i class="fa-solid fa-bell-slash"></i>
+                    <p>No tienes notificaciones</p>
+                    <span>Cuando haya novedades sobre tus citas, aparecerán aquí.</span>
                 </div>
 
                 <div class="notif-card-item" *ngFor="let notif of notificacionesFiltradas" 

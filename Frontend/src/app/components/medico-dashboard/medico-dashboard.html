@@ -84,13 +84,11 @@
             </div>
           </div>
           
-          <!-- Estado Vacío -->
-          <div class="empty-state-card" *ngIf="proximasCitas.length === 0" style="text-align: center; padding: 60px 20px;">
-             <div class="empty-icon-circle">
-               <i class="fa-solid fa-mug-hot"></i>
-             </div>
-             <p style="color: #1e293b; font-size: 1.2rem; margin: 15px 0 5px 0; font-weight: 700;">Tu agenda está despejada</p>
-             <p style="color: #64748b; margin: 0;">No tienes próximas citas. Buen momento para revisar reportes o descansar.</p>
+          <!-- Estado Vacío Unificado -->
+          <div class="empty-state" *ngIf="proximasCitas.length === 0">
+             <i class="fa-solid fa-mug-hot"></i>
+             <p>Tu agenda está despejada</p>
+             <span>No tienes próximas citas. Buen momento para revisar reportes o descansar.</span>
           </div>
         </div>
         

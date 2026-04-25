@@ -175,10 +175,10 @@
 </aside>
 
 <!-- Contenedor Inteligente de Layout -->
-<div [class]="isPanelRoute ? 'panel-layout-container' : 'web-layout-container'">
+<main [class]="isPanelRoute ? 'panel-layout-container' : 'web-layout-container'">
   <!-- 🔥 Detecta login sin recargar la página -->
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
-</div>
+</main>
 
 <!-- 🔄 MODAL GLASS: CONFIRMACIÓN SALIDA -->
 <div class="glass-overlay" *ngIf="mostrarModal" (click)="cancelarCerrarSesion()">

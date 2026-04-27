@@ -48,8 +48,8 @@ export class HomeComponent implements AfterViewInit {
       scrollWheelZoom: false // Para que no moleste al hacer scroll en la web
     }).setView([-12.095, -77.01], 13);
 
-    // Estilo de mapa Dark/Minimalista (CartoDB Dark Matter)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Estilo de mapa Claro/Elegante (CartoDB Positron) - Mucho más legible
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 20
@@ -65,19 +65,26 @@ export class HomeComponent implements AfterViewInit {
         <div class="marker-glow"></div>
       `,
       iconSize: [40, 40],
-      iconAnchor: [20, 40] // El punto de anclaje es la punta inferior del pin
+      iconAnchor: [20, 40]
     });
 
     // Añadir marcadores
     this.sedes.forEach(sede => {
       const popupContent = `
-        <div class="map-popup">
-          <div class="popup-img" style="background-image: url('${sede.img}')"></div>
-          <div class="popup-body">
-            <h6>${sede.nombre}</h6>
-            <p><i class="fas fa-map-marker-alt"></i> ${sede.direccion}</p>
-            <button onclick="window.dispatchEvent(new CustomEvent('map-action', {detail: '${sede.nombre}'}))" class="popup-btn">
-              Reservar Aquí
+        <div class="premium-popup">
+          <div class="popup-header" style="background-image: url('${sede.img}')">
+            <div class="popup-badge">Sede Oficial</div>
+          </div>
+          <div class="popup-content">
+            <h3>${sede.nombre}</h3>
+            <p><i class="fa-solid fa-location-dot"></i> ${sede.direccion}</p>
+            <div class="popup-features">
+              <span><i class="fa-solid fa-clock"></i> 24/7</span>
+              <span><i class="fa-solid fa-shield-heart"></i> Seguro</span>
+            </div>
+            <button class="popup-btn-premium">
+              Agendar Cita
+              <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
         </div>
@@ -87,7 +94,8 @@ export class HomeComponent implements AfterViewInit {
         .addTo(map)
         .bindPopup(popupContent, {
           closeButton: false,
-          className: 'glass-popup'
+          className: 'premium-glass-popup',
+          minWidth: 280
         });
     });
   }

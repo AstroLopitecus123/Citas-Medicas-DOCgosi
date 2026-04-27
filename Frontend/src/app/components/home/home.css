@@ -607,70 +607,119 @@
   100% { transform: scale(2.5); opacity: 0; }
 }
 
-/* POPUPS DE LEAFLET (GLASSMORPHISM) */
-.glass-popup .leaflet-popup-content-wrapper {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 25px !important;
+/* POPUPS DE LEAFLET PREMIUM (GLASSMORPHISM) */
+.premium-glass-popup .leaflet-popup-content-wrapper {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 28px !important;
   padding: 0 !important;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2) !important;
 }
 
-.glass-popup .leaflet-popup-tip {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) !important;
+.premium-glass-popup .leaflet-popup-content {
+  margin: 0 !important;
+  width: 280px !important;
 }
 
-.map-popup {
-  width: 240px;
-  color: white;
-}
-
-.popup-img {
+.premium-popup {
   width: 100%;
-  height: 120px;
+  overflow: hidden;
+}
+
+.popup-header {
+  width: 100%;
+  height: 140px;
   background-size: cover;
   background-position: center;
+  position: relative;
 }
 
-.popup-body {
-  padding: 15px;
-}
-
-.popup-body h6 {
-  font-size: 1.1rem;
+.popup-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(15, 191, 106, 0.9);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.7rem;
   font-weight: 800;
-  margin: 0 0 5px 0;
-  color: #fff;
+  text-transform: uppercase;
+  backdrop-filter: blur(5px);
 }
 
-.popup-body p {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 15px;
+.popup-content {
+  padding: 25px;
+  background: white;
+}
+
+.popup-content h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a2a3a;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.popup-content p {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
-.popup-btn {
+.popup-content p i {
+  color: #0fbf6a;
+}
+
+.popup-features {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.popup-features span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0fbf6a;
+  background: rgba(15, 191, 106, 0.1);
+  padding: 6px 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.popup-btn-premium {
   width: 100%;
-  background: #0fbf6a;
+  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 12px;
-  font-weight: 700;
+  padding: 14px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+  box-shadow: 0 10px 20px rgba(15, 191, 106, 0.3);
 }
 
-.popup-btn:hover {
-  background: #0a7c4a;
-  transform: translateY(-2px);
+.popup-btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(15, 191, 106, 0.45);
+}
+
+.popup-btn-premium i {
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

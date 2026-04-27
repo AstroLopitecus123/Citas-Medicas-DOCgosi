@@ -624,7 +624,7 @@
 }
 
 /* POPUPS DE LEAFLET PREMIUM (GLASSMORPHISM) */
-.premium-glass-popup .leaflet-popup-content-wrapper {
+::ng-deep .premium-glass-popup .leaflet-popup-content-wrapper {
   background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(15px) !important;
   -webkit-backdrop-filter: blur(15px) !important;
@@ -635,17 +635,17 @@
   box-shadow: 0 25px 60px rgba(0,0,0,0.2) !important;
 }
 
-.premium-glass-popup .leaflet-popup-content {
+::ng-deep .premium-glass-popup .leaflet-popup-content {
   margin: 0 !important;
   width: 280px !important;
 }
 
-.premium-popup {
+::ng-deep .premium-popup {
   width: 100%;
   overflow: hidden;
 }
 
-.popup-header {
+::ng-deep .popup-header {
   width: 100%;
   height: 140px;
   background-size: cover;
@@ -653,7 +653,7 @@
   position: relative;
 }
 
-.popup-badge {
+::ng-deep .popup-badge {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -667,12 +667,12 @@
   backdrop-filter: blur(5px);
 }
 
-.popup-content {
+::ng-deep .popup-content {
   padding: 25px;
   background: white;
 }
 
-.popup-content h3 {
+::ng-deep .popup-content h3 {
   font-size: 1.4rem;
   font-weight: 800;
   color: #1a2a3a;
@@ -680,7 +680,7 @@
   letter-spacing: -0.5px;
 }
 
-.popup-content p {
+::ng-deep .popup-content p {
   font-size: 0.95rem;
   color: #64748b;
   margin-bottom: 20px;
@@ -689,17 +689,17 @@
   gap: 8px;
 }
 
-.popup-content p i {
+::ng-deep .popup-content p i {
   color: #0fbf6a;
 }
 
-.popup-features {
+::ng-deep .popup-features {
   display: flex;
   gap: 15px;
   margin-bottom: 25px;
 }
 
-.popup-features span {
+::ng-deep .popup-features span {
   font-size: 0.75rem;
   font-weight: 700;
   color: #0fbf6a;
@@ -711,7 +711,7 @@
   gap: 5px;
 }
 
-.popup-btn-premium {
+::ng-deep .popup-btn-premium {
   width: 100%;
   background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
   color: white;
@@ -729,12 +729,12 @@
   box-shadow: 0 10px 20px rgba(15, 191, 106, 0.3);
 }
 
-.popup-btn-premium:hover {
+::ng-deep .popup-btn-premium:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 30px rgba(15, 191, 106, 0.45);
 }
 
-.popup-btn-premium i {
+::ng-deep .popup-btn-premium i {
   font-size: 1rem;
 }
 

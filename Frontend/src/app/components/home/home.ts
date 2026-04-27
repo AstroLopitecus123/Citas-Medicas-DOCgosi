@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NarratorDirective } from '../../directives/narrator.directive';
 import { UsuarioService } from '../../services/usuario.service';
+
+declare var L: any;
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,7 @@ import { UsuarioService } from '../../services/usuario.service';
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   especialidades = [
     { titulo: 'Cardiología', descripcion: 'Especialistas en la salud de su corazón y sistema circulatorio.', imagen: 'assets/images/ServiceEmergency.png' },
     { titulo: 'Pediatría', descripcion: 'Atención médica integral para el crecimiento sano de sus hijos.', imagen: 'assets/images/ServiceNurse.png' },
@@ -26,15 +28,64 @@ export class HomeComponent {
   ];
 
   sedes = [
-    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital' },
-    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building' },
-    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical' }
+    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/HomeDoctor.png' },
+    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building', lat: -12.0722, lng: -76.9450, img: 'assets/images/ServiceNurse.png' },
+    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical', lat: -12.1167, lng: -76.9833, img: 'assets/images/ServiceLab.png' }
   ];
 
   constructor(
     private router: Router,
     private usuarioService: UsuarioService
   ) {}
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+  private initMap() {
+    // Inicializar mapa centrado en Lima
+    const map = L.map('map', {
+      scrollWheelZoom: false // Para que no moleste al hacer scroll en la web
+    }).setView([-12.095, -77.01], 13);
+
+    // Estilo de mapa Dark/Minimalista (CartoDB Voyager)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 20
+    }).addTo(map);
+
+    // Crear icono personalizado para los marcadores
+    const medicalIcon = L.divIcon({
+      className: 'custom-marker',
+      html: `<div class="marker-glow"></div><i class="fa-solid fa-house-medical"></i>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20]
+    });
+
+    // Añadir marcadores
+    this.sedes.forEach(sede => {
+      const popupContent = `
+        <div class="map-popup">
+          <div class="popup-img" style="background-image: url('${sede.img}')"></div>
+          <div class="popup-body">
+            <h6>${sede.nombre}</h6>
+            <p><i class="fas fa-map-marker-alt"></i> ${sede.direccion}</p>
+            <button onclick="window.dispatchEvent(new CustomEvent('map-action', {detail: '${sede.nombre}'}))" class="popup-btn">
+              Reservar Aquí
+            </button>
+          </div>
+        </div>
+      `;
+
+      L.marker([sede.lat, sede.lng], { icon: medicalIcon })
+        .addTo(map)
+        .bindPopup(popupContent, {
+          closeButton: false,
+          className: 'glass-popup'
+        });
+    });
+  }
 
   sacarCita() {
     const usuarioJson = localStorage.getItem('usuario');

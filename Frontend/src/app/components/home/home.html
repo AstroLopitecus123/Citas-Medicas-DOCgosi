@@ -138,29 +138,24 @@
     </div>
   </section>
 
-  <!-- 5. SEDES -->
+  <!-- 5. SEDES INTERACTIVAS -->
   <section class="sedes">
-    <!-- Fondo de mapa con puntos animados -->
-    <div class="map-background">
-      <div class="glow-dot dot-1"></div>
-      <div class="glow-dot dot-2"></div>
-      <div class="glow-dot dot-3"></div>
-      <div class="glow-dot dot-4"></div>
-      <div class="glow-dot dot-5"></div>
-    </div>
-
-    <div class="section-container" style="position: relative; z-index: 2;">
-      <h2 class="section-title">Nuestras Sedes</h2>
-      <div class="section-underline"></div>
+    <div class="section-container">
+      <div class="sedes-header">
+        <h2 class="section-title">Nuestras Sedes</h2>
+        <div class="section-underline"></div>
+        <p class="sedes-subtitle">Explora nuestras ubicaciones y agenda tu cita en la sede más cercana.</p>
+      </div>
       
-      <div class="sedes-flex">
-        <div class="sede-item" *ngFor="let s of sedes">
-          <div class="sede-icon">
-            <i class="fa-solid" [ngClass]="s.icono"></i>
-          </div>
-          <div class="sede-info">
-            <h5>{{ s.nombre }}</h5>
-            <p>{{ s.direccion }}</p>
+      <!-- Contenedor del Mapa Leaflet -->
+      <div class="map-wrapper anim-fade-in">
+        <div id="map"></div>
+        
+        <!-- Overlay de Glassmorphism para instrucciones o info rápida -->
+        <div class="map-overlay">
+          <div class="overlay-card">
+            <i class="fas fa-location-dot"></i>
+            <span>3 Sedes en Lima</span>
           </div>
         </div>
       </div>

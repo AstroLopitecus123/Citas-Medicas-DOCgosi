@@ -562,44 +562,49 @@
   animation: pulse 2s infinite;
 }
 
-/* MARCADORES PERSONALIZADOS */
+/* MARCADORES PERSONALIZADOS - VISIBILIDAD FORZADA */
 .custom-marker {
   background: none !important;
   border: none !important;
-  z-index: 1000 !important;
+  z-index: 9999 !important;
+  overflow: visible !important;
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .marker-pin {
   width: 40px;
   height: 40px;
-  background: #0fbf6a;
+  background: #00ff88; /* Verde flúor para máxima visibilidad */
   color: white;
   border-radius: 50% 50% 50% 0;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: rotate(-45deg);
-  box-shadow: 0 4px 15px rgba(15, 191, 106, 0.4);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
   position: relative;
-  z-index: 2;
+  z-index: 10001 !important;
 }
 
 .marker-pin i {
   transform: rotate(45deg);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
 
 .marker-glow {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 40px;
-  margin: -20px 0 0 -20px;
-  background: rgba(15, 191, 106, 0.4);
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  background: rgba(0, 255, 136, 0.3);
   border-radius: 50%;
-  z-index: 1;
-  animation: marker-pulse 2s infinite;
+  z-index: 10000 !important;
+  animation: marker-pulse 1.5s infinite;
+  pointer-events: none;
 }
 
 @keyframes marker-pulse {

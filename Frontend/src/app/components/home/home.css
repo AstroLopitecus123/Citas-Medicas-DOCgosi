@@ -532,13 +532,24 @@
   z-index: 1;
 }
 
-/* OVERLAY DE INFORMACIÓN */
+/* OVERLAY DE INFORMACIÓN - REUBICADO A LA DERECHA */
 .map-overlay {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  top: 25px;
+  right: 25px;
   z-index: 1000;
   pointer-events: none;
+}
+
+/* Animación para los marcadores circulares */
+.pulse-marker {
+  animation: svg-pulse 2s infinite ease-in-out;
+}
+
+@keyframes svg-pulse {
+  0% { r: 10; opacity: 0.8; }
+  50% { r: 14; opacity: 1; }
+  100% { r: 10; opacity: 0.8; }
 }
 
 .overlay-card {

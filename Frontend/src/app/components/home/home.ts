@@ -43,32 +43,18 @@ export class HomeComponent implements AfterViewInit {
   }
 
   private initMap() {
-    // Inicializar mapa centrado en Lima
+    // Inicializar mapa centrado en Lima - SIN atribución para una vista limpia
     const map = L.map('map', {
-      scrollWheelZoom: false // Para que no moleste al hacer scroll en la web
+      scrollWheelZoom: false,
+      attributionControl: false 
     }).setView([-12.095, -77.01], 13);
 
-    // Estilo de mapa Claro/Elegante (CartoDB Positron) - Mucho más legible
+    // Estilo de mapa Claro/Elegante (CartoDB Positron)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      subdomains: 'abcd',
       maxZoom: 20
     }).addTo(map);
 
-    // Crear icono personalizado para los marcadores
-    const medicalIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `
-        <div class="marker-pin">
-          <i class="fa-solid fa-house-medical"></i>
-        </div>
-        <div class="marker-glow"></div>
-      `,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40]
-    });
-
-    // Añadir marcadores
+    // Añadir marcadores tipo Círculo (Garantiza visibilidad)
     this.sedes.forEach(sede => {
       const popupContent = `
         <div class="premium-popup">
@@ -90,13 +76,22 @@ export class HomeComponent implements AfterViewInit {
         </div>
       `;
 
-      L.marker([sede.lat, sede.lng], { icon: medicalIcon })
-        .addTo(map)
-        .bindPopup(popupContent, {
-          closeButton: false,
-          className: 'premium-glass-popup',
-          minWidth: 280
-        });
+      // Círculo interactivo verde flúor
+      const circle = L.circleMarker([sede.lat, sede.lng], {
+        radius: 12,
+        fillColor: "#00ff88",
+        color: "#fff",
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9,
+        className: 'pulse-marker' // Para animarlo por CSS
+      }).addTo(map);
+
+      circle.bindPopup(popupContent, {
+        closeButton: false,
+        className: 'premium-glass-popup',
+        minWidth: 280
+      });
     });
   }
 

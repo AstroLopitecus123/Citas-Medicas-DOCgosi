@@ -48,8 +48,8 @@ export class HomeComponent implements AfterViewInit {
       scrollWheelZoom: false // Para que no moleste al hacer scroll en la web
     }).setView([-12.095, -77.01], 13);
 
-    // Estilo de mapa Dark/Minimalista (CartoDB Voyager)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // Estilo de mapa Dark/Minimalista (CartoDB Dark Matter)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 20
@@ -58,9 +58,14 @@ export class HomeComponent implements AfterViewInit {
     // Crear icono personalizado para los marcadores
     const medicalIcon = L.divIcon({
       className: 'custom-marker',
-      html: `<div class="marker-glow"></div><i class="fa-solid fa-house-medical"></i>`,
+      html: `
+        <div class="marker-pin">
+          <i class="fa-solid fa-house-medical"></i>
+        </div>
+        <div class="marker-glow"></div>
+      `,
       iconSize: [40, 40],
-      iconAnchor: [20, 20]
+      iconAnchor: [20, 40] // El punto de anclaje es la punta inferior del pin
     });
 
     // Añadir marcadores

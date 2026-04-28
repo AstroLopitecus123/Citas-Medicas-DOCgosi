@@ -28,9 +28,9 @@ export class HomeComponent implements AfterViewInit {
   ];
 
   sedes = [
-    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/HomeDoctor.png' },
-    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building', lat: -12.0722, lng: -76.9450, img: 'assets/images/ServiceNurse.png' },
-    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical', lat: -12.1167, lng: -76.9833, img: 'assets/images/ServiceLab.png' }
+    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/SedeMiraflores.jpg' },
+    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', icono: 'fa-building', lat: -12.0722, lng: -76.9450, img: 'assets/images/SedeMolina.jpg' },
+    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', icono: 'fa-clinic-medical', lat: -12.1167, lng: -76.9833, img: 'assets/images/SedeSurco.jpg' }
   ];
 
   constructor(

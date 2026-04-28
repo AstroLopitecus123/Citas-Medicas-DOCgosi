@@ -81,8 +81,8 @@ export class MiNominaComponent implements OnInit {
 
   pagarNomina(id: number) {
     this.nominaService.pagarNomina(id).subscribe({
-      next: () => { this.ns.success('✅ Nómina marcada como PAGADA'); this.cargarNominas(); },
-      error: () => this.ns.error('❌ Error al procesar el pago')
+      next: () => { this.ns.success('Nómina marcada como PAGADA'); this.cargarNominas(); },
+      error: () => this.ns.error('Error al procesar el pago')
     });
   }
 
@@ -101,13 +101,13 @@ export class MiNominaComponent implements OnInit {
     this.procesando = true;
     this.nominaService.crearNomina(this.form).subscribe({
       next: () => {
-        this.ns.success('✅ Nómina creada correctamente');
+        this.ns.success('Nómina creada correctamente');
         this.procesando = false;
         this.cerrarModal();
         this.cargarNominas();
       },
       error: () => {
-        this.ns.error('❌ Error al crear la nómina');
+        this.ns.error('Error al crear la nómina');
         this.procesando = false;
       }
     });

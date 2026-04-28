@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CitaService } from '../../services/cita.service';
@@ -10,6 +10,7 @@ import { Router} from '@angular/router';
 import { MedicoService} from '../../services/medico.service';
 import { HistorialService } from '../../services/historial.service';
 import { NotificationService } from '../../services/notification.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-mis-citas',
@@ -19,8 +20,9 @@ import { NotificationService } from '../../services/notification.service';
   templateUrl: './mis-citas.html',
   styleUrls: ['./mis-citas.css']
 })
-export class MisCitasComponent implements OnInit {
+export class MisCitasComponent implements OnInit, OnDestroy {
   ctrl: MisCitasController;
+  private pollingSub?: Subscription;
 
   // 👇 inyectamos también el ActivatedRoute
   constructor(
@@ -45,6 +47,20 @@ export class MisCitasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ctrl.inicializar(); // ✅ sin argumentos
+    this.ctrl.inicializar(); // carga inicial
+    
+    // Polling cada 5 segundos para actualización en tiempo real
+    this.pollingSub = interval(5000).subscribe(() => {
+      // Usar if editando == false en el controller o algo similar para no interrumpir
+      if (!this.ctrl.editando && !this.ctrl.mostrandoModalCita && !this.ctrl.mostrandoModalCancelar && !this.ctrl.mostrandoModalHistorial) {
+         this.ctrl.cargarCitas(false);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingSub) {
+      this.pollingSub.unsubscribe();
+    }
   }
 }

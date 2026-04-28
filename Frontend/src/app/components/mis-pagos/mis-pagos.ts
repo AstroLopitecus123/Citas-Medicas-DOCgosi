@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { PagoService } from '../../services/pago.service';
 import { Pago } from '../../models/pago.model';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-mis-pagos',
@@ -13,7 +14,7 @@ import { NotificationService } from '../../services/notification.service';
   templateUrl: './mis-pagos.html',
   styleUrls: ['./mis-pagos.css']
 })
-export class MisPagosComponent implements OnInit {
+export class MisPagosComponent implements OnInit, OnDestroy {
   pagos: Pago[] = [];
   cargando = true;
   usuario: any = null;
@@ -29,6 +30,7 @@ export class MisPagosComponent implements OnInit {
   // Confirmación de anulación
   mostrandoConfirmarAnular = false;
   pagoAEliminarId: number | null = null;
+  private pollingSub?: Subscription;
 
   constructor(
     private pagoService: PagoService,
@@ -39,15 +41,26 @@ export class MisPagosComponent implements OnInit {
     const usrString = localStorage.getItem('usuario');
     if (usrString) {
       this.usuario = JSON.parse(usrString);
-      this.cargarPagos();
+      this.cargarPagos(true);
+      
+      // Polling para "Tiempo Real" cada 5 segundos
+      this.pollingSub = interval(5000).subscribe(() => {
+        this.cargarPagos(false);
+      });
     } else {
       this.error = 'No se encontró la sesión activa.';
       this.cargando = false;
     }
   }
 
-  cargarPagos() {
-    this.cargando = true;
+  ngOnDestroy() {
+    if (this.pollingSub) {
+      this.pollingSub.unsubscribe();
+    }
+  }
+
+  cargarPagos(showLoading: boolean = true) {
+    if (showLoading) this.cargando = true;
     let request$;
 
     const rol = this.usuario.rol?.toUpperCase();
@@ -72,12 +85,12 @@ export class MisPagosComponent implements OnInit {
             return dateB - dateA;
           });
           this.calcularAnaliticas();
-          this.cargando = false;
+          if (showLoading) this.cargando = false;
         },
         error: (err) => {
           console.error('Error al cargar pagos:', err);
           this.error = 'Error al recuperar el historial de transacciones.';
-          this.cargando = false;
+          if (showLoading) this.cargando = false;
         }
       });
     }
@@ -111,7 +124,7 @@ export class MisPagosComponent implements OnInit {
       next: () => {
         this.ns.success('Transacción anulada correctamente');
         this.cerrarModalConfirmar();
-        this.cargarPagos();
+        this.cargarPagos(true);
       },
       error: (err) => {
         console.error(err);
@@ -125,12 +138,12 @@ export class MisPagosComponent implements OnInit {
     this.cargando = true;
     this.pagoService.completarPago(pagoId).subscribe({
       next: () => {
-        this.ns.success('✅ Efectivo recibido. Pago Completado.');
-        this.cargarPagos();
+        this.ns.success('Efectivo recibido. Pago Completado.');
+        this.cargarPagos(true);
       },
       error: (err) => {
         console.error(err);
-        this.ns.error('❌ Error al registrar el cobro');
+        this.ns.error('Error al registrar el cobro');
         this.cargando = false;
       }
     });

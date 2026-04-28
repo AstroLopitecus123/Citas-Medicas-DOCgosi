@@ -193,10 +193,10 @@ export class MisCitasController {
   }
 
   // ==================== CITAS ====================
-  cargarCitas() {
+  cargarCitas(showLoading: boolean = true) {
     if (!this.usuario?.id) return;
 
-    this.cargando = true;
+    if (showLoading) this.cargando = true;
     const rol = this.usuario.rol?.toUpperCase();
     const idRuta = Number(this.route.snapshot.paramMap.get('id'));
 

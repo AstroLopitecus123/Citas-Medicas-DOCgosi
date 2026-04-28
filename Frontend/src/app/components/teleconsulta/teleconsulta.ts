@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../../services/notification.service';
 import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 
 import { environment } from '../../../environments/environment';
@@ -46,7 +47,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private ns: NotificationService
   ) {}
 
   ngOnInit() {
@@ -104,7 +106,10 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   async unirseASala() {
-    if (!this.agoraAppId) return;
+    if (!this.agoraAppId || this.agoraAppId === 'AGORA_NOT_FOUND') {
+      this.ns.error('Error de Configuración: Falta el Agora App ID en el backend.');
+      return;
+    }
 
     try {
       // Nota: Temporalmente null como token, asumiendo configuración flexible en consola Agora para MVP.
@@ -126,7 +131,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
     } catch (e) {
       console.error('Fallo al entrar a sala', e);
-      alert('Error de conexión. Asegúrate de tener permisos de cámara y micrófono.');
+      this.ns.error('Error de conexión. Asegúrate de tener permisos de cámara y micrófono.');
     }
   }
 

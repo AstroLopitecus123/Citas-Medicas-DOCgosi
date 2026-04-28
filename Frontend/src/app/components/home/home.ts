@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NarratorDirective } from '../../directives/narrator.directive';
@@ -69,7 +69,7 @@ export class HomeComponent implements AfterViewInit {
               <span><i class="fa-solid fa-clock"></i> 24/7</span>
               <span><i class="fa-solid fa-shield-heart"></i> Seguro</span>
             </div>
-            <button class="popup-btn-premium">
+            <button class="popup-btn-premium" onclick="window.dispatchEvent(new CustomEvent('agendar-cita-mapa'))">
               Agendar Cita
               <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -94,6 +94,11 @@ export class HomeComponent implements AfterViewInit {
         minWidth: 280
       });
     });
+  }
+
+  @HostListener('window:agendar-cita-mapa', ['$event'])
+  onAgendarCitaMapa(event: any) {
+    this.sacarCita();
   }
 
   sacarCita() {

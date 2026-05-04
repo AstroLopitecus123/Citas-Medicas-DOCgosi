@@ -72,6 +72,7 @@ export class AccesibilidadComponent implements OnInit {
   narradorActivo = false;
   narradorPaginaActivo = false;
   modoTeclado = false;
+  sonidoNotificaciones = true;
 
   // Estado del Test
   mostrandoTest = false;
@@ -120,6 +121,11 @@ export class AccesibilidadComponent implements OnInit {
     const nActivo = localStorage.getItem('DOCGOSI_NARRATOR_ACTIVE') === 'true';
     const npActivo = localStorage.getItem('DOCGOSI_PAGE_NARRATOR_ACTIVE') === 'true';
     const tModo = localStorage.getItem('DOCGOSI_KEYBOARD_MODE') === 'true';
+    const sNotif = localStorage.getItem('DOCGOSI_NOTIF_SOUNDS');
+
+    if (sNotif === 'false') {
+      this.sonidoNotificaciones = false;
+    }
 
     if (fActivo && fActivo !== 'NINGUNO') {
       this.filtroActivo = fActivo;
@@ -252,6 +258,11 @@ export class AccesibilidadComponent implements OnInit {
       document.body.classList.remove('focus-pro');
     }
     localStorage.setItem('DOCGOSI_KEYBOARD_MODE', this.modoTeclado.toString());
+  }
+
+  toggleSonidoNotificaciones(forzar?: boolean) {
+    this.sonidoNotificaciones = forzar !== undefined ? forzar : !this.sonidoNotificaciones;
+    localStorage.setItem('DOCGOSI_NOTIF_SOUNDS', this.sonidoNotificaciones.toString());
   }
 
   private aplicarColoresPersonalizados(activo: boolean) {

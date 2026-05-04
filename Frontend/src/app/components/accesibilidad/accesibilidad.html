@@ -224,6 +224,16 @@
         </button>
       </div>
       
+      <div class="pro-toggle-box" [class.active]="sonidoNotificaciones">
+        <div class="toggle-info">
+          <strong>Sonidos del Sistema</strong>
+          <span>Alertas acústicas de éxito o error.</span>
+        </div>
+        <button class="acc-switch" [class.on]="sonidoNotificaciones" (click)="toggleSonidoNotificaciones()">
+          <span class="switch-ball"></span>
+        </button>
+      </div>
+      
       <div class="voice-status-indicator" *ngIf="vozActiva" [class.listening]="voiceService.isListening">
         <div class="pulse-ring" *ngIf="voiceService.isListening"></div>
         <i class="fa-solid" [class.fa-microphone]="voiceService.isListening" [class.fa-microphone-slash]="!voiceService.isListening"></i>

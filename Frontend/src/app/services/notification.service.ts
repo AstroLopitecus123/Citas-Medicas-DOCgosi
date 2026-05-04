@@ -15,6 +15,10 @@ export class NotificationService {
   toastState$ = this.toastSubject.asObservable();
 
   private playSound(type: 'success' | 'error' | 'info') {
+    if (localStorage.getItem('DOCGOSI_NOTIF_SOUNDS') === 'false') {
+      return; // El usuario silenció las notificaciones
+    }
+    
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const oscillator = audioCtx.createOscillator();

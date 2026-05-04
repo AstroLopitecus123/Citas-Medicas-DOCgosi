@@ -305,6 +305,10 @@
     overflow: hidden;
 }
 
+.slot-cell {
+    position: relative;
+}
+
 .slot-taken-mask {
     position: absolute;
     inset: 0;

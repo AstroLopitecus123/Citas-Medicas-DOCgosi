@@ -206,8 +206,8 @@
 .schedule-grid-container { overflow-x: auto; background: white; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1); }
 .schedule-grid-container::-webkit-scrollbar { height: 0; display: none; } /* Ocultar scroll horizontal bugeado */
 .schedule-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 650px; table-layout: fixed; }
-.schedule-table th, .schedule-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; height: 60px; }
-.sticky-time { position: sticky; left: 0; background: #f1f5f9; z-index: 5; font-weight: 800; color: #094a2b; width: 75px; font-size: 0.85rem; border-right: 2px solid #94a3b8 !important; }
+.schedule-table th, .schedule-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid #94a3b8; border-right: 1px solid #94a3b8; height: 60px; }
+.sticky-time { position: sticky; left: 0; background: #f1f5f9; z-index: 5; font-weight: 800; color: #094a2b; width: 75px; font-size: 0.85rem; border-right: 2px solid #64748b !important; }
 .day-header { background: #f8fafc; padding: 12px 5px !important; border-bottom: 2px solid #94a3b8 !important; }
 .mt-20 { margin-top: 35px !important; }
 .day-name { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
@@ -222,7 +222,7 @@
 
 .slot-occupied { background: #fffcfc; }
 .slot-taken-mask { color: #fca5a5; font-size: 0.8rem; opacity: 0.6; }
-.not-available { background: #f8fafc; opacity: 0.3; pointer-events: none; }
+.not-available { background: #f8fafc; }
 
 .semana-nav { display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px 0 25px; }
 .semana-label { font-size: 0.95rem; font-weight: 800; color: #1e293b; background: #f8fafc; padding: 8px 18px; border-radius: 30px; border: 1px solid #e2e8f0; min-width: 140px; text-align: center; }
@@ -333,10 +333,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #94a3b8; /* Gris más visible */
-    font-size: 1.2rem;
+    color: #64748b; /* Gris oscuro para el guion */
+    font-size: 1.4rem;
+    font-weight: 800;
     cursor: pointer;
-    background: rgba(241, 245, 249, 0.3); /* Fondo sutil */
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(226, 232, 240, 0.4),
+        rgba(226, 232, 240, 0.4) 10px,
+        rgba(241, 245, 249, 0.4) 10px,
+        rgba(241, 245, 249, 0.4) 20px
+    );
     transition: all 0.2s ease;
 }
 

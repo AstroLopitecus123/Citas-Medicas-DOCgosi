@@ -305,6 +305,42 @@
     overflow: hidden;
 }
 
+.slot-taken-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(239, 68, 68, 0.03),
+        rgba(239, 68, 68, 0.03) 10px,
+        rgba(239, 68, 68, 0.08) 10px,
+        rgba(239, 68, 68, 0.08) 20px
+    );
+    color: #ef4444;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.slot-empty-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8; /* Gris más visible */
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: rgba(241, 245, 249, 0.3); /* Fondo sutil */
+    transition: all 0.2s ease;
+}
+
+.slot-empty-mask:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444; /* Cambia a rojo al pasar el mouse para indicar error/ocupado */
+}
+
 .btn-action-premium:disabled {
     opacity: 0.7;
     cursor: not-allowed;

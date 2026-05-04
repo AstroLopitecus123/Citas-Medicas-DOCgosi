@@ -1274,24 +1274,25 @@
   gap: 25px;
 }
 .loader-logo {
-  width: 120px !important;
+  width: 220px !important;
   height: auto;
   animation: pulseHeartbeat 1.5s infinite ease-in-out;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.3));
 }
 .loader-spinner {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   border: 4px solid rgba(255, 255, 255, 0.2);
   border-top-color: #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-top: 10px;
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 @keyframes pulseHeartbeat {
-  0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.8)); }
-  100% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+  0% { transform: scale(0.95); filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+  50% { transform: scale(1.15); filter: brightness(0) invert(1) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8)); }
+  100% { transform: scale(0.95); filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
 }

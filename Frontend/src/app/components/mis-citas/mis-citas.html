@@ -254,12 +254,12 @@
                                         <label class="slot-radio" *ngIf="ctrl.isDisponible(dia.fecha, h)">
                                             <input type="radio" name="horarioSeleccionado"
                                                 [checked]="ctrl.horarioSeleccionado === ctrl.getHorario(dia.fecha, h)"
-                                                (change)="ctrl.horarioSeleccionado = ctrl.getHorario(dia.fecha, h)">
+                                                (change)="ctrl.seleccionarHorario(dia.fecha, h)">
                                             <span class="radio-custom"></span>
                                         </label>
 
                                         <!-- Slot Ocupado (Visual Rojo) -->
-                                        <div class="slot-taken-mask" *ngIf="ctrl.isOcupado(dia.fecha, h)">
+                                        <div class="slot-taken-mask" *ngIf="ctrl.isOcupado(dia.fecha, h)" (click)="ctrl.notificarOcupado()" style="cursor: pointer;">
                                             <i class="fa-solid fa-lock"></i>
                                         </div>
                                     </td>

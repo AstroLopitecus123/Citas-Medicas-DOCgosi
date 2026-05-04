@@ -667,6 +667,19 @@ export class MisCitasController {
     }) || null;
   }
 
+  seleccionarHorario(diaFecha: string, hora: number) {
+    this.horarioSeleccionado = this.getHorario(diaFecha, hora);
+    if (this.ns) {
+      this.ns.success(`Horario seleccionado (${hora}:00). Por favor, confirma la reserva.`);
+    }
+  }
+
+  notificarOcupado() {
+    if (this.ns) {
+      this.ns.error('Este horario ya está ocupado o no disponible.');
+    }
+  }
+
   irAGestionarDisponibilidad() {
     if (this.medico && this.medico.id) {
       this.router.navigate(['/gestionar-disponibilidad', this.medico.id]);

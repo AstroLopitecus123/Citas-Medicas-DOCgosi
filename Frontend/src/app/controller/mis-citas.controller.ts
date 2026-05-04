@@ -676,7 +676,13 @@ export class MisCitasController {
 
   notificarOcupado() {
     if (this.ns) {
-      this.ns.error('Este horario ya está ocupado o no disponible.');
+      this.ns.error('Este horario ya ha sido reservado por otro paciente.');
+    }
+  }
+
+  notificarVacio() {
+    if (this.ns) {
+      this.ns.info('El médico no atiende en este horario.');
     }
   }
 

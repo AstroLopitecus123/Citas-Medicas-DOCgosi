@@ -264,7 +264,7 @@
                                         </div>
 
                                         <!-- Slot Vacío (Sin configurar) -->
-                                        <div class="slot-empty-mask" *ngIf="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)" (click)="ctrl.notificarOcupado()">
+                                        <div class="slot-empty-mask" *ngIf="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)" (click)="ctrl.notificarVacio()">
                                             <i class="fa-solid fa-minus"></i>
                                         </div>
                                     </td>

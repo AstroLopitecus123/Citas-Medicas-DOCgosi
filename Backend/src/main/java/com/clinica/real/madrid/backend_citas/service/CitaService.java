@@ -369,11 +369,17 @@ public class CitaService {
     }
     
     private void notificarCambioCita(Cita cita, String accion) {
+        final String f = cita.getFecha().toLocalDate().toString();
+        final String h = cita.getFecha().toLocalTime().toString();
+        final String nDr = cita.getMedico().getUsuario().getNombre();
+        final String nPc = cita.getPaciente().getNombre();
+        final com.clinica.real.madrid.backend_citas.model.Usuario pUser = cita.getPaciente();
+        final com.clinica.real.madrid.backend_citas.model.Usuario mUser = cita.getMedico().getUsuario();
         java.util.concurrent.CompletableFuture.runAsync(() -> {
-            String fecha = cita.getFecha().toLocalDate().toString();
-            String hora = cita.getFecha().toLocalTime().toString();
-            String nombreDr = cita.getMedico().getUsuario().getNombre();
-            String nombrePcte = cita.getPaciente().getNombre();
+            String fecha = f;
+            String hora = h;
+            String nombreDr = nDr;
+            String nombrePcte = nPc;
 
             // 📝 Determinar textos según la acción para que suenen naturales
             String msgPaciente = "";
@@ -430,13 +436,13 @@ public class CitaService {
             // 🔔 PERSISTENCIA EN DB
             try {
                 String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
-                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, cita.getPaciente(), cita.getId());
-                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, cita.getMedico().getUsuario(), cita.getId());
+                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, pUser, cita.getId());
+                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, mUser, cita.getId());
                 
                 notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION", cita.getId());
                 notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN", cita.getId());
                         
-                System.out.println("✅ Notificaciones pulidas enviadas para cita " + cita.getId());
+                System.out.println("✅ Notificaciones guardadas en DB para cita " + cita.getId());
             } catch (Exception e) {
                 System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
             }

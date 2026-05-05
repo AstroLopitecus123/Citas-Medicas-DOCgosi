@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface NotificacionRepository extends JpaRepository<Notificacion, Long> {
 
-    @Query("SELECT n FROM Notificacion n WHERE (n.usuarioDestino.id = :usuarioId OR n.rolDestino = :rol) AND n.fechaCreacion >= :fechaRegistro ORDER BY n.fechaCreacion DESC")
+    @Query("SELECT n FROM Notificacion n WHERE ((n.usuarioDestino IS NOT NULL AND n.usuarioDestino.id = :usuarioId) OR n.rolDestino = :rol) AND n.fechaCreacion >= :fechaRegistro ORDER BY n.fechaCreacion DESC")
     List<Notificacion> findByUsuarioOrRolDestino(@Param("usuarioId") Long usuarioId, @Param("rol") String rol, @Param("fechaRegistro") LocalDateTime fechaRegistro);
 
-    @Query("SELECT COUNT(n) FROM Notificacion n WHERE (n.usuarioDestino.id = :usuarioId OR n.rolDestino = :rol) AND n.leida = false AND n.fechaCreacion >= :fechaRegistro")
+    @Query("SELECT COUNT(n) FROM Notificacion n WHERE ((n.usuarioDestino IS NOT NULL AND n.usuarioDestino.id = :usuarioId) OR n.rolDestino = :rol) AND n.leida = false AND n.fechaCreacion >= :fechaRegistro")
     long countUnreadByUsuarioOrRolDestino(@Param("usuarioId") Long usuarioId, @Param("rol") String rol, @Param("fechaRegistro") LocalDateTime fechaRegistro);
 }

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional
 public class NotificacionService {
 
     @Autowired

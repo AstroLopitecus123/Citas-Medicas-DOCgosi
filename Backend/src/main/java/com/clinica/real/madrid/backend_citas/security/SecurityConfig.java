@@ -38,7 +38,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.disable()) // Desactivar la gestión interna de CORS de Security ya que usaremos el Filter global
+            .cors(org.springframework.security.config.Customizer.withDefaults()) // Desactivar la gestión interna de CORS de Security ya que usaremos el Filter global
             .csrf(csrf -> csrf.disable())
             .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -64,8 +64,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public org.springframework.web.filter.CorsFilter corsFilter() {
-        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
         
         config.setAllowCredentials(true);
@@ -80,8 +79,9 @@ public class SecurityConfig {
         config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setExposedHeaders(java.util.List.of("Authorization"));
         
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new org.springframework.web.filter.CorsFilter(source);
+        return source;
     }
 }
 

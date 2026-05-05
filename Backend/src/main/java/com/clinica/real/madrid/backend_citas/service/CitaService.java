@@ -268,7 +268,7 @@ public class CitaService {
 
     public void eliminarHistorialesPorUsuario(Long usuarioId) {
         // Primero obtenemos todas las citas del usuario
-        List<Cita> citas = citaRepository.findByPacienteId(usuarioId);
+        List<Cita> citas = citaRepository.findByPacienteIdOrderByFechaDesc(usuarioId);
         for (Cita cita : citas) {
             historialRepository.deleteByCitaId(cita.getId());
         }

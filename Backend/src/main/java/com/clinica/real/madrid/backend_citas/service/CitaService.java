@@ -44,7 +44,7 @@ public class CitaService {
     private PagoService pagoService;
 
     public List<Cita> listar() {
-        return citaRepository.findAll();
+        return citaRepository.findAllByOrderByFechaDesc();
     }
 
     public Cita obtenerPorId(Long id) {
@@ -72,7 +72,7 @@ public class CitaService {
     
     //AGREGADO 30/10
     public List<Cita> obtenerCitasPorMedico(Long idMedico) {
-        return citaRepository.findByMedicoId(idMedico);
+        return citaRepository.findByMedicoIdOrderByFechaDesc(idMedico);
     }
     
     public Cita crearCita(Cita cita) {
@@ -103,11 +103,11 @@ public class CitaService {
     }
 
     public List<Cita> listarPorUsuario(Long usuarioId) {
-        return citaRepository.findByPacienteId(usuarioId);
+        return citaRepository.findByPacienteIdOrderByFechaDesc(usuarioId);
     }
 
     public List<Cita> listarPorMedico(Long medicoId) {
-        return citaRepository.findByMedicoId(medicoId);
+        return citaRepository.findByMedicoIdOrderByFechaDesc(medicoId);
     }
 
     @Transactional

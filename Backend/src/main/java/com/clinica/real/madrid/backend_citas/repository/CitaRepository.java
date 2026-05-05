@@ -28,17 +28,19 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     // --------------------------
     // Finds
     // --------------------------
-    List<Cita> findByPacienteId(Long pacienteId);
+    List<Cita> findByPacienteIdOrderByFechaDesc(Long pacienteId);
 
-    List<Cita> findByMedicoId(Long medicoId);
+    List<Cita> findByMedicoIdOrderByFechaDesc(Long medicoId);
 
     @Query("SELECT c FROM Cita c " +
            "JOIN FETCH c.medico m " +
            "JOIN FETCH m.usuario u " +
            "JOIN FETCH m.especialidad e " +
            "WHERE c.paciente.id = :pacienteId " +
-           "ORDER BY c.fecha")
+           "ORDER BY c.fecha DESC")
     List<Cita> findByPacienteIdWithMedicoAndEspecialidad(@Param("pacienteId") Long pacienteId);
+
+    List<Cita> findAllByOrderByFechaDesc();
 
     // --------------------------
     // Deletes masivos (con transactional/modifying)

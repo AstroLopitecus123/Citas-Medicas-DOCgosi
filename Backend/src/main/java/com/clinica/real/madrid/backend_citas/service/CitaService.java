@@ -372,21 +372,44 @@ public class CitaService {
         java.util.concurrent.CompletableFuture.runAsync(() -> {
             String fecha = cita.getFecha().toLocalDate().toString();
             String hora = cita.getFecha().toLocalTime().toString();
+            String nombreDr = cita.getMedico().getUsuario().getNombre();
+            String nombrePcte = cita.getPaciente().getNombre();
+
+            // 📝 Determinar textos según la acción para que suenen naturales
+            String msgPaciente = "";
+            String msgStaff = "";
+            String asunto = "📅 Notificación de tu Cita - Clínica Real Madrid";
+
+            if (accion.equals("solicitud de reprogramación")) {
+                msgPaciente = String.format("Has solicitado cambiar la fecha de tu cita con el Dr. %s. Nueva propuesta: %s a las %s. Pendiente de aprobación.", nombreDr, fecha, hora);
+                msgStaff = String.format("El paciente %s ha solicitado reprogramar su cita con el Dr. %s para el día %s.", nombrePcte, nombreDr, fecha);
+            } else if (accion.equals("reprogramación aprobada")) {
+                msgPaciente = String.format("¡Tu cambio de cita ha sido aprobado! Te esperamos el %s a las %s con el Dr. %s.", fecha, hora, nombreDr);
+                msgStaff = String.format("Se ha aprobado la reprogramación de la cita del paciente %s con el Dr. %s.", nombrePcte, nombreDr);
+            } else if (accion.equals("reprogramación rechazada")) {
+                msgPaciente = String.format("Lo sentimos, no pudimos aprobar tu cambio de cita con el Dr. %s. Tu horario original o solicitud deben ser revisados.", nombreDr);
+                msgStaff = String.format("Se ha rechazado una solicitud de reprogramación para el paciente %s.", nombrePcte);
+            } else if (accion.equals("solicitud de cancelación")) {
+                msgPaciente = "Tu solicitud de cancelación está siendo procesada por nuestro equipo administrativo.";
+                msgStaff = String.format("El paciente %s solicita cancelar su cita con el Dr. %s. Motivo: %s", nombrePcte, nombreDr, cita.getMotivo());
+            } else if (accion.equals("cancelación aprobada")) {
+                msgPaciente = String.format("Tu cita con el Dr. %s ha sido cancelada exitosamente. El proceso de reembolso se ha iniciado.", nombreDr);
+                msgStaff = String.format("Confirmado: Cita cancelada para el paciente %s (Dr. %s).", nombrePcte, nombreDr);
+            } else if (accion.equals("cancelación rechazada")) {
+                msgPaciente = String.format("Tu solicitud de cancelación para la cita con el Dr. %s no ha sido aprobada. Por favor, contáctanos.", nombreDr);
+                msgStaff = String.format("Atención: Se ha rechazado la cancelación solicitada por %s.", nombrePcte);
+            } else {
+                msgPaciente = String.format("Tu cita con el Dr. %s ha tenido una actualización: %s.", nombreDr, accion);
+                msgStaff = String.format("Actualización en cita de %s: %s.", nombrePcte, accion);
+            }
 
             try {
                 // 📧 Correo al Paciente
                 SimpleMailMessage mailPaciente = new SimpleMailMessage();
                 mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
                 mailPaciente.setTo(cita.getPaciente().getCorreo());
-                mailPaciente.setSubject("📅 Notificación de cambio en su cita médica");
-                mailPaciente.setText(String.format(
-                        "Hola %s,\n\nSu cita con el Dr. %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                        cita.getPaciente().getNombre(),
-                        cita.getMedico().getUsuario().getNombre(),
-                        accion,
-                        fecha,
-                        hora
-                ));
+                mailPaciente.setSubject(asunto);
+                mailPaciente.setText(String.format("Hola %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombrePcte, msgPaciente));
                 mailSender.send(mailPaciente);
             } catch (Exception e) {
                 System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
@@ -397,15 +420,8 @@ public class CitaService {
                 SimpleMailMessage mailMedico = new SimpleMailMessage();
                 mailMedico.setFrom("clinicarealmadrid32@gmail.com");
                 mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
-                mailMedico.setSubject("📅 Notificación de cambio en su agenda");
-                mailMedico.setText(String.format(
-                        "Hola Dr. %s,\n\nLa cita con el paciente %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                        cita.getMedico().getUsuario().getNombre(),
-                        cita.getPaciente().getNombre(),
-                        accion,
-                        fecha,
-                        hora
-                ));
+                mailMedico.setSubject("🔔 Cambio en tu Agenda Médica");
+                mailMedico.setText(String.format("Hola Dr. %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombreDr, msgStaff));
                 mailSender.send(mailMedico);
             } catch (Exception e) {
                 System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
@@ -413,26 +429,14 @@ public class CitaService {
 
             // 🔔 PERSISTENCIA EN DB
             try {
-                String tituloNotif = "Cita " + accion.toUpperCase();
-                String mensajeNotif = String.format("Tu cita con el Dr. %s para el %s a las %s ha sido %s.",
-                        cita.getMedico().getUsuario().getNombre(), fecha, hora, accion);
+                String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
+                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, cita.getPaciente());
+                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, cita.getMedico().getUsuario());
                 
-                notificacionService.crearNotificacionParaUsuario(tituloNotif, mensajeNotif, cita.getPaciente());
-                
-                notificacionService.crearNotificacionParaUsuario("Cambio en Agenda: " + accion.toUpperCase(), 
-                        "La cita con el paciente " + cita.getPaciente().getNombre() + " ha sido " + accion, 
-                        cita.getMedico().getUsuario());
-
-                String staffMsg = String.format("Aviso Staff: La cita con el Dr. %s (Paciente: %s %s) ha sido %s.",
-                        cita.getMedico().getUsuario().getNombre(), 
-                        cita.getPaciente().getNombre(), 
-                        cita.getPaciente().getApellido(), 
-                        accion);
-                
-                notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "RECEPCION");
-                notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "ADMIN");
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION");
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN");
                         
-                System.out.println("✅ Notificación procesada asíncronamente para cita " + cita.getId());
+                System.out.println("✅ Notificaciones pulidas enviadas para cita " + cita.getId());
             } catch (Exception e) {
                 System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
             }

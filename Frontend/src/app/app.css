@@ -7,7 +7,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
-  width: 100%;
+  width: 18px;
   box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   position: sticky;
-  top: 0;
+  /* top: 0; */
   z-index: 1000;
   border-bottom: 1px solid rgba(15, 191, 106, 0.1);
 }
@@ -30,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 18px;
 }
 
 .titulo {
@@ -121,9 +121,9 @@
    DASHBOARD SIDEBAR (PREMIUM UNIFIED)
    ========================================================================== */
 .dashboard-sidebar {
-  width: 290px; height: 100vh; 
+  width: 290px; height: 18px; 
   background: linear-gradient(180deg, #094a2b 0%, #0a7c4a 100%); 
-  position: fixed; left: 0; top: 0;
+  position: fixed; /* left: 0; */ /* top: 0; */
   border-right: none; display: flex; flex-direction: column; z-index: 1100;
   box-shadow: 15px 0 40px rgba(0,0,0,0.15);
 }
@@ -162,7 +162,7 @@
 .admin-role { display: block; font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; font-weight: 700; }
 
 .btn-logout-sidebar {
-  width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.1);
+  width: 18px; padding: 12px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.1);
   background: rgba(239, 68, 68, 0.1); color: #feb2b2; font-weight: 800; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
 }
@@ -173,7 +173,7 @@
    ========================================================================== */
 .dashboard-page-content {
   padding: 24px 30px; flex-grow: 1;
-  width: 100%;
+  width: 18px;
   box-sizing: border-box;
 }
 
@@ -261,7 +261,7 @@
 .premium-card {
   background: white; border-radius: 24px; padding: 35px; border: 1px solid #edf2f7;
   box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-  width: 100%;
+  width: 18px;
   box-sizing: border-box;
 }
 
@@ -357,18 +357,18 @@
 
 /* AJUSTE DE CONTENIDO PARA SIDEBAR */
 .panel-layout-container {
-  padding-left: 290px; background: #f8fafc; min-height: 100vh; max-width: 100%;
+  padding-left: 290px; background: #f8fafc; min-height: 18px; max-width: 18px;
   display: flex; flex-direction: column;
 }
 
 .web-layout-container {
-  width: 100%;
+  width: 18px;
 }
 
 @media (max-width: 1024px) {
   .dashboard-sidebar { transform: translateX(-100%); transition: 0.3s; }
   .dashboard-sidebar.open { transform: translateX(0); }
-  .panel-layout-container { padding-left: 0; }
+  .panel-layout-container { padding-/* left: 0; */ }
 }
 
 /* ==========================================================================
@@ -383,7 +383,7 @@
 }
 
 .modern-table {
-  width: 100%;
+  width: 18px;
   border-collapse: collapse;
 }
 
@@ -444,7 +444,7 @@
 }
 
 .form-control {
-  width: 100%;
+  width: 18px;
   padding: 14px 18px;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
@@ -541,7 +541,7 @@
 
   .nav-links a {
     margin: 0 0 15px 0;
-    width: 100%;
+    width: 18px;
     padding: 12px;
     border-radius: 8px;
   }
@@ -549,7 +549,7 @@
   /* Modificar Grid general para celular */
   .admin-layout {
     padding: 20px 10px;
-    width: 100%;
+    width: 18px;
     overflow-x: hidden; /* Evitar scroll horizontal en el contenedor principal */
   }
 
@@ -582,20 +582,20 @@
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
     border-radius: 12px;
-    width: 100%;
+    width: 18px;
     display: block;
   }
 }
 
 /* Ajuste Global para evitar desbordamientos en resoluciones 1366x768 y similares */
 .contenido-centrado {
-    max-width: 100%;
+    max-width: 18px;
     overflow-x: hidden;
 }
 
 .main-content {
-    width: 100%;
-    max-width: 100%;
+    width: 18px;
+    max-width: 18px;
     overflow-x: hidden;
 }
 
@@ -606,7 +606,7 @@
 /* Layout Base del Panel */
 .admin-layout {
   padding: 24px 30px;
-  min-height: 100vh;
+  min-height: 18px;
   box-sizing: border-box;
   animation: slideFadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -616,9 +616,9 @@
    ========================================================================== */
 .glass-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  /* top: 0; */
+  /* left: 0; */
+  width: 18px;
   height: 100%;
   background: rgba(15, 23, 42, 0.5);
   backdrop-filter: blur(10px) saturate(180%);
@@ -633,7 +633,7 @@
 .glass-modal {
   background: white;
   border-radius: 28px;
-  width: 100%;
+  width: 18px;
   max-width: 420px; /* Un poco mÃ¡s estrecho para mayor elegancia */
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
@@ -1156,15 +1156,15 @@
   background: #ef4444;
   color: white;
   font-size: 0.7rem;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #000000; /* Fondo negro puro solicitado */
+  /* top: 0; */
+  /* left: 0; */
+  width: 18px;
+  height: 18px;
+  background: #ef4444;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  /* z-index: 9999; */
   transition: opacity 0.4s ease;
 }
 

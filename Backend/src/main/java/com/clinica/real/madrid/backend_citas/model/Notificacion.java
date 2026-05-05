@@ -33,14 +33,18 @@ public class Notificacion {
     @JoinColumn(name = "usuario_destino_id")
     private Usuario usuarioDestino;
 
+    @Column(name = "referencia_id")
+    private Long referenciaId;
+
     public Notificacion() {
     }
 
-    public Notificacion(String titulo, String mensaje, String rolDestino, Usuario usuarioDestino) {
+    public Notificacion(String titulo, String mensaje, String rolDestino, Usuario usuarioDestino, Long referenciaId) {
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.rolDestino = rolDestino;
         this.usuarioDestino = usuarioDestino;
+        this.referenciaId = referenciaId;
         this.fechaCreacion = LocalDateTime.now();
         this.leida = false;
     }
@@ -65,4 +69,7 @@ public class Notificacion {
 
     public Usuario getUsuarioDestino() { return usuarioDestino; }
     public void setUsuarioDestino(Usuario usuarioDestino) { this.usuarioDestino = usuarioDestino; }
+
+    public Long getReferenciaId() { return referenciaId; }
+    public void setReferenciaId(Long referenciaId) { this.referenciaId = referenciaId; }
 }

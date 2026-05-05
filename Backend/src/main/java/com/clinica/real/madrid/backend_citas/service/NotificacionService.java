@@ -15,13 +15,13 @@ public class NotificacionService {
     @Autowired
     private NotificacionRepository notificacionRepository;
 
-    public Notificacion crearNotificacionParaRol(String titulo, String mensaje, String rolDestino) {
-        Notificacion notificacion = new Notificacion(titulo, mensaje, rolDestino, null);
+    public Notificacion crearNotificacionParaRol(String titulo, String mensaje, String rolDestino, Long referenciaId) {
+        Notificacion notificacion = new Notificacion(titulo, mensaje, rolDestino, null, referenciaId);
         return notificacionRepository.save(notificacion);
     }
 
-    public Notificacion crearNotificacionParaUsuario(String titulo, String mensaje, Usuario usuarioDestino) {
-        Notificacion notificacion = new Notificacion(titulo, mensaje, null, usuarioDestino);
+    public Notificacion crearNotificacionParaUsuario(String titulo, String mensaje, Usuario usuarioDestino, Long referenciaId) {
+        Notificacion notificacion = new Notificacion(titulo, mensaje, null, usuarioDestino, referenciaId);
         return notificacionRepository.save(notificacion);
     }
 

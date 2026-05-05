@@ -10,6 +10,7 @@ export interface Notificacion {
   fechaCreacion: string;
   leida: boolean;
   rolDestino: string;
+  referenciaId?: number;
 }
 
 @Injectable({

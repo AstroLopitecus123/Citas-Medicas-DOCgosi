@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { NotificacionService, Notificacion } from '../../services/notificacion.service';
 import { NotificationService } from '../../services/notification.service';
 
@@ -19,7 +20,8 @@ export class NotificacionesComponent implements OnInit {
 
   constructor(
     private notificacionService: NotificacionService,
-    private ns: NotificationService
+    private ns: NotificationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -54,17 +56,35 @@ export class NotificacionesComponent implements OnInit {
   }
 
   marcarLeida(notif: Notificacion): void {
-    if (notif.leida) return;
+    if (!notif.leida) {
+      this.notificacionService.marcarComoLeida(notif.id).subscribe({
+        next: () => {
+          notif.leida = true;
+          this.notificacionService.notificarCambio(); // 🔥 Sincronizar sidebar
+        },
+        error: () => {}
+      });
+    }
 
-    this.notificacionService.marcarComoLeida(notif.id).subscribe({
-      next: () => {
-        notif.leida = true;
-        this.notificacionService.notificarCambio(); // 🔥 Sincronizar sidebar
-      },
-      error: () => {
-        // Error silencioso para no interrumpir la experiencia
+    // 🚀 Lógica de Navegación Inteligente
+    if (notif.referenciaId) {
+      const t = notif.titulo.toLowerCase();
+      let accion = '';
+      
+      if (t.includes('reprogramar') || t.includes('reprogramación')) {
+        accion = 'reprogramar';
+      } else if (t.includes('cancelar') || t.includes('cancelación')) {
+        accion = 'cancelar';
       }
-    });
+
+      // Redirigir a mis-citas pasando el ID y la acción deseada
+      this.router.navigate(['/mis-citas'], { 
+        queryParams: { 
+          idCita: notif.referenciaId, 
+          accion: accion 
+        } 
+      });
+    }
   }
 
   marcarTodasComoLeidas(): void {

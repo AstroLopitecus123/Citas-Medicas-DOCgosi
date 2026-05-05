@@ -255,6 +255,31 @@ export class MisCitasController {
     });
 
     this.cargando = false;
+    this.verificarAccionPendiente();
+  }
+
+  private verificarAccionPendiente() {
+    const idCita = Number(this.route.snapshot.queryParamMap.get('idCita'));
+    const accion = this.route.snapshot.queryParamMap.get('accion');
+
+    if (idCita && accion) {
+      console.log('🎯 Acción pendiente detectada:', accion, 'para cita:', idCita);
+      const cita = this.citas.find(c => c.id === idCita);
+      if (cita) {
+        if (accion === 'reprogramar') {
+          this.reprogramarCita(cita);
+        } else if (accion === 'cancelar') {
+          this.cancelarCita(cita);
+        }
+        
+        // Limpiar parámetros para evitar reaperturas accidentales
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { idCita: null, accion: null },
+          queryParamsHandling: 'merge'
+        });
+      }
+    }
   }
 
   private manejarErrorCitas(err: any) {

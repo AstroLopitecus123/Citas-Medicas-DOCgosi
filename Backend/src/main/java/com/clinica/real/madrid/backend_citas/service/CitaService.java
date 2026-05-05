@@ -430,11 +430,11 @@ public class CitaService {
             // 🔔 PERSISTENCIA EN DB
             try {
                 String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
-                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, cita.getPaciente());
-                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, cita.getMedico().getUsuario());
+                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, cita.getPaciente(), cita.getId());
+                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, cita.getMedico().getUsuario(), cita.getId());
                 
-                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION");
-                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN");
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION", cita.getId());
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN", cita.getId());
                         
                 System.out.println("✅ Notificaciones pulidas enviadas para cita " + cita.getId());
             } catch (Exception e) {

@@ -369,87 +369,73 @@ public class CitaService {
     }
     
     private void notificarCambioCita(Cita cita, String accion) {
-        String fecha = cita.getFecha().toLocalDate().toString();
-        String hora = cita.getFecha().toLocalTime().toString();
+        java.util.concurrent.CompletableFuture.runAsync(() -> {
+            String fecha = cita.getFecha().toLocalDate().toString();
+            String hora = cita.getFecha().toLocalTime().toString();
 
-        try {
-            // 📧 Correo al Paciente
-            SimpleMailMessage mailPaciente = new SimpleMailMessage();
-            mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
-            mailPaciente.setTo(cita.getPaciente().getCorreo());
-            mailPaciente.setSubject("📅 Notificación de cambio en su cita médica");
-            mailPaciente.setText(String.format(
-                    "Hola %s,\n\nSu cita con el Dr. %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                    cita.getPaciente().getNombre(),
-                    cita.getMedico().getUsuario().getNombre(),
-                    accion,
-                    fecha,
-                    hora
-            ));
-            mailSender.send(mailPaciente);
-        } catch (Exception e) {
-            System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
-        }
+            try {
+                // 📧 Correo al Paciente
+                SimpleMailMessage mailPaciente = new SimpleMailMessage();
+                mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
+                mailPaciente.setTo(cita.getPaciente().getCorreo());
+                mailPaciente.setSubject("📅 Notificación de cambio en su cita médica");
+                mailPaciente.setText(String.format(
+                        "Hola %s,\n\nSu cita con el Dr. %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
+                        cita.getPaciente().getNombre(),
+                        cita.getMedico().getUsuario().getNombre(),
+                        accion,
+                        fecha,
+                        hora
+                ));
+                mailSender.send(mailPaciente);
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
+            }
 
-        // 📱 WhatsApp (Desactivado temporalmente por solicitud del usuario)
-        /*
-        String mensajeWssp = String.format(
-            "Cita %s ✅\nHola %s, tu cita con el Dr. %s ha sido %s para el %s a las %s en R.E.T.O Salud.",
-            accion.toUpperCase(),
-            cita.getPaciente().getNombre(),
-            cita.getMedico().getUsuario().getNombre(),
-            accion, fecha, hora
-        );
-        if(cita.getPaciente().getTelefono() != null && !cita.getPaciente().getTelefono().isEmpty()) {
-            twilioService.enviarNotificacionWhatsApp(cita.getPaciente().getTelefono(), mensajeWssp);
-        }
-        */
+            try {
+                // 📧 Correo al Médico
+                SimpleMailMessage mailMedico = new SimpleMailMessage();
+                mailMedico.setFrom("clinicarealmadrid32@gmail.com");
+                mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
+                mailMedico.setSubject("📅 Notificación de cambio en su agenda");
+                mailMedico.setText(String.format(
+                        "Hola Dr. %s,\n\nLa cita con el paciente %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
+                        cita.getMedico().getUsuario().getNombre(),
+                        cita.getPaciente().getNombre(),
+                        accion,
+                        fecha,
+                        hora
+                ));
+                mailSender.send(mailMedico);
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
+            }
 
-        try {
-            // 📧 Correo al Médico
-            SimpleMailMessage mailMedico = new SimpleMailMessage();
-            mailMedico.setFrom("clinicarealmadrid32@gmail.com");
-            mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
-            mailMedico.setSubject("📅 Notificación de cambio en su agenda");
-            mailMedico.setText(String.format(
-                    "Hola Dr. %s,\n\nLa cita con el paciente %s ha sido %s.\nFecha: %s\nHora: %s\n\nSaludos,\nClínica Real Madrid",
-                    cita.getMedico().getUsuario().getNombre(),
-                    cita.getPaciente().getNombre(),
-                    accion,
-                    fecha,
-                    hora
-            ));
-            mailSender.send(mailMedico);
-        } catch (Exception e) {
-            System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
-        }
+            // 🔔 PERSISTENCIA EN DB
+            try {
+                String tituloNotif = "Cita " + accion.toUpperCase();
+                String mensajeNotif = String.format("Tu cita con el Dr. %s para el %s a las %s ha sido %s.",
+                        cita.getMedico().getUsuario().getNombre(), fecha, hora, accion);
+                
+                notificacionService.crearNotificacionParaUsuario(tituloNotif, mensajeNotif, cita.getPaciente());
+                
+                notificacionService.crearNotificacionParaUsuario("Cambio en Agenda: " + accion.toUpperCase(), 
+                        "La cita con el paciente " + cita.getPaciente().getNombre() + " ha sido " + accion, 
+                        cita.getMedico().getUsuario());
 
-        // 🔔 PERSISTENCIA EN DB (Para el Centro de Notificaciones)
-        try {
-            String tituloNotif = "Cita " + accion.toUpperCase();
-            String mensajeNotif = String.format("Tu cita con el Dr. %s para el %s a las %s ha sido %s.",
-                    cita.getMedico().getUsuario().getNombre(), fecha, hora, accion);
-            
-            notificacionService.crearNotificacionParaUsuario(tituloNotif, mensajeNotif, cita.getPaciente());
-            
-            // También al médico
-            notificacionService.crearNotificacionParaUsuario("Cambio en Agenda: " + accion.toUpperCase(), 
-                    "La cita con el paciente " + cita.getPaciente().getNombre() + " ha sido " + accion, 
-                    cita.getMedico().getUsuario());
-
-            // 📢 Alerta al staff administrativo
-            String staffMsg = String.format("Aviso Staff: La cita con el Dr. %s (Paciente: %s %s) ha sido %s.",
-                    cita.getMedico().getUsuario().getNombre(), 
-                    cita.getPaciente().getNombre(), 
-                    cita.getPaciente().getApellido(), 
-                    accion);
-            
-            notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "RECEPCION");
-            notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "ADMIN");
-                    
-            System.out.println("✅ Notificación guardada en DB para todos los actores: cita " + cita.getId());
-        } catch (Exception e) {
-            System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
-        }
+                String staffMsg = String.format("Aviso Staff: La cita con el Dr. %s (Paciente: %s %s) ha sido %s.",
+                        cita.getMedico().getUsuario().getNombre(), 
+                        cita.getPaciente().getNombre(), 
+                        cita.getPaciente().getApellido(), 
+                        accion);
+                
+                notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "RECEPCION");
+                notificacionService.crearNotificacionParaRol("Actualización Staff: " + accion.toUpperCase(), staffMsg, "ADMIN");
+                        
+                System.out.println("✅ Notificación procesada asíncronamente para cita " + cita.getId());
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
+            }
+        });
     }
 }

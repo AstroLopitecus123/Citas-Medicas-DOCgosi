@@ -34,9 +34,17 @@ public class NotificacionService {
     }
 
     public Notificacion marcarComoLeida(Long id) {
-        Notificacion notificacion = notificacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notificación no encontrada"));
-        notificacion.setLeida(true);
-        return notificacionRepository.save(notificacion);
+        try {
+            Notificacion notificacion = notificacionRepository.findById(id)
+                    .orElse(null);
+            if (notificacion != null) {
+                notificacion.setLeida(true);
+                return notificacionRepository.save(notificacion);
+            }
+            return null;
+        } catch (Exception e) {
+            System.err.println("Error al marcar notificación como leída: " + e.getMessage());
+            return null;
+        }
     }
 }

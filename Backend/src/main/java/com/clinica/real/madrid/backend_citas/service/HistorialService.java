@@ -42,7 +42,7 @@ public class HistorialService {
 
     // Listar todos
     public List<Historial> listarTodos() {
-        return historialRepository.findAll();
+        return historialRepository.findAllByOrderByFechaRegistroDesc();
     }
 
     // Editar historial

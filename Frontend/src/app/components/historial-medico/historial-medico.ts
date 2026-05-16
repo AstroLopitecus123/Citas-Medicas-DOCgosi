@@ -95,7 +95,7 @@ export class HistorialMedicoComponent implements OnInit {
     // Datos del Paciente y Cita
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(10);
-    doc.text(`Paciente: ${h.cita.paciente.usuario.nombre} ${h.cita.paciente.usuario.apellido}`, 15, 50);
+    doc.text(`Paciente: ${h.cita.paciente.nombre} ${h.cita.paciente.apellido}`, 15, 50);
     doc.text(`Fecha de Consulta: ${h.cita.fecha.split('T')[0]}`, 15, 55);
     doc.text(`Doctor: ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`, 15, 60);
     if (h.cita.medico.especialidad) {

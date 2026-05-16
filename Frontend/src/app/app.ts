@@ -124,7 +124,7 @@ export class AppComponent {
     const panelKeywords = [
       '/admin', '/medico', '/recepcion', '/paciente', 
       '/mis-citas', '/mi-historial', '/mi-perfil', '/notificaciones',
-      '/usuarios', '/medicos', '/especialidades', 
+      '/usuarios', '/medicos', '/especialidades', '/historial-clinico',
       '/checkout', '/pagar-tarjeta', '/gestionar-disponibilidad'
     ];
     return panelKeywords.some(keyword => url.includes(keyword));

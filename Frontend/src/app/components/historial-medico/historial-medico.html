@@ -1,28 +1,35 @@
-<div class="historial-page">
-  <header class="page-header">
-    <div class="header-content">
-      <i class="fa-solid fa-file-medical-alt main-icon"></i>
-      <div>
-        <h1>Historial Clínico Digital</h1>
-        <p>Consulta tus diagnósticos, recetas e indicaciones médicas.</p>
-      </div>
+<div class="dashboard-page-content">
+  <header class="premium-welcome-banner">
+    <div class="welcome-icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+      <i class="fa-solid fa-file-medical-alt"></i>
     </div>
-    <button class="back-btn" routerLink="/paciente/dashboard">
-      <i class="fa-solid fa-arrow-left"></i> Volver al Panel
-    </button>
+    <div class="welcome-text">
+       <div class="badge-role">HISTORIAL CLÍNICO</div>
+       <h1>Expediente Digital</h1>
+       <p>Consulta tus diagnósticos, recetas e indicaciones médicas.</p>
+    </div>
+    <div class="header-actions">
+      <button class="back-btn-premium" routerLink="/paciente/dashboard">
+        <i class="fa-solid fa-arrow-left"></i> Volver
+      </button>
+    </div>
   </header>
 
   <div class="content-container">
-    <div *ngIf="cargando" class="loading-state">
-      <div class="spinner"></div>
+    <div *ngIf="cargando" class="loading-state-premium">
+      <div class="spinner-premium"></div>
       <p>Recuperando expediente médico...</p>
     </div>
-
-    <div *ngIf="!cargando && historiales.length === 0" class="empty-state">
-      <i class="fa-solid fa-folder-open"></i>
+ 
+    <div *ngIf="!cargando && historiales.length === 0" class="premium-card empty-state-dash">
+      <div class="empty-icon-box">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
       <h3>Aún no tienes registros médicos</h3>
       <p>Tus diagnósticos aparecerán aquí una vez que completes tus consultas con nuestros especialistas.</p>
-      <button class="action-btn" routerLink="/mis-citas">Ver mis citas agendadas</button>
+      <button class="action-btn-dash" routerLink="/mis-citas">
+        <i class="fa-solid fa-calendar-check"></i> Ver mis citas agendadas
+      </button>
     </div>
 
     <div *ngIf="!cargando && historiales.length > 0" class="historial-list">

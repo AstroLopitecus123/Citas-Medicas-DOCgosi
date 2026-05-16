@@ -1,0 +1,70 @@
+<div class="historial-page">
+  <header class="page-header">
+    <div class="header-content">
+      <i class="fa-solid fa-file-medical-alt main-icon"></i>
+      <div>
+        <h1>Historial Clínico Digital</h1>
+        <p>Consulta tus diagnósticos, recetas e indicaciones médicas.</p>
+      </div>
+    </div>
+    <button class="back-btn" routerLink="/paciente/dashboard">
+      <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+    </button>
+  </header>
+
+  <div class="content-container">
+    <div *ngIf="cargando" class="loading-state">
+      <div class="spinner"></div>
+      <p>Recuperando expediente médico...</p>
+    </div>
+
+    <div *ngIf="!cargando && historiales.length === 0" class="empty-state">
+      <i class="fa-solid fa-folder-open"></i>
+      <h3>Aún no tienes registros médicos</h3>
+      <p>Tus diagnósticos aparecerán aquí una vez que completes tus consultas con nuestros especialistas.</p>
+      <button class="action-btn" routerLink="/mis-citas">Ver mis citas agendadas</button>
+    </div>
+
+    <div *ngIf="!cargando && historiales.length > 0" class="historial-list">
+      <div class="historial-item-card" *ngFor="let h of historiales">
+        <div class="item-header">
+          <div class="doctor-info">
+            <img [src]="'https://ui-avatars.com/api/?name=' + h.cita.medico.usuario.nombre + '&background=0D8ABC&color=fff'" alt="Doctor">
+            <div>
+              <h4>Dr. {{ h.cita.medico.usuario.nombre }} {{ h.cita.medico.usuario.apellido }}</h4>
+              <span class="especialidad-tag">{{ h.cita.medico.especialidad.nombre }}</span>
+              <p *ngIf="usuario.rol !== 'PACIENTE'" class="paciente-subtext">
+                Paciente: <strong>{{ h.cita.paciente.nombre }} {{ h.cita.paciente.apellido }}</strong>
+              </p>
+            </div>
+          </div>
+          <div class="date-info">
+            <i class="fa-solid fa-calendar-check"></i>
+            {{ h.cita.fecha | date:'dd/MM/yyyy HH:mm' }}
+          </div>
+        </div>
+
+        <div class="item-body">
+          <div class="info-group">
+            <label><i class="fa-solid fa-stethoscope"></i> Diagnóstico</label>
+            <p>{{ h.diagnostico }}</p>
+          </div>
+          <div class="info-group highlight">
+            <label><i class="fa-solid fa-pills"></i> Receta y Tratamiento</label>
+            <p>{{ h.receta }}</p>
+          </div>
+          <div class="info-group" *ngIf="h.notas">
+            <label><i class="fa-solid fa-comment-medical"></i> Notas Adicionales</label>
+            <p>{{ h.notas }}</p>
+          </div>
+        </div>
+
+        <div class="item-footer">
+          <button class="pdf-btn" (click)="descargarPDF(h)">
+            <i class="fa-solid fa-file-pdf"></i> Descargar Receta (PDF)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

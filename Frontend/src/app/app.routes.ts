@@ -71,6 +71,8 @@ export const routes: Routes = [
 
   // ─── RUTAS COMPARTIDAS (Cualquier usuario autenticado) ───────────────────────
   { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent), title: 'Mi Perfil', canActivate: [AuthGuard] },
+  { path: 'historial-clinico', loadComponent: () => import('./components/historial-medico/historial-medico').then(m => m.HistorialMedicoComponent), title: 'Mi Historial Clínico', canActivate: [AuthGuard] },
+  { path: 'historial-clinico/:pacienteId', loadComponent: () => import('./components/historial-medico/historial-medico').then(m => m.HistorialMedicoComponent), title: 'Expediente del Paciente', canActivate: [AuthGuard] },
   { path: 'mi-historial', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Historial de Pagos', canActivate: [AuthGuard] },
   { path: 'notificaciones', loadComponent: () => import('./components/notificaciones/notificaciones').then(m => m.NotificacionesComponent), title: 'Mis Notificaciones', canActivate: [AuthGuard] },
   { path: 'teleconsulta/:id', loadComponent: () => import('./components/teleconsulta/teleconsulta').then(m => m.TeleconsultaComponent), title: 'Sala de Teleconsulta', canActivate: [AuthGuard] },

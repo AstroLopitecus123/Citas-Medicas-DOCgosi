@@ -1,0 +1,130 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { HistorialService } from '../../services/historial.service';
+import { Historial } from '../../models/historial.model';
+import { NotificationService } from '../../services/notification.service';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+@Component({
+  selector: 'app-historial-medico',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './historial-medico.html',
+  styleUrls: ['./historial-medico.css']
+})
+export class HistorialMedicoComponent implements OnInit {
+  historiales: Historial[] = [];
+  cargando = true;
+  usuario: any = null;
+  pacienteId: number | null = null;
+  error = '';
+
+  constructor(
+    private historialService: HistorialService,
+    private route: ActivatedRoute,
+    private ns: NotificationService
+  ) {}
+
+  ngOnInit() {
+    const usrString = localStorage.getItem('usuario');
+    if (usrString) {
+      this.usuario = JSON.parse(usrString);
+      
+      // Si hay un ID en la URL, lo usamos (para médicos/admin)
+      // Si no, usamos el ID del usuario logueado (para pacientes)
+      this.route.params.subscribe(params => {
+        if (params['pacienteId']) {
+          this.pacienteId = +params['pacienteId'];
+        } else {
+          this.pacienteId = this.usuario.id;
+        }
+        this.cargarHistorial();
+      });
+    } else {
+      this.error = 'Sesión no válida.';
+      this.cargando = false;
+    }
+  }
+
+  cargarHistorial() {
+    this.cargando = true;
+    let request$;
+
+    if (this.usuario.rol === 'PACIENTE') {
+      // Si es paciente, siempre ve lo suyo
+      request$ = this.historialService.obtenerHistorialPorPaciente(this.usuario.id);
+    } else if (this.pacienteId && this.pacienteId !== this.usuario.id) {
+      // Si hay un ID de paciente específico (vista desde doctor/admin)
+      request$ = this.historialService.obtenerHistorialPorPaciente(this.pacienteId);
+    } else {
+      // Si es staff y no hay ID específico, listamos TODOS los historiales del sistema
+      request$ = this.historialService.listarHistoriales();
+    }
+
+    request$.subscribe({
+      next: (data) => {
+        this.historiales = data;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.error = 'Error al cargar el historial clínico.';
+        this.cargando = false;
+      }
+    });
+  }
+
+  descargarPDF(h: Historial) {
+    const doc = new jsPDF();
+    
+    // Configuración estética
+    const primaryColor = [26, 115, 232]; // Azul Premium
+    
+    // Encabezado
+    doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text('R.E.T.O SALUD', 105, 20, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text('INFORME MÉDICO Y RECETA', 105, 30, { align: 'center' });
+
+    // Datos del Paciente y Cita
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(10);
+    doc.text(`Paciente: ${this.usuario.nombre} ${this.usuario.apellido}`, 15, 50);
+    doc.text(`Fecha de Consulta: ${h.cita.fecha}`, 15, 55);
+    doc.text(`Doctor: ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`, 15, 60);
+    doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, 65);
+
+    // Tabla de Contenido
+    autoTable(doc, {
+      startY: 75,
+      head: [['Concepto', 'Detalle']],
+      body: [
+        ['Diagnóstico', h.diagnostico || 'No especificado'],
+        ['Receta / Tratamiento', h.receta || 'Sin indicaciones'],
+        ['Notas Adicionales', h.notas || 'Ninguna']
+      ],
+      headStyles: { fillStyle: 'f', fillColor: primaryColor as any },
+      styles: { cellPadding: 5, fontSize: 11, valign: 'middle' },
+      columnStyles: { 0: { cellWidth: 50, fontStyle: 'bold' } }
+    });
+
+    // Pie de página / Firma simulada
+    const finalY = (doc as any).lastAutoTable.finalY || 150;
+    doc.setDrawColor(200, 200, 200);
+    doc.line(120, finalY + 40, 190, finalY + 40);
+    doc.text('Firma y Sello del Médico', 155, finalY + 45, { align: 'center' });
+    
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Este documento es una representación digital del historial clínico del paciente.', 105, 285, { align: 'center' });
+
+    doc.save(`Historial_Medico_${this.usuario.nombre}_${h.cita.fecha.split('T')[0]}.pdf`);
+    this.ns.success('Documento generado con éxito');
+  }
+}

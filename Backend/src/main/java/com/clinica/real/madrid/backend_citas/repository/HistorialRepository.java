@@ -11,4 +11,5 @@ public interface HistorialRepository extends JpaRepository<Historial, Long> {
 	Optional<Historial> findByCitaId(Long citaId);
 	void deleteByCitaId(Long citaId);
 	java.util.List<Historial> findAllByOrderByFechaRegistroDesc();
+	java.util.List<Historial> findByCitaPacienteIdOrderByCitaFechaDesc(Long pacienteId);
 }

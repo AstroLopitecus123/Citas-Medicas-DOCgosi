@@ -39,6 +39,11 @@ public class HistorialController {
                 .orElse(ResponseEntity.ok(null)); // 👈 ya no devuelve 404
     }
 
+    @GetMapping("/paciente/{pacienteId}")
+    public List<Historial> obtenerPorPaciente(@PathVariable Long pacienteId) {
+        return historialService.listarPorPaciente(pacienteId);
+    }
+
 
     // Consultar historial por id
     @GetMapping("/{id}")

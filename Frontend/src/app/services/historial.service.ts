@@ -98,4 +98,11 @@ export class HistorialService {
       { headers: this.getAuthHeaders() }
     );
   }
+
+  obtenerHistorialPorPaciente(pacienteId: number): Observable<Historial[]> {
+    return this.http.get<Historial[]>(
+      `${this.apiUrl}/paciente/${pacienteId}`,
+      { headers: this.getAuthHeaders() }
+    );
+  }
 }

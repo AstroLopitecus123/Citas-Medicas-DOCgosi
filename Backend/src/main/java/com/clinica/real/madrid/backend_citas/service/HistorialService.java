@@ -65,4 +65,8 @@ public class HistorialService {
     public Optional<Historial> obtenerHistorialPorCita(Long citaId) {
         return historialRepository.findByCitaId(citaId);
     }
+
+    public List<Historial> listarPorPaciente(Long pacienteId) {
+        return historialRepository.findByCitaPacienteIdOrderByCitaFechaDesc(pacienteId);
+    }
 }

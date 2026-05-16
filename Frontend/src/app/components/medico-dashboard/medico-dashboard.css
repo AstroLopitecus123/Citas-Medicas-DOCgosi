@@ -116,6 +116,26 @@
   box-shadow: 0 8px 15px rgba(20, 184, 166, 0.4);
 }
 
+.btn-secondary-action {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: white;
+  color: #1a73e8;
+  border: 1.5px solid #1a73e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary-action:hover {
+  background: #eef2ff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+}
+
 .empty-icon-circle {
   width: 80px;
   height: 80px;

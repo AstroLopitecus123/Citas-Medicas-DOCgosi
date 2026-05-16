@@ -77,6 +77,11 @@
                 {{ cita.estado }}
               </div>
               
+              <!-- Botón Ver Historial Clínico -->
+              <button class="btn-secondary-action" [routerLink]="['/historial-clinico', cita.paciente.id]" title="Ver Historial Clínico">
+                <i class="fa-solid fa-file-medical"></i>
+              </button>
+
               <!-- Botón Teleconsulta Inmediato -->
               <button class="btn-primary-action" *ngIf="cita.estado === 'CONFIRMADA'" routerLink="/teleconsulta/{{cita.id}}" title="Entrar a Videollamada">
                 <i class="fa-solid fa-video"></i>

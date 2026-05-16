@@ -6,6 +6,8 @@ import { Usuario } from '../../models/tipos';
 import { NotificacionService, Notificacion } from '../../services/notificacion.service';
 import { environment } from '../../../environments/environment';
 import { NotificacionesComponent } from '../notificaciones/notificaciones';
+import { HistorialService } from '../../services/historial.service';
+import { Historial } from '../../models/historial.model';
 
 @Component({
   selector: 'app-paciente-dashboard',
@@ -20,25 +22,26 @@ export class PacienteDashboardComponent implements OnInit {
   today = new Date();
   
   stats: any = {
-    proximaCita: 'Ninguna agendada',
     totalCitas: 0,
     historiasClinicas: 0
   };
 
+  ultimaHistoria: Historial | null = null;
   notificacionesRecientes: Notificacion[] = [];
 
   constructor(
     private http: HttpClient,
-    private notificacionService: NotificacionService
+    private notificacionService: NotificacionService,
+    private historialService: HistorialService
   ) {}
 
   ngOnInit() {
     const usuarioStr = localStorage.getItem('usuario');
     if (usuarioStr) {
       this.usuario = JSON.parse(usuarioStr);
+      this.cargarDatosDashboard();
+      this.cargarNotificaciones();
     }
-    this.cargarResumen();
-    this.cargarNotificaciones();
   }
 
   cargarNotificaciones() {
@@ -53,17 +56,31 @@ export class PacienteDashboardComponent implements OnInit {
     });
   }
 
-  cargarResumen() {
-    // Simulación de carga de resumen para el paciente
-    // En producción se consultaría a /api/citas/resumen-paciente/{id}
-    setTimeout(() => {
-      this.stats = {
-        proximaCita: '22 de Mayo, 10:00 AM',
-        totalCitas: 4,
-        historiasClinicas: 2
-      };
-      this.cargando = false;
-    }, 800);
+  cargarDatosDashboard() {
+    if (!this.usuario) return;
+    this.cargando = true;
+
+    // 1. Obtener Historiales
+    this.historialService.obtenerHistorialPorPaciente(this.usuario.id).subscribe({
+      next: (historias) => {
+        this.stats.historiasClinicas = historias.length;
+        if (historias.length > 0) {
+          this.ultimaHistoria = historias[0]; // La más reciente
+        }
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.cargando = false;
+      }
+    });
+
+    // 2. Obtener total de citas (puedes añadir un endpoint específico luego si quieres)
+    this.http.get<any[]>(`${environment.apiUrl}/api/citas/paciente/${this.usuario.id}`).subscribe({
+      next: (citas) => {
+        this.stats.totalCitas = citas.length;
+      }
+    });
   }
 
   getGreeting(): string {

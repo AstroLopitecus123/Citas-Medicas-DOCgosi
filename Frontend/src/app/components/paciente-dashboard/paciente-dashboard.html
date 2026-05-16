@@ -80,17 +80,35 @@
       </div>
     </div>
 
-    <!-- RECOMENDACIONES -->
-    <div class="premium-card help-panel">
-      <h3 class="card-title"><i class="fa-solid fa-shield-heart"></i> Recomendaciones</h3>
-      <div class="info-content">
+    <!-- ÚLTIMA CONSULTA -->
+    <div class="premium-card help-panel" [ngClass]="{'has-data': ultimaHistoria}">
+      <h3 class="card-title">
+        <i class="fa-solid fa-file-waveform"></i> 
+        {{ ultimaHistoria ? 'Última Consulta' : 'Recomendaciones' }}
+      </h3>
+      
+      <div class="info-content" *ngIf="ultimaHistoria">
+        <div class="last-visit-box">
+          <div class="visit-header">
+            <span class="visit-date">{{ ultimaHistoria.cita.fecha | date:'dd/MM/yyyy' }}</span>
+            <span class="visit-doctor">Dr. {{ ultimaHistoria.cita.medico.usuario.nombre }}</span>
+          </div>
+          <div class="visit-diagnosis">
+            <strong>Diagnóstico:</strong>
+            <p>{{ ultimaHistoria.diagnostico?.substring(0, 80) }}...</p>
+          </div>
+          <button class="view-more-btn" routerLink="/historial-clinico">Ver historial completo</button>
+        </div>
+      </div>
+
+      <div class="info-content" *ngIf="!ultimaHistoria">
         <div class="recommendation-item">
           <i class="fa-solid fa-circle-info"></i>
           <p>Recuerda llegar 15 minutos antes de tu cita agendada para el triaje.</p>
         </div>
         <div class="recommendation-item">
           <i class="fa-solid fa-file-pdf"></i>
-          <p>Tus resultados de laboratorio ahora están disponibles en la sección "Historias".</p>
+          <p>Tus recetas aparecerán aquí una vez que completes tu primera consulta.</p>
         </div>
       </div>
       <div class="ai-badge">

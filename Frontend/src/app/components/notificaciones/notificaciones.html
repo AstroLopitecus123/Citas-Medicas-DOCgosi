@@ -53,4 +53,38 @@
                 </div>
             </div>
         </div>
+</div>
+
+<!-- ━━━ MODAL DE DETALLE DE NOTIFICACIÓN (GLASSMORPHISM) ━━━ -->
+<div class="glass-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
+  <div class="glass-modal animation-pop-in" (click)="$event.stopPropagation()">
+    <div class="modal-header-glass">
+      <div class="header-icon-title">
+        <div class="header-icon-box" [style.background]="getIconBackground(notificacionSeleccionada?.titulo || '')" [style.color]="'#1a73e8'">
+          <i class="fa-solid" [ngClass]="getIconClass(notificacionSeleccionada?.titulo || '')"></i>
+        </div>
+        <div>
+          <h3>{{ notificacionSeleccionada?.titulo }}</h3>
+          <p style="font-size: 0.8rem; margin:0; color: #64748b;">Detalle de la Notificación</p>
+        </div>
+      </div>
+      <button class="btn-close-glass" (click)="cerrarModal()">&times;</button>
     </div>
+
+    <div class="modal-body-glass">
+      <p class="notif-message-full">{{ notificacionSeleccionada?.mensaje }}</p>
+      <small style="color: #94a3b8; display: block; margin-top: 15px;">
+        <i class="fa-solid fa-clock"></i> Recibida el {{ notificacionSeleccionada?.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
+      </small>
+    </div>
+
+    <div class="modal-footer-glass">
+      <button class="btn-action btn-outline" (click)="cerrarModal()">
+        Cerrar
+      </button>
+      <button class="btn-action btn-add" (click)="verCitaRelacionada()">
+        <i class="fa-solid fa-calendar-days"></i> Ver mis citas
+      </button>
+    </div>
+  </div>
+</div>

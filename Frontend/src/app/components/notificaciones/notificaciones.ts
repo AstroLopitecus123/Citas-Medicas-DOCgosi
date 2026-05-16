@@ -15,6 +15,8 @@ export class NotificacionesComponent implements OnInit {
   notificaciones: Notificacion[] = [];
   filtro: 'TODAS' | 'NO_LEIDAS' = 'TODAS';
   loading = true;
+  notificacionSeleccionada: Notificacion | null = null;
+  mostrarModal = false;
 
   @Input() modoDashboard = false;
 
@@ -66,25 +68,40 @@ export class NotificacionesComponent implements OnInit {
       });
     }
 
-    // 🚀 Lógica de Navegación Inteligente
-    if (notif.referenciaId) {
-      const t = notif.titulo.toLowerCase();
-      let accion = '';
-      
-      if (t.includes('reprogramar') || t.includes('reprogramación')) {
-        accion = 'reprogramar';
-      } else if (t.includes('cancelar') || t.includes('cancelación')) {
-        accion = 'cancelar';
-      }
+    // 🔔 Mostrar Modal en lugar de navegar directo
+    this.notificacionSeleccionada = notif;
+    this.mostrarModal = true;
+  }
 
-      // Redirigir a mis-citas pasando el ID y la acción deseada
-      this.router.navigate(['/mis-citas'], { 
-        queryParams: { 
-          idCita: notif.referenciaId, 
-          accion: accion 
-        } 
-      });
+  cerrarModal(): void {
+    this.mostrarModal = false;
+    this.notificacionSeleccionada = null;
+  }
+
+  verCitaRelacionada(): void {
+    const notif = this.notificacionSeleccionada;
+    if (!notif || !notif.referenciaId) {
+      this.router.navigate(['/mis-citas']);
+      this.cerrarModal();
+      return;
     }
+
+    const t = notif.titulo.toLowerCase();
+    let accion = '';
+    
+    if (t.includes('reprogramar') || t.includes('reprogramación')) {
+      accion = 'reprogramar';
+    } else if (t.includes('cancelar') || t.includes('cancelación')) {
+      accion = 'cancelar';
+    }
+
+    this.router.navigate(['/mis-citas'], { 
+      queryParams: { 
+        idCita: notif.referenciaId, 
+        accion: accion 
+      } 
+    });
+    this.cerrarModal();
   }
 
   marcarTodasComoLeidas(): void {

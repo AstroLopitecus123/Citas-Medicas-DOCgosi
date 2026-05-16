@@ -32,7 +32,7 @@
             <img [src]="'https://ui-avatars.com/api/?name=' + h.cita.medico.usuario.nombre + '&background=0D8ABC&color=fff'" alt="Doctor">
             <div>
               <h4>Dr. {{ h.cita.medico.usuario.nombre }} {{ h.cita.medico.usuario.apellido }}</h4>
-              <span class="especialidad-tag">{{ h.cita.medico.especialidad.nombre }}</span>
+              <span class="especialidad-tag" *ngIf="h.cita.medico.especialidad">{{ h.cita.medico.especialidad.nombre }}</span>
               <p *ngIf="usuario.rol !== 'PACIENTE'" class="paciente-subtext">
                 Paciente: <strong>{{ h.cita.paciente.nombre }} {{ h.cita.paciente.apellido }}</strong>
               </p>

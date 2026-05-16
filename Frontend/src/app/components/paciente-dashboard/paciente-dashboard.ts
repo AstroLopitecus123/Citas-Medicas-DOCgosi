@@ -61,26 +61,30 @@ export class PacienteDashboardComponent implements OnInit {
     this.cargando = true;
 
     // 1. Obtener Historiales
-    this.historialService.obtenerHistorialPorPaciente(this.usuario.id).subscribe({
-      next: (historias) => {
-        this.stats.historiasClinicas = historias.length;
-        if (historias.length > 0) {
-          this.ultimaHistoria = historias[0]; // La más reciente
+    if (this.usuario.id) {
+      this.historialService.obtenerHistorialPorPaciente(this.usuario.id).subscribe({
+        next: (historias) => {
+          this.stats.historiasClinicas = historias.length;
+          if (historias.length > 0) {
+            this.ultimaHistoria = historias[0]; // La más reciente
+          }
+          this.cargando = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.cargando = false;
         }
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.cargando = false;
-      }
-    });
+      });
+    }
 
-    // 2. Obtener total de citas (puedes añadir un endpoint específico luego si quieres)
-    this.http.get<any[]>(`${environment.apiUrl}/api/citas/paciente/${this.usuario.id}`).subscribe({
-      next: (citas) => {
-        this.stats.totalCitas = citas.length;
-      }
-    });
+    // 2. Obtener total de citas
+    if (this.usuario.id) {
+      this.http.get<any[]>(`${environment.apiUrl}/api/citas/paciente/${this.usuario.id}`).subscribe({
+        next: (citas) => {
+          this.stats.totalCitas = citas.length;
+        }
+      });
+    }
   }
 
   getGreeting(): string {

@@ -95,10 +95,12 @@ export class HistorialMedicoComponent implements OnInit {
     // Datos del Paciente y Cita
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(10);
-    doc.text(`Paciente: ${this.usuario.nombre} ${this.usuario.apellido}`, 15, 50);
-    doc.text(`Fecha de Consulta: ${h.cita.fecha}`, 15, 55);
+    doc.text(`Paciente: ${h.cita.paciente.usuario.nombre} ${h.cita.paciente.usuario.apellido}`, 15, 50);
+    doc.text(`Fecha de Consulta: ${h.cita.fecha.split('T')[0]}`, 15, 55);
     doc.text(`Doctor: ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`, 15, 60);
-    doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, 65);
+    if (h.cita.medico.especialidad) {
+      doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, 65);
+    }
 
     // Tabla de Contenido
     autoTable(doc, {
@@ -109,7 +111,7 @@ export class HistorialMedicoComponent implements OnInit {
         ['Receta / Tratamiento', h.receta || 'Sin indicaciones'],
         ['Notas Adicionales', h.notas || 'Ninguna']
       ],
-      headStyles: { fillStyle: 'f', fillColor: primaryColor as any },
+      headStyles: { fillColor: primaryColor as any },
       styles: { cellPadding: 5, fontSize: 11, valign: 'middle' },
       columnStyles: { 0: { cellWidth: 50, fontStyle: 'bold' } }
     });

@@ -397,8 +397,18 @@ export class MisCitasController {
   }
 
   registrarCita() {
-    if (!this.especialidadSeleccionada || !this.medicoSeleccionado || !this.horarioSeleccionado) {
-      if (this.ns) this.ns.error('Debes seleccionar especialidad, médico y horario');
+    if (!this.especialidadSeleccionada) {
+      if (this.ns) this.ns.error('Debes seleccionar una especialidad.');
+      return;
+    }
+    
+    if (!this.medicoSeleccionado) {
+      if (this.ns) this.ns.error('Debes seleccionar a un médico especialista.');
+      return;
+    }
+    
+    if (!this.horarioSeleccionado) {
+      if (this.ns) this.ns.error('Debes seleccionar un horario disponible.');
       return;
     }
 

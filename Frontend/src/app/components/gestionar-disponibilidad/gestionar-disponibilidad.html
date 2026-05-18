@@ -1,6 +1,5 @@
 <div class="admin-layout">
-  
-  <!-- 🔍 Banner de Bienvenida Premium -->
+
   <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;" *ngIf="medico; else cargando">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-calendar-days"></i>
@@ -11,7 +10,7 @@
        <p>Gestión de horarios semanales para el Dr. {{ nombreMedico }}</p>
     </div>
     <div class="header-actions" style="display: flex; gap: 15px; align-items: center;">
-        <!-- ⏱️ Contador de Horas Seleccionadas -->
+
         <div class="hours-counter-badge" [class.meets-requirement]="totalHorasSeleccionadas >= minimoHorasSemana"
              style="background: #fff; padding: 10px 18px; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center;">
           <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 700;">Horas Semanales</span>
@@ -21,7 +20,6 @@
           </div>
         </div>
 
-        <!-- Navegación de Semanas -->
         <div class="semana-nav-premium" style="display: flex; align-items: center; gap: 15px; background: #f1f5f9; padding: 10px 20px; border-radius: 30px;">
           <button class="btn-icon" (click)="anteriorSemana()" [disabled]="semanaIndice === 0" style="background: none; border: none; cursor: pointer; color: #475569;">
             <i class="fa-solid fa-chevron-left"></i>
@@ -37,7 +35,6 @@
     </div>
   </header>
 
-  <!-- MODAL DE BLOQUEO PREMIUM (ROJO/ERROR) -->
   <div class="glass-overlay" *ngIf="mostrarModalBloqueo">
     <div class="glass-modal error" style="max-width: 450px; border-top: 5px solid #ef4444;">
       <div class="modal-header-glass">
@@ -47,7 +44,7 @@
         </div>
         <button class="btn-close-glass" (click)="mostrarModalBloqueo = false">&times;</button>
       </div>
-      
+
       <div class="modal-body-glass" style="padding: 30px 25px; text-align: center;">
         <p style="font-size: 1rem; color: #475569; line-height: 1.6; margin: 0;">
           {{ mensajeBloqueo }}
@@ -66,7 +63,6 @@
     </div>
   </div>
 
-  <!-- ⚠️ Alerta de horas faltantes -->
   <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
     <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem;"></i>
     <div>
@@ -75,7 +71,6 @@
     </div>
   </div>
 
-  <!-- MODAL DE ADVERTENCIA PREMIUM -->
   <div class="glass-overlay" *ngIf="mostrarModalConfirmacion">
     <div class="glass-modal warning" style="max-width: 480px;">
       <div class="modal-header-glass">
@@ -85,12 +80,12 @@
         </div>
         <button class="btn-close-glass" (click)="mostrarModalConfirmacion = false">&times;</button>
       </div>
-      
+
       <div class="modal-body-glass" style="padding: 30px 25px; text-align: center;">
         <p style="font-size: 1.05rem; color: #1e293b; margin: 0 0 20px; font-weight: 600;">
           Has completado las <strong>{{ totalHorasSeleccionadas }} h semanales</strong> mandatorias.
         </p>
-        
+
         <div class="low-hours-warning" style="background: rgba(245, 158, 11, 0.04); padding: 20px; border-radius: 18px; border: 1.5px dashed rgba(245, 158, 11, 0.3); text-align: left;">
            <span style="font-size: 0.8rem; color: #b45309; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Días con carga inferior a la recomendada ({{ minimoHorasDia }}h):</span>
            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">
@@ -100,7 +95,7 @@
               </span>
            </div>
         </div>
-        
+
         <p style="margin-top: 25px; font-weight: 500; color: #64748b; font-size: 0.95rem; line-height: 1.5;">
           La normativa institucional recomienda una carga diaria equilibrada. ¿Deseas autorizar y guardar esta configuración de todas formas?
         </p>
@@ -119,7 +114,6 @@
     </div>
   </div>
 
-  <!-- 🧾 Tarjeta de la Agenda -->
   <div class="premium-card">
     <div class="modern-table-frame" *ngIf="medico; else cargando">
       <div class="modern-table-container scroll-x">
@@ -144,13 +138,13 @@
                   class="slot-cell"
                   [class.disponible]="isDisponible(dia.fecha, h)" 
                   [class.fixed]="!esEditable(dia.fecha)">
-                
+
                 <label class="modern-checkbox" *ngIf="esEditable(dia.fecha); else noEditable">
                   <input #chk type="checkbox" [checked]="isDisponible(dia.fecha, h)"
                     (change)="toggleHorario(dia.fecha, h, chk.checked)">
                   <span class="checkmark"></span>
                 </label>
-  
+
                 <ng-template #noEditable>
                   <div class="status-marker" [class.marked]="isDisponible(dia.fecha, h)">
                      <i class="fa-solid" [class.fa-check-double]="isDisponible(dia.fecha, h)" [class.fa-lock]="!isDisponible(dia.fecha, h)"></i>
@@ -163,7 +157,6 @@
       </div>
     </div>
 
-    <!-- 💾 Acciones -->
     <div class="footer-actions">
       <button class="btn-action btn-add" (click)="guardar()">
         <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Cambios en la Agenda

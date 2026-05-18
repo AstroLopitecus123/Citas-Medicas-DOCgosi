@@ -493,7 +493,6 @@
 .btn-icon:hover { background: #e2e8f0; color: #1a2a3a; }
 .btn-icon.delete:hover { background: #fff5f5; color: #c53030; }
 
-
 /* ==========================================================================
    RESPONSIVE (MÃ“VIL Y TABLET)
    ========================================================================== */
@@ -514,7 +513,7 @@
   .header {
     padding: 0 15px;
   }
-  
+
   .menu-toggle {
     display: block; /* Muestra hamburguesa */
   }

@@ -67,21 +67,17 @@ public class SolicitudEmpleoService {
         usuario.setCorreo(solicitud.getCorreo());
         usuario.setDni(solicitud.getDni());
         usuario.setTelefono(solicitud.getTelefono());
-        
-        // Contraseña temporal aleatoria
+
         String tempPass = UUID.randomUUID().toString().substring(0, 8);
         usuario.setContrasena(passwordEncoder.encode(tempPass));
-        
+
         usuario.setEstado(EstadoUsuario.ACTIVADO);
-        
-        // Guardamos el usuario primero
+
         usuario = usuarioRepository.save(usuario);
 
-        // Asignamos el rol usando la lógica de UsuarioService para que cree el registro de Médico si aplica
         Rol rolDestino = solicitud.getPuesto() == SolicitudEmpleo.Puesto.MEDICO ? Rol.MEDICO : Rol.RECEPCION;
         usuarioService.actualizarRol(usuario.getId(), rolDestino.name());
-        
-        // TODO: Enviar correo al usuario con su contraseña temporal
-        System.out.println("✅ Usuario creado desde solicitud. Pass temporal: " + tempPass);
+
+        System.out.println(" Usuario creado desde solicitud. Pass temporal: " + tempPass);
     }
 }

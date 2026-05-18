@@ -15,7 +15,7 @@ export class Usuario {
   telefono?: string;
   fechaNacimiento?: string;
   dni?: string;
-  correoUsuario?: string; // Propiedad extra para el formulario
+  correoUsuario?: string; 
   configuracionVisual?: string;
   constructor(data?: any) {
     if (data) {

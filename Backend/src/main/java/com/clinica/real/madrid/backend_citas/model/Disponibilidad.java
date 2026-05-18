@@ -1,6 +1,5 @@
 package com.clinica.real.madrid.backend_citas.model;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -51,10 +50,6 @@ public class Disponibilidad {
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
-
-    // ---------------------
-    // Getters y Setters
-    // ---------------------
 
     public Long getId() {
         return id;
@@ -120,9 +115,6 @@ public class Disponibilidad {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    // ---------------------
-    // Método auxiliar para compatibilidad
-    // ---------------------
     public Boolean getDisponible() {
         return this.estado == EstadoDisponibilidad.DISPONIBLE;
     }

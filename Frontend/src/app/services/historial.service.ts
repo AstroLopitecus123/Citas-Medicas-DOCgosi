@@ -22,10 +22,6 @@ export class HistorialService {
     });
   }
 
-  /**
-   * ✅ Registrar nuevo historial médico
-   * POST /api/historiales/{citaId}
-   */
   registrarHistorial(citaId: number, historial: Partial<Historial>): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/${citaId}`,
@@ -34,10 +30,6 @@ export class HistorialService {
     );
   }
 
-  /**
-   * ✅ Obtener historial por cita
-   * GET /api/historiales/cita/{citaId}
-   */
   obtenerHistorialPorCita(citaId: number): Observable<Historial | null> {
   return this.http.get<Historial>(
     `${this.apiUrl}/cita/${citaId}`,
@@ -48,20 +40,16 @@ export class HistorialService {
     }
   ).pipe(
     catchError((err) => {
-      // 👇 Evita que aparezca cualquier 404 en consola
+
       if (err.status === 404) {
         return of(null);
       }
-      // Si no es 404, también lo silenciamos (para evitar logs molestos)
+
       return of(null);
     })
   );
 }
 
-  /**
-   * ✅ Listar todos los historiales (solo para administración)
-   * GET /api/historiales
-   */
   listarHistoriales(): Observable<Historial[]> {
     return this.http.get<Historial[]>(
       this.apiUrl,
@@ -69,10 +57,6 @@ export class HistorialService {
     );
   }
 
-  /**
-   * ✅ Actualizar historial (si el médico quiere editarlo)
-   * PUT /api/historiales/{id}
-   */
   actualizarHistorial(id: number, historial: Partial<Historial>): Observable<any> {
     return this.http.put(
       `${this.apiUrl}/${id}`,
@@ -81,10 +65,6 @@ export class HistorialService {
     );
   }
 
-  /**
-   * ✅ Eliminar historial (opcional, solo admin)
-   * DELETE /api/historiales/{id}
-   */
   eliminarHistorial(id: number): Observable<any> {
     return this.http.delete(
       `${this.apiUrl}/${id}`,

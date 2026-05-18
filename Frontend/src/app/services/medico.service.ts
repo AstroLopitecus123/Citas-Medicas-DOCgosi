@@ -60,7 +60,6 @@ export class MedicoService {
   listarPorEspecialidad(especialidadId: number, fecha: string): Observable<Medico[]> {
     const params = new HttpParams().set('fecha', fecha);
 
-    // Nota: especialidadId va en la URL, no como parámetro
     return this.http.get<Medico[]>(`${this.apiUrl}/especialidad/${especialidadId}`, {
       headers: this.getAuthHeaders(),
       params

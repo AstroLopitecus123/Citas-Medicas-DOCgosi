@@ -1,17 +1,16 @@
 <div class="login-layout">
-  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+
   <div class="doctor-container">
     <img src="/assets/images/DoctorCrear.png" alt="Doctor" class="doctor-img" 
          appNarrator altText="Médico amigable dándote la bienvenida al sistema de salud R.E.T.O">
   </div>
 
-  <!-- COLUMNA IZQUIERDA (Texto) -->
   <div class="login-hero anim-fade-in">
     <div class="hero-glass-panel">
       <div class="hero-content">
         <h1>Únete a R.E.T.O Salud</h1>
         <p class="hero-subtitle">Crea tu cuenta hoy y accede a la red de salud más avanzada desde la comodidad de tu hogar.</p>
-        
+
         <div class="hero-features">
           <div class="feature-item">
             <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
@@ -39,7 +38,6 @@
     </div>
   </div>
 
-  <!-- COLUMNA DERECHA (Formulario) -->
   <div class="login-form-wrapper">
     <div class="login-card anim-slide-up registrar-card-wide">
       <div class="back-link">
@@ -51,7 +49,7 @@
 
       <div class="google-register-quick">
         <p class="quick-text">¿Quieres ahorrar tiempo?</p>
-        <!-- Botón propio con estilo Google que usa redirect -->
+
         <button type="button" class="google-redirect-btn" (click)="registrarConGoogle()">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20">
             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -67,7 +65,7 @@
       </div>
 
       <form (ngSubmit)="ctrl.registrar()" class="registrar-form" aria-label="Formulario de registro de usuario">
-        
+
         <div class="form-grid">
           <div class="input-group">
             <label for="nombre">Nombre</label>
@@ -83,7 +81,6 @@
           </div>
         </div>
 
-        <!-- Correo -->
         <div class="input-group correo-group-modern">
           <label for="correo">Correo Electrónico</label>
           <div class="input-with-domain">
@@ -93,7 +90,6 @@
           </div>
         </div>
 
-        <!-- Contraseña y Confirmación -->
         <div class="form-grid">
           <div class="input-group">
             <label for="contrasena">Contraseña</label>
@@ -110,7 +106,7 @@
         </div>
 
         <div class="form-grid">
-          <!-- DNI -->
+
           <div class="input-group">
             <label for="dni">DNI / ID</label>
             <input id="dni" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.dni" name="dni" 
@@ -118,7 +114,6 @@
                    aria-label="Número de documento de identidad">
           </div>
 
-          <!-- Teléfono -->
           <div class="input-group">
             <label for="telefono">Teléfono</label>
             <input id="telefono" type="text" inputmode="numeric" [(ngModel)]="ctrl.usuario.telefono" name="telefono" 
@@ -143,7 +138,6 @@
           </div>
         </div>
 
-        <!-- SECCIÓN DE ACCESIBILIDAD (Nueva experiencia fluida) -->
         <div class="accessibility-promo-card" [class.activated]="ctrl.usuario.configuracionVisual !== 'NINGUNO'">
           <div class="promo-text">
             <h4><i class="fa-solid fa-universal-access"></i> Apoyo visual</h4>

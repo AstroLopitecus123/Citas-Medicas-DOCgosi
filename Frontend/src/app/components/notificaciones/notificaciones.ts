@@ -62,13 +62,12 @@ export class NotificacionesComponent implements OnInit {
       this.notificacionService.marcarComoLeida(notif.id).subscribe({
         next: () => {
           notif.leida = true;
-          this.notificacionService.notificarCambio(); // 🔥 Sincronizar sidebar
+          this.notificacionService.notificarCambio(); 
         },
         error: () => {}
       });
     }
 
-    // 🔔 Mostrar Modal en lugar de navegar directo
     this.notificacionSeleccionada = notif;
     this.mostrarModal = true;
   }
@@ -88,7 +87,7 @@ export class NotificacionesComponent implements OnInit {
 
     const t = notif.titulo.toLowerCase();
     let accion = '';
-    
+
     if (t.includes('reprogramar') || t.includes('reprogramación')) {
       accion = 'reprogramar';
     } else if (t.includes('cancelar') || t.includes('cancelación')) {
@@ -108,7 +107,6 @@ export class NotificacionesComponent implements OnInit {
     const noLeidas = this.notificaciones.filter(n => !n.leida);
     if (noLeidas.length === 0) return;
 
-    // Ejecutamos en serie o paralelo
     noLeidas.forEach(n => this.marcarLeida(n));
     if (this.ns) this.ns.success('Todas las notificaciones marcadas como leídas');
   }

@@ -11,7 +11,6 @@ public class PaymentIntentResponse {
         this.status = status;
     }
 
-    // Getters y Setters
     public String getClientSecret() { return clientSecret; }
     public void setClientSecret(String clientSecret) { this.clientSecret = clientSecret; }
 

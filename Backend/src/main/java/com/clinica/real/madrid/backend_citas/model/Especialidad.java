@@ -31,10 +31,6 @@ public class Especialidad {
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    // ---------------------
-    // GETTERS Y SETTERS
-    // ---------------------
-
     public Long getId() {
         return id;
     }

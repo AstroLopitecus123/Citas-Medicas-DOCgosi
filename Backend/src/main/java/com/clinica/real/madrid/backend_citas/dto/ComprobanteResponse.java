@@ -2,7 +2,6 @@ package com.clinica.real.madrid.backend_citas.dto;
 
 import java.time.LocalDateTime;
 
-// Implementado Pagos
 public class ComprobanteResponse {
     private Long id;
     private Long pagoId;

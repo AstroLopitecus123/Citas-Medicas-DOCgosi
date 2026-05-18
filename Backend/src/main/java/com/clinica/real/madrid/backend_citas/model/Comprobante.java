@@ -3,7 +3,6 @@ package com.clinica.real.madrid.backend_citas.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-// Implementado Pagos
 @Entity
 @Table(name = "comprobantes")
 public class Comprobante {

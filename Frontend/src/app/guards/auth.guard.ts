@@ -6,7 +6,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    // Si no está autenticado, redirigir al login guardando la URL destino
     console.log('🔒 Acceso no autorizado. Redirigiendo a login...');
     this.router.navigate(['/login'], {
       queryParams: { returnUrl: state.url }

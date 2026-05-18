@@ -27,12 +27,11 @@ export class GoogleCallbackComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('--- Iniciando verificación de Google Callback ---');
-    
-    // Intentar capturar el token tanto del hash como de los parámetros normales
+
     const hash = window.location.hash.substring(1);
     const hashParams = new URLSearchParams(hash);
     const queryParams = new URLSearchParams(window.location.search);
-    
+
     const idToken = hashParams.get('id_token') || queryParams.get('id_token');
 
     console.log('Token detectado:', idToken ? 'SÍ (oculto por seguridad)' : 'NO');
@@ -48,19 +47,16 @@ export class GoogleCallbackComponent implements OnInit {
     this.usuarioService.loginConGoogle(idToken).subscribe({
       next: (res) => {
         console.log('Respuesta del servidor exitosa:', res);
-        
-        // El servidor devuelve una estructura plana (id, nombre, rol, token, etc.)
-        // No viene envuelto en un objeto "usuario"
+
         if (res && res.token) {
           const nombreUsuario = res.nombre || 'Usuario';
           this.ns.success(`¡Bienvenido, ${nombreUsuario}!`);
-          
-          // Notificar al resto de la app que el login se completó
+
           this.app.loginActualizado$.next();
-          
+
           const rol = res.rol?.toUpperCase();
           console.log('Redirigiendo a panel por rol:', rol);
-          
+
           if (rol === 'ADMIN') this.router.navigate(['/admin']);
           else if (rol === 'MEDICO') this.router.navigate(['/medico/dashboard']);
           else if (rol === 'RECEPCION') this.router.navigate(['/recepcion/dashboard']);
@@ -73,7 +69,7 @@ export class GoogleCallbackComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error en la llamada al servidor (loginConGoogle):', err);
-        // Extraer el mensaje de error detallado que configuramos en el backend
+
         const msgError = err.error?.error || 'Error desconocido al validar con Google';
         this.ns.error('Error: ' + msgError);
         this.router.navigate(['/login']);

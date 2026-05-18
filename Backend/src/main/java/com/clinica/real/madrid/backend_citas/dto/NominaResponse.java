@@ -2,7 +2,6 @@ package com.clinica.real.madrid.backend_citas.dto;
 
 import java.math.BigDecimal;
 
-// Response de una nómina hacia el frontend
 public class NominaResponse {
     private Long id;
     private Long empleadoId;

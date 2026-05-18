@@ -28,21 +28,15 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    
 
-    // ---------------------------
-    // Registro de usuario
-    // ---------------------------
     @PostMapping("/registro")
     public ResponseEntity<?> registro(@RequestBody UsuarioRegistroRequest request) {
         try {
-            // Registrar usuario en DB
+
             Usuario usuario = usuarioService.registrarUsuario(request);
 
-            // Generar token JWT
             String token = jwtUtil.generateToken(usuario.getCorreo());
 
-            // Retornar DTO de respuesta
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new UsuarioResponse(token, usuario));
         } catch (Exception e) {
@@ -52,31 +46,25 @@ public class AuthController {
         }
     }
 
-    // ---------------------------
-    // 🔹 Login con token JWT
-    // ---------------------------
     @PostMapping("/login")
     public ResponseEntity<UsuarioResponse> login(@RequestBody UsuarioLoginRequest request) {
         try {
-            // Autenticar usuario
+
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasena())
             );
 
-            // Recuperar usuario de DB
             Usuario usuario = usuarioService.login(request.getCorreo(), request.getContrasena());
-            
+
             System.out.println("ROL BACKEND: " + usuario.getRol());
 
-            // Generar token JWT
             String token = jwtUtil.generateToken(usuario.getCorreo());
 
-            // Retornar respuesta con token
             return ResponseEntity.ok(new UsuarioResponse(token, usuario));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(null); // Angular recibirá 401 y puede mostrar mensaje
+                    .body(null); 
         }
     }
 
@@ -88,14 +76,12 @@ public class AuthController {
             String token = jwtUtil.generateToken(usuario.getCorreo());
             return ResponseEntity.ok(new UsuarioResponse(token, usuario));
         } catch (Exception e) {
-            e.printStackTrace(); // Esto saldrá en los logs de Railway
+            e.printStackTrace(); 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error en Google Auth: " + e.getMessage()));
         }
     }
 
-    
- // 🔹 Paso 1: Solicitar recuperación
     @PostMapping("/recuperar")
     public ResponseEntity<?> recuperar(@RequestBody Map<String, String> body) {
         String correo = body.get("correo");
@@ -103,7 +89,6 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("mensaje", "Correo de recuperación enviado correctamente."));
     }
 
-    // 🔹 Paso 2: Restablecer contraseña con token
     @PostMapping("/restablecer")
     public ResponseEntity<?> restablecer(@RequestBody Map<String, String> body) {
         String token = body.get("token");

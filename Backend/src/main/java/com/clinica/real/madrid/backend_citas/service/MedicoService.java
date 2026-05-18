@@ -22,7 +22,7 @@ public class MedicoService {
 
     private final MedicoRepository medicoRepository;
     private final EspecialidadRepository especialidadRepository;
-    
+
     @Autowired
     private DisponibilidadRepository disponibilidadRepository;
 
@@ -34,12 +34,10 @@ public class MedicoService {
         this.especialidadRepository = especialidadRepository;
     }
 
-    // Listar todos los médicos
     public List<Medico> listarTodos() {
         return medicoRepository.findAll();
     }
 
-    // Asignar o actualizar especialidad de un médico
     public Medico asignarEspecialidad(Long medicoId, Long especialidadId) {
         Medico medico = medicoRepository.findById(medicoId)
                 .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
@@ -50,16 +48,16 @@ public class MedicoService {
         medico.setEspecialidad(esp);
         return medicoRepository.save(medico);
     }
-    
+
     public Medico obtenerPorId(Long id) {
         return medicoRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Medico no encontrado"));
     }
-    
+
     public Medico obtenerPorUsuarioId(Long usuarioId) {
         return medicoRepository.findByUsuarioId(usuarioId).orElse(null);
     }
-    
+
     public List<Medico> listarPorEspecialidad(Long especialidadId) {
         return medicoRepository.findByEspecialidadId(especialidadId);
     }
@@ -68,7 +66,7 @@ public class MedicoService {
         return disponibilidadRepository.findByMedicoIdAndEstado(medicoId, Disponibilidad.EstadoDisponibilidad.DISPONIBLE)
                 .stream()
                 .filter(d -> d.getFecha().equals(fecha))
-                .map(d -> d.getHoraInicio()) // Devuelve lista de horas iniciales
+                .map(d -> d.getHoraInicio()) 
                 .collect(Collectors.toList());
     }
 }

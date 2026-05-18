@@ -13,7 +13,6 @@ export class PagoService {
 
   private apiUrl = `${environment.apiUrl}/api/pagos`;
 
-  // --- Stripe Elements state ---
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
   private cardElement: StripeCardElement | null = null;
@@ -22,13 +21,11 @@ export class PagoService {
     this.initializeStripe();
   }
 
-  // ==================== STRIPE ELEMENTS ====================
-
   private async initializeStripe(): Promise<void> {
     try {
       this.stripe = await loadStripe(STRIPE_CONFIG.publishableKey);
       if (!this.stripe) throw new Error('No se pudo inicializar Stripe');
-      console.log('✅ Stripe Elements inicializado correctamente');
+      console.log(' Stripe Elements inicializado correctamente');
     } catch (err) {
       console.error('❌ Error inicializando Stripe:', err);
     }
@@ -71,7 +68,7 @@ export class PagoService {
       this.cardElement.mount(`#${containerId}`);
       await new Promise(resolve => setTimeout(resolve, 300));
 
-      console.log('✅ Stripe Card Element montado en #' + containerId);
+      console.log(' Stripe Card Element montado en #' + containerId);
       return this.cardElement;
     } catch (err) {
       console.error('❌ Error creando Card Element:', err);
@@ -112,7 +109,7 @@ export class PagoService {
 
     if (error) {
       console.error('❌ Error Stripe:', error);
-      // Extraemos el código técnico para mapearlo a un mensaje "real" después
+
       return { 
         success: false, 
         error: error.message,
@@ -127,8 +124,6 @@ export class PagoService {
 
     return { success: false, error: 'Estado de pago desconocido' };
   }
-
-  // ==================== HTTP ====================
 
   private getHeaders() {
     const token = localStorage.getItem('token') || '';

@@ -16,18 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Long> {
 
-    // --------------------------
-    // Checks (útiles antes de borrar)
-    // --------------------------
     boolean existsByPacienteId(Long pacienteId);
 
     boolean existsByMedicoId(Long medicoId);
 
     boolean existsByMedicoIdAndFecha(Long medicoId, LocalDateTime fecha);
 
-    // --------------------------
-    // Finds
-    // --------------------------
     List<Cita> findByPacienteIdOrderByFechaDesc(Long pacienteId);
 
     List<Cita> findByMedicoIdOrderByFechaDesc(Long medicoId);
@@ -42,9 +36,6 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     List<Cita> findAllByOrderByFechaDesc();
 
-    // --------------------------
-    // Deletes masivos (con transactional/modifying)
-    // --------------------------
     @Modifying
     @Transactional
     @Query("DELETE FROM Cita c WHERE c.paciente.id = :pacienteId")
@@ -54,10 +45,10 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     @Transactional
     @Query("DELETE FROM Cita c WHERE c.medico.id = :medicoId")
     void deleteByMedicoId(@Param("medicoId") Long medicoId);
-    
+
     @Modifying
     @Query("UPDATE Cita c SET c.estado = :nuevoEstado WHERE c.id = :id")
     int actualizarEstado(@Param("id") Long id, @Param("nuevoEstado") EstadoCita nuevoEstado);
-    
+
     List<Cita> findByFechaBetweenAndEstado(LocalDateTime desde, LocalDateTime hasta, EstadoCita estado);
 }

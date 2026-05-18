@@ -19,7 +19,6 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class ChatbotController {
 
-    // Extraemos la clave desde variables de entorno
     @Value("${GEMINI_API_KEY}")
     private String geminiApiKey;
 
@@ -39,24 +38,22 @@ public class ChatbotController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        // Configurar los headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(geminiApiKey); // En el formato de OpenAI auth bearer
+        headers.setBearerAuth(geminiApiKey); 
 
-        // Construir el cuerpo de la petición
         ChatbotRequest request = new ChatbotRequest();
         request.setModel(geminiApiModel);
-        
+
         List<ChatbotRequest.Message> messages = new ArrayList<>();
-        // El prompt de sistema para dar el contexto médico
+
         messages.add(new ChatbotRequest.Message("system", 
             "Eres el asistente virtual IA exclusivo de R.E.T.O Salud, una clínica médica premium. " +
             "Responde de manera profesional, empática, cortés y muy concisa (máximo 3 líneas). " +
             "Si te preguntan por servicios, diles que tenemos todas las especialidades disponibles y pueden registrarse en el sistema. " +
             "No des diagnósticos médicos, solo guía administrativa."
         ));
-        
+
         messages.add(new ChatbotRequest.Message("user", preguntaUsuario));
         request.setMessages(messages);
 

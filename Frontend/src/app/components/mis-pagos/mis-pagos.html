@@ -1,7 +1,6 @@
 <div class="admin-layout">
   <div class="mis-pagos-full" *ngIf="usuario; else sinUsuario">
-    
-    <!-- 🔍 Banner de Bienvenida Premium -->
+
     <header class="premium-welcome-banner" style="border-left: 6px solid #00c0a3;">
       <div class="welcome-icon-box" style="background: linear-gradient(135deg, #00c0a3 0%, #007664 100%);">
         <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -21,7 +20,6 @@
       </div>
     </header>
 
-    <!-- RESUMEN HORIZONTAL (GESTIÓN) -->
     <div class="stats-grid">
       <div class="stat-card kpi-info">
         <div class="stat-icon"><i class="fa-solid fa-receipt"></i></div>
@@ -30,7 +28,7 @@
           <p>Total Transacciones</p>
         </div>
       </div>
-      
+
       <div class="stat-card kpi-success">
         <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
         <div class="stat-info">
@@ -56,7 +54,6 @@
         </div>
     </div>
 
-    <!-- TABLA DE HISTORIAL -->
     <section class="main-content">
       <div class="premium-card">
         <div class="card-header-flex">
@@ -111,13 +108,13 @@
                   </span>
                 </td>
                 <td><small class="text-muted">{{ p.citaFechaResumen || ('#Cita ' + p.citaId) }}</small></td>
-                
+
                 <td *ngIf="usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION'" style="text-align: center;">
                     <div class="actions-flex justify-center">
                         <button *ngIf="p.estadoPago !== 'ANULADO'" class="btn-table-action btn-delete" (click)="$event.stopPropagation(); anularPago(p.id)" title="Anular Pago">
                           <i class="fa-solid fa-ban"></i>
                         </button>
-                        <!-- Botón Cobrar Efectivo (Recepcion) -->
+
                         <button *ngIf="p.estadoPago === 'PENDIENTE' && p.metodo === 'EFECTIVO'" 
                                 class="btn-table-action" 
                                 style="background-color: #e0f2fe; color: #0284c7; width: auto; padding: 0 12px; border-radius: 8px; font-weight: 700; gap: 6px; display: inline-flex;" 
@@ -125,8 +122,7 @@
                                 title="Cobrar Efectivo Físico">
                           <i class="fa-solid fa-hand-holding-dollar"></i> Cobrar
                         </button>
-                        
-                        <!-- Botón Ver Recibo -->
+
                         <button *ngIf="p.estadoPago === 'COMPLETADO' && p.comprobante?.archivoUrl" 
                                 class="btn-table-action btn-edit" 
                                 (click)="$event.stopPropagation(); verComprobante(p.comprobante?.archivoUrl || '')" 
@@ -152,7 +148,6 @@
     </section>
   </div>
 
-  <!-- 🗑️ MODAL GLASS: CONFIRMAR ANULACIÓN PAGO -->
   <div class="glass-overlay" *ngIf="mostrandoConfirmarAnular" (click)="cerrarModalConfirmar()">
     <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">

@@ -34,10 +34,6 @@ export class RegistrarUsuarioComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  /**
-   * Redirige al usuario a Google OAuth sin popup.
-   * Evita completamente el error de Cross-Origin-Opener-Policy.
-   */
   registrarConGoogle(): void {
     const nonce = Math.random().toString(36).substring(2);
     sessionStorage.setItem('google_nonce', nonce);

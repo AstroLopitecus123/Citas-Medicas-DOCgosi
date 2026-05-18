@@ -1,7 +1,6 @@
 <div class="admin-layout">
   <div class="nomina-page" *ngIf="usuario">
 
-    <!-- BANNER -->
     <header class="premium-welcome-banner" [style.border-left-color]="esAdmin ? '#6366f1' : '#0fbf6a'">
       <div class="welcome-icon-box" [style.background]="esAdmin ? 'linear-gradient(135deg,#6366f1,#4f46e5)' : 'linear-gradient(135deg,#0fbf6a,#0d9488)'">
         <i class="fa-solid fa-money-check-dollar"></i>
@@ -20,7 +19,6 @@
       </div>
     </header>
 
-    <!-- STATS KPIs -->
     <div class="stats-grid">
       <div class="stat-card kpi-success">
         <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
@@ -45,7 +43,6 @@
       </div>
     </div>
 
-    <!-- TABLA -->
     <section class="main-content">
       <div class="premium-card">
         <div class="card-header-flex">
@@ -129,7 +126,6 @@
     </section>
   </div>
 
-  <!-- MODAL CREAR NÓMINA (Admin) -->
   <div class="glass-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
     <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">

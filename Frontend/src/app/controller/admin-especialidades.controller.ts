@@ -12,7 +12,6 @@ export class AdminEspecialidadesController {
   mensaje: string = '';
   error: string = '';
 
-  // Confirmación de eliminación
   mostrandoConfirmarEliminar = false;
   especialidadAEliminarId: number | null = null;
   especialidadAEliminarNombre: string = '';
@@ -40,7 +39,7 @@ export class AdminEspecialidadesController {
     if (this.editando) {
       this.especialidadService.actualizar(this.editando.id, this.editando).subscribe({
         next: () => {
-          this.mensaje = '✅ Especialidad actualizada correctamente.';
+          this.mensaje = ' Especialidad actualizada correctamente.';
           this.cerrarModal();
           this.listar();
         },
@@ -49,7 +48,7 @@ export class AdminEspecialidadesController {
     } else {
       this.especialidadService.crear(this.nueva).subscribe({
         next: () => {
-          this.mensaje = '✅ Especialidad creada correctamente.';
+          this.mensaje = ' Especialidad creada correctamente.';
           this.nueva = new Especialidad();
           this.cerrarModal();
           this.listar();
@@ -111,7 +110,7 @@ export class AdminEspecialidadesController {
     const nuevoEstado: EstadoEspecialidad = esp.estado === 'ACTIVA' ? 'INACTIVA' : 'ACTIVA';
     this.especialidadService.cambiarEstado(esp.id, nuevoEstado).subscribe({
       next: () => {
-        this.mensaje = `✅ Estado cambiado a ${nuevoEstado}`;
+        this.mensaje = ` Estado cambiado a ${nuevoEstado}`;
         this.listar();
       },
       error: () => this.error = '❌ Error al cambiar el estado.'

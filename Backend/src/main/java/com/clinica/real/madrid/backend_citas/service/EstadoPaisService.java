@@ -9,12 +9,10 @@ import java.util.List;
 @Service
 public class EstadoPaisService {
 
-    // Listar todos los estados
     public List<EstadoPais> listar() {
-        return List.of(EstadoPais.values()); // Java 9+ List.of
+        return List.of(EstadoPais.values()); 
     }
 
-    // Validar si un estado permite operaciones sobre un país
     public void validarEstadoParaOperacion(EstadoPais estado) {
         if (estado == EstadoPais.INACTIVO) {
             throw new BadRequestException("No se puede realizar esta operación sobre un país inactivo");

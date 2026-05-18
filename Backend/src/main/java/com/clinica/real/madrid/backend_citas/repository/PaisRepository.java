@@ -9,6 +9,5 @@ public interface PaisRepository extends JpaRepository<Pais, Long> {
 
     boolean existsByNombre(String nombre);
 
-    // Este método verifica si existe otro país con el mismo nombre pero distinto id
     boolean existsByNombreAndIdNot(String nombre, Long id);
 }

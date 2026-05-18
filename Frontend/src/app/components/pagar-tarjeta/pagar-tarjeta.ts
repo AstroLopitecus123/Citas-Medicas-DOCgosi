@@ -18,17 +18,14 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
   cita: any = null;
   usuario: any = null;
 
-  // UI State
   cargando = false;
   pagoExitoso = false;
   cardElementMontado = false;
   nombreTitular = '';
 
-  // Card Preview State
   cardBrand = 'unknown';
   cardLast4 = '••••';
 
-  // Monto fijo por consulta
   monto = 100.00;
 
   constructor(
@@ -58,15 +55,14 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    // Montar el Card Element de Stripe en el contenedor del DOM
+
     setTimeout(async () => {
       console.log('💳 Iniciando Stripe Card Element...');
       const element = await this.pagoService.createCardElement('stripe-card-element');
       if (element) {
         this.cardElementMontado = true;
-        console.log('✅ Stripe Card Element listo para recibir datos de tarjeta.');
+        console.log(' Stripe Card Element listo para recibir datos de tarjeta.');
 
-        // 🎯 Escuchar cambios para actualizar la tarjeta visual
         element.on('change', (event: any) => {
           this.cardBrand = event.brand || 'unknown';
         });
@@ -98,7 +94,6 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    // PASO 1: Crear PaymentIntent en el backend
     this.pagoService.crearPaymentIntent({
       citaId: this.citaId,
       usuarioId: this.usuario?.id,
@@ -113,9 +108,8 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
           return;
         }
 
-        console.log('✅ PaymentIntent creado. Confirmando con Stripe...');
+        console.log(' PaymentIntent creado. Confirmando con Stripe...');
 
-        // PASO 2: Confirmar con Stripe Elements (SEGURO - sin datos en texto plano)
         const resultado = await this.pagoService.confirmarPagoConTarjeta(
           clientSecret,
           this.usuario?.correo || '',
@@ -131,7 +125,6 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         console.log('🎉 ¡Stripe confirmó el pago! Notificando al sistema...');
 
-        // PASO 3: Confirmar en nuestro backend
         const body = {
           citaId: this.citaId as number,
           usuarioId: this.usuario?.id,
@@ -148,7 +141,7 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           error: (err: any) => {
             this.cargando = false;
-            // El pago YA se realizó en Stripe, aunque el backend falle al confirmar
+
             this.pagoExitoso = true;
             this.ns.success('Pago confirmado. Contacta soporte si hay dudas.');
             console.error('Error al notificar backend post-pago:', err);
@@ -171,13 +164,9 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   * 🛡️ Mapeo de errores técnicos a mensajes "reales" y profesionales
-   * Filtra menciones a "modo de prueba" para que el usuario sienta una experiencia real.
-   */
   private getMensajeErrorReal(resultado: any): string {
     const code = resultado.errorCode;
-    
+
     const mensajes: { [key: string]: string } = {
       'test_mode_live_card': 'La tarjeta ingresada no puede ser procesada en este entorno. Verifique los datos o use otra tarjeta.',
       'card_declined': 'Su tarjeta ha sido rechazada por la entidad emisora. Por favor, contacte con su banco.',

@@ -28,7 +28,7 @@ public class NotificacionController {
         String correo = auth.getName();
         Usuario r = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-                
+
         List<Notificacion> notificaciones = notificacionService.obtenerMisNotificaciones(
             r.getId(), 
             r.getRol().name(), 

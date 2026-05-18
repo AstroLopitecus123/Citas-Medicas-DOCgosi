@@ -24,7 +24,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     public static UsuarioPrincipal fromUsuario(Usuario usuario) {
         String rol = usuario.getRol() != null ? usuario.getRol().name() : "PACIENTE";
-        // Spring Security espera prefijo ROLE_ para hasRole()
+
         Collection<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + rol)
         );

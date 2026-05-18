@@ -1,7 +1,6 @@
 <div class="dashboard-page-content">
     <div class="mis-citas-full" *ngIf="ctrl.usuario; else sinUsuario">
-        
-        <!-- 📅 BIENVENIDA PREMIUM -->
+
         <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
             <div class="welcome-icon-box">
                 <i class="fa-solid fa-calendar-check"></i>
@@ -26,13 +25,12 @@
 
         <section class="main-content">
 
-            <!-- 🔍 BARRA DE FILTROS Y BÚSQUEDA -->
             <div class="premium-card filters-bar-premium">
                 <div class="search-box-modern">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" [(ngModel)]="ctrl.textoBusqueda" placeholder="Buscar por paciente, médico o especialidad...">
                 </div>
-                
+
                 <div class="status-tabs-modern">
                     <button [class.active-tab]="ctrl.filtroEstado === 'TODAS'" (click)="ctrl.filtroEstado = 'TODAS'">Todas</button>
                     <button [class.active-tab]="ctrl.filtroEstado === 'PENDIENTE'" (click)="ctrl.filtroEstado = 'PENDIENTE'">Pendientes</button>
@@ -102,15 +100,14 @@
                                 </td>
                                 <td style="text-align: center;">
                                     <div class="actions-flex-buttons">
-                                        <!-- Confirmar (Solo Admin/Recepcion/Medico y si está PENDIENTE) -->
+
                                         <button class="btn-table-action btn-confirm" 
                                                 *ngIf="cita.estado === 'PENDIENTE' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.confirmarCita(cita)" 
                                                 title="Confirmar Cita">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
-                                        
-                                        <!-- TELECONSULTA: Ingresar a Sala Virtual -->
+
                                         <button class="btn-table-action btn-confirm" 
                                                 *ngIf="cita.estado === 'CONFIRMADA'"
                                                 routerLink="/teleconsulta/{{cita.id}}" 
@@ -119,7 +116,6 @@
                                             <i class="fa-solid fa-video"></i>
                                         </button>
 
-                                        <!-- Aprobar Reprogramación (Admin/Recepción/Médico) -->
                                         <button class="btn-table-action btn-confirm" 
                                                 *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.aprobarReprogramacion(cita)" 
@@ -127,7 +123,6 @@
                                             <i class="fa-solid fa-calendar-check"></i>
                                         </button>
 
-                                        <!-- Rechazar Reprogramación (Admin/Recepción/Médico) -->
                                         <button class="btn-table-action btn-cancel" 
                                                 *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.rechazarReprogramacion(cita)" 
@@ -135,7 +130,6 @@
                                             <i class="fa-solid fa-calendar-xmark"></i>
                                         </button>
 
-                                        <!-- Confirmar Cancelación (Solo Admin/Recepcion/Medico) -->
                                         <button class="btn-table-action btn-cancel" 
                                                 *ngIf="cita.estado === 'SOLICITUD_CANCELACION' && ctrl.usuario.rol !== 'PACIENTE'"
                                                 (click)="ctrl.cancelarCita(cita)" 
@@ -143,7 +137,6 @@
                                             <i class="fa-solid fa-hand-holding-dollar"></i>
                                         </button>
 
-                                        <!-- Reprogramar (Solicitar si es paciente) -->
                                         <button class="btn-table-action btn-reprogram" 
                                                 *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
                                                 (click)="ctrl.reprogramarCita(cita)" 
@@ -151,7 +144,6 @@
                                             <i class="fa-solid fa-clock-rotate-left"></i>
                                         </button>
 
-                                        <!-- Cancelar (Solicitar si es paciente) -->
                                         <button class="btn-table-action btn-cancel" 
                                                 *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
                                                 (click)="ctrl.cancelarCita(cita)" 
@@ -159,7 +151,6 @@
                                             <i class="fa-solid fa-xmark"></i>
                                         </button>
 
-                                        <!-- Diagnóstico -->
                                         <button class="btn-table-action btn-medical" 
                                                 *ngIf="(ctrl.usuario.rol === 'MEDICO') || (ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
                                                 (click)="ctrl.abrirModalHistorial(cita)" 
@@ -184,7 +175,6 @@
         </section>
     </div>
 
-    <!-- 🔄 MODAL GLASS: NUEVA CITA / REPROGRAMAR -->
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCita" (click)="ctrl.cerrarModalCita()">
         <div class="glass-modal modal-large animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass">
@@ -249,8 +239,7 @@
                                         class="slot-cell"
                                         [class.not-available]="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)"
                                         [class.slot-occupied]="ctrl.isOcupado(dia.fecha, h)">
-                                        
-                                        <!-- Slot Disponible -->
+
                                         <label class="slot-radio" *ngIf="ctrl.isDisponible(dia.fecha, h)">
                                             <input type="radio" name="horarioSeleccionado"
                                                 [checked]="ctrl.horarioSeleccionado === ctrl.getHorario(dia.fecha, h)"
@@ -258,12 +247,10 @@
                                             <span class="radio-custom"></span>
                                         </label>
 
-                                        <!-- Slot Ocupado (Visual Rojo) -->
                                         <div class="slot-taken-mask" *ngIf="ctrl.isOcupado(dia.fecha, h)" (click)="ctrl.notificarOcupado()" style="cursor: pointer;">
                                             <i class="fa-solid fa-lock"></i>
                                         </div>
 
-                                        <!-- Slot Vacío (Sin configurar) -->
                                         <div class="slot-empty-mask" *ngIf="!ctrl.isDisponible(dia.fecha, h) && !ctrl.isOcupado(dia.fecha, h)" (click)="ctrl.notificarVacio()">
                                             <i class="fa-solid fa-minus"></i>
                                         </div>
@@ -294,7 +281,6 @@
         </div>
     </div>
 
-    <!-- 🗑️ MODAL GLASS: CANCELAR CITA -->
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalCancelar" (click)="ctrl.cerrarModalCancelar()">
         <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass warning-header">
@@ -328,7 +314,7 @@
             </div>
 
             <div class="modal-footer-glass">
-                <!-- VISTA PACIENTE O CANCELACIÓN DIRECTA ADMIN -->
+
                 <ng-container *ngIf="ctrl.usuario.rol === 'PACIENTE' || ctrl.citaACancelar?.estado !== 'SOLICITUD_CANCELACION'">
                     <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()" [disabled]="ctrl.procesandoAccion">Mantener Cita</button>
                     <button class="btn-confirm-glass bg-gradient-danger" 
@@ -339,7 +325,6 @@
                     </button>
                 </ng-container>
 
-                <!-- VISTA GESTIÓN ADMIN (PARA SOLICITUDES) -->
                 <ng-container *ngIf="ctrl.usuario.rol !== 'PACIENTE' && ctrl.citaACancelar?.estado === 'SOLICITUD_CANCELACION'">
                     <button class="btn-action-premium btn-rechazar-premium" (click)="ctrl.rechazarCancelacionProceso()" [disabled]="ctrl.procesandoAccion">
                         <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion" [class.fa-ban]="!ctrl.procesandoAccion"></i>
@@ -354,7 +339,6 @@
         </div>
     </div>
 
-    <!-- 🔄 MODAL GLASS: HISTORIAL -->
     <div class="glass-overlay" *ngIf="ctrl.mostrandoModalHistorial" (click)="ctrl.cerrarModalHistorial()">
         <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass">

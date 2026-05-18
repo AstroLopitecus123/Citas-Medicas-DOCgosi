@@ -24,28 +24,23 @@ public class HistorialService {
         Cita cita = citaRepository.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada con ID: " + citaId));
 
-        // Asociar la cita
         historial.setCita(cita);
 
         return historialRepository.save(historial);
     }
 
-    // Buscar historial por ID
     public Optional<Historial> obtenerPorId(Long id) {
         return historialRepository.findById(id);
     }
 
-    // Buscar historial por cita
     public Optional<Historial> obtenerPorCita(Long citaId) {
         return historialRepository.findByCitaId(citaId);
     }
 
-    // Listar todos
     public List<Historial> listarTodos() {
         return historialRepository.findAllByOrderByFechaRegistroDesc();
     }
 
-    // Editar historial
     public Historial actualizarHistorial(Long id, Historial datos) {
         Historial existente = historialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Historial no encontrado"));
@@ -57,7 +52,6 @@ public class HistorialService {
         return historialRepository.save(existente);
     }
 
-    // Eliminar historial (opcional)
     public void eliminarHistorial(Long id) {
         historialRepository.deleteById(id);
     }

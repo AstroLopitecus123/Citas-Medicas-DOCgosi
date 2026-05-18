@@ -1,5 +1,5 @@
 <div class="dashboard-page-content">
-  <!-- 🔍 Banner de Bienvenida Premium -->
+
   <header class="premium-welcome-banner">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-user-circle"></i>
@@ -17,7 +17,6 @@
     </div>
   </header>
 
-  <!-- KPI STATS -->
   <div class="stats-grid">
     <div class="stat-card kpi-primary">
       <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
@@ -42,7 +41,6 @@
     </div>
   </div>
 
-  <!-- NOTIFICACIONES INTEGRADAS (ANCHO COMPLETO COMO ADMIN) -->
   <div class="section-title-dash">
     <i class="fa-solid fa-bell"></i>
     <h2>Centro de Avisos</h2>
@@ -52,7 +50,7 @@
   </div>
 
   <div class="dashboard-grid">
-    <!-- QUICK ACTIONS -->
+
     <div class="premium-card">
       <h3 class="card-title">Acciones del Paciente</h3>
       <div class="quick-actions">
@@ -80,13 +78,12 @@
       </div>
     </div>
 
-    <!-- ÚLTIMA CONSULTA -->
     <div class="premium-card help-panel" [ngClass]="{'has-data': ultimaHistoria}">
       <h3 class="card-title">
         <i class="fa-solid fa-file-waveform"></i> 
         {{ ultimaHistoria ? 'Última Consulta' : 'Recomendaciones' }}
       </h3>
-      
+
       <div class="info-content" *ngIf="ultimaHistoria">
         <div class="last-visit-box">
           <div class="visit-header">

@@ -1,16 +1,15 @@
 <div class="job-layout">
-  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+
   <div class="doctor-container">
     <img src="/assets/images/DoctorEmpleo.png" alt="Doctor Reclutamiento" class="doctor-img">
   </div>
 
-  <!-- COLUMNA IZQUIERDA (Texto con Glassmorphism) -->
   <div class="job-hero anim-fade-in">
     <div class="hero-glass-panel">
       <div class="hero-content">
         <h1>Únete a nuestro equipo médico</h1>
         <p class="hero-subtitle">Buscamos profesionales apasionados por la salud para transformar el futuro de la medicina digital en DOCgosi.</p>
-        
+
         <div class="hero-features">
           <div class="feature-item">
             <i class="fa-solid fa-laptop-medical"></i>
@@ -43,10 +42,9 @@
     </div>
   </div>
 
-  <!-- COLUMNA DERECHA (Formulario) -->
   <div class="job-form-wrapper">
     <div class="job-card anim-slide-up" [class.success-card]="exito">
-      
+
       <div *ngIf="!exito; else successTpl">
         <div class="card-header-job">
           <h2 class="card-title">Postulación</h2>

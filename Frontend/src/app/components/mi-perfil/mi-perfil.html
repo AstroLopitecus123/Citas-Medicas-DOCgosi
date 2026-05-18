@@ -1,6 +1,5 @@
 <div class="admin-layout" *ngIf="!cargando; else loader">
-    
-    <!-- 🔍 Banner de Bienvenida Premium -->
+
     <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
       <div class="welcome-icon-box">
         <i class="fa-solid fa-user-gear"></i>
@@ -21,8 +20,7 @@
     </header>
 
     <div class="profile-container">
-        
-        <!-- CARD DE INFORMACIÓN -->
+
         <div class="premium-card profile-main-card">
             <div class="profile-banner">
                 <div class="avatar-wrapper">
@@ -102,7 +100,6 @@
     </div>
 </div>
 
-<!-- MODAL GLASS: EDITAR PERFIL -->
 <div class="glass-overlay" *ngIf="editando" (click)="cancelarEdicion()">
     <div class="glass-modal premium-card animation-pop-in" (click)="$event.stopPropagation()">
         <div class="modal-header-glass">
@@ -117,7 +114,7 @@
             </div>
             <button class="btn-close-glass" (click)="cancelarEdicion()">&times;</button>
         </div>
-        
+
         <div class="modal-body-glass">
             <div class="form-grid">
                 <div class="form-group-modern">
@@ -160,7 +157,6 @@
     </div>
 </div>
 
-<!-- MODAL GLASS: CAMBIO PASSWORD -->
 <div class="glass-overlay" *ngIf="mostrarModalPassword" (click)="cerrarModalPassword()">
     <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
         <div class="modal-header-glass security">
@@ -175,7 +171,7 @@
             </div>
             <button class="btn-close-glass" (click)="cerrarModalPassword()">&times;</button>
         </div>
-        
+
         <div class="modal-body-glass">
             <div class="form-group-modern mb-4">
                 <label class="svg-label">

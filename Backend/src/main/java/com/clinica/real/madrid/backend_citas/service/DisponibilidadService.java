@@ -20,7 +20,7 @@ public class DisponibilidadService {
 
     @Autowired
     private DisponibilidadRepository disponibilidadRepository;
-    
+
     @Autowired
     private MedicoRepository medicoRepository;
 
@@ -33,17 +33,14 @@ public class DisponibilidadService {
                 .orElseThrow(() -> new ResourceNotFoundException("Disponibilidad no encontrada"));
     }
 
- // 🔹 Listar todas las disponibilidades de un médico
     public List<Disponibilidad> listarPorMedico(Long medicoId) {
         return disponibilidadRepository.findByMedicoId(medicoId);
     }
 
-    // 🔹 Listar disponibilidades por rango de fechas (por ejemplo, semana)
     public List<Disponibilidad> listarPorRango(Long medicoId, LocalDate inicio, LocalDate fin) {
         return disponibilidadRepository.findByMedicoIdAndFechaBetween(medicoId, inicio, fin);
     }
 
-    // 🔹 Guardar o actualizar una lista de disponibilidades
     @Transactional
     public List<Disponibilidad> guardarDisponibilidades(Long medicoId, List<Disponibilidad> disponibilidades) {
         Medico medico = medicoRepository.findById(medicoId)
@@ -57,8 +54,6 @@ public class DisponibilidadService {
         return disponibilidadRepository.saveAll(disponibilidades);
     }
 
-
-    // 🔹 Eliminar disponibilidades dentro de un rango
     @Transactional
     public void eliminarPorRango(Long medicoId, LocalDate inicio, LocalDate fin) {
         disponibilidadRepository.deleteByMedicoIdAndFechaBetween(medicoId, inicio, fin);

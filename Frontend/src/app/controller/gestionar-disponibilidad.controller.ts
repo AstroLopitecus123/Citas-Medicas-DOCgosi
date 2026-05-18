@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class GestionarDisponibilidadController {
 
-  constructor(private disponibilidadService: DisponibilidadService) {}
+  constructor(private disponibilidadService: DisponibilidadService) { }
 
   listarPorMedico(medicoId: number): Observable<Disponibilidad[]> {
     return this.disponibilidadService.listarPorMedico(medicoId);
@@ -19,7 +19,6 @@ export class GestionarDisponibilidadController {
   }
 
   guardarDisponibilidades(disponibilidades: Disponibilidad[]): Observable<Disponibilidad[]> {
-    // Lógica adicional opcional antes de enviar al service
     return this.disponibilidadService.guardarDisponibilidades(disponibilidades);
   }
 

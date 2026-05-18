@@ -31,12 +31,11 @@ public class HistorialController {
         return ResponseEntity.ok(historialService.registrarHistorial(citaId, historial));
     }
 
-    // Consultar historial por cita
     @GetMapping("/cita/{citaId}")
     public ResponseEntity<Historial> obtenerPorCita(@PathVariable Long citaId) {
         return historialService.obtenerPorCita(citaId)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.ok(null)); // 👈 ya no devuelve 404
+                .orElse(ResponseEntity.ok(null)); 
     }
 
     @GetMapping("/paciente/{pacienteId}")
@@ -44,8 +43,6 @@ public class HistorialController {
         return historialService.listarPorPaciente(pacienteId);
     }
 
-
-    // Consultar historial por id
     @GetMapping("/{id}")
     public ResponseEntity<Historial> obtenerPorId(@PathVariable Long id) {
         return historialService.obtenerPorId(id)
@@ -53,13 +50,11 @@ public class HistorialController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Listar todos
     @GetMapping
     public List<Historial> listarTodos() {
         return historialService.listarTodos();
     }
 
-    // Editar historial
     @PutMapping("/{id}")
     public ResponseEntity<Historial> actualizarHistorial(
             @PathVariable Long id,
@@ -67,7 +62,6 @@ public class HistorialController {
         return ResponseEntity.ok(historialService.actualizarHistorial(id, historial));
     }
 
-    // Eliminar (opcional)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarHistorial(@PathVariable Long id) {
         historialService.eliminarHistorial(id);

@@ -33,7 +33,6 @@ export class PagarEfectivoComponent implements OnInit {
     this.citaId = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.citaId) { this.mensaje = 'ID de cita inválido'; this.cargando = false; return; }
 
-    // 1️⃣ Cargar detalles de la cita primero
     this.citaService.obtenerPorId(this.citaId).subscribe({
       next: (cita) => {
         this.cita = cita;
@@ -58,7 +57,6 @@ export class PagarEfectivoComponent implements OnInit {
       monto: 20.00
     };
 
-    // Simular procesamiento para feedback visual
     setTimeout(() => {
       this.pagoService.prometerEfectivo(body).subscribe({
         next: () => {

@@ -2,7 +2,6 @@ package com.clinica.real.madrid.backend_citas.dto;
 
 import java.math.BigDecimal;
 
-// Implementado Pagos
 public class PagoResponse {
     private Long id;
     private Long citaId;
@@ -12,13 +11,12 @@ public class PagoResponse {
     private String estadoPago;
     private String fechaPago;
     private String transaccionId;
-    
-    // Datos extendidos para la tabla Frontend
+
     private String pacienteNombre;
     private String medicoNombre;
     private String especialidad;
     private String citaFechaResumen;
-    
+
     private ComprobanteResponse comprobante;
 
     public Long getId() {

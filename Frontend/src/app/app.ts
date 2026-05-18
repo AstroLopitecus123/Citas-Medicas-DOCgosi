@@ -33,7 +33,6 @@ export class AppComponent {
   isPanelRoute = false;
   notificacionesNoLeidas = 0;
 
-
   constructor(
     private router: Router, 
     private http: HttpClient,
@@ -41,25 +40,21 @@ export class AppComponent {
     private notificacionService: NotificacionService
   ) {
     this.verificarLogin();
-    
-    // 🛡️ Inicialización forzada usando el pathname real del navegador
+
     this.actualizarEstadoPanel(window.location.pathname);
 
-    // ⏱️ Control de Animación de Transición de Página (Smart Context Detection)
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        // Determinamos si la nueva ruta es del panel
+
         const willBePanelRoute = this.checkIfUrlIsPanel(event.url);
-        
-        // 🔄 Solo mostramos el loader si cambiamos de contexto (de Home a Panel o viceversa)
-        // O si es la carga inicial de la aplicación
+
         if (this.isPanelRoute !== willBePanelRoute || event.id === 1) {
           this.loading = true;
-          console.log('🚀 Cambio de contexto detectado — Activando Preloader Premium');
+          console.log(' Cambio de contexto detectado — Activando Preloader Premium');
         }
       } 
       else if (event instanceof NavigationEnd) {
-        // Al terminar, actualizamos el estado real y ocultamos el loader con un pequeño delay para suavidad
+
         this.actualizarEstadoPanel(event.urlAfterRedirects);
         setTimeout(() => {
           this.loading = false;
@@ -70,14 +65,12 @@ export class AppComponent {
       }
     });
 
-    // 🔥 Escuchar el evento de login y refrescar datos
     this.loginActualizado$.subscribe(() => {
-      console.log("🔥 Login detectado — actualizando header sin recargar");
+      console.log(" Login detectado — actualizando header sin recargar");
       this.verificarLogin();
       this.cargarConteoNotificaciones();
     });
 
-    // 🔔 Polling y Escucha Reactiva de notificaciones
     this.notificacionService.refreshObservable.subscribe(() => {
       this.cargarConteoNotificaciones();
     });
@@ -89,10 +82,9 @@ export class AppComponent {
     }, 30000);
   }
 
-
   abrirModalCerrarSesion() {
     this.mostrarModal = true;
-    this.isMenuOpen = false; // Cierra el menú en móvil si estaba abierto
+    this.isMenuOpen = false; 
   }
 
   cancelarCerrarSesion() {
@@ -107,7 +99,6 @@ export class AppComponent {
     this.mostrarModal = false;
     this.ns.info('Cerrando sesión...');
 
-    // 🚀 Primero navegamos al Home para evitar errores en componentes del Dashboard que dependen del usuario
     this.router.navigate(['/']).then(() => {
       localStorage.removeItem('usuario');
       localStorage.removeItem('token');
@@ -115,11 +106,10 @@ export class AppComponent {
 
       this.usuario = null;
       this.isLoggedIn = false;
-      console.log('✅ Sesión limpiada correctamente tras navegación');
+      console.log(' Sesión limpiada correctamente tras navegación');
     });
   }
 
-  // Helper para verificar si una URL pertenece a la interfaz de paneles
   private checkIfUrlIsPanel(url: string): boolean {
     const panelKeywords = [
       '/admin', '/medico', '/recepcion', '/paciente', 
@@ -132,7 +122,7 @@ export class AppComponent {
 
   private actualizarEstadoPanel(url: string) {
     this.isPanelRoute = this.checkIfUrlIsPanel(url);
-    console.log('🛡️ Estado Panel Actualizado:', this.isPanelRoute, 'para URL:', url);
+    console.log(' Estado Panel Actualizado:', this.isPanelRoute, 'para URL:', url);
   }
 
   getDashboardRoute(): string {
@@ -142,7 +132,7 @@ export class AppComponent {
     if (rol === 'MEDICO') return '/medico/dashboard';
     if (rol === 'RECEPCION') return '/recepcion/dashboard';
     if (rol === 'PACIENTE') return '/paciente/dashboard';
-    return '/paciente/dashboard'; // Default para cualquier logueado
+    return '/paciente/dashboard'; 
   }
 
   verificarLogin() {
@@ -152,16 +142,14 @@ export class AppComponent {
     if (usuarioStr) {
       try {
         const parsedUsuario: Usuario = JSON.parse(usuarioStr);
-        console.log('✅ Usuario parseado:', parsedUsuario);
+        console.log(' Usuario parseado:', parsedUsuario);
 
-        // Normaliza rol
         parsedUsuario.rol = this.normalizarRol(parsedUsuario.rol);
-        console.log('🔹 Rol normalizado:', parsedUsuario.rol);
+        console.log(' Rol normalizado:', parsedUsuario.rol);
 
         this.usuario = parsedUsuario;
         this.isLoggedIn = true;
 
-        // ♿ Aplicar configuración visual del usuario
         if (this.usuario['configuracionVisual']) {
           this.aplicarFiltroGlobal(this.usuario['configuracionVisual']);
         }
@@ -174,8 +162,7 @@ export class AppComponent {
       console.log('⚠️ No hay usuario en localStorage');
       this.usuario = null;
       this.isLoggedIn = false;
-      
-      // ♿ Intentar aplicar filtro desde localStorage anónimo
+
       const filtroAnon = localStorage.getItem('accesibilidad-filtro');
       if (filtroAnon) this.aplicarFiltroGlobal(filtroAnon);
     }
@@ -195,7 +182,7 @@ export class AppComponent {
   }
 
   private normalizarRol(rol?: string): RolUsuario {
-    console.log('🎯 Rol recibido para normalizar:', rol);
+    console.log(' Rol recibido para normalizar:', rol);
     const rolUpper = rol?.toUpperCase();
     if (
       rolUpper === 'ADMIN' ||
@@ -203,7 +190,7 @@ export class AppComponent {
       rolUpper === 'RECEPCION' ||
       rolUpper === 'PACIENTE'
     ) {
-      console.log('✅ Rol válido:', rolUpper);
+      console.log(' Rol válido:', rolUpper);
       return rolUpper as RolUsuario;
     }
     console.log('⚠️ Rol inválido, asignando PACIENTE');
@@ -211,7 +198,7 @@ export class AppComponent {
   }
 
   login(datos: { correo: string; contrasena: string }): Observable<LoginResponse> {
-  console.log('🚀 Intentando login con:', datos);
+  console.log(' Intentando login con:', datos);
 
   return this.http.post<LoginResponse>(`/api/auth/login`, datos).pipe(
     tap(res => {
@@ -219,29 +206,26 @@ export class AppComponent {
 
       if (res.token) {
         localStorage.setItem('token', res.token);
-        console.log('✅ Token guardado:', res.token);
+        console.log(' Token guardado:', res.token);
       }
 
       if (res.usuario) {
         console.log('📌 Usuario recibido del backend:', res.usuario);
 
         res.usuario.rol = this.normalizarRol(res.usuario.rol);
-        console.log('🔹 Rol normalizado antes de guardar:', res.usuario.rol);
+        console.log(' Rol normalizado antes de guardar:', res.usuario.rol);
 
         localStorage.setItem('usuario', JSON.stringify(res.usuario));
 
-        // 🔥 ACTUALIZACIÓN INMEDIATA
         this.usuario = { ...res.usuario };
         this.isLoggedIn = true;
 
-        // 🔥 EMITIR QUE SE LOGGEÓ (EL HEADER SE ACTUALIZA SIN RECARGAR)
         this.loginActualizado$.next();
 
-        // ♿ SUGERENCIA PROACTIVA DE ACCESIBILIDAD PARA NUEVOS USUARIOS
         if (!res.usuario['configuracionVisual'] || res.usuario['configuracionVisual'] === 'NINGUNO') {
           setTimeout(() => {
             if (this.accesibilidad) {
-              console.log('✨ Sugiriendo Asistente de Accesibilidad a nuevo usuario');
+              console.log(' Sugiriendo Asistente de Accesibilidad a nuevo usuario');
               this.accesibilidad.abrirAsistente(true);
             }
           }, 2000);
@@ -251,12 +235,11 @@ export class AppComponent {
   );
 }
 
-
   onRouteChange(component: any) {
-    // Si el componente tiene el evento loginExitoso, nos suscribimos
+
     if (component?.loginExitoso) {
       component.loginExitoso.subscribe(() => {
-        console.log("🔥 Login detectado — actualizando usuario sin recargar");
+        console.log(" Login detectado — actualizando usuario sin recargar");
         this.verificarLogin();
       });
     }
@@ -272,7 +255,7 @@ export class AppComponent {
     if (!this.isLoggedIn) return;
     this.notificacionService.contarNoLeidas().subscribe({
       next: (res) => { this.notificacionesNoLeidas = res.cantidad; },
-      error: () => { /* silenciar errores de red */ }
+      error: () => {  }
     });
   }
 }

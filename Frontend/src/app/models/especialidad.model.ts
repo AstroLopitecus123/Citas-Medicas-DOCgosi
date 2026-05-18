@@ -1,21 +1,17 @@
-// --- Archivo: especialidad.model.ts ---
 
-import { EstadoEspecialidad } from './tipos'; // Importa el tipo
+
+import { EstadoEspecialidad } from './tipos'; 
 
 export class Especialidad {
-  // Propiedades
+
   id!: number;
   nombre!: string;
   estado!: EstadoEspecialidad;
   fechaCreacion!: string;
-  descripcion?: string; // Opcional
+  descripcion?: string; 
 
-  /**
-   * Constructor
-   */
   constructor(data?: any) {
-    // Usamos Object.assign porque esta clase
-    // no contiene otras clases anidadas.
+
     if (data) {
       Object.assign(this, data);
     }

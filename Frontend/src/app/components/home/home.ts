@@ -44,18 +44,16 @@ export class HomeComponent implements AfterViewInit {
   }
 
   private initMap() {
-    // Inicializar mapa centrado en Lima - SIN atribución para una vista limpia
+
     const map = L.map('map', {
       scrollWheelZoom: false,
       attributionControl: false 
     }).setView([-12.095, -77.01], 13);
 
-    // Estilo de mapa Claro/Elegante (CartoDB Positron)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 20
     }).addTo(map);
 
-    // Añadir marcadores tipo Círculo (Garantiza visibilidad)
     this.sedes.forEach(sede => {
       const popupContent = `
         <div class="premium-popup">
@@ -77,7 +75,6 @@ export class HomeComponent implements AfterViewInit {
         </div>
       `;
 
-      // Círculo interactivo verde flúor
       const circle = L.circleMarker([sede.lat, sede.lng], {
         radius: 12,
         fillColor: "#00ff88",
@@ -85,7 +82,7 @@ export class HomeComponent implements AfterViewInit {
         weight: 3,
         opacity: 1,
         fillOpacity: 0.9,
-        className: 'pulse-marker' // Para animarlo por CSS
+        className: 'pulse-marker' 
       }).addTo(map);
 
       circle.bindPopup(popupContent, {
@@ -105,7 +102,7 @@ export class HomeComponent implements AfterViewInit {
     const usuarioJson = localStorage.getItem('usuario');
     if (usuarioJson) {
       const usuario = JSON.parse(usuarioJson);
-      // Redirigir según el rol
+
       if (usuario.rol === 'PACIENTE') {
         this.router.navigate(['/paciente-dashboard']);
       } else if (usuario.rol === 'MEDICO') {
@@ -116,7 +113,7 @@ export class HomeComponent implements AfterViewInit {
         this.router.navigate(['/recepcion-dashboard']);
       }
     } else {
-      // Si no hay sesión, al login
+
       this.router.navigate(['/login']);
     }
   }

@@ -36,21 +36,19 @@ public class CitaController {
         return ResponseEntity.ok(citaService.obtenerPorId(id));
     }
 
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         citaService.eliminar(id);
         return ResponseEntity.ok("Cita eliminada correctamente");
     }
-    
+
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> listarCitasPorUsuario(@PathVariable Long id) {
         List<Cita> citas = citaService.obtenerCitasPorPaciente(id);
         return ResponseEntity.ok(citas);
     }
-    
-    //AGREGADO 30/10
+
     @GetMapping("/medico/{id}")
     public ResponseEntity<?> listarCitasPorMedico(@PathVariable Long id) {
         List<Cita> citas = citaService.obtenerCitasPorMedico(id);
@@ -87,7 +85,7 @@ public class CitaController {
             return ResponseEntity.status(500).body("Error al cancelar la cita");
         }
     }
-    
+
     @PutMapping("/{id}/reprogramar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('RECEPCION')")
     public ResponseEntity<?> reprogramarCita(@PathVariable Long id, @RequestBody Cita nuevaCita) {

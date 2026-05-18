@@ -25,7 +25,6 @@ public class NominaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Admin: crear una nómina para un empleado
     @Transactional
     public NominaResponse crearNomina(NominaRequest req) {
         Usuario empleado = usuarioRepository.findById(req.getEmpleadoId())
@@ -43,7 +42,6 @@ public class NominaService {
         return mapToResponse(nominaRepository.save(n));
     }
 
-    // Admin: marcar una nómina como PAGADA
     @Transactional
     public NominaResponse pagarNomina(Long nominaId) {
         Nomina n = nominaRepository.findById(nominaId)
@@ -53,13 +51,11 @@ public class NominaService {
         return mapToResponse(nominaRepository.save(n));
     }
 
-    // Empleado: ver sus propias nóminas
     public List<NominaResponse> obtenerNominasPorEmpleado(Long empleadoId) {
         return nominaRepository.findByEmpleadoIdOrderByCreatedAtDesc(empleadoId)
                 .stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    // Admin: ver todas las nóminas
     public List<NominaResponse> obtenerTodasLasNominas() {
         return nominaRepository.findAllByOrderByCreatedAtDesc()
                 .stream().map(this::mapToResponse).collect(Collectors.toList());

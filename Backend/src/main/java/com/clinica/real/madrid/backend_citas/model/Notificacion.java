@@ -24,11 +24,9 @@ public class Notificacion {
     @Column(nullable = false)
     private boolean leida = false;
 
-    // Puede ser dirigido a un rol ("ADMIN", "RECEPCION", "MEDICO") o a un usuario específico
     @Column(name = "rol_destino")
     private String rolDestino;
 
-    // Si la notificacion es para alguien en especifico
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_destino_id")
     private Usuario usuarioDestino;

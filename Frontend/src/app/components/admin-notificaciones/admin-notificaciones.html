@@ -1,6 +1,5 @@
 <div class="admin-layout">
 
-  <!-- Header Premium -->
   <header class="premium-welcome-banner" style="border-left: 6px solid #f59e0b;">
     <div class="welcome-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
       <i class="fa-solid fa-bell"></i>
@@ -17,7 +16,6 @@
     </div>
   </header>
 
-  <!-- Filtros -->
   <div class="premium-card" style="padding: 16px 24px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
     <span style="font-weight: 700; color: #64748b; font-size: 0.9rem;">Filtrar:</span>
     <button class="btn-table-action" [class.btn-edit]="filtro === 'TODAS'" [class.btn-status]="filtro !== 'TODAS'"
@@ -30,30 +28,25 @@
     </button>
   </div>
 
-  <!-- Lista de Notificaciones -->
   <div class="premium-card" *ngIf="!loading">
 
-    <!-- Empty State -->
     <div *ngIf="notificacionesFiltradas.length === 0" class="empty-state">
       <i class="fa-solid fa-bell-slash"></i>
       <p>No hay avisos pendientes</p>
       <span>Cuando los pacientes soliciten cambios en sus citas o existan alertas del sistema, aparecerán detalladas aquí.</span>
     </div>
 
-    <!-- Notificación Item -->
     <div class="notif-item" *ngFor="let notif of notificacionesFiltradas"
       (click)="marcarLeida(notif)"
       [class.notif-leida]="notif.leida"
       style="display:flex; gap:18px; padding:20px 24px; border-bottom: 1px solid #f1f5f9; cursor:pointer; align-items:flex-start; transition: background 0.2s ease;"
       [style.background]="notif.leida ? 'white' : 'rgba(245,158,11,0.04)'">
 
-      <!-- Icono -->
       <div style="width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;"
         [style.background]="'rgba(0,0,0,0.05)'" [style.color]="getColor(notif.titulo)">
         <i class="fa-solid" [class]="getIcono(notif.titulo)" style="font-size: 1.2rem;"></i>
       </div>
 
-      <!-- Contenido -->
       <div style="flex: 1;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
           <strong style="font-size: 0.95rem; color: #1e293b;">{{ notif.titulo }}</strong>
@@ -73,7 +66,6 @@
 
   </div>
 
-  <!-- Loader -->
   <div *ngIf="loading" style="text-align:center; padding: 60px 0; color: #94a3b8;">
     <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem;"></i>
   </div>

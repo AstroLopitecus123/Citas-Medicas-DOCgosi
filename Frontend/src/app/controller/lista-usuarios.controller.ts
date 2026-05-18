@@ -9,21 +9,19 @@ import { NotificationService } from '../services/notification.service';
 })
 export class ListaUsuariosController {
 
-  usuarios: UsuarioFull[] = [];                   // Todos los usuarios
-  usuariosFiltrados: UsuarioFull[] = [];          // Usuarios después del filtro
-  usuariosPaginados: (UsuarioFull | null)[] = []; // Usuarios de la página actual (relleno con null)
+  usuarios: UsuarioFull[] = [];
+  usuariosFiltrados: UsuarioFull[] = [];
+  usuariosPaginados: (UsuarioFull | null)[] = [];
 
-  filtro: string = '';                             // Texto del buscador
-  paginaActual: number = 1;                        // Página actual
-  itemsPorPagina: number = 10;                     // Usuarios por página
-  totalPaginas: number = 1;                        // Total de páginas
-  menuAbierto: number | null = null;               // ID del usuario con menú abierto
+  filtro: string = '';
+  paginaActual: number = 1;
+  itemsPorPagina: number = 10;
+  totalPaginas: number = 1;
+  menuAbierto: number | null = null;
 
-  // Confirmación de eliminación
   mostrandoConfirmarEliminar = false;
   usuarioSeleccionadoAEliminar: UsuarioFull | null = null;
 
-  // Edición de Rol
   mostrandoModalRol = false;
   usuarioSeleccionadoRol: UsuarioFull | null = null;
   nuevoRolVisual: string = '';
@@ -65,14 +63,12 @@ export class ListaUsuariosController {
     this.actualizarPagina();
   }
 
-  /** Actualiza la página actual y asegura 10 filas siempre */
   actualizarPagina(): void {
     const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
     const fin = inicio + this.itemsPorPagina;
 
     const pagina: (UsuarioFull | null)[] = this.usuariosFiltrados.slice(inicio, fin);
 
-    // Rellenar con filas vacías
     while (pagina.length < this.itemsPorPagina) {
       pagina.push(null);
     }
@@ -80,7 +76,6 @@ export class ListaUsuariosController {
     this.usuariosPaginados = pagina;
   }
 
-  /** Navegación */
   siguientePagina(): void {
     if (this.paginaActual < this.totalPaginas) {
       this.paginaActual++;
@@ -95,13 +90,11 @@ export class ListaUsuariosController {
     }
   }
 
-  /** Menú de acciones */
   toggleMenu(usuario: UsuarioFull | null): void {
     if (!usuario) return;
     this.menuAbierto = this.menuAbierto === usuario.id ? null : usuario.id;
   }
 
-  /** Gestión de Eliminación Premium */
   eliminarUsuario(usuario: UsuarioFull | null): void {
     if (!usuario) return;
     this.usuarioSeleccionadoAEliminar = usuario;
@@ -132,7 +125,6 @@ export class ListaUsuariosController {
     this.usuarioSeleccionadoAEliminar = null;
   }
 
-  /** Alternar estado rpido (Ojo) */
   toggleEstado(usuario: UsuarioFull): void {
     const nuevoEstado = usuario.estado === 'ACTIVADO' ? 'DESACTIVADO' : 'ACTIVADO';
     this.actualizarEstado(usuario, nuevoEstado);
@@ -166,7 +158,7 @@ export class ListaUsuariosController {
   guardarRolUsuario(): void {
     if (!this.usuarioSeleccionadoRol) return;
     const u = this.usuarioSeleccionadoRol;
-    
+
     this.usuarioService.actualizarRol(u.id, this.nuevoRolVisual).subscribe({
       next: (res) => {
         u.rol = this.nuevoRolVisual as any;

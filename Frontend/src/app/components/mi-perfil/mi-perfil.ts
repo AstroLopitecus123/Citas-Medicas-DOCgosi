@@ -20,13 +20,11 @@ export class MiPerfilComponent implements OnInit {
   editando = false;
   cargando = true;
 
-  // Variables para Modal Password
   mostrarModalPassword = false;
   pwdActual = '';
   pwdNueva = '';
   pwdConfirmar = '';
 
-  // Toggles de visibilidad (estilo WEB CALIDAD)
   verPadActual = false;
   verPadNueva = false;
   verPadConfirmar = false;
@@ -95,7 +93,6 @@ export class MiPerfilComponent implements OnInit {
     return !!p1 && !!p2 ? p1.id === p2.id : p1 === p2;
   }
 
-  // --- LOGICA CAMBIO PASSWORD ---
   abrirModalPassword() {
     this.pwdActual = '';
     this.pwdNueva = '';

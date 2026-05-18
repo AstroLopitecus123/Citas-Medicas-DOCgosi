@@ -1,4 +1,4 @@
-<!-- BOTÓN FLOTANTE -->
+
 <div class="chatbot-fab" 
      (click)="toggleChat()" 
      (keydown.enter)="toggleChat()"
@@ -9,10 +9,8 @@
   <i class="fa-solid fa-comment-medical"></i>
 </div>
 
-<!-- VENTANA DEL CHAT -->
 <div class="chatbot-window" [class.open]="isOpen">
-  
-  <!-- Cabecera -->
+
   <div class="chatbot-header">
     <div class="header-info">
       <h3>¿En qué puedo ayudarte?</h3>
@@ -27,20 +25,18 @@
     <i class="fa-solid fa-globe"></i> Español <i class="fa-solid fa-chevron-down ml-5"></i>
   </div>
 
-  <!-- Contenedor de Mensajes -->
   <div class="chatbot-messages" #chatScroll>
-    
+
     <div class="message-wrapper" *ngFor="let msg of messages" [ngClass]="msg.role">
       <div class="avatar" *ngIf="msg.role === 'bot'">
         <i class="fa-solid fa-notes-medical"></i>
       </div>
-      
+
       <div class="bubble">
         {{ msg.text }}
       </div>
     </div>
 
-    <!-- Indicador de Carga -->
     <div class="message-wrapper bot" *ngIf="isLoading">
       <div class="avatar"><i class="fa-solid fa-notes-medical"></i></div>
       <div class="bubble typing">
@@ -48,7 +44,6 @@
       </div>
     </div>
 
-    <!-- Opciones Rápidas (solo se muestran al principio) -->
     <div class="quick-actions" *ngIf="messages.length === 1">
       <p class="qa-title">R.E.T.O Salud</p>
       <div class="qa-grid">
@@ -60,12 +55,10 @@
     </div>
   </div>
 
-  <!-- Disclaimer -->
   <div class="chatbot-disclaimer">
     Si crees que tienes una emergencia médica, llama al 911 de inmediato o dirígete a la sala de emergencias más cercana.
   </div>
 
-  <!-- Input de chat -->
   <div class="chatbot-input">
     <input 
       type="text" 

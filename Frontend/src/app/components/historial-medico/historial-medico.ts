@@ -31,9 +31,7 @@ export class HistorialMedicoComponent implements OnInit {
     const usrString = localStorage.getItem('usuario');
     if (usrString) {
       this.usuario = JSON.parse(usrString);
-      
-      // Si hay un ID en la URL, lo usamos (para médicos/admin)
-      // Si no, usamos el ID del usuario logueado (para pacientes)
+
       this.route.params.subscribe(params => {
         if (params['pacienteId']) {
           this.pacienteId = +params['pacienteId'];
@@ -53,13 +51,13 @@ export class HistorialMedicoComponent implements OnInit {
     let request$;
 
     if (this.usuario.rol === 'PACIENTE') {
-      // Si es paciente, siempre ve lo suyo
+
       request$ = this.historialService.obtenerHistorialPorPaciente(this.usuario.id);
     } else if (this.pacienteId && this.pacienteId !== this.usuario.id) {
-      // Si hay un ID de paciente específico (vista desde doctor/admin)
+
       request$ = this.historialService.obtenerHistorialPorPaciente(this.pacienteId);
     } else {
-      // Si es staff y no hay ID específico, listamos TODOS los historiales del sistema
+
       request$ = this.historialService.listarHistoriales();
     }
 
@@ -78,21 +76,18 @@ export class HistorialMedicoComponent implements OnInit {
 
   descargarPDF(h: Historial) {
     const doc = new jsPDF();
-    
-    // Configuración estética
-    const primaryColor = [26, 115, 232]; // Azul Premium
-    
-    // Encabezado
+
+    const primaryColor = [26, 115, 232]; 
+
     doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.rect(0, 0, 210, 40, 'F');
-    
+
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
     doc.text('R.E.T.O SALUD', 105, 20, { align: 'center' });
     doc.setFontSize(12);
     doc.text('INFORME MÉDICO Y RECETA', 105, 30, { align: 'center' });
 
-    // Datos del Paciente y Cita
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(10);
     doc.text(`Paciente: ${h.cita.paciente.nombre} ${h.cita.paciente.apellido}`, 15, 50);
@@ -102,7 +97,6 @@ export class HistorialMedicoComponent implements OnInit {
       doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, 65);
     }
 
-    // Tabla de Contenido
     autoTable(doc, {
       startY: 75,
       head: [['Concepto', 'Detalle']],
@@ -116,12 +110,11 @@ export class HistorialMedicoComponent implements OnInit {
       columnStyles: { 0: { cellWidth: 50, fontStyle: 'bold' } }
     });
 
-    // Pie de página / Firma simulada
     const finalY = (doc as any).lastAutoTable.finalY || 150;
     doc.setDrawColor(200, 200, 200);
     doc.line(120, finalY + 40, 190, finalY + 40);
     doc.text('Firma y Sello del Médico', 155, finalY + 45, { align: 'center' });
-    
+
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.text('Este documento es una representación digital del historial clínico del paciente.', 105, 285, { align: 'center' });

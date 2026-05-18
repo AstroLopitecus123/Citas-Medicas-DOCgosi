@@ -20,11 +20,10 @@ export class GestionarDisponibilidadComponent implements OnInit {
 
   minimoHorasSemana = 36;
   minimoHorasDia = 6;
-  semanaIndice = 0; // 0 = siguiente semana, 1 = semana después, 2 = tercera semana
+  semanaIndice = 0; 
   medico!: Medico;
   disponibilidades: Disponibilidad[] = [];
-  
-  // Estado de Validación Flexible
+
   mostrarModalConfirmacion = false;
   mostrarModalBloqueo = false;
   mensajeBloqueo = '';
@@ -32,11 +31,11 @@ export class GestionarDisponibilidadComponent implements OnInit {
   resultadoValidacion = {
     totalValido: true,
     distribucionValida: true,
-    diasBajos: [] as string[] // Guardará las fechas que no cumplen con 6h
+    diasBajos: [] as string[] 
   };
 
   dias: { nombre: string, fecha: string }[] = [];
-  horas = Array.from({ length: 13 }, (_, i) => 8 + i); // 8am a 8pm
+  horas = Array.from({ length: 13 }, (_, i) => 8 + i); 
 
   constructor(
     private controller: GestionarDisponibilidadController,
@@ -58,7 +57,6 @@ export class GestionarDisponibilidadComponent implements OnInit {
     );
   }
 
-  // Genera los 6 días de lunes a sábado con nombre y fecha
   generarDiasConFechas(): void {
     const nombresDias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const lunesActual = this.getLunesDeSemana();
@@ -82,7 +80,6 @@ export class GestionarDisponibilidadComponent implements OnInit {
     }
   }
 
-  // Convierte dd/MM/yy a yyyy-MM-dd para backend
   private fechaToISO(fecha: string): string {
     const [dia, mes, anio] = fecha.split('/').map(p => parseInt(p, 10));
     const f = new Date(2000 + anio, mes - 1, dia);
@@ -127,20 +124,17 @@ export class GestionarDisponibilidadComponent implements OnInit {
   validarHorario(): void {
     const horasSemana = this.horasSemanaActual;
     const porDia: { [fecha: string]: number } = {};
-    
-    // Reset
+
     this.resultadoValidacion = { 
       totalValido: true, 
       distribucionValida: true, 
       diasBajos: [] 
     };
 
-    // 1. Validar Total (Mandatorio 36h)
     if (horasSemana.length < this.minimoHorasSemana) {
       this.resultadoValidacion.totalValido = false;
     }
 
-    // 2. Validar Distribución (Advertencia si no hay 6h por día o no hay 6 días)
     horasSemana.forEach(d => {
       porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
     });
@@ -216,12 +210,9 @@ export class GestionarDisponibilidadComponent implements OnInit {
       });
   }
 
-
-  // Devuelve las disponibilidades que pertenecen a la semana visible
   get horasSemanaActual(): Disponibilidad[] {
     if (!this.dias.length) return [];
-    
-    // Obtenemos rango de la semana actual en formato ISO (YYYY-MM-DD)
+
     const fechaInicioISO = this.fechaToISO(this.dias[0].fecha);
     const fechaFinISO = this.fechaToISO(this.dias[this.dias.length - 1].fecha);
 
@@ -239,10 +230,8 @@ export class GestionarDisponibilidadComponent implements OnInit {
   validarMinimoHoras(): boolean {
     const horasSemana = this.horasSemanaActual;
 
-    // 1. Validar Total Semanal (Mínimo 36h)
     if (horasSemana.length < this.minimoHorasSemana) return false;
 
-    // 2. Validar Mínimo por Día (Mínimo 6h por cada uno de los 6 días L-S)
     const porDia: { [fecha: string]: number } = {};
     horasSemana.forEach(d => {
       porDia[d.fecha] = (porDia[d.fecha] || 0) + 1;
@@ -255,16 +244,12 @@ export class GestionarDisponibilidadComponent implements OnInit {
   }
 
   esEditable(fecha: string): boolean {
-    // La fecha viene en DD/MM/YY
+
     const isoFecha = this.fechaToISO(fecha);
-    
-    // Obtenemos lunes de la semana 1 (la del sistema)
+
     const lunesBase = this.getLunesDeSemana();
     const lunesBaseISO = lunesBase.toISOString().split('T')[0];
 
-    // Por políticas, solo se editan semanas futuras o la actual? 
-    // En este componente se manejan Semana 1, 2 y 3.
-    // La lógica original comparaba con el rango visible, mantendremos eso pero con strings.
     const inicioVisible = this.fechaToISO(this.dias[0].fecha);
     const finVisible = this.fechaToISO(this.dias[this.dias.length - 1].fecha);
 

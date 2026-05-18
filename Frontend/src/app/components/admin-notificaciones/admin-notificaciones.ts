@@ -47,7 +47,7 @@ export class AdminNotificacionesComponent implements OnInit {
     this.notificacionService.marcarComoLeida(notif.id).subscribe({
       next: () => { 
         notif.leida = true; 
-        this.notificacionService.notificarCambio(); // 🔥 Refrescar contador global
+        this.notificacionService.notificarCambio(); 
       }
     });
   }
@@ -55,12 +55,12 @@ export class AdminNotificacionesComponent implements OnInit {
   marcarTodasLeidas() {
     const noLeidas = this.notificaciones.filter(n => !n.leida);
     if (noLeidas.length === 0) return;
-    
+
     noLeidas.forEach(n => {
       this.notificacionService.marcarComoLeida(n.id).subscribe({
         next: () => { 
           n.leida = true; 
-          this.notificacionService.notificarCambio(); // 🔥 Refrescar contador global
+          this.notificacionService.notificarCambio(); 
         }
       });
     });

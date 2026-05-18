@@ -26,7 +26,7 @@
     <div class="solicitud-grid" *ngIf="!cargando && solicitudes.length > 0">
       <div class="solicitud-card" *ngFor="let s of solicitudes" [class]="s.estado?.toLowerCase()">
         <div class="card-status-badge">{{ s.estado }}</div>
-        
+
         <div class="card-main">
           <div class="user-avatar">
             <i class="fa-solid" [class.fa-user-doctor]="s.puesto === 'MEDICO'" [class.fa-headset]="s.puesto === 'RECEPCION'"></i>

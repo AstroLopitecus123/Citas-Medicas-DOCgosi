@@ -16,9 +16,9 @@ export class NotificationService {
 
   private playSound(type: 'success' | 'error' | 'info') {
     if (localStorage.getItem('DOCGOSI_NOTIF_SOUNDS') === 'false') {
-      return; // El usuario silenció las notificaciones
+      return; 
     }
-    
+
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const oscillator = audioCtx.createOscillator();
@@ -29,8 +29,8 @@ export class NotificationService {
 
       if (type === 'success') {
         oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-        oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+        oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
         gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
         gainNode.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.05);
         gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);

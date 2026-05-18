@@ -18,25 +18,22 @@ import { environment } from '../../../environments/environment';
 export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   citaId: string = '';
-  rol: string = 'PACIENTE'; // Se obtendrá de la sesión
+  rol: string = 'PACIENTE'; 
 
-  // Estados de Vista
   unido: boolean = false;
   micOn: boolean = true;
   camOn: boolean = true;
   remoteUserJoined: boolean = false;
-  
-  // Estado Accesibilidad
+
   mostrarSubtitulos: boolean = false;
   deepgramActive: boolean = false;
   mensajeActualEmisor: string = '';
   mensajeActualTranscrito: string = '';
 
-  // CORE Agora & Deepgram
   private rtcClient!: IAgoraRTCClient;
   private localAudioTrack!: IMicrophoneAudioTrack;
   private localVideoTrack!: ICameraVideoTrack;
-  
+
   private agoraAppId: string = '';
   private deepgramApiKey: string = '';
   private deepgramSocket: any = null;
@@ -61,7 +58,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   obtenerConfiguracion() {
-    // Obtenemos las llaves de seguridad desde el backend
+
     this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config`).subscribe({
       next: (config) => {
         this.agoraAppId = config.agoraAppId;
@@ -75,10 +72,9 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   async prepararAgora() {
     this.rtcClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
 
-    // Escuchar cuando el otro usuario entra
     this.rtcClient.on('user-published', async (user, mediaType) => {
       await this.rtcClient.subscribe(user, mediaType);
-      
+
       if (mediaType === 'video') {
         const remoteVideoTrack = user.videoTrack;
         this.remoteUserJoined = true;
@@ -86,7 +82,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
           remoteVideoTrack?.play('remote-video');
         }, 300);
       }
-      
+
       if (mediaType === 'audio') {
         const remoteAudioTrack = user.audioTrack;
         remoteAudioTrack?.play();
@@ -98,7 +94,6 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
        this.remoteUserJoined = false;
     });
 
-    // Escuchar mensajes en vivo para subtitulos
     this.rtcClient.on('stream-message', (uid, payload) => {
       const texto = new TextDecoder().decode(payload);
       this.recibirSubtitulo(texto);
@@ -112,21 +107,18 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     }
 
     try {
-      // Nota: Temporalmente null como token, asumiendo configuración flexible en consola Agora para MVP.
+
       const canalUID = `cita-${this.citaId}`;
       await this.rtcClient.join(this.agoraAppId, canalUID, null, null);
 
-      // Crear pistas locales
       this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
-      // Mostrar local
       this.unido = true;
       setTimeout(() => {
         this.localVideoTrack.play('local-video');
       }, 300);
 
-      // Publicar en red
       await this.rtcClient.publish([this.localAudioTrack, this.localVideoTrack]);
 
     } catch (e) {
@@ -157,10 +149,6 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
-  // ==========================================
-  // IA DE SUBTITULOS (DEEPGRAM)
-  // ==========================================
-  
   async toggleDeepgram() {
     if(!this.deepgramActive) {
       this.iniciarReconocimientoVoz();
@@ -171,16 +159,16 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   async iniciarReconocimientoVoz() {
     this.deepgramActive = true;
-    
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       const deepgramUrl = 'wss://api.deepgram.com/v1/listen?model=nova-2&language=es-419&smart_format=true';
       this.deepgramSocket = new WebSocket(deepgramUrl, ['token', this.deepgramApiKey]);
 
       this.deepgramSocket.onopen = () => {
         console.log('Deepgram conectado');
-        
+
         this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
         this.mediaRecorder.ondataavailable = (e) => {
           if (e.data.size > 0 && this.deepgramSocket && this.deepgramSocket.readyState === 1) {
@@ -217,14 +205,11 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   enviarSubtituloAlPaciente(texto: string) {
-      // Envía el texto escrito por el DataChannel de Agora
-      // Esto simula un broadcast bajo latencia
+
       console.log('Emitiendo:', texto);
       try {
         const encoded = new TextEncoder().encode(texto);
-        // Enviamos el mensaje al stream y nos lo automostramos
-        // rtcClient.sendStreamMessage(encoded); // Nota: Requires data stream track
-        // Como alternativa simple de prototipo mostramos de inmediato
+
         this.recibirSubtitulo(texto, "Dr. Muñoz");
       } catch(e) {
         console.warn("Fallo envio Agora, mostrando localmente: ", e);
@@ -236,7 +221,6 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.mensajeActualEmisor = emisor;
       this.mensajeActualTranscrito = texto;
 
-      // Ocultar despues de unos segundos si no hay mas charla
       setTimeout(() => {
           if(this.mensajeActualTranscrito === texto) {
               this.mensajeActualTranscrito = '';

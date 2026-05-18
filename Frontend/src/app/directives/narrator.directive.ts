@@ -7,19 +7,17 @@ import { NarratorService } from '../services/narrator.service';
 })
 export class NarratorDirective implements OnInit, OnDestroy {
   @Input() altText: string = '';
-  
+
   private btnNarrator: HTMLElement | null = null;
   private checkInterval: any;
 
   constructor(
-    private el: ElementRef, 
+    private el: ElementRef,
     private renderer: Renderer2,
     private narratorService: NarratorService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    // Verificamos periódicamente si el modo narrador está activo en localStorage
-    // Alternativamente, esto podría ser un observable en un servicio global.
     this.checkInterval = setInterval(() => {
       const isNarratorActive = localStorage.getItem('DOCGOSI_NARRATOR_ACTIVE') === 'true';
       if (isNarratorActive && !this.btnNarrator) {
@@ -35,12 +33,9 @@ export class NarratorDirective implements OnInit, OnDestroy {
     this.renderer.addClass(this.btnNarrator, 'narrator-btn-overlay');
     this.renderer.setProperty(this.btnNarrator, 'innerHTML', '<i class="fa-solid fa-volume-high"></i>');
     this.renderer.setAttribute(this.btnNarrator, 'title', 'Escuchar descripción de imagen');
-    
-    // Posicionamiento relativo al padre de la imagen
+
     let host = this.el.nativeElement.parentNode;
     if (host) {
-      // Si el padre inmediato tiene overflow hidden (común en avatares circulares),
-      // buscamos el siguiente ancestro para evitar recortes (clipping).
       const style = window.getComputedStyle(host);
       if (style.overflow === 'hidden' && host.parentNode) {
         host = host.parentNode;
@@ -50,9 +45,9 @@ export class NarratorDirective implements OnInit, OnDestroy {
       if (currentPos === 'static') {
         this.renderer.setStyle(host, 'position', 'relative');
       }
-      
+
       this.renderer.appendChild(host, this.btnNarrator);
-      
+
       this.renderer.listen(this.btnNarrator, 'click', (event) => {
         event.stopPropagation();
         const textToRead = this.altText || this.el.nativeElement.alt || 'Imagen sin descripción';

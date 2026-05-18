@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-// Implementado Pagos
 @Entity
 @Table(name = "pagos")
 public class Pago {

@@ -46,10 +46,6 @@ public class Medico {
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-    // ---------------------
-    // GETTERS Y SETTERS
-    // ---------------------
-
     public Long getId() {
         return id;
     }

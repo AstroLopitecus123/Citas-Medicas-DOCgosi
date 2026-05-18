@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-// Implementado Pagos
 @Repository
 public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByCitaId(Long citaId);

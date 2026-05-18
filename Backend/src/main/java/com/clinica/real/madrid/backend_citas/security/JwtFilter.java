@@ -31,19 +31,18 @@ public class JwtFilter extends OncePerRequestFilter {
                                     throws ServletException, IOException {
 
         String path = request.getServletPath();
-        if (path.startsWith("/auth")) { // rutas públicas
+        if (path.startsWith("/auth")) { 
             filterChain.doFilter(request, response);
             return;
         }
 
         final String header = request.getHeader("Authorization");
-        System.out.println("Authorization header: " + header); // <-- revisa aquí
+        System.out.println("Authorization header: " + header); 
 
         String token = null;
         String username = null;
-        
-        System.out.println("Authorization header: " + header);
 
+        System.out.println("Authorization header: " + header);
 
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
@@ -56,8 +55,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 System.err.println("❌ No se pudo extraer el usuario del token (puede estar expirado): " + e.getMessage());
             }
         }
-
-
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);

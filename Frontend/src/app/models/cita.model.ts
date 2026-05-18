@@ -4,7 +4,6 @@ import { EstadoCita } from './tipos';
 import { Historial } from './historial.model';
 import { Pago } from './pago.model';
 
-
 export type EstadoPago = 'PENDIENTE' | 'PAGADO' | 'RECHAZADO';
 
 export class Cita {
@@ -21,8 +20,6 @@ export class Cita {
   pago?: Pago;
   fechaPropuesta?: string;
 
-
-  // ➕ Nuevo
   estadoPago!: EstadoPago;
   monto?: number;
   metodoPago?: string;
@@ -35,7 +32,7 @@ export class Cita {
     this.id = 0;
     this.fecha = '';
     this.estado = 'PENDIENTE';
-    this.estadoPago = 'PENDIENTE';  // ⭐ default
+    this.estadoPago = 'PENDIENTE';  
     this.motivo = '';
     this.fechaCreacion = '';
     this.fechaActualizacion = '';
@@ -53,18 +50,15 @@ export class Cita {
       this.fechaActualizacion =
         data.fechaActualizacion ?? this.fechaActualizacion;
 
-      // 🧾 Datos de pago
       this.monto = data.monto ?? this.monto;
       this.metodoPago = data.metodoPago ?? this.metodoPago;
       this.transaccionId = data.transaccionId ?? this.transaccionId;
       this.fechaPago = data.fechaPago ?? this.fechaPago;
 
-      // 👤 Paciente
       this.paciente = data.paciente
         ? new UsuarioFull(data.paciente)
         : new UsuarioFull();
 
-      // 🩺 Medico
       this.medico = data.medico ? new Medico(data.medico) : new Medico();
       if (!this.medico.usuario) {
         this.medico.usuario = new UsuarioFull();

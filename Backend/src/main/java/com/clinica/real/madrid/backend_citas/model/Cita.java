@@ -36,7 +36,7 @@ public class Cita {
     private EstadoCita estado = EstadoCita.PENDIENTE;
 
     private String motivo;
-    
+
     @Column(name = "fecha_propuesta")
     private LocalDateTime fechaPropuesta;
 
@@ -45,10 +45,6 @@ public class Cita {
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
-
-    // ---------------------
-    // Getters y Setters
-    // ---------------------
 
     public Long getId() {
         return id;

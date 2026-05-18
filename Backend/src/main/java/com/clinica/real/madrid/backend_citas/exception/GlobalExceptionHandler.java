@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<Map<String, Object>> handleBadRequest(BadRequestException ex) {
-	    ex.printStackTrace(); // Consola
+	    ex.printStackTrace(); 
 
 	    String msg = ex.getMessage();
 	    String field = "";
@@ -25,18 +25,17 @@ public class GlobalExceptionHandler {
 
 	    Map<String, Object> body = new HashMap<>();
 	    body.put("timestamp", LocalDateTime.now());
-	    body.put("status", HttpStatus.CONFLICT.value()); // 409 para conflicto de datos
+	    body.put("status", HttpStatus.CONFLICT.value()); 
 	    body.put("error", "Conflict");
 	    body.put("message", msg);
-	    body.put("field", field); // campo opcional
+	    body.put("field", field); 
 
 	    return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 	}
 
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
-        ex.printStackTrace(); // Consola
+        ex.printStackTrace(); 
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.NOT_FOUND.value());
@@ -47,7 +46,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleAll(Exception ex) {
-        ex.printStackTrace(); // Consola
+        ex.printStackTrace(); 
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -55,6 +54,6 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
 }
 

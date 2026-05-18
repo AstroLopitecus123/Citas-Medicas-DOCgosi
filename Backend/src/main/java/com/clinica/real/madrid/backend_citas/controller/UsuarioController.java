@@ -26,26 +26,24 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "http://localhost:4200") // para Angular
+@CrossOrigin(origins = "http://localhost:4200") 
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    
+
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-    // 🔹 Listar usuarios
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.listarUsuarios();
-        usuarios.forEach(u -> u.setContrasena(null)); // no enviar contraseñas
+        usuarios.forEach(u -> u.setContrasena(null)); 
         return ResponseEntity.ok(usuarios);
     }
 
-    // 🔹 Obtener usuario por ID
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {
@@ -54,7 +52,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    // 🔹 Registrar usuario
     @PostMapping("/registrar")
     public ResponseEntity<Usuario> registrarUsuario(@RequestBody UsuarioRegistroRequest request) {
         Usuario usuario = usuarioService.registrarUsuario(request);
@@ -62,18 +59,14 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
-
- // 🔹 Eliminar usuario y sus citas
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Transactional  // ⚡ Transacción activa para todo el proceso
+    @Transactional  
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.ok("Usuario y sus citas eliminados correctamente");
     }
-    
-    
-    //AGREGADO EL 30/10
+
     @PutMapping("/{id}/estado")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizarEstado(
@@ -87,7 +80,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuarioActualizado);
     }
-    
+
     @PutMapping("/{id}/rol")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizarRol(@PathVariable Long id, @RequestBody Map<String, String> body) {
@@ -95,7 +88,7 @@ public class UsuarioController {
         Usuario usuarioActualizado = usuarioService.actualizarRol(id, nuevoRol);
         return ResponseEntity.ok(usuarioActualizado);
     }
-    
+
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Usuario> actualizarUsuario(

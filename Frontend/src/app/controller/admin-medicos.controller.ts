@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 export interface UsuarioFullConIndice extends UsuarioFull {
-  fila: number; // índice consecutivo
+  fila: number;
 }
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AdminMedicosController {
     private medicoService: MedicoService,
     private especialidadService: EspecialidadService,
     private router: Router
-  ) {}
+  ) { }
 
   inicializar() {
     this.cargarMedicos();
@@ -38,7 +38,6 @@ export class AdminMedicosController {
     this.medicoService.listarMedicos().subscribe({
       next: data => {
         this.medicos = data.map(d => new UsuarioFull(d));
-        // ⚡ Generar fila consecutiva
         this.medicosConIndice = this.medicos.map((medico, index) => ({
           ...medico,
           fila: index + 1
@@ -81,7 +80,7 @@ export class AdminMedicosController {
           console.log('Especialidad actualizada:', medicoActualizado);
           this.medicoSeleccionado.especialidad = medicoActualizado.especialidad;
           this.cerrarModal();
-          this.cargarMedicos(); // Recargar para ver cambios en la tabla
+          this.cargarMedicos();
         },
         error: err => console.error('Error al actualizar especialidad:', err)
       });

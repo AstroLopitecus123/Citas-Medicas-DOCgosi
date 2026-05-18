@@ -2,7 +2,6 @@ package com.clinica.real.madrid.backend_citas.dto;
 
 import java.math.BigDecimal;
 
-// Implementado Pagos
 public class PagoEfectivoRequest {
     private Long citaId;
     private Long usuarioId;

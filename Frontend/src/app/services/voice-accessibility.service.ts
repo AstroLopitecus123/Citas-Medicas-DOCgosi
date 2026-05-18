@@ -14,16 +14,12 @@ export class VoiceAccessibilityService implements OnDestroy {
   private mediaRecorder: MediaRecorder | null = null;
   public isListening: boolean = false;
 
-  // Notificamos cuando se detecta un comando para feedback visual si se desea
   commandDetected = new Subject<string>();
 
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  /**
-   * Inicializa la configuración desde el backend y comienza a escuchar si se requiere.
-   */
   startListening() {
     if (this.isListening) return;
 
@@ -61,14 +57,14 @@ export class VoiceAccessibilityService implements OnDestroy {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      // Probamos pasando el token directamente en la URL para máxima compatibilidad con proxies
+
       const deepgramUrl = `wss://api.deepgram.com/v1/listen?model=nova-2&language=es&smart_format=true&interim_results=true&token=${this.deepgramApiKey}`;
-      
+
       this.deepgramSocket = new WebSocket(deepgramUrl);
 
       this.deepgramSocket.onopen = () => {
         console.log('Asistente de Voz DOCgosi: Activo');
-        
+
         this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
         this.mediaRecorder.ondataavailable = (e) => {
           if (e.data.size > 0 && this.deepgramSocket && this.deepgramSocket.readyState === 1) {
@@ -104,7 +100,6 @@ export class VoiceAccessibilityService implements OnDestroy {
   private handleTranscripcion(text: string) {
     console.log('Comando Voz:', text);
 
-    // 1. COMANDOS DE NAVEGACIÓN
     if (text.includes('ir a inicio') || text.includes('vuelve al inicio')) {
       this.router.navigate(['/']);
       this.commandDetected.next('Navegando al Inicio');
@@ -125,8 +120,7 @@ export class VoiceAccessibilityService implements OnDestroy {
       this.router.navigate(['/mis-pagos']);
       this.commandDetected.next('Abriendo Pagos');
     }
-    
-    // 2. ACCIONES DE FORMULARIO Y TRANSACCIONES
+
     if (text.includes('pagar ahora') || text.includes('finalizar registro') || text.includes('confirmar cita')) {
       const btnSubmit = document.querySelector('button[type="submit"]') as HTMLButtonElement;
       if (btnSubmit) {
@@ -143,8 +137,6 @@ export class VoiceAccessibilityService implements OnDestroy {
       }
     }
 
-    // 3. DICTADO AUTOMÁTICO EN CAMPO ENFOCADO
-    // Si el usuario dice "escribe [texto]" o "poner [texto]"
     if (text.startsWith('escribe ') || text.startsWith('poner ')) {
       const contenido = text.replace('escribe ', '').replace('poner ', '').trim();
       this.inyectarTexto(contenido);
@@ -157,10 +149,9 @@ export class VoiceAccessibilityService implements OnDestroy {
       const start = activeElement.selectionStart || 0;
       const end = activeElement.selectionEnd || 0;
       const val = activeElement.value;
-      
+
       activeElement.value = val.substring(0, start) + texto + val.substring(end);
-      
-      // Disparar evento de input para que Angular detecte el cambio de ngModel
+
       activeElement.dispatchEvent(new Event('input', { bubbles: true }));
       this.commandDetected.next(`Escribiendo: ${texto}`);
     }

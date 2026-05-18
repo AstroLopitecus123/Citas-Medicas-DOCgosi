@@ -10,14 +10,12 @@ import { AppComponent } from '../app';
 @Injectable()
 export class RegistrarUsuarioController {
 
-  // Mensajes
   private readonly MENSAJES = {
     registroExitoso: 'Usuario registrado correctamente',
     completarCampos: 'Por favor completa correctamente todos los campos'
   };
   confirmarContrasena: string = '';
-  // Valores default
-  private readonly defaultUsuario ={
+  private readonly defaultUsuario = {
     nombre: '',
     apellido: '',
     correo: '',
@@ -43,12 +41,10 @@ export class RegistrarUsuarioController {
     paisId: false
   };
 
-  // Estado reactivo
   usuario: Usuario = new Usuario(this.defaultUsuario);
   mostrarContrasena = false;
   mostrarConfirmarContrasena = false;
-  
-  // Pasos del registro
+
   pasoActual: number = 1;
 
   touched: typeof this.defaultTouched = { ...this.defaultTouched };
@@ -59,11 +55,8 @@ export class RegistrarUsuarioController {
   dniError: string = '';
   telefonoError: string = '';
 
-
-  // Paises
   paises: Pais[] = [];
 
-  // Utilidades inyectadas vía setUtils
   private router?: Router;
   private ns?: NotificationService;
   private app?: AppComponent;
@@ -75,17 +68,15 @@ export class RegistrarUsuarioController {
     this.cargarPaises();
   }
 
-  /** ------------------ GETTERS DE VALIDACIÓN ------------------ */
-
   get nombreValido(): boolean {
     const n = this.usuario.nombre?.trim() || '';
-    // No nulo, máximo 50 caracteres, sin números
+
     return n.length > 0 && n.length <= 50 && !/\d/.test(n);
   }
 
   get apellidoValido(): boolean {
     const a = this.usuario.apellido?.trim() || '';
-    // No nulo, máximo 50 caracteres, sin números
+
     return a.length > 0 && a.length <= 50 && !/\d/.test(a);
   }
 
@@ -103,13 +94,13 @@ export class RegistrarUsuarioController {
 
   get dniValido(): boolean {
     const dniStr = (this.usuario.dni || '').toString().trim();
-    // Solo números, sin espacios, máximo 8 dígitos, no vacío
+
     return /^\d{1,8}$/.test(dniStr);
   }
 
   get telefonoValido(): boolean {
     const telStr = (this.usuario.telefono || '').toString().trim();
-    // Solo números, sin espacios, máximo 9 dígitos, no vacío
+
     return /^\d{1,9}$/.test(telStr);
   }
 
@@ -149,8 +140,6 @@ export class RegistrarUsuarioController {
     return !!this.error && !this.formularioValido;
   }
 
-  /** ------------------ MÉTODOS ------------------ */
-
   inicializarFormulario() {
     this.usuario = new Usuario(this.defaultUsuario);
     this.confirmarContrasena = '';
@@ -162,7 +151,6 @@ export class RegistrarUsuarioController {
   cargarPaises() {
     this.paisService.listar().subscribe({
       next: (data) => {
-        // Usa .map() para crear instancias de la clase Pais
         this.paises = data.map(paisObj => new Pais(paisObj));
       },
       error: (err) => console.error('Error al cargar países:', err)
@@ -218,7 +206,6 @@ export class RegistrarUsuarioController {
 
   setFiltro(tipo: string) {
     this.usuario.configuracionVisual = tipo;
-    // Aplicar filtro temporal en el DOM para preview real si el usuario quiere
     document.documentElement.style.filter = this.getFiltroStyle(tipo);
   }
 
@@ -236,15 +223,12 @@ export class RegistrarUsuarioController {
   }
 
   registrar(): void {
-    // Concatenar &#64;gmail.com antes de enviar
     if (this.usuario.correoUsuario) {
       this.usuario.correo = this.usuario.correoUsuario + '@gmail.com';
     }
 
-    // Marcar todos los campos como tocados para que se pongan en rojo
     Object.keys(this.touched).forEach(k => this.touched[k as keyof typeof this.touched] = true);
 
-    // Resetear errores de campo
     this.correoError = '';
     this.dniError = '';
     this.telefonoError = '';
@@ -285,7 +269,6 @@ export class RegistrarUsuarioController {
         if (this.ns) this.ns.success('¡Cuenta creada con éxito! Bienvenido a R.E.T.O Salud.');
         this.inicializarFormulario();
 
-        // 🚀 Redirección automática al Login para que el usuario inicie sesión
         if (this.router) {
           setTimeout(() => {
             this.router?.navigate(['/login']);
@@ -299,7 +282,7 @@ export class RegistrarUsuarioController {
           if (field === 'correo') this.correoError = msg;
           else if (field === 'dni') this.dniError = msg;
           else if (field === 'telefono') this.telefonoError = msg;
-          
+
           if (this.ns) this.ns.error(`${msg}`);
         } else {
           const errMsg = err.error?.message || err.message || 'Error desconocido';

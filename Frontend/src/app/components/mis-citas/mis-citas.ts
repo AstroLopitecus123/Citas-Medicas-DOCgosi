@@ -5,7 +5,7 @@ import { CitaService } from '../../services/cita.service';
 import { MisCitasController } from '../../controller/mis-citas.controller';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
-import { ActivatedRoute } from '@angular/router'; // 👈 importa ActivatedRoute
+import { ActivatedRoute } from '@angular/router'; 
 import { Router} from '@angular/router';
 import { MedicoService} from '../../services/medico.service';
 import { HistorialService } from '../../services/historial.service';
@@ -24,7 +24,6 @@ export class MisCitasComponent implements OnInit, OnDestroy {
   ctrl: MisCitasController;
   private pollingSub?: Subscription;
 
-  // 👇 inyectamos también el ActivatedRoute
   constructor(
     private citaService: CitaService,
     private usuarioService: UsuarioService,
@@ -34,7 +33,7 @@ export class MisCitasComponent implements OnInit, OnDestroy {
     private historialService: HistorialService,
     private ns: NotificationService
   ) {
-    // 👇 pasamos los parámetros al controlador
+
     this.ctrl = new MisCitasController(
       this.citaService, 
       this.usuarioService, 
@@ -47,11 +46,10 @@ export class MisCitasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ctrl.inicializar(); // carga inicial
-    
-    // Polling cada 5 segundos para actualización en tiempo real
+    this.ctrl.inicializar(); 
+
     this.pollingSub = interval(5000).subscribe(() => {
-      // Usar if editando == false en el controller o algo similar para no interrumpir
+
       if (!this.ctrl.editando && !this.ctrl.mostrandoModalCita && !this.ctrl.mostrandoModalCancelar && !this.ctrl.mostrandoModalHistorial) {
          this.ctrl.cargarCitas(false);
       }

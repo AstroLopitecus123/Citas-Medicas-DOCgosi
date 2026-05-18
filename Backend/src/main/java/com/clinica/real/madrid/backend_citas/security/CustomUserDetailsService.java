@@ -16,12 +16,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        // Buscar el usuario en la base de datos
+
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "Usuario no encontrado con correo: " + correo));
 
-        // Retornamos nuestro UsuarioPrincipal personalizado
         return UsuarioPrincipal.fromUsuario(usuario);
     }
 }

@@ -27,10 +27,6 @@ public class Pais {
     @Column(nullable = false)
     private EstadoPais estado = EstadoPais.ACTIVO;
 
-    // ---------------------
-    // GETTERS Y SETTERS
-    // ---------------------
-
     public Long getId() {
         return id;
     }

@@ -16,28 +16,24 @@ public class PaisService {
     @Autowired
     private PaisRepository paisRepository;
 
-    // Listar todos los países
     public List<Pais> listar() {
         return paisRepository.findAll();
     }
 
-    // Obtener país por id
     public Pais obtenerPorId(Long id) {
         return paisRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("País no encontrado"));
     }
 
-    // Guardar o actualizar país
     public Pais guardar(Pais pais) {
         if (pais.getNombre() == null || pais.getNombre().isBlank()) {
             throw new BadRequestException("Debe completar el nombre del país");
         }
 
         if (pais.getEstado() == null) {
-            pais.setEstado(EstadoPais.ACTIVO); // Por defecto activo si no se envía
+            pais.setEstado(EstadoPais.ACTIVO); 
         }
 
-        // Validar duplicado por nombre
         boolean paisExistente = pais.getId() == null
                 ? paisRepository.existsByNombre(pais.getNombre())
                 : paisRepository.existsByNombreAndIdNot(pais.getNombre(), pais.getId());
@@ -49,7 +45,6 @@ public class PaisService {
         return paisRepository.save(pais);
     }
 
-    // Eliminar país
     public void eliminar(Long id) {
         if (!paisRepository.existsById(id)) {
             throw new ResourceNotFoundException("País no encontrado");

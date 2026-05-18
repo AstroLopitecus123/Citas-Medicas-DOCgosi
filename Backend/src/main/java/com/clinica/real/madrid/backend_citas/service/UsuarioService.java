@@ -41,7 +41,7 @@ public class UsuarioService {
 
     @Autowired
     private PaisRepository paisRepository;
-    
+
     @Autowired
     private MedicoRepository medicoRepository;
 
@@ -57,26 +57,23 @@ public class UsuarioService {
     public UsuarioService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-    
+
     @Autowired
     @Lazy
     private PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private CitaService citaService;
 
-    // 🔹 Listar todos los usuarios
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    // 🔹 Obtener usuario por ID
     public Usuario obtenerUsuarioPorId(Long id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado"));
     }
 
-    // 🔹 Registrar usuario
     public Usuario registrarUsuario(UsuarioRegistroRequest request) {
 
         if (request.getNombre() == null || request.getNombre().isBlank() ||
@@ -111,7 +108,7 @@ public class UsuarioService {
         usuario.setPais(pais);
         usuario.setContrasena(passwordEncoder.encode(request.getContrasena()));
         usuario.setRol(Rol.PACIENTE);
-        
+
         if (request.getConfiguracionVisual() != null) {
             usuario.setConfiguracionVisual(request.getConfiguracionVisual());
         }
@@ -127,7 +124,6 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    // 🔹 Eliminar usuario (con eliminación lógica de citas e historiales)
     @Transactional
     public void eliminarUsuario(Long id) {
         if (!usuarioRepository.existsById(id)) {
@@ -139,7 +135,6 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
- // 🔹 Login 
     public Usuario login(String correo, String contrasenaPlain) {
         return usuarioRepository.findByCorreo(correo)
                 .filter(u -> passwordEncoder.matches(contrasenaPlain, u.getContrasena()))
@@ -165,15 +160,13 @@ public class UsuarioService {
                 .orElseGet(() -> {
                     Usuario nuevo = new Usuario();
                     nuevo.setCorreo(email);
-                    // Usar nombre y apellido reales de Google
+
                     nuevo.setNombre(nombre != null ? nombre : "Usuario");
                     nuevo.setApellido(apellido != null ? apellido : "Google");
                     nuevo.setRol(Rol.PACIENTE);
                     nuevo.setContrasena(passwordEncoder.encode(UUID.randomUUID().toString()));
                     nuevo.setEstado(EstadoUsuario.ACTIVADO);
-                    
-                    // Datos obligatorios en DB pero que Google no da
-                    // Usamos un prefijo para que el usuario sepa que debe cambiarlo
+
                     nuevo.setDni("G-" + System.currentTimeMillis() / 1000); 
                     nuevo.setTelefono("000000000");
                     nuevo.setFechaNacimiento(java.time.LocalDate.of(2000, 1, 1));
@@ -183,17 +176,13 @@ public class UsuarioService {
                 });
     }
 
-
-
-
-    // 🔹 Actualizar estado de usuario
     public Usuario actualizarEstado(Long id, EstadoUsuario nuevoEstado) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         usuario.setEstado(nuevoEstado);
         return usuarioRepository.save(usuario);
     }
-    
+
     @Transactional
     public Usuario actualizarRol(Long id, String nuevoRol) {
         if (nuevoRol == null || nuevoRol.isBlank()) {
@@ -211,11 +200,10 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        Rol rolAnterior = usuario.getRol(); // ⚡ guardamos el rol anterior
+        Rol rolAnterior = usuario.getRol(); 
         usuario.setRol(rolEnum);
         usuarioRepository.save(usuario);
 
-        // 🔹 Si el nuevo rol es MEDICO y no existe en la tabla medicos, lo creamos
         if (rolEnum == Rol.MEDICO && rolAnterior != Rol.MEDICO) {
             boolean existeMedico = medicoRepository.existsByUsuarioId(id);
             if (!existeMedico) {
@@ -227,7 +215,6 @@ public class UsuarioService {
             }
         }
 
-        // 🔹 Si el rol anterior era MEDICO y ahora ya no, eliminamos de tabla medicos
         if (rolAnterior == Rol.MEDICO && rolEnum != Rol.MEDICO) {
             medicoRepository.findByUsuarioId(id).ifPresent(medicoRepository::delete);
         }
@@ -235,7 +222,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    
     public Usuario actualizarUsuario(Long id, Usuario datos) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -255,7 +241,7 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
-    
+
     public void enviarCorreoRecuperacion(String correo) {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("No existe un usuario con ese correo."));
@@ -286,9 +272,6 @@ public class UsuarioService {
         mailSender.send(mensaje);
     }
 
-    /**
-     * Restablecer contraseña usando token
-     */
     public void restablecerContrasena(String token, String nuevaContrasena) {
         Usuario usuario = usuarioRepository.findByTokenRecuperacion(token)
                 .orElseThrow(() -> new RuntimeException("Token inválido o expirado."));
@@ -304,20 +287,15 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    /**
-     * Cambiar contraseña validando la clave actual
-     */
     @Transactional
     public void cambiarPassword(Long id, String actualPassword, String nuevaPassword) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        // Validar que la contraseña actual sea correcta
         if (!passwordEncoder.matches(actualPassword, usuario.getContrasena())) {
             throw new BadRequestException("La contraseña actual es incorrecta");
         }
 
-        // Cifrar y guardar la nueva contraseña
         usuario.setContrasena(passwordEncoder.encode(nuevaPassword));
         usuarioRepository.save(usuario);
     }

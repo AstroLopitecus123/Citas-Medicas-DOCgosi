@@ -1,10 +1,10 @@
 export class Comprobante {
   id!: number;
   pagoId!: number;
-  numero!: string; // Ej: FACT-2025-000312
+  numero!: string;
   fecha!: string;
 
-  archivoUrl?: string; // URL del PDF generado
+  archivoUrl?: string;
 
   constructor(data?: any) {
     this.id = 0;

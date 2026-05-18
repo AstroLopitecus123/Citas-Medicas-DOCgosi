@@ -15,7 +15,6 @@
       </div>
     </a>
 
-    <!-- Botón Hamburguesa (Móviles) -->
     <button class="menu-toggle" (click)="toggleMenu()">
       <i class="fa-solid" [ngClass]="isMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
     </button>
@@ -26,7 +25,6 @@
         <i class="fa-solid fa-circle-user"></i> <span>{{ usuario?.nombre || 'Mi Panel' }}</span>
       </a>
 
-      <!-- SOLO USUARIOS NO LOGUEADOS -->
       <a *ngIf="!isLoggedIn" routerLink="/registrar">
         <i class="fa-solid fa-user-plus"></i> Registrar
       </a>
@@ -34,7 +32,6 @@
         <i class="fa-solid fa-right-to-bracket"></i> Inicio de Sesión
       </a>
 
-      <!-- CERRAR SESIÓN PARA CUALQUIER USUARIO LOGUEADO -->
       <a *ngIf="isLoggedIn" (click)="abrirModalCerrarSesion(); $event.stopPropagation()" class="cerrar-sesion">
         <i class="fa-solid fa-power-off"></i> Cerrar sesión
       </a>
@@ -42,7 +39,6 @@
   </div>
 </header>
 
-<!-- ━━━ SIDEBAR PERSISTENTE (MULTIROLES) ━━━ -->
 <aside class="dashboard-sidebar" *ngIf="isPanelRoute">
   <div class="sidebar-brand">
     <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" style="height: 44px; width: auto;" />
@@ -53,7 +49,7 @@
   </div>
 
   <nav class="sidebar-nav">
-    <!-- LINKS ADMIN -->
+
     <ng-container *ngIf="usuario?.rol === 'ADMIN'">
       <a class="nav-item" routerLink="/admin" routerLinkActive="active">
         <i class="fa-solid fa-house-chimney-medical"></i> <span>Dashboard</span>
@@ -85,7 +81,6 @@
       </a>
     </ng-container>
 
-    <!-- LINKS MEDICO -->
     <ng-container *ngIf="usuario?.rol === 'MEDICO'">
       <a class="nav-item" routerLink="/medico/dashboard" routerLinkActive="active">
         <i class="fa-solid fa-house-medical-circle-check"></i> <span>Mi Agenda</span>
@@ -111,7 +106,6 @@
       </a>
     </ng-container>
 
-    <!-- LINKS RECEPCION -->
     <ng-container *ngIf="usuario?.rol === 'RECEPCION'">
       <a class="nav-item" routerLink="/recepcion/dashboard" routerLinkActive="active">
         <i class="fa-solid fa-hospital-user"></i> <span>Panel Recepción</span>
@@ -137,7 +131,6 @@
       </a>
     </ng-container>
 
-    <!-- LINKS PACIENTE -->
     <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
       <a class="nav-item" routerLink="/paciente/dashboard" routerLinkActive="active">
         <i class="fa-solid fa-house-chimney-user"></i> <span>Mi Panel</span>
@@ -160,11 +153,10 @@
       </a>
     </ng-container>
 
-    <!-- COMÚN PARA TODOS LOS PANELES -->
     <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active" *ngIf="usuario?.rol !== 'PACIENTE'">
       <i class="fa-solid fa-calendar-days"></i> <span>Gestión Citas</span>
     </a>
-    
+
     <a class="nav-item" routerLink="/" routerLinkActive="active">
       <i class="fa-solid fa-home"></i> <span>Ver Web</span>
     </a>
@@ -186,13 +178,11 @@
   </div>
 </aside>
 
-<!-- Contenedor Inteligente de Layout -->
 <main [class]="isPanelRoute ? 'panel-layout-container' : 'web-layout-container'">
-  <!-- 🔥 Detecta login sin recargar la página -->
+
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
 </main>
 
-<!-- 🔄 MODAL GLASS: CONFIRMACIÓN SALIDA -->
 <div class="glass-overlay" *ngIf="mostrarModal" (click)="cancelarCerrarSesion()">
   <div class="glass-modal animation-pop-in" (click)="$event.stopPropagation()">
     <div class="modal-header-glass">
@@ -224,11 +214,8 @@
   </div>
 </div>
 
-<!-- Asistente Virtual Inteligente (Gemini) -->
 <app-chatbot></app-chatbot>
 
-<!-- Botón Flotante de Accesibilidad Visual -->
 <app-accesibilidad></app-accesibilidad>
 
-<!-- Sistema de Notificaciones Premium -->
 <app-toast></app-toast>

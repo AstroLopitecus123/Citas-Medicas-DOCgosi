@@ -20,31 +20,24 @@ public class Nomina {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal monto;
 
-    // "QUINCENAL" o "MENSUAL"
     @Column(nullable = false, length = 20)
     private String tipoPeriodo;
 
-    // Ej: "2026-04-01" inicio del periodo
     @Column(name = "fecha_inicio_periodo", nullable = false)
     private LocalDate fechaInicioPeriodo;
 
-    // Ej: "2026-04-15" fin del periodo
     @Column(name = "fecha_fin_periodo", nullable = false)
     private LocalDate fechaFinPeriodo;
 
-    // PENDIENTE | PAGADO
     @Column(name = "estado", nullable = false, length = 20)
     private String estado = "PENDIENTE";
 
-    // Fecha real en la que el Admin realizó el depósito
     @Column(name = "fecha_pago")
     private LocalDateTime fechaPago;
 
-    // Descripción / nota del Admin (ej. "Quincena 1 Abril 2026")
     @Column(length = 255)
     private String descripcion;
 
-    // Generado automáticamente al crear
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -52,8 +45,6 @@ public class Nomina {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
-
-    // ─── Getters & Setters ────────────────────────────────────────────────────
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

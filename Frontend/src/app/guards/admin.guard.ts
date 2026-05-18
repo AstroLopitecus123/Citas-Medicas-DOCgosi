@@ -6,7 +6,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class AdminGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -26,7 +26,6 @@ export class AdminGuard implements CanActivate {
       if (usuario?.rol?.toUpperCase() === 'ADMIN') {
         return true;
       }
-      // Tiene sesión pero no es ADMIN → redirigir a su propio dashboard
       console.log('⛔ No es ADMIN → redirigiendo a su dashboard');
       this.redirigirPorRol(usuario.rol?.toUpperCase());
       return false;

@@ -8,7 +8,6 @@ import com.clinica.real.madrid.backend_citas.repository.CitaRepository;
 import com.clinica.real.madrid.backend_citas.repository.DisponibilidadRepository;
 import com.clinica.real.madrid.backend_citas.repository.HistorialRepository;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,10 +23,10 @@ public class CitaService {
 
     @Autowired
     private CitaRepository citaRepository;
-    
+
     @Autowired
     private DisponibilidadRepository disponibilidadRepository;
-    
+
     @Autowired
     private HistorialRepository historialRepository;
 
@@ -52,29 +51,25 @@ public class CitaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
     }
 
-
-
     public void eliminar(Long id) {
         if (!citaRepository.existsById(id)) {
             throw new ResourceNotFoundException("Cita no encontrada");
         }
         citaRepository.deleteById(id);
     }
-    
+
     public List<Cita> obtenerCitasPorPaciente(Long pacienteId) {
         return citaRepository.findByPacienteIdWithMedicoAndEspecialidad(pacienteId);
     }
- // 🔹 Nuevo método: eliminar todas las citas de un usuario
+
     public void eliminarPorUsuario(Long usuarioId) {
         citaRepository.deleteByPacienteId(usuarioId);
     }
-   
-    
-    //AGREGADO 30/10
+
     public List<Cita> obtenerCitasPorMedico(Long idMedico) {
         return citaRepository.findByMedicoIdOrderByFechaDesc(idMedico);
     }
-    
+
     public Cita crearCita(Cita cita) {
         if (cita == null || cita.getMedico() == null || cita.getMedico().getId() == null) {
             throw new RuntimeException("Datos de médico inválidos para crear la cita");
@@ -83,11 +78,9 @@ public class CitaService {
             throw new RuntimeException("La fecha de la cita es obligatoria");
         }
 
-        // Validar disponibilidad
         List<Disponibilidad> disponibles = disponibilidadRepository
             .findByMedicoIdAndEstado(cita.getMedico().getId(), Disponibilidad.EstadoDisponibilidad.DISPONIBLE);
 
-        // Marcar disponibilidad como NO_DISPONIBLE
         Disponibilidad disp = disponibles.stream()
             .filter(d -> d.getFecha().equals(cita.getFecha().toLocalDate())
                       && !cita.getFecha().toLocalTime().isBefore(d.getHoraInicio())
@@ -117,11 +110,10 @@ public class CitaService {
             throw new RuntimeException("No se encontró la cita con ID " + id);
         }
 
-        // Obtener cita para notificación
         Cita cita = citaRepository.findById(id).orElseThrow();
         notificarCambioCita(cita, "confirmada");
     }
-    
+
     @Transactional
     public void cancelarCita(Long id) {
         int filas = citaRepository.actualizarEstado(id, EstadoCita.CANCELADA);
@@ -129,10 +121,8 @@ public class CitaService {
             throw new RuntimeException("No se encontró la cita con ID " + id);
         }
 
-        // Obtener cita
         Cita cita = citaRepository.findById(id).orElseThrow();
-        
-        // 🛡️ Liberar el horario automáticamente
+
         disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             cita.getFecha().toLocalDate(), 
@@ -144,21 +134,20 @@ public class CitaService {
 
         notificarCambioCita(cita, "cancelada");
     }
-    
+
     @Transactional
     public void solicitarReprogramacion(Long id, LocalDateTime nuevaFecha, String motivo) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
         cita.setFechaPropuesta(nuevaFecha);
         cita.setEstado(EstadoCita.SOLICITUD_REPROGRAMACION);
-        
-        // Guardar motivo si se proporciona
+
         if (motivo != null && !motivo.trim().isEmpty()) {
             cita.setMotivo(motivo);
         }
-        
+
         citaRepository.save(cita);
-        
+
         notificarCambioCita(cita, "solicitud de reprogramación");
     }
 
@@ -169,7 +158,7 @@ public class CitaService {
         cita.setEstado(EstadoCita.SOLICITUD_CANCELACION);
         cita.setMotivo(motivo);
         citaRepository.save(cita);
-        
+
         notificarCambioCita(cita, "solicitud de cancelación");
     }
 
@@ -177,14 +166,13 @@ public class CitaService {
     public void confirmarReprogramacion(Long id) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
-        
+
         if (cita.getFechaPropuesta() == null) {
             throw new RuntimeException("No hay una fecha propuesta para esta cita");
         }
 
         LocalDateTime nuevaFecha = cita.getFechaPropuesta();
 
-        // 1️⃣ Liberar el horario antiguo
         disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             cita.getFecha().toLocalDate(), 
@@ -194,7 +182,6 @@ public class CitaService {
             disponibilidadRepository.save(disp);
         });
 
-        // 2️⃣ Bloquear el nuevo horario
         disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             nuevaFecha.toLocalDate(), 
@@ -221,9 +208,9 @@ public class CitaService {
     public void rechazarReprogramacion(Long id) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
-        
+
         cita.setFechaPropuesta(null);
-        // Marcamos como rechazada y se mantiene la fecha original
+
         cita.setEstado(EstadoCita.REPROGRAMACION_RECHAZADA);
         citaRepository.save(cita);
 
@@ -234,18 +221,15 @@ public class CitaService {
     public void confirmarCancelacion(Long id) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
-        
-        // 1. Ejecutar cancelación (liberar horario y cambiar estado)
+
         cancelarCita(id); 
 
-        // 2. Procesar Reembolso Automático
         try {
             pagoService.reembolsarPago(id);
         } catch (Exception e) {
             System.err.println("⚠️ Error en reembolso automático para cita " + id + ": " + e.getMessage());
         }
 
-        // 3. Notificación personalizada
         notificarCambioCita(cita, "cancelación aprobada y reembolso gestionado");
     }
 
@@ -253,8 +237,7 @@ public class CitaService {
     public void rechazarCancelacion(Long id) {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
-        
-        // Volver al estado previa (Asumimos CONFIRMADA si venía de una solicitud)
+
         cita.setEstado(EstadoCita.CONFIRMADA);
         citaRepository.save(cita);
 
@@ -263,31 +246,29 @@ public class CitaService {
 
     @Transactional
     public void reprogramarCita(Long id, LocalDateTime nuevaFecha) {
-        // ... (Este método se mantiene para compatibilidad con Admin que reprograma directamente)
+
     }
 
     public void eliminarHistorialesPorUsuario(Long usuarioId) {
-        // Primero obtenemos todas las citas del usuario
+
         List<Cita> citas = citaRepository.findByPacienteIdOrderByFechaDesc(usuarioId);
         for (Cita cita : citas) {
             historialRepository.deleteByCitaId(cita.getId());
         }
     }
-    
-    
+
     @Scheduled(fixedRate = 3600000)
     public void enviarRecordatorios() {
         LocalDateTime ahora = LocalDateTime.now();
         LocalDateTime desde = ahora.plusHours(23);
         LocalDateTime hasta = ahora.plusHours(25);
 
-        // Buscar citas CONFIRMADAS dentro del rango
         List<Cita> citas = citaRepository.findByFechaBetweenAndEstado(desde, hasta, EstadoCita.CONFIRMADA);
 
         for (Cita cita : citas) {
             try {
                 enviarRecordatorio(cita);
-                System.out.printf("✅ Recordatorio enviado para cita %d (%s)%n",
+                System.out.printf(" Recordatorio enviado para cita %d (%s)%n",
                         cita.getId(), cita.getFecha());
             } catch (Exception e) {
                 System.err.printf("⚠️ Error al enviar recordatorio para cita %d: %s%n",
@@ -295,43 +276,13 @@ public class CitaService {
             }
         }
     }
-    
-    
-    /*
-    @Scheduled(fixedRate = 30000) // ⏱️ cada 30 segundos (modo prueba)
-    public void enviarRecordatorios() {
-        LocalDateTime ahora = LocalDateTime.now();
 
-        // Buscar citas CONFIRMADAS en los próximos 5 minutos
-        LocalDateTime desde = ahora;
-        LocalDateTime hasta = ahora.plusDays(2);
-
-        List<Cita> citas = citaRepository.findByFechaBetweenAndEstado(desde, hasta, EstadoCita.CONFIRMADA);
-
-        for (Cita cita : citas) {
-            try {
-                enviarRecordatorio(cita);
-                System.out.printf("✅ Recordatorio enviado para cita %d (%s)%n",
-                        cita.getId(), cita.getFecha());
-            } catch (Exception e) {
-                System.err.printf("⚠️ Error al enviar recordatorio para cita %d: %s%n",
-                        cita.getId(), e.getMessage());
-            }
-        }
-    }
-    */
-   
-
-    /**
-     * ✉️ Envía recordatorio por correo a paciente y médico
-     */
     private void enviarRecordatorio(Cita cita) {
         String fecha = cita.getFecha().toLocalDate().toString();
         String hora = cita.getFecha().toLocalTime().toString();
 
-        // 📧 Correo al paciente (desde el correo de la empresa)
         SimpleMailMessage mailPaciente = new SimpleMailMessage();
-        mailPaciente.setFrom("clinicarealmadrid32@gmail.com"); // tu correo de empresa
+        mailPaciente.setFrom("clinicarealmadrid32@gmail.com"); 
         mailPaciente.setTo(cita.getPaciente().getCorreo());
         mailPaciente.setSubject("📅 Recordatorio de cita médica");
         mailPaciente.setText(String.format(
@@ -344,11 +295,10 @@ public class CitaService {
 
         mailSender.send(mailPaciente);
 
-        System.out.println("✅ Recordatorio enviado a paciente: " 
+        System.out.println(" Recordatorio enviado a paciente: " 
                 + cita.getPaciente().getCorreo() 
                 + " para la cita: " + cita.getFecha());
-        
-     // 📧 Correo al médico (desde el correo de la empresa)
+
         SimpleMailMessage mailMedico = new SimpleMailMessage();
         mailMedico.setFrom("clinicarealmadrid32@gmail.com");
         mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
@@ -362,12 +312,12 @@ public class CitaService {
         ));
         mailSender.send(mailMedico);
 
-        System.out.println("✅ Recordatorio enviado a médico: " 
+        System.out.println(" Recordatorio enviado a médico: " 
                 + cita.getMedico().getUsuario().getCorreo() 
                 + " para la cita: " + cita.getFecha());
 
     }
-    
+
     private void notificarCambioCita(Cita cita, String accion) {
         final String f = cita.getFecha().toLocalDate().toString();
         final String h = cita.getFecha().toLocalTime().toString();
@@ -381,7 +331,6 @@ public class CitaService {
             String nombreDr = nDr;
             String nombrePcte = nPc;
 
-            // 📝 Determinar textos según la acción para que suenen naturales
             String msgPaciente = "";
             String msgStaff = "";
             String asunto = "📅 Notificación de tu Cita - Clínica Real Madrid";
@@ -410,7 +359,7 @@ public class CitaService {
             }
 
             try {
-                // 📧 Correo al Paciente
+
                 SimpleMailMessage mailPaciente = new SimpleMailMessage();
                 mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
                 mailPaciente.setTo(cita.getPaciente().getCorreo());
@@ -422,7 +371,7 @@ public class CitaService {
             }
 
             try {
-                // 📧 Correo al Médico
+
                 SimpleMailMessage mailMedico = new SimpleMailMessage();
                 mailMedico.setFrom("clinicarealmadrid32@gmail.com");
                 mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
@@ -433,16 +382,15 @@ public class CitaService {
                 System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
             }
 
-            // 🔔 PERSISTENCIA EN DB
             try {
                 String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
                 notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, pUser, cita.getId());
                 notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, mUser, cita.getId());
-                
+
                 notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION", cita.getId());
                 notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN", cita.getId());
-                        
-                System.out.println("✅ Notificaciones guardadas en DB para cita " + cita.getId());
+
+                System.out.println(" Notificaciones guardadas en DB para cita " + cita.getId());
             } catch (Exception e) {
                 System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
             }

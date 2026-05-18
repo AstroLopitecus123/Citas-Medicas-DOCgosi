@@ -3,8 +3,8 @@ import { Pais } from './pais.model';
 import { Especialidad } from './especialidad.model';
 
 export class UsuarioFull {
-  medicoId: number = 0;               // ⚡ ID de la tabla Medico
-  id: number = 0;                      // ID del usuario
+  medicoId: number = 0;               
+  id: number = 0;                      
   nombre: string = '';
   apellido: string = '';
   correo: string = '';
@@ -15,19 +15,17 @@ export class UsuarioFull {
   fechaNacimiento: string = '';
   dni: string = '';
   pais: Pais = new Pais();
-  especialidad?: Especialidad;         // ⚡ la asignada al médico
-  especialidadSeleccionada?: Especialidad; // para el select en el frontend
+  especialidad?: Especialidad;         
+  especialidadSeleccionada?: Especialidad; 
 
   constructor(data?: any) {
     if (data) {
-      // ⚡ data puede ser un Medico con un objeto usuario dentro
+
       const usuario = data.usuario ?? data;
 
-      // ⚡ IDs
-      this.medicoId = data.id ?? 0;   // ID de la tabla Medico
-      this.id = usuario.id ?? 0;      // ID del usuario
+      this.medicoId = data.id ?? 0;   
+      this.id = usuario.id ?? 0;      
 
-      // ⚡ Datos del usuario
       this.nombre = usuario.nombre ?? '';
       this.apellido = usuario.apellido ?? '';
       this.correo = usuario.correo ?? '';
@@ -39,7 +37,6 @@ export class UsuarioFull {
       this.dni = usuario.dni ?? '';
       this.pais = new Pais(usuario.pais);
 
-      // ⚡ Especialidad del médico
       this.especialidad = data.especialidad ?? undefined;
       this.especialidadSeleccionada = this.especialidad;
     }

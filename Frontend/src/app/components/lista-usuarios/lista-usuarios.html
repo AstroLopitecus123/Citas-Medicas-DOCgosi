@@ -1,6 +1,5 @@
 <div class="admin-layout">
-  
-  <!-- 🔍 Banner de Bienvenida Premium -->
+
   <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-users"></i>
@@ -19,7 +18,6 @@
     </div>
   </header>
 
-  <!-- 🧾 Tarjeta Principal con Tabla -->
   <div class="premium-card">
     <div class="modern-table-container">
       <table class="modern-table">
@@ -37,7 +35,7 @@
         </thead>
 
         <tbody>
-          <!-- 🧍 Mostrar usuarios -->
+
           <tr *ngFor="let usuario of ctrl.usuariosPaginados; let i = index" [class.fila-vacia]="!usuario">
 
             <ng-container *ngIf="usuario; else filaVacia">
@@ -53,15 +51,13 @@
                   <span><i class="fa-solid fa-phone"></i> {{ usuario!.telefono || '-' }}</span>
                 </div>
               </td>
-              
-              <!-- 🏷️ Badge de Rol -->
+
               <td>
                 <span class="badge-modern info" style="min-width: 100px; justify-content: center;">
                   <i class="fa-solid fa-user-tag"></i> {{ usuario!.rol }}
                 </span>
               </td>
 
-              <!-- ✅ Badge de estado Dinámico -->
               <td>
                 <div class="status-pill-container">
                     <span class="badge-modern" 
@@ -79,13 +75,12 @@
                   <span class="dni-text">DNI: {{ usuario!.dni || '-' }}</span>
                 </div>
               </td>
-              
+
               <td class="date-cell">
                 <i class="fa-solid fa-calendar-day" style="color: #64748b; margin-right: 5px;"></i>
                 {{ usuario!.fechaRegistro ? (usuario!.fechaRegistro | date:'dd MMM yyyy') : '-' }}
               </td>
 
-              <!-- ✅ Acciones Premium Unificadas -->
               <td>
                 <div class="actions-flex justify-center">
                   <button class="btn-table-action btn-edit" (click)="ctrl.abrirModalRol(usuario!)" title="Editar Rol">
@@ -111,7 +106,6 @@
       </table>
     </div>
 
-    <!-- ✅ Paginación Modernizada -->
     <div class="modern-pagination">
       <button class="btn-page prev" (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1">
         <i class="fa-solid fa-chevron-left"></i>
@@ -132,7 +126,6 @@
     </div>
   </div>
 
-  <!-- 🗑️ MODAL GLASS: CONFIRMAR ELIMINACIÓN USUARIO -->
   <div class="glass-overlay" *ngIf="ctrl.mostrandoConfirmarEliminar" (click)="ctrl.cerrarModalConfirmar()">
     <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
@@ -168,7 +161,6 @@
   </div>
 </div>
 
-<!-- 🧑‍💼 MODAL GLASS: EDITAR ROL -->
 <div class="glass-overlay" *ngIf="ctrl.mostrandoModalRol" (click)="ctrl.cerrarModalRol()">
   <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
     <div class="modal-header-glass">

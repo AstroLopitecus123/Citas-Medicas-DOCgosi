@@ -26,14 +26,11 @@ public class DisponibilidadController {
         this.disponibilidadService = disponibilidadService;
     }
 
-    // 🔹 Listar todas las disponibilidades de un médico
     @GetMapping("/medico/{id}")
     public List<Disponibilidad> listarPorMedico(@PathVariable("id") Long medicoId) {
         return disponibilidadService.listarPorMedico(medicoId);
     }
 
-
-    // 🔹 Listar disponibilidades por rango de fechas (semana actual o futuras)
     @GetMapping("/medico/{id}/rango")
     public List<Disponibilidad> listarPorRango(
             @PathVariable("id") Long medicoId,
@@ -42,7 +39,6 @@ public class DisponibilidadController {
         return disponibilidadService.listarPorRango(medicoId, LocalDate.parse(inicio), LocalDate.parse(fin));
     }
 
-    // 🔹 Registrar o actualizar disponibilidades
     @PostMapping("/medico/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MEDICO')")
     public List<Disponibilidad> guardarDisponibilidades(
@@ -51,8 +47,6 @@ public class DisponibilidadController {
         return disponibilidadService.guardarDisponibilidades(medicoId, disponibilidades);
     }
 
-
-    // 🔹 Eliminar disponibilidades en un rango de fechas
     @DeleteMapping("/medico/{id}/rango")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MEDICO')")
     public void eliminarPorRango(

@@ -1,5 +1,5 @@
 <div class="home-container">
-  <!-- 1. HERO SECTION (RETO) -->
+
   <section class="hero">
     <div class="hero-content">
       <div class="hero-text">
@@ -25,7 +25,6 @@
     </div>
   </section>
 
-  <!-- 2. QUIÉNES SOMOS -->
   <section class="about">
     <div class="section-container about-flex">
       <div class="about-images">
@@ -55,10 +54,9 @@
     </div>
   </section>
 
-  <!-- 3. ESPECIALIDADES (TWO COLUMN HEX LAYOUT) -->
   <section class="services">
     <div class="section-container services-flex">
-      <!-- Columna Izquierda: Texto Informativo -->
+
       <div class="services-content anim-slide-in-left">
         <span class="sub-title">Nuestra Experiencia</span>
         <h2 class="main-title">Nuestras Especialidades</h2>
@@ -73,18 +71,17 @@
         </div>
       </div>
 
-      <!-- Columna Derecha: Honeycomb Grid con Efecto Flip -->
       <div class="hex-grid-container anim-slide-in-right">
         <ul class="honeycomb">
           <li class="honeycomb-cell" *ngFor="let e of especialidades">
             <div class="honeycomb-cell__wrapper">
-              <!-- Lado Frontal: Imagen y Título -->
+
               <div class="honeycomb-cell__front">
                 <img [src]="e.imagen" class="honeycomb-cell__image" [alt]="e.titulo">
                 <div class="honeycomb-cell__overlay"></div>
                 <h4 class="honeycomb-cell__title">{{ e.titulo }}</h4>
               </div>
-              <!-- Lado Trasero: Descripción y Acción -->
+
               <div class="honeycomb-cell__back">
                 <div class="back-content">
                   <p>{{ e.descripcion }}</p>
@@ -95,8 +92,7 @@
               </div>
             </div>
           </li>
-          
-          <!-- Celda de "And more" con Flip -->
+
           <li class="honeycomb-cell honeycomb__more">
             <div class="honeycomb-cell__wrapper">
               <div class="honeycomb-cell__front">
@@ -110,7 +106,7 @@
                 </div>
               </div>
             </div>
-            <!-- 6. Placeholder para balancear el grid (si es necesario) -->
+
           </li>
           <li class="honeycomb-cell honeycomb__placeholder"></li>
         </ul>
@@ -118,12 +114,11 @@
     </div>
   </section>
 
-  <!-- 4. DOCTORES -->
   <section class="doctors">
     <div class="section-container">
       <h2 class="section-title">Nuestros Doctores</h2>
       <div class="section-underline"></div>
-      
+
       <div class="doctors-grid">
         <div class="doctor-card" *ngFor="let doc of doctores">
           <div class="doc-pic">
@@ -138,7 +133,6 @@
     </div>
   </section>
 
-  <!-- 5. SEDES INTERACTIVAS -->
   <section class="sedes">
     <div class="section-container">
       <div class="sedes-header">
@@ -146,12 +140,10 @@
         <div class="section-underline"></div>
         <p class="sedes-subtitle">Explora nuestras ubicaciones y agenda tu cita en la sede más cercana.</p>
       </div>
-      
-      <!-- Contenedor del Mapa Leaflet -->
+
       <div class="map-wrapper anim-fade-in">
         <div id="map"></div>
-        
-        <!-- Overlay de Glassmorphism para instrucciones o info rápida -->
+
         <div class="map-overlay">
           <div class="overlay-card">
             <i class="fas fa-location-dot"></i>

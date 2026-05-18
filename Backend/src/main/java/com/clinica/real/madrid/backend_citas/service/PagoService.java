@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-// Implementado Pagos
 @Service
 public class PagoService {
 
@@ -36,14 +35,13 @@ public class PagoService {
     @Transactional
     public PaymentIntentResponse crearPaymentIntent(PaymentIntentRequest request) throws StripeException {
         System.out.println("\uD83D\uDCB3 Creando PaymentIntent para Cita ID: " + request.getCitaId() + " - Monto: S/. " + request.getMonto());
-        
-        // Convertir monto a centavos para Stripe (100 soles = 10000 centavos)
+
         long montoCentavos = (long) (request.getMonto() * 100);
 
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(montoCentavos)
                 .setCurrency(request.getMoneda() != null ? request.getMoneda().toLowerCase() : "pen")
-                // ✅ CLAVE: especificar 'card' explicitamente para que funcione con confirmCardPayment() en el frontend
+
                 .addPaymentMethodType("card")
                 .putMetadata("citaId", request.getCitaId().toString())
                 .putMetadata("usuarioId", request.getUsuarioId().toString())
@@ -71,7 +69,7 @@ public class PagoService {
         pago.setUsuario(usuario);
         pago.setMonto(request.getMonto());
         pago.setMetodo(MetodoPago.EFECTIVO);
-        pago.setEstadoPago(EstadoPago.PENDIENTE); // La recepcionista lo confirmará
+        pago.setEstadoPago(EstadoPago.PENDIENTE); 
         pago.setFechaPago(null);
 
         Pago savedPago = pagoRepository.save(pago);
@@ -83,7 +81,7 @@ public class PagoService {
     public PagoResponse completarPago(Long pagoId) {
         Pago pago = pagoRepository.findById(pagoId)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
-                
+
         pago.setEstadoPago(EstadoPago.COMPLETADO);
         pago.setFechaPago(LocalDateTime.now());
 
@@ -95,7 +93,6 @@ public class PagoService {
             pago.setComprobante(comprobante);
         }
 
-        // Sincronizar Cita
         if (pago.getCita() != null) {
             pago.getCita().setEstado(EstadoCita.CONFIRMADA);
             citaRepository.save(pago.getCita());
@@ -128,7 +125,6 @@ public class PagoService {
         pago.setComprobante(comprobante);
         Pago savedPago = pagoRepository.save(pago);
 
-        // 🛡️ Sincronización Automática: Confirmar la cita tras el pago
         cita.setEstado(EstadoCita.CONFIRMADA);
         citaRepository.save(cita);
 
@@ -152,14 +148,13 @@ public class PagoService {
 
         if (Boolean.TRUE.equals(request.getExito())) {
             pago.setEstadoPago(EstadoPago.COMPLETADO);
-            
+
             Comprobante comprobante = new Comprobante();
             comprobante.setNumero("FACT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
             comprobante.setFecha(LocalDateTime.now());
             comprobante.setPago(pago);
             pago.setComprobante(comprobante);
 
-            // 🛡️ Sincronización Automática
             cita.setEstado(EstadoCita.CONFIRMADA);
             citaRepository.save(cita);
         } else {
@@ -203,9 +198,6 @@ public class PagoService {
         return mapToResponse(savedPago);
     }
 
-    /**
-     * 💳 Reembolsa todos los pagos asociados a una cita en Stripe o los anula si son efectivo.
-     */
     @Transactional
     public void reembolsarPago(Long citaId) {
         List<Pago> pagos = pagoRepository.findByCitaId(citaId);
@@ -223,14 +215,14 @@ public class PagoService {
                             .setPaymentIntent(pago.getTransaccionId())
                             .build();
                     Refund refund = Refund.create(params);
-                    System.out.println("✅ Reembolso exitoso en Stripe. ID: " + refund.getId());
+                    System.out.println(" Reembolso exitoso en Stripe. ID: " + refund.getId());
                     pago.setEstadoPago(EstadoPago.REEMBOLSADO);
                 } catch (StripeException e) {
                     System.err.println("❌ Error de Stripe al reembolsar pago #" + pago.getId() + ": " + e.getMessage());
-                    // No lanzamos excepción para no bloquear el flujo si un pago falla, pero lo logueamos
+
                 }
             } else {
-                // Pago en efectivo o sin referencia
+
                 pago.setEstadoPago(EstadoPago.ANULADO);
             }
             pagoRepository.save(pago);
@@ -246,8 +238,7 @@ public class PagoService {
         response.setMetodo(pago.getMetodo().name());
         response.setEstadoPago(pago.getEstadoPago().name());
         response.setTransaccionId(pago.getTransaccionId());
-        
-        // Pobar detalles visuales para el Dashboard (Frontend)
+
         if (pago.getUsuario() != null) {
             response.setPacienteNombre(pago.getUsuario().getNombre() + " " + pago.getUsuario().getApellido());
         }
@@ -260,7 +251,7 @@ public class PagoService {
                 response.setCitaFechaResumen(pago.getCita().getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
             }
         }
-        
+
         if (pago.getFechaPago() != null) {
             response.setFechaPago(pago.getFechaPago().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         }

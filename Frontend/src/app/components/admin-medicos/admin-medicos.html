@@ -1,6 +1,5 @@
 <div class="admin-layout">
-  
-  <!-- 🔍 Banner de Bienvenida Premium -->
+
   <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-user-doctor"></i>
@@ -18,7 +17,6 @@
     </div>
   </header>
 
-  <!-- 📊 Listado de Médicos (Full Width) -->
   <div class="premium-card table-card animation-slide-up">
     <div class="card-header-modern">
       <h3><i class="fa-solid fa-list-check"></i> Listado de Médicos</h3>
@@ -26,7 +24,7 @@
         <div *ngIf="ctrl.error" class="error-pill">{{ ctrl.error }}</div>
       </div>
     </div>
-    
+
     <div class="modern-table-container">
       <table class="modern-table">
         <thead>
@@ -72,7 +70,6 @@
     </div>
   </div>
 
-  <!-- 💎 MODAL GLASS: ASIGNAR ESPECIALIDAD -->
   <div class="glass-overlay" *ngIf="ctrl.mostrandoModalAsignar" (click)="ctrl.cerrarModal()">
     <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">

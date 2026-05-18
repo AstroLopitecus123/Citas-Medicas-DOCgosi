@@ -12,11 +12,10 @@ public class TwilioService {
 
     public void enviarNotificacionWhatsApp(String toNumero, String mensaje) {
         try {
-            // Asume que el numero ya viene con prefijo +51 o similar
-            // Para la API Sandbox de Twilio, el "To:" debe ser "whatsapp:+numero"
+
             String toUrl = "whatsapp:" + toNumero;
             if(!toNumero.startsWith("+")) {
-                toUrl = "whatsapp:+" + toNumero; // Ajuste preventivo
+                toUrl = "whatsapp:+" + toNumero; 
             }
 
             Message.creator(
@@ -24,8 +23,8 @@ public class TwilioService {
                     new com.twilio.type.PhoneNumber(fromNumber),
                     mensaje
             ).create();
-            
-            System.out.println("✅ Notificación de WhatsApp enviada a " + toNumero);
+
+            System.out.println(" Notificación de WhatsApp enviada a " + toNumero);
         } catch (Exception e) {
             System.err.println("❌ Error enviando WhatsApp: " + e.getMessage());
         }

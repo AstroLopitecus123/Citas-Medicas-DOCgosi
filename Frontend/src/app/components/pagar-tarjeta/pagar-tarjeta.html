@@ -1,6 +1,5 @@
 <div class="pago-container">
 
-  <!-- LOADING OVERLAY -->
   <div class="loading-overlay" *ngIf="cargando">
     <div class="loader-card">
       <div class="spinner"></div>
@@ -9,20 +8,19 @@
     </div>
   </div>
 
-  <!-- SUCCESS SCREEN -->
   <div class="success-screen" *ngIf="pagoExitoso">
     <div class="success-card">
       <div class="success-icon-wrapper">
         <div class="success-circle"></div>
         <i class="fa-solid fa-check"></i>
       </div>
-      
+
       <h2>¡Pago Confirmado!</h2>
       <p class="success-msg">Tu cita ha sido reservada y pagada exitosamente.</p>
-      
+
       <div class="purchase-receipt" *ngIf="cita">
         <div class="receipt-header">Detalle de tu Cita</div>
-        
+
         <div class="receipt-body">
           <div class="receipt-item">
             <span class="item-label"><i class="fa-solid fa-stethoscope"></i> Especialidad</span>
@@ -55,15 +53,13 @@
     </div>
   </div>
 
-  <!-- FORMULARIO DE PAGO CON STRIPE ELEMENTS -->
   <div class="pago-card" *ngIf="!pagoExitoso">
 
-    <!-- Header Premium -->
     <div class="pago-header">
       <button class="btn-back" (click)="volver()" title="Volver">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
-      
+
       <div class="header-main-content">
         <div class="lock-icon-container">
           <i class="fa-solid fa-lock"></i>
@@ -75,7 +71,6 @@
       </div>
     </div>
 
-    <!-- Resumen Cita -->
     <div class="resumen-cita" *ngIf="cita">
       <div class="resumen-left">
         <i class="fa-solid fa-notes-medical"></i>
@@ -87,7 +82,6 @@
       <div class="resumen-monto">S/. {{ monto | number:'1.2-2' }}</div>
     </div>
 
-    <!-- Card Visual Preview -->
     <div class="card-preview" [ngClass]="{
       'is-visa': cardBrand === 'visa',
       'is-mc': cardBrand === 'mastercard',
@@ -117,10 +111,8 @@
       </div>
     </div>
 
-    <!-- Formulario -->
     <div class="form-section">
 
-      <!-- Nombre del titular (campo propio, no es dato de tarjeta) -->
       <div class="form-group">
         <label>Nombre del Titular</label>
         <input
@@ -132,7 +124,6 @@
         />
       </div>
 
-      <!-- Stripe Card Element (iframe seguro) -->
       <div class="form-group">
         <label>
           Datos de Tarjeta
@@ -143,13 +134,11 @@
           </span>
         </label>
 
-        <!-- Estado de carga del elemento de Stripe -->
         <div class="stripe-loading" *ngIf="!cardElementMontado">
           <div class="stripe-spinner"></div>
           <span>Cargando formulario seguro...</span>
         </div>
 
-        <!-- Contenedor donde Stripe inyecta el iframe -->
         <div
           id="stripe-card-element"
           class="stripe-element-container"
@@ -157,7 +146,6 @@
         ></div>
       </div>
 
-      <!-- Tarjeta de prueba hint -->
       <div class="test-hint">
         <i class="fa-solid fa-flask"></i>
         <span>Modo pruebas: usa <code>4242 4242 4242 4242</code>, cualquier fecha futura y CVC</span>

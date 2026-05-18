@@ -4,9 +4,8 @@ public class PaymentIntentRequest {
     private Long citaId;
     private Long usuarioId;
     private Double monto;
-    private String moneda; // "pen" o "usd"
+    private String moneda; 
 
-    // Getters y Setters
     public Long getCitaId() { return citaId; }
     public void setCitaId(Long citaId) { this.citaId = citaId; }
 

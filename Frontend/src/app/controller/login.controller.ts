@@ -30,10 +30,9 @@ export class LoginController {
           const usuario = new UsuarioFull(res);
           localStorage.setItem('usuario', JSON.stringify(usuario));
           if (this.loginExitoso) this.loginExitoso.emit();
-          
+
           if (this.ns) this.ns.success(`¡Bienvenido de nuevo, ${usuario.nombre}!`);
 
-          // 🚀 Redirección inteligente basada en rol
           const rol = usuario.rol?.toUpperCase();
           if (rol === 'ADMIN') {
             this.router.navigate(['/admin']);

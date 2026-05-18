@@ -1,16 +1,15 @@
 <div class="login-layout">
-  <!-- IMAGEN DEL DOCTOR (Foreground) -->
+
   <div class="doctor-container">
     <img src="/assets/images/DoctorRecuperar.png" alt="Doctor" class="doctor-img">
   </div>
 
-  <!-- COLUMNA IZQUIERDA (Texto con Glassmorphism) -->
   <div class="login-hero anim-fade-in">
     <div class="hero-glass-panel">
       <div class="hero-content">
         <h1>Recupera tu acceso</h1>
         <p class="hero-subtitle">No te preocupes, enviaremos un enlace de seguridad a tu correo para que puedas restablecer tu contraseña en segundos.</p>
-        
+
         <div class="hero-features">
           <div class="feature-item">
             <i class="fa-solid fa-envelope-circle-check"></i>
@@ -35,18 +34,17 @@
     </div>
   </div>
 
-  <!-- COLUMNA DERECHA (Formulario) -->
   <div class="login-form-wrapper">
     <div class="login-card anim-slide-up login-card-custom">
       <div class="back-link">
         <a routerLink="/login"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
       </div>
-      
+
       <h2 class="card-title">Recuperar Contraseña</h2>
       <p class="instructor-text">Indícanos el correo asociado a tu cuenta R.E.T.O para continuar.</p>
 
       <form (ngSubmit)="ctrl.recuperar()" class="login-form">
-        <!-- Campo Correo Electrónico -->
+
         <div class="input-group">
           <label for="correo">Correo electrónico</label>
           <input
@@ -60,7 +58,6 @@
           />
         </div>
 
-        <!-- Botón de submit -->
         <button type="submit" class="btn-submit w-100" [disabled]="ctrl.enviado">
           <span *ngIf="!ctrl.enviado">
             <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i> Enviar enlace de recuperación
@@ -71,7 +68,6 @@
         </button>
       </form>
 
-      <!-- Mensajes de Estado -->
       <div class="status-messages" *ngIf="ctrl.mensaje || ctrl.error">
         <p class="msg-general" [class.has-success]="ctrl.mensaje" [class.has-error]="ctrl.error">
           <i class="fa-solid" [class.fa-circle-check]="ctrl.mensaje" [class.fa-triangle-exclamation]="ctrl.error"></i>

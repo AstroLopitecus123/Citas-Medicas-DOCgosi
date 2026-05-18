@@ -1,12 +1,12 @@
 <div class="admin-layout">
   <div class="payment-wrapper">
-    <!-- SUMMARY CARD -->
+
     <div class="premium-card summary-card">
       <div class="card-header">
         <i class="fa-solid fa-file-invoice-dollar"></i>
         <h3>Resumen de Reserva</h3>
       </div>
-      
+
       <div class="summary-details" *ngIf="cita">
         <div class="detail-row">
           <span class="label">Especialidad:</span>
@@ -33,10 +33,9 @@
       </div>
     </div>
 
-    <!-- ACTION CARD -->
     <div class="premium-card action-card">
       <div class="payment-status" [class.processing]="procesandoPago" [class.success]="mensaje.includes('¡Voucher')">
-        
+
         <div class="status-icon" *ngIf="!procesandoPago && !mensaje">
            <i class="fa-solid fa-wallet"></i>
         </div>

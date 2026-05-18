@@ -14,7 +14,7 @@ public class UsuarioResponse {
     private LocalDate fechaNacimiento;
     private String dni;
     private String paisNombre;
-    private String rol; // siempre PACIENTE por defecto
+    private String rol; 
 
     public UsuarioResponse(String token, Usuario usuario) {
         this.token = token;
@@ -31,7 +31,6 @@ public class UsuarioResponse {
         }
     }
 
-    // Getters
     public String getToken() { return token; }
     public Long getId() { return id; }
     public String getNombre() { return nombre; }

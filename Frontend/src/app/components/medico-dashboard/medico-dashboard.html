@@ -15,7 +15,6 @@
     </div>
   </header>
 
-  <!-- KPI CARDS -->
   <div class="stats-grid">
     <div class="stat-card kpi-blue">
       <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
@@ -41,34 +40,33 @@
   </div>
 
   <div class="dashboard-split-view">
-    
-    <!-- COLUMNA IZQUIERDA: ENFOQUE OPERATIVO (Agenda Principal) -->
+
     <div class="primary-column">
-      
+
       <div class="premium-card appointment-preview" style="height: 100%;">
         <div class="card-header">
           <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0fbf6a; margin-right: 8px;"></i> Próximas Citas</h3>
           <a routerLink="/mis-citas" class="view-all">Ver agenda completa</a>
         </div>
-        
+
         <div class="appointment-list" *ngIf="!cargando">
-          <!-- Renderizar cada cita dinámicamente -->
+
           <div class="apt-item" *ngFor="let cita of proximasCitas">
-            
+
             <div class="apt-time-block">
               <span class="apt-hour">{{ cita.fecha | date:'h:mm' }}</span>
               <span class="apt-meridian">{{ cita.fecha | date:'a' }}</span>
             </div>
-            
+
             <div class="apt-patient-info" style="flex: 1;">
               <h4 style="margin: 0; font-weight: 700; color: #1e293b; font-size: 1.1rem;">{{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</h4>
               <small style="color: #64748b; font-weight: 500;">
                 <i class="fa-solid fa-notes-medical"></i> {{ cita.motivo?.substring(0, 30) || 'Consulta general' }}...
               </small>
             </div>
-            
+
             <div class="apt-actions" style="display: flex; align-items: center; gap: 15px;">
-              <!-- Etiqueta de estado -->
+
               <div class="apt-status" 
                    [ngClass]="{
                      'confirmed': cita.estado === 'CONFIRMADA', 
@@ -76,27 +74,24 @@
                    }">
                 {{ cita.estado }}
               </div>
-              
-              <!-- Botón Ver Historial Clínico -->
+
               <button class="btn-secondary-action" [routerLink]="['/historial-clinico', cita.paciente.id]" title="Ver Historial Clínico">
                 <i class="fa-solid fa-file-medical"></i>
               </button>
 
-              <!-- Botón Teleconsulta Inmediato -->
               <button class="btn-primary-action" *ngIf="cita.estado === 'CONFIRMADA'" routerLink="/teleconsulta/{{cita.id}}" title="Entrar a Videollamada">
                 <i class="fa-solid fa-video"></i>
               </button>
             </div>
           </div>
-          
-          <!-- Estado Vacío Unificado -->
+
           <div class="empty-state" *ngIf="proximasCitas.length === 0">
              <i class="fa-solid fa-mug-hot"></i>
              <p>Tu agenda está despejada</p>
              <span>No tienes próximas citas. Buen momento para revisar reportes o descansar.</span>
           </div>
         </div>
-        
+
         <div class="loading-state" *ngIf="cargando" style="padding: 40px; text-align: center; color: #0d9488;">
            <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
            <p>Sincronizando agenda...</p>
@@ -105,17 +100,15 @@
 
     </div>
 
-    <!-- COLUMNA DERECHA: RESUMEN Y AVISOS -->
     <div class="secondary-column">
-      
+
       <div class="premium-card notifications-panel">
         <div class="card-header border-bottom">
           <h3 class="card-title" style="margin: 0; font-size: 1.1rem;">
             <i class="fa-solid fa-bell" style="color: #f59e0b; margin-right: 8px;"></i> Centro de Avisos
           </h3>
         </div>
-        
-        <!-- Componente nativo inyectado en vista compacta -->
+
         <div class="compact-notifications-wrapper">
           <app-notificaciones [modoDashboard]="true"></app-notificaciones>
         </div>

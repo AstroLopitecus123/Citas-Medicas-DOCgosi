@@ -12,10 +12,6 @@ export class NarratorService {
 
   constructor() { }
 
-  /**
-   * Lee un texto en voz alta usando la API nativa del navegador.
-   * @param texto El texto a narrar
-   */
   speak(texto: string) {
     if (!texto || texto === this.lastText && this.synthesis.speaking) return;
 
@@ -24,7 +20,7 @@ export class NarratorService {
 
     this.vocero = new SpeechSynthesisUtterance(texto);
     this.vocero.lang = 'es-ES';
-    this.vocero.rate = 1.1; // Un poco más rápido para fluidez al navegar
+    this.vocero.rate = 1.1; 
     this.vocero.pitch = 1.0;
 
     this.synthesis.speak(this.vocero);
@@ -36,12 +32,10 @@ export class NarratorService {
     }
   }
 
-  // --- NARRADOR GLOBAL DE PÁGINA ---
-
   activateGlobalNarrator() {
     if (this.isGlobalActive) return;
     this.isGlobalActive = true;
-    
+
     window.addEventListener('mouseover', this.handleMouseOver);
     window.addEventListener('focus', this.handleFocus, true);
   }
@@ -63,27 +57,22 @@ export class NarratorService {
 
   private processElement(el: any) {
     if (!el || !this.isGlobalActive) return;
-    
-    // Asegurarnos de que sea un elemento HTML antes de usar closest
+
     const htmlEl = el as HTMLElement;
     if (!htmlEl.closest) return;
 
-    // Evitar leer el panel de accesibilidad mismo para no saturar
     if (htmlEl.closest('.acc-fab-wrapper')) return;
 
     let text = '';
 
-    // 1. Prioridad: Texto de ayuda o alt
     if (el.getAttribute('aria-label')) text = el.getAttribute('aria-label')!;
     else if (el.title) text = el.title;
     else if (el instanceof HTMLImageElement && el.alt) text = "Imagen: " + el.alt;
-    
-    // 2. Si es un input o botón, leer su etiqueta
+
     else if (el.innerText && el.innerText.trim().length > 0) {
       text = el.innerText.trim();
     }
-    
-    // 3. Casos especiales de inputs
+
     else if (el instanceof HTMLInputElement) {
       text = el.placeholder || "Campo de texto";
     }

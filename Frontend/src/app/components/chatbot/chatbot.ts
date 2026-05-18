@@ -20,7 +20,7 @@ export class ChatbotComponent implements AfterViewChecked {
   isOpen = false;
   isLoading = false;
   userInput = '';
-  
+
   messages: ChatMessage[] = [
     {
       role: 'bot',

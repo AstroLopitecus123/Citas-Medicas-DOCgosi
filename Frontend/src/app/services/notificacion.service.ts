@@ -28,12 +28,10 @@ export class NotificacionService {
     return { headers: { Authorization: `Bearer ${token}` } };
   }
 
-  // Permite suscribirse a actualizaciones desde cualquier componente
   get refreshObservable() {
     return this.refresh$.asObservable();
   }
 
-  // Notifica a los suscriptores que deben refrescar conteos
   notificarCambio() {
     this.refresh$.next();
   }

@@ -1,6 +1,6 @@
 <div class="checkout-container">
   <div class="checkout-card" *ngIf="!cargando && cita; else loadingTpl">
-    
+
     <div class="checkout-header">
       <div class="icon-circle">
         <i class="fa-solid fa-credit-card"></i>
@@ -9,7 +9,6 @@
       <p>Selecciona tu método de pago preferido para confirmar la cita</p>
     </div>
 
-    <!-- Resumen de cita -->
     <div class="resumen-reserva">
       <div class="resumen-header">
         <i class="fa-solid fa-notes-medical"></i>
@@ -36,7 +35,7 @@
     </div>
 
     <div class="opciones-pago">
-      <!-- Opción Tarjeta (Pago Seguro) -->
+
       <div class="opcion-card" (click)="pagarTarjeta()">
         <div class="opcion-icon text-primary">
           <i class="fa-solid fa-credit-card"></i>
@@ -50,7 +49,6 @@
         </div>
       </div>
 
-      <!-- Opción Efectivo -->
       <div class="opcion-card" (click)="pagarEfectivo()">
         <div class="opcion-icon text-success">
           <i class="fa-solid fa-money-bill-wave"></i>

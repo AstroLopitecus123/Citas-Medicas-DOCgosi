@@ -6,7 +6,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class MedicoGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,8 +23,7 @@ export class MedicoGuard implements CanActivate {
     try {
       const usuario = JSON.parse(usuarioStr);
       const rol = usuario?.rol?.toUpperCase();
-      
-      // Permitimos acceso a MEDICOS y ADMINS
+
       if (rol === 'MEDICO' || rol === 'ADMIN') return true;
 
       console.log('⛔ No tiene permiso de Médico/Admin → redirigiendo');

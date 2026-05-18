@@ -97,7 +97,6 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = { Authorization: `Bearer ${token}` };
 
-    // Cargar usuarios
     this.http.get<any[]>(`${environment.apiUrl}/api/usuarios`, { headers }).subscribe({
       next: (usuarios) => {
         this.stats.totalUsuarios = usuarios.length;
@@ -106,7 +105,6 @@ export class AdminDashboardComponent implements OnInit {
       error: () => {}
     });
 
-    // Cargar especialidades
     this.http.get<any[]>(`${environment.apiUrl}/api/especialidades`, { headers }).subscribe({
       next: (esp) => {
         this.stats.totalEspecialidades = esp.filter(e => e.estado === 'ACTIVA').length;

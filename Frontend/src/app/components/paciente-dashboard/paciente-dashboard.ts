@@ -20,7 +20,7 @@ export class PacienteDashboardComponent implements OnInit {
   usuario: Usuario | null = null;
   cargando = true;
   today = new Date();
-  
+
   stats: any = {
     totalCitas: 0,
     historiasClinicas: 0
@@ -47,7 +47,7 @@ export class PacienteDashboardComponent implements OnInit {
   cargarNotificaciones() {
     this.notificacionService.getMisNotificaciones().subscribe({
       next: (notifs) => {
-        // Tomamos las últimas 3
+
         this.notificacionesRecientes = notifs
           .sort((a,b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime())
           .slice(0, 3);
@@ -60,13 +60,12 @@ export class PacienteDashboardComponent implements OnInit {
     if (!this.usuario) return;
     this.cargando = true;
 
-    // 1. Obtener Historiales
     if (this.usuario.id) {
       this.historialService.obtenerHistorialPorPaciente(this.usuario.id).subscribe({
         next: (historias) => {
           this.stats.historiasClinicas = historias.length;
           if (historias.length > 0) {
-            this.ultimaHistoria = historias[0]; // La más reciente
+            this.ultimaHistoria = historias[0]; 
           }
           this.cargando = false;
         },
@@ -77,7 +76,6 @@ export class PacienteDashboardComponent implements OnInit {
       });
     }
 
-    // 2. Obtener total de citas
     if (this.usuario.id) {
       this.http.get<any[]>(`${environment.apiUrl}/api/citas/paciente/${this.usuario.id}`).subscribe({
         next: (citas) => {

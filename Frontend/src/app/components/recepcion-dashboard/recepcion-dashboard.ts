@@ -33,7 +33,7 @@ export class RecepcionDashboardComponent implements OnInit {
   }
 
   cargarDatos() {
-    // Simulación de carga de datos para recepción
+
     setTimeout(() => {
       this.stats = {
         citasHoy: 25,

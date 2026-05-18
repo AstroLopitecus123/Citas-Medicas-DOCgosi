@@ -2,13 +2,12 @@ package com.clinica.real.madrid.backend_citas.dto;
 
 import java.math.BigDecimal;
 
-// Request para crear una Nomina
 public class NominaRequest {
     private Long empleadoId;
     private BigDecimal monto;
-    private String tipoPeriodo;       // "QUINCENAL" o "MENSUAL"
-    private String fechaInicioPeriodo; // "2026-04-01"
-    private String fechaFinPeriodo;    // "2026-04-15"
+    private String tipoPeriodo;       
+    private String fechaInicioPeriodo; 
+    private String fechaFinPeriodo;    
     private String descripcion;
 
     public Long getEmpleadoId() { return empleadoId; }

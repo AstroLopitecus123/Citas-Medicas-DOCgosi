@@ -15,16 +15,14 @@ import { NotificationService } from '../../services/notification.service';
 export class MiNominaComponent implements OnInit {
   usuario: any = null;
   nominas: NominaResponse[] = [];
-  todosEmpleados: any[] = []; // Para admin
+  todosEmpleados: any[] = []; 
   cargando = true;
   esAdmin = false;
 
-  // Stats
   totalPagado = 0;
   totalPendiente = 0;
   ultimoPago: NominaResponse | null = null;
 
-  // Modal crear nómina (Admin)
   mostrarModal = false;
   procesando = false;
   form: NominaRequest = {

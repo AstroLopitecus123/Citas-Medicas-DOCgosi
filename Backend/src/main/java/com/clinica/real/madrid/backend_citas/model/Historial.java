@@ -43,10 +43,6 @@ public class Historial {
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-    // ---------------------
-    // GETTERS Y SETTERS
-    // ---------------------
-
     public Long getId() {
         return id;
     }

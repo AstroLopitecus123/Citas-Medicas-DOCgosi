@@ -10,12 +10,10 @@ import java.util.List;
 @Service  
 public class EstadoCitaService {
 
-    // Listar todos los estados
     public List<EstadoCita> listar() {
         return Arrays.asList(EstadoCita.values());
     }
 
-    // Validar transición de estado (regla de negocio)
     public void validarTransicion(EstadoCita estadoActual, EstadoCita nuevoEstado) {
         switch (estadoActual) {
             case CANCELADA:

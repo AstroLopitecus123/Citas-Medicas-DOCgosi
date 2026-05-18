@@ -49,32 +49,26 @@ export class AccesibilidadComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
 
-  // Modo preview temporal (barra flotante)
   modoPreview = false;
   filtroPreview: TipoFiltro = 'NINGUNO';
   cuentaRegresiva = 10;
   private timerPreview: any;
 
-  // Estados de Vista
   vistaActual: 'PRINCIPAL' | 'VISION' | 'ZOOM' | 'CONTRASTE' | 'AUDIO' | 'NAVEGACION' = 'PRINCIPAL';
 
-  // Ajustes Visuales
   nivelZoom = 1; 
   contrasteActivo = false;
 
-  // Colores personalizados
   customBg = '#ffffff';
   customText = '#333333';
   esPersonalizado = false;
 
-  // Estados Accesibilidad Pro
   vozActiva = false;
   narradorActivo = false;
   narradorPaginaActivo = false;
   modoTeclado = false;
   sonidoNotificaciones = true;
 
-  // Estado del Test
   mostrandoTest = false;
   pasoTest = 0; 
   diagnostico: TipoFiltro[] = [];
@@ -91,7 +85,7 @@ export class AccesibilidadComponent implements OnInit {
     { 
       tipo: 'PROTANOPIA' as TipoFiltro,     
       etiqueta: 'Protanopia',      
-      icono: '🔴', 
+      icono: '', 
       color: '#dc2626',
       desc: 'Dificultad para percibir la luz roja.'
     },
@@ -115,8 +109,7 @@ export class AccesibilidadComponent implements OnInit {
     const customActivo = localStorage.getItem('DOCGOSI_CUSTOM_ACTIVE');
     const cBg = localStorage.getItem('DOCGOSI_CUSTOM_BG');
     const cText = localStorage.getItem('DOCGOSI_CUSTOM_TEXT');
-    
-    // Pro
+
     const vActiva = localStorage.getItem('DOCGOSI_VOICE_ACTIVE') === 'true';
     const nActivo = localStorage.getItem('DOCGOSI_NARRATOR_ACTIVE') === 'true';
     const npActivo = localStorage.getItem('DOCGOSI_PAGE_NARRATOR_ACTIVE') === 'true';
@@ -179,19 +172,18 @@ export class AccesibilidadComponent implements OnInit {
 
   toggleContraste() {
     this.contrasteActivo = !this.contrasteActivo;
-    
-    // Si desactivamos, limpiamos todo (Preset y Personalizado)
+
     if (!this.contrasteActivo) {
       this.esPersonalizado = false;
       this.aplicarColoresPersonalizados(false);
       this.aplicarContraste(false);
     } else {
-      // Si activamos desde el toggle (sin estar en personalizado), aplicamos Preset
+
       if (!this.esPersonalizado) {
         this.aplicarContraste(true);
       }
     }
-    
+
     localStorage.setItem('DOCGOSI_CONTRASTE', this.contrasteActivo.toString());
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', this.esPersonalizado.toString());
   }
@@ -200,12 +192,12 @@ export class AccesibilidadComponent implements OnInit {
     const val = (event.target as HTMLInputElement).value;
     if (tipo === 'BG') this.customBg = val;
     else this.customText = val;
-    
+
     this.esPersonalizado = true;
-    this.contrasteActivo = true; // Forzar ON para indicar que hay contraste aplicado
-    this.aplicarContraste(false); // El preset cede ante el personalizado
+    this.contrasteActivo = true; 
+    this.aplicarContraste(false); 
     this.aplicarColoresPersonalizados(true);
-    
+
     localStorage.setItem('DOCGOSI_CUSTOM_BG', this.customBg);
     localStorage.setItem('DOCGOSI_CUSTOM_TEXT', this.customText);
     localStorage.setItem('DOCGOSI_CUSTOM_ACTIVE', 'true');
@@ -367,7 +359,7 @@ export class AccesibilidadComponent implements OnInit {
       this.http.put(`/api/usuarios/${this.app.usuario.id}/configuracion-visual`, {
         configuracionVisual: this.filtroActivo
       }).subscribe({
-        next: () => console.log('✅ Configuración visual guardada'),
+        next: () => console.log(' Configuración visual guardada'),
         error: (err: any) => console.error('❌ Error:', err)
       });
     }
@@ -403,7 +395,6 @@ export class AccesibilidadComponent implements OnInit {
     if (!el && this.abierto) this.abierto = false;
   }
 
-  // ━━━ MOTOR DE NAVEGACIÓN ESPACIAL (FLECHAS) ━━━
   @HostListener('document:keydown', ['$event'])
   manejarTecladoGlobal(e: KeyboardEvent) {
     if (!this.modoTeclado) return;
@@ -450,9 +441,8 @@ export class AccesibilidadComponent implements OnInit {
       const dx = centroCand.x - centroActual.x;
       const dy = centroCand.y - centroActual.y;
 
-      // Filtrado por dirección
       let esValido = false;
-      const margen = 5; // Tolerancia para alineaciones imperfectas
+      const margen = 5; 
 
       switch (tecla) {
         case 'ArrowUp':    if (dy < -margen) esValido = true; break;
@@ -463,14 +453,11 @@ export class AccesibilidadComponent implements OnInit {
 
       if (esValido) {
         const distancia = Math.sqrt(dx * dx + dy * dy);
-        
-        // --- REFINAMIENTO DE PRIORIDAD ---
-        // Aumentamos drásticamente la penalización por desviación lateral al movernos arriba/abajo
-        // Esto evita que al estar en el form, "Down" nos mande al FAB del chatbot a la derecha.
+
         const penalizacionLateral = (tecla === 'ArrowUp' || tecla === 'ArrowDown') 
-          ? Math.abs(dx) * 8 // Penalización ultra alta para evitar fugas laterales
+          ? Math.abs(dx) * 8 
           : Math.abs(dy) * 5;
-        
+
         const distanciaTotal = distancia + penalizacionLateral;
 
         if (distanciaTotal < minimaDistancia) {
@@ -480,9 +467,8 @@ export class AccesibilidadComponent implements OnInit {
       }
     }
 
-    // Si no encontró nada cercano, intentar buscar el primer elemento visible en esa dirección sin penalización
     if (!mejorCandidato) {
-       // Re-intento relajado para saltos largos (ej: del form al FAB)
+
        for (const cand of candidatos) {
           if (cand === actual) continue;
           const rectCand = cand.getBoundingClientRect();
@@ -498,12 +484,12 @@ export class AccesibilidadComponent implements OnInit {
       mejorCandidato.focus();
       mejorCandidato.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-      // Si no hay nada en esa dirección, intentar un salto circular o hacia el extremo
+
       this.notificarFinDireccion();
     }
   }
 
   private notificarFinDireccion() {
-    // Podríamos añadir un sonido sutil o vibración visual
+
   }
 }

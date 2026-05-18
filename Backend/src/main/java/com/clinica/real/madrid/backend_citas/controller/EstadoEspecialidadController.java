@@ -17,7 +17,7 @@ public class EstadoEspecialidadController {
 
     @GetMapping
     public ResponseEntity<List<EstadoEspecialidad>> listar() {
-        // Devuelve todos los estados posibles del enum
+
         return ResponseEntity.ok(estadoEspecialidadService.listar());
     }
 }

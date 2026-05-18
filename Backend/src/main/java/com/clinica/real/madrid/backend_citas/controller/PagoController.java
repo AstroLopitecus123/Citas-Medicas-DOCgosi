@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Implementado Pagos
 @RestController
 @RequestMapping("/api/pagos")
 @CrossOrigin("*")

@@ -56,8 +56,6 @@
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
 .module-card:hover .module-arrow { color: #0fbf6a; transform: translateX(5px); }
 
-
-
 .quick-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

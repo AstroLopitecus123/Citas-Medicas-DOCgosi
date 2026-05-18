@@ -13,7 +13,6 @@ import { NotificationService } from '../services/notification.service';
 
 export class MisCitasController {
 
-  // ==================== HISTORIAL ====================
   mostrandoModalHistorial = false;
   historialActual: Historial = new Historial();
   vistaSoloLectura = false;
@@ -21,12 +20,10 @@ export class MisCitasController {
   historialSeleccionado: Historial | null = null;
   modoVisualizacion = false;
 
-  // ==================== CANCELACIÓN ====================
   mostrandoModalCancelar = false;
   citaACancelar: Cita | null = null;
   motivoCancelacion = '';
 
-  // Datos del usuario y edición
   modoReprogramacion = false;
   citaEnReprogramacion: Cita | null = null;
   medico: any = null;
@@ -38,7 +35,6 @@ export class MisCitasController {
   cargando = false;
   public fechaActual: Date = new Date();
 
-  // Citas
   citas: Cita[] = [];
   filtroEstado: string = 'TODAS';
   textoBusqueda: string = '';
@@ -51,7 +47,7 @@ export class MisCitasController {
     }
     if (this.textoBusqueda) {
       const b = this.textoBusqueda.toLowerCase();
-      lista = lista.filter(c => 
+      lista = lista.filter(c =>
         c.paciente?.nombre?.toLowerCase().includes(b) ||
         c.paciente?.apellido?.toLowerCase().includes(b) ||
         c.medico?.usuario?.nombre?.toLowerCase().includes(b) ||
@@ -63,22 +59,20 @@ export class MisCitasController {
     return lista;
   }
 
-  // Modal nueva cita
   mostrandoModalCita = false;
   especialidades: Especialidad[] = [];
   medicosDisponibles: Medico[] = [];
-  horariosDisponibles: any[] = []; // { fecha: string, horaInicio: string, horaFin: string }
+  horariosDisponibles: any[] = []; 
   especialidadSeleccionada: Especialidad | null | undefined = null;
   medicoSeleccionado: Medico | null = null;
   horarioSeleccionado: any = null;
   motivoCita = '';
   fechaSeleccionada: string | null = null;
 
-  // Tabla de disponibilidad
   mostrarTablaDisponibilidad = false;
-  semanaIndice = 0; // 0 = próxima semana, 1 = siguiente, 2 = tercera
+  semanaIndice = 0; 
   dias: { nombre: string, fecha: string }[] = [];
-  horas = Array.from({ length: 13 }, (_, i) => 8 + i); // 8am a 8pm
+  horas = Array.from({ length: 13 }, (_, i) => 8 + i); 
   disponibilidades: any[] = [];
 
   constructor(
@@ -91,8 +85,6 @@ export class MisCitasController {
     private ns?: NotificationService
   ) { }
 
-
-  // ==================== USUARIO ====================
   inicializar() {
     const usuarioLocal = localStorage.getItem('usuario');
     const idLocal = usuarioLocal ? JSON.parse(usuarioLocal).id : null;
@@ -100,7 +92,7 @@ export class MisCitasController {
     const usuarioId = idRuta || idLocal;
 
     if (usuarioId) {
-      console.log('🚀 DOCgosi v2.1.2 - Cargando datos de usuario y disponibilidad...');
+      console.log(' DOCgosi v2.1.2 - Cargando datos de usuario y disponibilidad...');
       this.cargarUsuario(usuarioId);
       this.cargarEspecialidades();
     } else {
@@ -116,27 +108,25 @@ export class MisCitasController {
         this.usuario.pais = new Pais(this.usuario.pais ?? {});
         this.usuarioEditado = new UsuarioFull(this.usuario);
 
-        // 🔹 Cargar países primero
         this.usuarioService.listarPaises().subscribe({
           next: paises => {
             this.listaPaises = paises ?? [];
 
-            // 🔹 Si el usuario es médico, obtener su registro y luego cargar citas
             if (this.usuario.rol?.toUpperCase() === 'MEDICO') {
               this.medicoService.obtenerPorUsuarioId(this.usuario.id).subscribe({
                 next: medico => {
                   this.medico = medico;
-                  this.cargarCitas(); // 👈 ahora aquí
+                  this.cargarCitas(); 
                   this.cargando = false;
                 },
                 error: err => {
                   console.error('Error al obtener médico por usuario:', err);
-                  this.cargarCitas(); // igual carga aunque falle
+                  this.cargarCitas(); 
                   this.cargando = false;
                 }
               });
             } else {
-              this.cargarCitas(); // 👈 para pacientes o admins
+              this.cargarCitas(); 
               this.cargando = false;
             }
           },
@@ -174,15 +164,14 @@ export class MisCitasController {
         this.usuarioEditado = new UsuarioFull(this.usuario);
         this.editando = false;
 
-        // Actualizar localStorage si es el mismo usuario
         const usuarioLocal = JSON.parse(localStorage.getItem('usuario') || '{}');
         if (usuarioLocal.id === this.usuario.id) localStorage.setItem('usuario', JSON.stringify(this.usuario));
-        
+
         if (this.ns) this.ns.success('Perfil actualizado correctamente');
       },
-      error: err => { 
-        console.error(err); 
-        this.error = 'No se pudo actualizar el perfil.'; 
+      error: err => {
+        console.error(err);
+        this.error = 'No se pudo actualizar el perfil.';
         if (this.ns) this.ns.error('Error al actualizar el perfil');
       }
     });
@@ -192,7 +181,6 @@ export class MisCitasController {
     return !!p1 && !!p2 ? p1.id === p2.id : p1 === p2;
   }
 
-  // ==================== CITAS ====================
   cargarCitas(showLoading: boolean = true) {
     if (!this.usuario?.id) return;
 
@@ -200,14 +188,13 @@ export class MisCitasController {
     const rol = this.usuario.rol?.toUpperCase();
     const idRuta = Number(this.route.snapshot.paramMap.get('id'));
 
-    // 1. Si es ADMIN o RECEPCION y NO hay un id en la ruta -> Cargar TODAS las citas de la clínica
     if ((rol === 'ADMIN' || rol === 'RECEPCION') && !idRuta) {
       this.citaService.listarTodas().subscribe({
         next: data => this.asignarCitas(data),
         error: err => this.manejarErrorCitas(err)
       });
     }
-    // 2. Si el usuario es médico -> Cargar sus propias citas médicas
+
     else if (rol === 'MEDICO') {
       if (this.medico && this.medico.id) {
         this.citaService.listarPorMedico(this.medico.id).subscribe({
@@ -218,8 +205,8 @@ export class MisCitasController {
         console.warn('No se encontró el ID del médico para cargar citas.');
         this.cargando = false;
       }
-    } 
-    // 3. Caso general: Cargar citas de un paciente específico (sea por ruta o por ser el usuario actual)
+    }
+
     else {
       this.citaService.listarPorUsuario(this.usuario.id).subscribe({
         next: data => this.asignarCitas(data),
@@ -235,15 +222,14 @@ export class MisCitasController {
       c.medico.especialidad ??= {} as Especialidad;
       c.paciente ??= {} as UsuarioFull;
       (c as any).menuAbierto = false;
-      c.tieneHistorial = false; // 👈 valor inicial
+      c.tieneHistorial = false; 
 
-      // ✅ Verificar si la cita ya tiene historial
       this.historialService.obtenerHistorialPorCita(c.id).subscribe({
         next: (historial) => {
           c.tieneHistorial = !!historial;
         },
         error: (err) => {
-          // ⚙️ Ignorar 404 (sin historial), mostrar solo otros errores
+
           if (err.status !== 404) {
             console.error('Error al obtener historial de la cita', c.id, err);
           }
@@ -263,7 +249,7 @@ export class MisCitasController {
     const accion = this.route.snapshot.queryParamMap.get('accion');
 
     if (idCita && accion) {
-      console.log('🎯 Acción pendiente detectada:', accion, 'para cita:', idCita);
+      console.log(' Acción pendiente detectada:', accion, 'para cita:', idCita);
       const cita = this.citas.find(c => c.id === idCita);
       if (cita) {
         if (accion === 'reprogramar') {
@@ -271,8 +257,7 @@ export class MisCitasController {
         } else if (accion === 'cancelar') {
           this.cancelarCita(cita);
         }
-        
-        // Limpiar parámetros para evitar reaperturas accidentales
+
         this.router.navigate([], {
           relativeTo: this.route,
           queryParams: { idCita: null, accion: null },
@@ -288,27 +273,21 @@ export class MisCitasController {
     this.cargando = false;
   }
 
-
   toggleMenu(cita: Cita) {
     this.citas.forEach(c => { if (c !== cita) c.menuAbierto = false; });
     cita.menuAbierto = !cita.menuAbierto;
   }
 
-
-
   reprogramarCita(cita: Cita) {
     this.modoReprogramacion = true;
     this.citaEnReprogramacion = cita;
 
-    // Mostrar modal de cita
     this.mostrandoModalCita = true;
 
-    // Prellenar datos de la cita
     this.especialidadSeleccionada = cita.medico?.especialidad ?? null;
     this.medicoSeleccionado = cita.medico ?? null;
     this.motivoCita = cita.motivo ?? '';
 
-    // Cargar horarios disponibles solo si hay un médico asignado
     if (this.medicoSeleccionado && this.medicoSeleccionado.id) {
       this.medicoService.listarHorariosDisponibles(this.medicoSeleccionado.id).subscribe({
         next: (data: any[]) => {
@@ -325,9 +304,6 @@ export class MisCitasController {
     }
   }
 
-
-
-  // ==================== MODAL NUEVA CITA ====================
   abrirModalCita() {
     this.mostrandoModalCita = true;
     this.especialidadSeleccionada = null;
@@ -358,12 +334,11 @@ export class MisCitasController {
       return;
     }
 
-    // Para probar, pasamos null o una fecha por defecto
     const fecha = this.fechaSeleccionada || '';
 
     this.medicoService.listarPorEspecialidad(
       this.especialidadSeleccionada.id,
-      fecha // el backend puede ignorarlo si está vacío
+      fecha 
     ).subscribe({
       next: data => {
         this.medicosDisponibles = data;
@@ -375,7 +350,6 @@ export class MisCitasController {
       error: err => console.error('Error al cargar médicos:', err)
     });
   }
-
 
   cargarHorariosDisponibles() {
     if (!this.medicoSeleccionado) {
@@ -390,7 +364,7 @@ export class MisCitasController {
           this.horariosDisponibles = data;
           this.horarioSeleccionado = null;
           this.mostrarTablaDisponibilidad = true;
-          this.generarDiasConFechas(); // genera los 6 días para la tabla
+          this.generarDiasConFechas(); 
         },
         error: err => console.error('Error al cargar horarios:', err)
       });
@@ -401,12 +375,12 @@ export class MisCitasController {
       if (this.ns) this.ns.error('Debes seleccionar una especialidad.');
       return;
     }
-    
+
     if (!this.medicoSeleccionado) {
       if (this.ns) this.ns.error('Debes seleccionar a un médico especialista.');
       return;
     }
-    
+
     if (!this.horarioSeleccionado) {
       if (this.ns) this.ns.error('Debes seleccionar un horario disponible.');
       return;
@@ -419,15 +393,13 @@ export class MisCitasController {
     const fechaCompleta = `${fecha}T${hora}`;
 
     if (this.modoReprogramacion && this.citaEnReprogramacion) {
-      // 📝 Combinamos la cita base con la nueva fecha y el nuevo motivo del textarea
-      const citaActualizada = { 
-        ...this.citaEnReprogramacion, 
+      const citaActualizada = {
+        ...this.citaEnReprogramacion,
         fecha: fechaCompleta,
         motivo: this.motivoCita
       };
 
       if (this.usuario.rol === 'PACIENTE') {
-        // El paciente solicita reprogramar
         this.citaService.solicitarReprogramar(citaActualizada.id, citaActualizada).subscribe({
           next: () => {
             this.procesandoAccion = false;
@@ -435,13 +407,12 @@ export class MisCitasController {
             this.cargarCitas();
             this.cerrarModalCita();
           },
-          error: (err) => { 
+          error: (err) => {
             this.procesandoAccion = false;
-            this.procesandoActionError(err, 'Error al solicitar reprogramación'); 
+            this.procesandoActionError(err, 'Error al solicitar reprogramación');
           }
         });
       } else {
-        // Admin/Medico reprograma directamente
         this.citaService.reprogramarCita(citaActualizada.id, citaActualizada).subscribe({
           next: () => {
             this.procesandoAccion = false;
@@ -449,15 +420,14 @@ export class MisCitasController {
             this.cargarCitas();
             this.cerrarModalCita();
           },
-          error: (err) => { 
+          error: (err) => {
             this.procesandoAccion = false;
-            this.procesandoActionError(err, 'Error al reprogramar la cita'); 
+            this.procesandoActionError(err, 'Error al reprogramar la cita');
           }
         });
       }
 
     } else {
-      // Crear nueva cita
       const nuevaCita: any = {
         paciente: this.usuario,
         medico: this.medicoSeleccionado,
@@ -532,7 +502,7 @@ export class MisCitasController {
   }
 
   confirmarCancelacionProceso() {
-    console.log('🚀 Iniciando proceso de cancelación...', {
+    console.log(' Iniciando proceso de cancelación...', {
       idCita: this.citaACancelar?.id,
       rol: this.usuario?.rol,
       motivo: this.motivoCancelacion
@@ -543,37 +513,36 @@ export class MisCitasController {
       return;
     }
 
-    // Normalizamos el rol para la comparación
     const rol = this.usuario?.rol?.toUpperCase();
 
     this.procesandoAccion = true;
 
     if (rol === 'PACIENTE') {
-      console.log('📩 Enviando solicitud de cancelación (Paciente)...');
+      console.log(' Enviando solicitud de cancelación (Paciente)...');
       this.citaService.solicitarCancelar(this.citaACancelar.id, this.motivoCancelacion).subscribe({
         next: () => {
-          console.log('✅ Solicitud de cancelación enviada con éxito');
+          console.log(' Solicitud de cancelación enviada con éxito');
           if (this.ns) this.ns.success('Solicitud de cancelación confirmada. Su gestión de reembolso está en proceso de revisión.');
           this.cargarCitas();
           this.cerrarModalCancelar();
           this.procesandoAccion = false;
         },
-        error: (err) => { 
+        error: (err) => {
           console.error('❌ Error al solicitar cancelación:', err);
           this.procesandoActionError(err, 'Error al solicitar cancelación');
         }
       });
     } else {
-      console.log('🛠️ Confirmando cancelación directa (Admin/Staff)...');
+      console.log(' Confirmando cancelación directa (Admin/Staff)...');
       this.citaService.confirmarCancelar(this.citaACancelar.id).subscribe({
         next: () => {
-          console.log('✅ Cancelación confirmada con éxito');
+          console.log(' Cancelación confirmada con éxito');
           if (this.ns) this.ns.success('Cancelación aprobada y reembolso procesado exitosamente.');
           this.cargarCitas();
           this.cerrarModalCancelar();
           this.procesandoAccion = false;
         },
-        error: (err) => { 
+        error: (err) => {
           console.error('❌ Error al confirmar cancelación:', err);
           this.procesandoActionError(err, 'Error al confirmar cancelación e iniciar reembolso');
         }
@@ -582,10 +551,9 @@ export class MisCitasController {
   }
 
   private procesandoActionError(err: any, defaultMsg: string) {
-    console.error('🔥 Error crítico capturado:', err);
-    this.procesandoAccion = false; // 🔄 SIEMPRE liberar el estado
-    
-    // Si es un error de CORS o Red (status 0), dar mensaje claro
+    console.error(' Error crítico capturado:', err);
+    this.procesandoAccion = false;
+
     if (err.status === 0) {
       if (this.ns) this.ns.error('Error de conexión con el servidor. Por favor, reintente en unos momentos.');
       return;
@@ -613,16 +581,14 @@ export class MisCitasController {
     });
   }
 
-
-  // ==================== DISPONIBILIDAD ====================
   generarDiasConFechas(): void {
     const nombresDias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const lunesActual = this.getLunesDeSemana(); // lunes de la semana actual
+    const lunesActual = this.getLunesDeSemana();
     const lunesMostrar = new Date(lunesActual);
-    lunesMostrar.setDate(lunesActual.getDate() + 7 + this.semanaIndice * 7); // +7 para saltar la semana actual
+    lunesMostrar.setDate(lunesActual.getDate() + 7 + this.semanaIndice * 7);
 
     this.dias = [];
-    for (let i = 0; i < 6; i++) { // Lunes a sábado
+    for (let i = 0; i < 6; i++) {
       const fecha = new Date(lunesMostrar);
       fecha.setDate(lunesMostrar.getDate() + i);
 
@@ -640,7 +606,7 @@ export class MisCitasController {
 
   getLunesDeSemana(): Date {
     const today = new Date();
-    const day = today.getDay() || 7; // domingo = 0 → 7
+    const day = today.getDay() || 7;
     const diff = today.getDate() - day + 1;
     return new Date(today.setDate(diff));
   }
@@ -649,7 +615,7 @@ export class MisCitasController {
     if (this.semanaIndice < 2) {
       this.semanaIndice++;
       this.generarDiasConFechas();
-      this.cargarHorariosDisponibles(); // recarga tabla
+      this.cargarHorariosDisponibles();
     }
   }
 
@@ -657,7 +623,7 @@ export class MisCitasController {
     if (this.semanaIndice > 0) {
       this.semanaIndice--;
       this.generarDiasConFechas();
-      this.cargarHorariosDisponibles(); // recarga tabla
+      this.cargarHorariosDisponibles();
     }
   }
 
@@ -667,7 +633,7 @@ export class MisCitasController {
       const dHora = parseInt(d.horaInicio.split(':')[0], 10);
       return d.fecha === fechaISO && dHora === hora;
     });
-    // ✅ Comparamos el estado en mayúsculas por seguridad
+
     return !!h && h.estado?.toUpperCase() === 'DISPONIBLE';
   }
 
@@ -677,16 +643,15 @@ export class MisCitasController {
       const dHora = parseInt(d.horaInicio.split(':')[0], 10);
       return d.fecha === fechaISO && dHora === hora;
     });
-    // ✅ Comparamos el estado en mayúsculas por seguridad
+
     return !!h && h.estado?.toUpperCase() === 'NO_DISPONIBLE';
   }
 
-
   private fechaToISO(fecha: string): string {
-    // fecha viene como "DD/MM/YY" o "D/M/YY"
+
     const [dia, mes, anio] = fecha.split('/').map(p => parseInt(p, 10));
     const fullAnio = anio < 100 ? 2000 + anio : anio;
-    // Construimos el string manualmente para evitar desvíos por zona horaria de Date.toISOString()
+
     return `${fullAnio}-${mes.toString().padStart(2, '0')}-${dia.toString().padStart(2, '0')}`;
   }
 
@@ -735,13 +700,11 @@ export class MisCitasController {
 
     this.historialService.obtenerHistorialPorCita(cita.id).subscribe((data) => {
       if (data) {
-        // Existe historial → modo visualización
         this.historialActual = data;
         this.vistaSoloLectura = true;
         this.modoVisualizacion = true;
         cita.tieneHistorial = true;
       } else {
-        // No existe historial → modo registro
         this.historialActual = { cita: cita } as Historial;
         this.vistaSoloLectura = false;
         this.modoVisualizacion = false;
@@ -776,7 +739,7 @@ export class MisCitasController {
         console.log('Historial registrado correctamente:', respuesta);
         this.mostrandoModalHistorial = false;
         if (this.ns) this.ns.success('Historial médico guardado con éxito.');
-        this.cargarCitas(); // refrescar tabla
+        this.cargarCitas();
       },
       error: (err) => {
         console.error('Error al registrar historial:', err);
@@ -790,7 +753,7 @@ export class MisCitasController {
       next: (historial) => {
         if (historial) {
           this.historialSeleccionado = new Historial(historial);
-          this.mostrandoModalHistorial = true; // muestra el modal
+          this.mostrandoModalHistorial = true;
         }
       },
       error: (err) => {

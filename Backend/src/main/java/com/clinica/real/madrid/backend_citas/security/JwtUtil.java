@@ -12,13 +12,13 @@ import java.util.Date;
 public class JwtUtil {
 
     @Value("${jwt.secret}")
-    private String jwtSecret; // Debe ser un base64 seguro >= 512 bits para HS512
+    private String jwtSecret; 
 
     @Value("${jwt.expirationMs}")
     private long jwtExpirationMs;
 
     private SecretKey getSigningKey() {
-        // Convierte el secret en un SecretKey compatible con HS512
+
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
@@ -52,7 +52,7 @@ public class JwtUtil {
                 .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException ex) {
-            // Token inválido o expirado
+
             return false;
         }
     }

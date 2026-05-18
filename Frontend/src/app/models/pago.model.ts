@@ -8,13 +8,11 @@ export class Pago {
   monto!: number;
   metodo!: string;
 
-  // 🔥 Campo real del backend
   estadoPago!: 'PENDIENTE' | 'COMPLETADO' | 'ANULADO';
 
   fechaPago?: string;
   transaccionId?: string;
 
-  // Nuevos campos extendidos para Historial de Pagos
   pacienteNombre?: string;
   medicoNombre?: string;
   especialidad?: string;
@@ -39,7 +37,6 @@ export class Pago {
       this.monto = data.monto ?? this.monto;
       this.metodo = data.metodo ?? this.metodo;
 
-      // 👈 nombre correcto del backend
       this.estadoPago = data.estadoPago ?? this.estadoPago;
 
       this.fechaPago = data.fechaPago ?? this.fechaPago;

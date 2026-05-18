@@ -11,10 +11,9 @@ public class UsuarioRegistroRequest {
     private String telefono;
     private LocalDate fechaNacimiento;
     private String dni;
-    private Long paisId; // ID del país asociado
+    private Long paisId; 
     private String configuracionVisual;
 
-    // Getters y Setters
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 

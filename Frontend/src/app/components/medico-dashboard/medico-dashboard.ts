@@ -44,23 +44,22 @@ export class MedicoDashboardComponent implements OnInit {
 
     this.citaService.listarPorMedico(medId).subscribe({
       next: (citas: Cita[]) => {
-        // Separamos las de hoy, y sacamos estadísticas reales
+
         const hoyStr = new Date().toISOString().split('T')[0];
-        
+
         const citasHoy = citas.filter(c => c.fecha && c.fecha.startsWith(hoyStr));
-        const atendidosMes = citas.filter(c => c.tieneHistorial || c.estado === 'CONFIRMADA').length; // Simplificando stats
-        
+        const atendidosMes = citas.filter(c => c.tieneHistorial || c.estado === 'CONFIRMADA').length; 
+
         this.stats = {
           citasHoy: citasHoy.length,
           pacientesAtendidos: atendidosMes,
-          horasDisponibles: 0 // Podría ser cargado despues
+          horasDisponibles: 0 
         };
 
-        // Extraer las próximas citas (futuras o del dia en curso que no estén canceladas)
         this.proximasCitas = citas
           .filter(c => c.estado !== 'CANCELADA' && c.estado !== 'SOLICITUD_CANCELACION')
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
-          .slice(0, 5); // Tomamos las top 5 mas prontas
+          .slice(0, 5); 
 
         this.cargando = false;
       },

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-// Implementado Pagos
 @Repository
 public interface ComprobanteRepository extends JpaRepository<Comprobante, Long> {
     Optional<Comprobante> findByNumero(String numero);

@@ -5,9 +5,9 @@ export class Disponibilidad {
 
   id!: number;
   medico!: Medico;
-  fecha!: string;         // yyyy-mm-dd
-  horaInicio!: string;    // HH:mm:ss
-  horaFin!: string;       // HH:mm:ss
+  fecha!: string;
+  horaInicio!: string;
+  horaFin!: string;
   estado!: EstadoDisponibilidad;
   fechaCreacion!: string;
 
@@ -18,7 +18,6 @@ export class Disponibilidad {
       this.horaInicio = data.horaInicio ?? '';
       this.horaFin = data.horaFin ?? '';
 
-      // Convertir string del backend a enum, si existe
       if (data.estado) {
         if (Object.values(EstadoDisponibilidad).includes(data.estado)) {
           this.estado = data.estado as EstadoDisponibilidad;
@@ -40,9 +39,6 @@ export class Disponibilidad {
     }
   }
 
-  // ---------------------
-  // Formateo de horas
-  // ---------------------
   get horaInicioFormateada(): string {
     return this.formatearHora(this.horaInicio);
   }

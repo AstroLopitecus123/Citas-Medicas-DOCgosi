@@ -41,7 +41,6 @@ export class DisponibilidadService {
       .pipe(map(data => data.map(d => new Disponibilidad(d))));
   }
 
-
   eliminarPorRango(medicoId: number, inicio: string, fin: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/medico/${medicoId}/rango?inicio=${inicio}&fin=${fin}`);
   }

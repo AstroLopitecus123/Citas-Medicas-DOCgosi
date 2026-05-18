@@ -22,13 +22,11 @@ public class MedicoController {
         this.medicoService = medicoService;
     }
 
-    // 🔹 Listar todos los médicos
     @GetMapping
     public ResponseEntity<List<Medico>> listarMedicos() {
         return ResponseEntity.ok(medicoService.listarTodos());
     }
 
-    // 🔹 Asignar o actualizar especialidad de un médico
     @PutMapping("/{id}/especialidad/{espId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Medico> asignarEspecialidad(
@@ -38,13 +36,13 @@ public class MedicoController {
         Medico medicoActualizado = medicoService.asignarEspecialidad(medicoId, especialidadId);
         return ResponseEntity.ok(medicoActualizado);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Medico> obtenerPorId(@PathVariable Long id) {
-        Medico medico = medicoService.obtenerPorId(id); // debes implementarlo
+        Medico medico = medicoService.obtenerPorId(id); 
         return ResponseEntity.ok(medico);
     }
-    
+
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<Medico> obtenerPorUsuarioId(@PathVariable Long usuarioId) {
         Medico medico = medicoService.obtenerPorUsuarioId(usuarioId);
@@ -53,7 +51,7 @@ public class MedicoController {
         }
         return ResponseEntity.ok(medico);
     }    
-    
+
     @GetMapping("/especialidad/{especialidadId}")
     public List<Medico> listarPorEspecialidad(@PathVariable Long especialidadId) {
         return medicoService.listarPorEspecialidad(especialidadId);

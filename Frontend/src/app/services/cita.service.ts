@@ -20,7 +20,6 @@ export class CitaService {
     return new HttpHeaders({ 'Authorization': `Bearer ${token}` });
   }
 
-  // CITAS
   listarTodas(): Observable<Cita[]> {
     return this.http.get<Cita[]>(`${this.apiUrl}/citas`, { headers: this.getAuthHeaders() });
   }
@@ -97,7 +96,6 @@ export class CitaService {
     });
   }
 
-  // MÉDICOS Y ESPECIALIDADES
   listarMedicosPorEspecialidad(especialidadId: number): Observable<Medico[]> {
     return this.http.get<Medico[]>(`${this.apiUrl}/medicos/especialidad/${especialidadId}`, { headers: this.getAuthHeaders() });
   }

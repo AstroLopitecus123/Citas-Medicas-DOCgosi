@@ -64,8 +64,7 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pais_id", nullable = true)
     private Pais pais;
-    
-    //AGREGADO EL 30/10
+
     @ManyToMany
     @JoinTable(
         name = "medico_especialidades",
@@ -73,7 +72,7 @@ public class Usuario {
         inverseJoinColumns = @JoinColumn(name = "especialidad_id")
     )
     private Set<Especialidad> especialidades;
-    
+
     @Column(name = "token_recuperacion")
     private String tokenRecuperacion;
 
@@ -82,11 +81,7 @@ public class Usuario {
 
     @Column(name = "configuracion_visual", length = 50)
     private String configuracionVisual = "NINGUNO";
-    
-    // ---------------------
-    // GETTERS Y SETTERS
-    // ---------------------
-    
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -122,8 +117,7 @@ public class Usuario {
 
     public Pais getPais() { return pais; }
     public void setPais(Pais pais) { this.pais = pais; }
-    
-    //AGREGADO EL 30/10
+
     public Set<Especialidad> getEspecialidades() { return especialidades; }
     public void setEspecialidades(Set<Especialidad> especialidades) {this.especialidades = especialidades; }
 	public String getTokenRecuperacion() {
@@ -141,6 +135,6 @@ public class Usuario {
 
     public String getConfiguracionVisual() { return configuracionVisual; }
     public void setConfiguracionVisual(String configuracionVisual) { this.configuracionVisual = configuracionVisual; }
-    
+
 }
 

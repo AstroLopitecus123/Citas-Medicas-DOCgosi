@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class AdminMedicos implements OnInit {
 
-  // ✅ Angular inyectará el controller automáticamente
   constructor(public ctrl: AdminMedicosController) {}
 
   ngOnInit(): void {

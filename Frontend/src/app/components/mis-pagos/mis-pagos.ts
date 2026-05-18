@@ -20,14 +20,12 @@ export class MisPagosComponent implements OnInit, OnDestroy {
   usuario: any = null;
   today: Date = new Date();
   error = '';
-  
-  // Dashboard Analytics
+
   totalIngresos = 0;
   totalTransacciones = 0;
   pagosCompletados = 0;
   pagosPendientes = 0;
 
-  // Confirmación de anulación
   mostrandoConfirmarAnular = false;
   pagoAEliminarId: number | null = null;
   private pollingSub?: Subscription;
@@ -42,8 +40,7 @@ export class MisPagosComponent implements OnInit, OnDestroy {
     if (usrString) {
       this.usuario = JSON.parse(usrString);
       this.cargarPagos(true);
-      
-      // Polling para "Tiempo Real" cada 5 segundos
+
       this.pollingSub = interval(5000).subscribe(() => {
         this.cargarPagos(false);
       });
@@ -68,11 +65,11 @@ export class MisPagosComponent implements OnInit, OnDestroy {
     if (rol === 'PACIENTE') {
       request$ = this.pagoService.obtenerPagosPorUsuario(this.usuario.id);
     } else if (rol === 'MEDICO') {
-      // Usar medicoId si está disponible en el objeto usuario
+
       const medicoId = this.usuario.medicoId || this.usuario.id;
       request$ = this.pagoService.obtenerPagosPorMedico(medicoId);
     } else {
-      // Recepcion / Admin
+
       request$ = this.pagoService.obtenerTodosLosPagos();
     }
 

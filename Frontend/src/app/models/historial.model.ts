@@ -1,7 +1,7 @@
 import { Cita } from './cita.model';
 
 export class Historial {
-  id?: number; // ← antes era !
+  id?: number; 
   cita!: Cita;
   fechaRegistro?: string;
   fechaActualizacion?: string;

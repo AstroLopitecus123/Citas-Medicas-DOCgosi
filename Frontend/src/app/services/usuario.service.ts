@@ -15,13 +15,11 @@ export class UsuarioService {
   private usuariosUrl = `${environment.apiUrl}/api/usuarios`;
   private authUrl = `${environment.apiUrl}/auth`;
 
-  // 🆕 OBSERVABLE GLOBAL DEL USUARIO
   private usuarioSubject = new BehaviorSubject<Usuario | null>(this.cargarUsuarioLocalStorage());
   usuario$ = this.usuarioSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  // 🆕 Cargar usuario desde localStorage al iniciar la app
   private cargarUsuarioLocalStorage(): Usuario | null {
     const user = localStorage.getItem('usuario');
     return user ? JSON.parse(user) : null;
@@ -55,22 +53,18 @@ export class UsuarioService {
     return this.http.put(`${this.usuariosUrl}/${id}/rol`, { rol: nuevoRol }, { headers });
   }
 
-  // 🆙 LOGIN ADAPTADO + BehaviorSubject
   login(datos: { correo: string, contrasena: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.authUrl}/login`, datos)
       .pipe(
         tap(res => {
 
-          // Guardar token
           if (res.token) {
             localStorage.setItem('token', res.token);
           }
 
-          // Guardar usuario y enviar al observable global
           if (res && res.token) {
             const usuario = new Usuario(res);
-            
-            // Normalizar rol
+
             const rolBackend = res.rol?.toUpperCase();
             if (rolBackend === 'ADMIN' || rolBackend === 'MEDICO' || rolBackend === 'RECEPCION') {
               usuario.rol = rolBackend as any;
@@ -78,10 +72,8 @@ export class UsuarioService {
               usuario.rol = 'PACIENTE' as any;
             }
 
-            // Guardar localmente
             localStorage.setItem('usuario', JSON.stringify(usuario));
 
-            // 🆕 Notificar a toda la app
             this.usuarioSubject.next(usuario);
           }
         })

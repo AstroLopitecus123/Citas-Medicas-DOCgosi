@@ -214,6 +214,40 @@
   </div>
 </div>
 
+<div class="glass-overlay" *ngIf="mostrarModalInactividad">
+  <div class="glass-modal animation-pop-in" (click)="$event.stopPropagation()">
+    <div class="modal-header-glass">
+      <div class="header-icon-title">
+        <div class="header-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+        <div>
+          <h3>Sesión por Expirar</h3>
+          <p style="font-size: 0.8rem; margin:0; color: #64748b;">Aviso de inactividad</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body-glass" style="text-align: center; padding: 25px 20px;">
+      <p style="font-size: 1.1rem; margin-bottom: 10px;">Hemos detectado un periodo de inactividad.</p>
+      <p>Tu sesión se cerrará automáticamente en:</p>
+      <div class="countdown-circle" style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); border: 2px solid #f59e0b; color: #f59e0b; font-size: 2rem; font-weight: bold; margin: 15px 0;">
+        {{ inactividadCountdown }}
+      </div>
+      <small style="color: #94a3b8; display: block; margin-top: 5px;">Presiona mantener sesión para continuar trabajando.</small>
+    </div>
+
+    <div class="modal-footer-glass" style="display: flex; gap: 10px; justify-content: flex-end;">
+      <button class="btn-action btn-outline" (click)="cerrarSesionInactividad()">
+        Cerrar sesión
+      </button>
+      <button class="btn-action btn-add" style="background: #f59e0b; color: #fff;" (click)="mantenerSesion()">
+        Mantener sesión
+      </button>
+    </div>
+  </div>
+</div>
+
 <app-chatbot></app-chatbot>
 
 <app-accesibilidad></app-accesibilidad>

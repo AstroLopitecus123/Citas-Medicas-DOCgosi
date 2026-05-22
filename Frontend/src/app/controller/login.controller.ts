@@ -53,8 +53,8 @@ export class LoginController {
       },
       error: (err) => {
         console.error('Error en login:', err);
-        this.error = 'Correo o contraseña incorrectos.';
-        if (this.ns) this.ns.error('Correo o contraseña incorrectos');
+        this.error = err.error?.message || 'Correo o contraseña incorrectos.';
+        if (this.ns) this.ns.error(this.error);
       }
     });
   }

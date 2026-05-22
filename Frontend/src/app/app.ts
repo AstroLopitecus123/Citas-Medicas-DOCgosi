@@ -32,6 +32,10 @@ export class AppComponent {
   loginActualizado$ = new Subject<void>();
   isPanelRoute = false;
   notificacionesNoLeidas = 0;
+  inactividadTimer: any;
+  countdownTimer: any;
+  mostrarModalInactividad = false;
+  inactividadCountdown = 30;
 
   constructor(
     private router: Router, 
@@ -97,6 +101,7 @@ export class AppComponent {
 
   cerrarSesion() {
     this.mostrarModal = false;
+    this.detenerMonitoreoInactividad();
     this.ns.info('Cerrando sesión...');
 
     this.router.navigate(['/']).then(() => {
@@ -165,6 +170,11 @@ export class AppComponent {
 
       const filtroAnon = localStorage.getItem('accesibilidad-filtro');
       if (filtroAnon) this.aplicarFiltroGlobal(filtroAnon);
+    }
+    if (this.isLoggedIn) {
+      this.iniciarMonitoreoInactividad();
+    } else {
+      this.detenerMonitoreoInactividad();
     }
   }
 
@@ -257,5 +267,60 @@ export class AppComponent {
       next: (res) => { this.notificacionesNoLeidas = res.cantidad; },
       error: () => {  }
     });
+  }
+
+  iniciarMonitoreoInactividad() {
+    this.detenerMonitoreoInactividad();
+    const eventos = ['mousemove', 'click', 'keypress', 'touchstart', 'scroll'];
+    eventos.forEach(evt => {
+      window.addEventListener(evt, this.resetearInactividad);
+    });
+    this.resetearInactividad();
+  }
+
+  detenerMonitoreoInactividad() {
+    const eventos = ['mousemove', 'click', 'keypress', 'touchstart', 'scroll'];
+    eventos.forEach(evt => {
+      window.removeEventListener(evt, this.resetearInactividad);
+    });
+    if (this.inactividadTimer) clearTimeout(this.inactividadTimer);
+    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    this.mostrarModalInactividad = false;
+  }
+
+  resetearInactividad = () => {
+    if (this.mostrarModalInactividad) return;
+    if (this.inactividadTimer) clearTimeout(this.inactividadTimer);
+    if (this.isLoggedIn) {
+      this.inactividadTimer = setTimeout(() => {
+        this.mostrarAdvertenciaInactividad();
+      }, 180000);
+    }
+  }
+
+  mostrarAdvertenciaInactividad() {
+    this.mostrarModalInactividad = true;
+    this.inactividadCountdown = 30;
+    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    this.countdownTimer = setInterval(() => {
+      this.inactividadCountdown--;
+      if (this.inactividadCountdown <= 0) {
+        clearInterval(this.countdownTimer);
+        this.cerrarSesionInactividad();
+      }
+    }, 1000);
+  }
+
+  mantenerSesion() {
+    this.mostrarModalInactividad = false;
+    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    this.resetearInactividad();
+  }
+
+  cerrarSesionInactividad() {
+    this.mostrarModalInactividad = false;
+    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    this.cerrarSesion();
+    this.ns.warning('Tu sesión ha expirado por inactividad.');
   }
 }

@@ -8,6 +8,8 @@ import com.clinica.real.madrid.backend_citas.security.JwtUtil;
 import com.clinica.real.madrid.backend_citas.service.UsuarioService;
 
 import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+    private static final Map<String, Integer> intentosFallidosMap = new ConcurrentHashMap<>();
+    private static final Map<String, LocalDateTime> bloqueoExpiraMap = new ConcurrentHashMap<>();
 
     @Autowired
     private UsuarioService usuarioService;
@@ -47,14 +52,33 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioResponse> login(@RequestBody UsuarioLoginRequest request) {
-        try {
+    public ResponseEntity<?> login(@RequestBody UsuarioLoginRequest request) {
+        String correo = request.getCorreo() != null ? request.getCorreo().toLowerCase().trim() : "";
+        if (correo.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Correo o contraseña incorrectos."));
+        }
 
+        LocalDateTime expira = bloqueoExpiraMap.get(correo);
+        if (expira != null) {
+            if (LocalDateTime.now().isBefore(expira)) {
+                System.err.println("INCIDENTE: Intento de inicio de sesión en cuenta bloqueada: " + correo);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente más tarde."));
+            } else {
+                bloqueoExpiraMap.remove(correo);
+                intentosFallidosMap.remove(correo);
+            }
+        }
+
+        try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasena())
             );
 
             Usuario usuario = usuarioService.login(request.getCorreo(), request.getContrasena());
+
+            intentosFallidosMap.remove(correo);
 
             System.out.println("ROL BACKEND: " + usuario.getRol());
 
@@ -63,8 +87,21 @@ public class AuthController {
             return ResponseEntity.ok(new UsuarioResponse(token, usuario));
 
         } catch (Exception e) {
+            boolean existe = usuarioService.listarUsuarios().stream().anyMatch(u -> u.getCorreo().equalsIgnoreCase(correo));
+            if (existe) {
+                int intentos = intentosFallidosMap.getOrDefault(correo, 0) + 1;
+                intentosFallidosMap.put(correo, intentos);
+                System.out.println("Intentos fallidos para " + correo + ": " + intentos);
+
+                if (intentos >= 5) {
+                    bloqueoExpiraMap.put(correo, LocalDateTime.now().plusMinutes(15));
+                    System.err.println("INCIDENTE: Cuenta bloqueada temporalmente por exceso de intentos fallidos (5): " + correo);
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                            .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente en 15 minutos."));
+                }
+            }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(null); 
+                    .body(Map.of("message", "Correo o contraseña incorrectos."));
         }
     }
 

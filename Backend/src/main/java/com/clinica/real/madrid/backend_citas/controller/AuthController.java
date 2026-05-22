@@ -94,10 +94,10 @@ public class AuthController {
                 System.out.println("Intentos fallidos para " + correo + ": " + intentos);
 
                 if (intentos >= 5) {
-                    bloqueoExpiraMap.put(correo, LocalDateTime.now().plusMinutes(15));
+                    bloqueoExpiraMap.put(correo, LocalDateTime.now().plusMinutes(3));
                     System.err.println("INCIDENTE: Cuenta bloqueada temporalmente por exceso de intentos fallidos (5): " + correo);
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                            .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente en 15 minutos."));
+                            .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente en 3 minutos."));
                 }
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

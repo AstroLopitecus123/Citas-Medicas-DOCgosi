@@ -9,6 +9,7 @@ import com.clinica.real.madrid.backend_citas.service.UsuarioService;
 
 import java.util.Map;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,15 @@ public class AuthController {
         LocalDateTime expira = bloqueoExpiraMap.get(correo);
         if (expira != null) {
             if (LocalDateTime.now().isBefore(expira)) {
+                long segundosRestantes = ChronoUnit.SECONDS.between(LocalDateTime.now(), expira);
+                long minutos = segundosRestantes / 60;
+                long segundos = segundosRestantes % 60;
+                String tiempoRestante = minutos > 0
+                        ? minutos + " min " + segundos + " seg"
+                        : segundos + " seg";
                 System.err.println("INCIDENTE: Intento de inicio de sesión en cuenta bloqueada: " + correo);
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente más tarde."));
+                        .body(Map.of("message", "Cuenta bloqueada. Reintente en " + tiempoRestante + "."));
             } else {
                 bloqueoExpiraMap.remove(correo);
                 intentosFallidosMap.remove(correo);
@@ -97,7 +104,7 @@ public class AuthController {
                     bloqueoExpiraMap.put(correo, LocalDateTime.now().plusMinutes(3));
                     System.err.println("INCIDENTE: Cuenta bloqueada temporalmente por exceso de intentos fallidos (5): " + correo);
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                            .body(Map.of("message", "Cuenta bloqueada temporalmente por 5 intentos fallidos. Reintente en 3 minutos."));
+                            .body(Map.of("message", "Cuenta bloqueada por 5 intentos fallidos. Reintente en 3 min 0 seg."));
                 }
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

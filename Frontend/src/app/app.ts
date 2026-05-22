@@ -321,6 +321,6 @@ export class AppComponent {
     this.mostrarModalInactividad = false;
     if (this.countdownTimer) clearInterval(this.countdownTimer);
     this.cerrarSesion();
-    this.ns.warning('Tu sesión ha expirado por inactividad.');
+    this.ns.info('Tu sesión ha expirado por inactividad.');
   }
 }

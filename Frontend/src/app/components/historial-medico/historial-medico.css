@@ -1,4 +1,7 @@
-/* Estilos para el Historial Médico que coinciden con el Dashboard */
+/* ============================================================
+   HISTORIAL MÉDICO — ESTILOS PREMIUM
+   ============================================================ */
+
 .dashboard-page-content {
     padding: 25px;
     animation: fadeIn 0.5s ease;
@@ -18,7 +21,6 @@
     gap: 8px;
     transition: all 0.2s;
 }
-
 .back-btn-premium:hover {
     background: #f8fafc;
     transform: translateX(-5px);
@@ -65,38 +67,6 @@
     margin-bottom: 20px;
 }
 
-.empty-state-dash h3 {
-    font-size: 1.5rem;
-    color: #1e293b;
-    margin-bottom: 10px;
-}
-
-.empty-state-dash p {
-    color: #64748b;
-    max-width: 400px;
-    margin-bottom: 30px;
-}
-
-.action-btn-dash {
-    background: #0a7c4a;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
-}
-
-.action-btn-dash:hover {
-    background: #08633b;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(10, 124, 74, 0.2);
-}
-
 .historial-list {
     display: flex;
     flex-direction: column;
@@ -104,6 +74,313 @@
     margin-top: 25px;
 }
 
+/* ============================================================
+   TARJETA DE PACIENTE AGRUPADO
+   ============================================================ */
+.paciente-card {
+    background: white;
+    border-radius: 20px;
+    border: 1.5px solid #e2e8f0;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.04);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+.paciente-card:hover {
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+/* Cabecera clickeable del paciente */
+.paciente-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    cursor: pointer;
+    background: white;
+    transition: background 0.2s ease;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.paciente-card-header:hover {
+    background: #f8fafc;
+}
+
+.paciente-info-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.paciente-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 2px solid #a7f3d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    color: #059669;
+}
+.paciente-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.paciente-text h3 {
+    margin: 0 0 6px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.consultas-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #bbf7d0;
+}
+.consultas-badge i {
+    font-size: 0.75rem;
+    color: #16a34a;
+}
+
+.paciente-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Botón descargar historia clínica completa */
+.btn-descargar-historia {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(190, 18, 60, 0.25);
+    white-space: nowrap;
+}
+.btn-descargar-historia:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(190, 18, 60, 0.35);
+    background: linear-gradient(135deg, #9f1239 0%, #881337 100%);
+}
+.btn-descargar-historia i {
+    font-size: 1rem;
+}
+
+/* Botón toggle del acordeón */
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+.toggle-btn.rotated {
+    transform: rotate(180deg);
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+/* ============================================================
+   ACORDEÓN — LISTADO DE CITAS
+   ============================================================ */
+.citas-acordeon {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 0px solid #f1f5f9;
+}
+.citas-acordeon.expandido {
+    max-height: 5000px; /* suficiente para cualquier número de citas */
+    border-top: 1.5px solid #f1f5f9;
+}
+
+.cita-item {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    border-bottom: 1px solid #f1f5f9;
+    animation: fadeIn 0.3s ease;
+}
+.cita-item:last-child {
+    border-bottom: none;
+}
+
+/* Número de cita lateral */
+.cita-numero {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 0 20px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: #94a3b8;
+    background: #fafafa;
+    border-right: 1px solid #f1f5f9;
+    letter-spacing: 0.5px;
+}
+
+.cita-content {
+    flex: 1;
+    padding: 20px 25px;
+}
+
+.cita-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.medico-info-cita {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.medico-avatar-sm {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #ebf8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    color: #2b6cb0;
+    font-size: 1.1rem;
+    border: 1.5px solid #bfdbfe;
+}
+.medico-avatar-sm img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.medico-nombre {
+    display: block;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.especialidad-chip {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 3px;
+    border: 1px solid #dbeafe;
+}
+
+.fecha-cita {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 5px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+.fecha-cita i {
+    color: #3b82f6;
+}
+
+/* Detalles de la cita */
+.cita-detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.detalle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.detalle-item.notas {
+    grid-column: span 2;
+}
+
+.detalle-item label {
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.detalle-item label i {
+    color: #3b82f6;
+}
+
+.detalle-item p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #334155;
+    font-weight: 600;
+    line-height: 1.5;
+    background: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+}
+.detalle-item.highlight label {
+    color: #1d4ed8;
+}
+.detalle-item.highlight label i {
+    color: #3b82f6;
+}
+.detalle-item.highlight p {
+    background: #eff6ff;
+    color: #1e3a8a;
+    border-color: #dbeafe;
+}
+
+/* ============================================================
+   VISTA PACIENTE (mantiene diseño original)
+   ============================================================ */
 .historial-item-card {
     background: white;
     border-radius: 20px;
@@ -112,7 +389,6 @@
     border: 1px solid rgba(0,0,0,0.05);
     transition: all 0.3s;
 }
-
 .historial-item-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 30px rgba(0,0,0,0.06);
@@ -132,14 +408,12 @@
     gap: 15px;
     align-items: center;
 }
-
 .doctor-info img {
     width: 50px;
     height: 50px;
     border-radius: 15px;
     object-fit: cover;
 }
-
 .doctor-info h4 {
     margin: 0;
     font-size: 1.1rem;
@@ -173,21 +447,16 @@
 }
 
 .info-group label {
-    display: block;
+    display: flex;
     font-size: 0.8rem;
     font-weight: 800;
     text-transform: uppercase;
     color: #94a3b8;
     margin-bottom: 10px;
-    display: flex;
     align-items: center;
     gap: 8px;
 }
-
-.info-group label i {
-    color: #3b82f6;
-}
-
+.info-group label i { color: #3b82f6; }
 .info-group p {
     margin: 0;
     font-size: 0.95rem;
@@ -197,13 +466,11 @@
     background: #f8fafc;
     border-radius: 12px;
 }
-
 .info-group.highlight p {
     background: rgba(10, 124, 74, 0.03);
     border-left: 3px solid #0a7c4a;
 }
 
-/* FOOTER */
 .item-footer {
     display: flex;
     justify-content: flex-end;
@@ -222,47 +489,41 @@
     align-items: center;
     gap: 10px;
 }
+.pdf-btn:hover { background: #dc2626; }
 
-.pdf-btn:hover {
-    background: #dc2626;
-}
-
-/* STATES */
-.loading-state, .empty-state {
-    text-align: center;
-    padding: 100px 20px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-}
-
-.empty-state i {
-    font-size: 4rem;
-    color: #cbd5e1;
-    margin-bottom: 20px;
-}
-
-.empty-state h3 {
-    color: #1e293b;
-    margin-bottom: 10px;
-}
-
-.empty-state p {
-    color: #64748b;
-    margin-bottom: 25px;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #1a73e8;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
+    0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .paciente-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .paciente-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .btn-descargar-historia span { display: none; }
+    .cita-detalles {
+        grid-template-columns: 1fr;
+    }
+    .detalle-item.notas {
+        grid-column: span 1;
+    }
+    .cita-numero {
+        width: 36px;
+        min-width: 36px;
+        font-size: 0.7rem;
+    }
 }

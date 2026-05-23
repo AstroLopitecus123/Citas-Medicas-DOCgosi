@@ -24,21 +24,9 @@
         <div class="premium-card profile-main-card">
             <div class="profile-banner">
                 
-                <!-- Sección de Avatar y Cropper -->
+                <!-- Sección de Avatar -->
                 <div class="avatar-section">
-                  
-                  <div *ngIf="mostrandoCropper" style="width: 100%; margin-bottom: 20px;">
-                    <app-avatar-cropper
-                      [imageFile]="selectedImageFile"
-                      (cropBlob)="onCropBlob($event)"
-                      (cancelar)="cancelarRecorte()"
-                    ></app-avatar-cropper>
-                    <div *ngIf="subiendoFoto" style="text-align:center; margin-top: 10px; color: #0fbf6a; font-weight: 600;">
-                      <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
-                    </div>
-                  </div>
-
-                  <div class="avatar-wrapper" *ngIf="!mostrandoCropper">
+                  <div class="avatar-wrapper">
                     <div class="avatar-img-container">
                       <img *ngIf="usuario.fotoUrl" [src]="usuario.fotoUrl" alt="Foto de perfil">
                       <i *ngIf="!usuario.fotoUrl" class="fa-solid fa-user-circle default-avatar"></i>
@@ -244,6 +232,45 @@
             </button>
             <button class="btn-action outline w-100 mt-2" (click)="cerrarModalPassword()">
                 Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cropper de Foto (modal separado encima de todo) -->
+<div class="glass-overlay" *ngIf="mostrandoCropper" style="z-index: 1100;" (click)="cancelarRecorte()">
+    <div class="glass-modal premium-card animation-pop-in" style="max-width: 420px;" (click)="$event.stopPropagation()">
+        <div class="modal-header-glass">
+            <div class="header-info">
+                <div class="header-icon-box" style="background: rgba(15,191,106,0.1); color: #0fbf6a;">
+                    <i class="fa-solid fa-crop-simple"></i>
+                </div>
+                <div>
+                    <h3>Ajustar Foto de Perfil</h3>
+                    <p>Arrastra la imagen y ajusta el zoom.</p>
+                </div>
+            </div>
+            <button class="btn-close-glass" (click)="cancelarRecorte()">&times;</button>
+        </div>
+
+        <div class="modal-body-glass" style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <app-avatar-cropper
+              #cropperPerfil
+              [imageFile]="selectedImageFile"
+              (cancelar)="cancelarRecorte()"
+            ></app-avatar-cropper>
+            <div *ngIf="subiendoFoto" style="color:#0fbf6a; font-weight:600;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
+            </div>
+        </div>
+
+        <div class="modal-footer-glass">
+            <button class="btn-action outline" (click)="cancelarRecorte()">
+                <i class="fa-solid fa-xmark"></i> Cancelar
+            </button>
+            <button class="btn-action primary" (click)="guardarFoto()" [disabled]="subiendoFoto">
+                <i class="fa-solid fa-check" *ngIf="!subiendoFoto"></i>
+                <i class="fa-solid fa-circle-notch fa-spin" *ngIf="subiendoFoto"></i> Guardar Foto
             </button>
         </div>
     </div>

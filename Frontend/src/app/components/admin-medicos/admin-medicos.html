@@ -134,19 +134,8 @@
       </div>
 
       <div class="modal-body-glass">
-        <!-- Foto de Perfil Upload -->
-        <div *ngIf="ctrl.mostrandoCropper" style="margin-bottom: 20px;">
-          <app-avatar-cropper
-            [imageFile]="ctrl.selectedImageFile"
-            (cropBlob)="ctrl.onCropBlob($event)"
-            (cancelar)="ctrl.cancelarRecorte()"
-          ></app-avatar-cropper>
-          <div *ngIf="ctrl.subiendoFoto" style="text-align:center; margin-top: 10px; color: #0fbf6a; font-weight: 600;">
-            <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
-          </div>
-        </div>
-
-        <div class="edit-avatar-section mb-4" *ngIf="!ctrl.mostrandoCropper" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 25px;">
+        <!-- Foto de Perfil -->
+        <div class="edit-avatar-section mb-4" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 25px;">
           <div class="avatar-wrapper-edit" style="position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0fbf6a; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden;">
             <img *ngIf="ctrl.fotoUrlEditado; else defaultEditAvatar" [src]="ctrl.fotoUrlEditado" style="width: 100%; height: 100%; object-fit: cover;" alt="Vista previa de foto">
             <ng-template #defaultEditAvatar>
@@ -188,10 +177,50 @@
 
       <div class="modal-footer-glass">
         <button class="btn-cancel-glass" (click)="ctrl.cerrarModalEditarPerfil()">Cancelar</button>
-        <button class="btn-confirm-glass" (click)="guardarPerfil()" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
+        <button class="btn-confirm-glass" (click)="ctrl.guardarPerfilEditado()" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
           <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Modal Cropper de Foto (encima del modal de editar) -->
+  <div class="glass-overlay" *ngIf="ctrl.mostrandoCropper" style="z-index: 1100;" (click)="ctrl.cancelarRecorte()">
+    <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()" style="max-width: 420px;">
+      <div class="modal-header-glass">
+        <div class="header-info">
+          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
+            <i class="fa-solid fa-crop-simple"></i>
+          </div>
+          <div>
+            <h3>Ajustar Foto de Perfil</h3>
+            <p>Arrastra la imagen y ajusta el zoom.</p>
+          </div>
+        </div>
+        <button class="btn-close-glass" (click)="ctrl.cancelarRecorte()">&times;</button>
+      </div>
+
+      <div class="modal-body-glass" style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <app-avatar-cropper
+          #cropperModal
+          [imageFile]="ctrl.selectedImageFile"
+          (cancelar)="ctrl.cancelarRecorte()"
+        ></app-avatar-cropper>
+        <div *ngIf="ctrl.subiendoFoto" style="color:#0fbf6a; font-weight:600;">
+          <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
+        </div>
+      </div>
+
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="ctrl.cancelarRecorte()">
+          <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+        <button class="btn-confirm-glass" (click)="guardarFoto()" [disabled]="ctrl.subiendoFoto" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
+          <i class="fa-solid fa-check" *ngIf="!ctrl.subiendoFoto"></i>
+          <i class="fa-solid fa-circle-notch fa-spin" *ngIf="ctrl.subiendoFoto"></i> Guardar Foto
+        </button>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -154,8 +154,8 @@ export class AdminMedicosController {
         this.subiendoFoto = false;
         this.mostrandoCropper = false;
         this.selectedImageFile = null;
-        // Now save the rest of the profile data
-        this.guardarPerfilEditado();
+        // La foto fue guardada — el modal de recorte cierra y el usuario
+        // puede ver la nueva foto en el formulario y hacer clic en "Guardar Cambios"
       },
       error: (err) => {
         console.error('Error al subir foto:', err);

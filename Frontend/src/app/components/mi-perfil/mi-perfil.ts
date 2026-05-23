@@ -15,7 +15,7 @@ import { AvatarCropperComponent } from '../avatar-cropper/avatar-cropper.compone
   styleUrls: ['./mi-perfil.css']
 })
 export class MiPerfilComponent implements OnInit {
-  @ViewChild(AvatarCropperComponent) cropperRef?: AvatarCropperComponent;
+  @ViewChild('cropperPerfil') cropperRef?: AvatarCropperComponent;
   usuario: UsuarioFull = new UsuarioFull();
   usuarioEditado: UsuarioFull = new UsuarioFull();
   listaPaises: Pais[] = [];
@@ -84,40 +84,39 @@ export class MiPerfilComponent implements OnInit {
     this.editando = false;
   }
 
-  async guardarCambios() {
-    // Si hay un cropper activo, primero sube la foto y luego guarda los datos
-    if (this.mostrandoCropper && this.cropperRef) {
-      this.subiendoFoto = true;
-      const blob = await this.cropperRef.getBlob();
-      if (blob) {
-        const file = new File([blob], 'perfil_recortado.png', { type: 'image/png' });
-        this.usuarioService.subirFoto(this.usuario.id, file).subscribe({
-          next: (data) => {
-            this.usuario.fotoUrl = data.fotoUrl;
-            this.usuarioEditado.fotoUrl = data.fotoUrl;
-            const localUser = localStorage.getItem('usuario');
-            if (localUser) {
-              const userObj = JSON.parse(localUser);
-              userObj.fotoUrl = data.fotoUrl;
-              localStorage.setItem('usuario', JSON.stringify(userObj));
-            }
-            this.subiendoFoto = false;
-            this.mostrandoCropper = false;
-            this.selectedImageFile = null;
-            this.ns.success('Foto de perfil actualizada correctamente');
-            this.guardarDatosFormulario();
-          },
-          error: () => {
-            this.subiendoFoto = false;
-            this.ns.error('No se pudo subir la foto de perfil');
+  guardarCambios() {
+    this.guardarDatosFormulario();
+  }
+
+  /** Llamado desde el botón "Guardar Foto" dentro del modal de recorte */
+  async guardarFoto() {
+    if (!this.cropperRef) return;
+    this.subiendoFoto = true;
+    const blob = await this.cropperRef.getBlob();
+    if (blob) {
+      const file = new File([blob], 'perfil_recortado.png', { type: 'image/png' });
+      this.usuarioService.subirFoto(this.usuario.id, file).subscribe({
+        next: (data) => {
+          this.usuario.fotoUrl = data.fotoUrl;
+          this.usuarioEditado.fotoUrl = data.fotoUrl;
+          const localUser = localStorage.getItem('usuario');
+          if (localUser) {
+            const userObj = JSON.parse(localUser);
+            userObj.fotoUrl = data.fotoUrl;
+            localStorage.setItem('usuario', JSON.stringify(userObj));
           }
-        });
-      } else {
-        this.subiendoFoto = false;
-        this.guardarDatosFormulario();
-      }
+          this.subiendoFoto = false;
+          this.mostrandoCropper = false;
+          this.selectedImageFile = null;
+          this.ns.success('Foto de perfil actualizada correctamente');
+        },
+        error: () => {
+          this.subiendoFoto = false;
+          this.ns.error('No se pudo subir la foto de perfil');
+        }
+      });
     } else {
-      this.guardarDatosFormulario();
+      this.subiendoFoto = false;
     }
   }
 

@@ -12,7 +12,7 @@ import { AvatarCropperComponent } from '../avatar-cropper/avatar-cropper.compone
   styleUrls: ['./admin-medicos.css']
 })
 export class AdminMedicos implements OnInit {
-  @ViewChild(AvatarCropperComponent) cropperRef?: AvatarCropperComponent;
+  @ViewChild('cropperModal') cropperRef?: AvatarCropperComponent;
 
   constructor(public ctrl: AdminMedicosController) {}
 
@@ -20,18 +20,16 @@ export class AdminMedicos implements OnInit {
     this.ctrl.inicializar();
   }
 
-  async guardarPerfil() {
-    if (this.ctrl.mostrandoCropper && this.cropperRef) {
-      this.ctrl.subiendoFoto = true;
-      const blob = await this.cropperRef.getBlob();
-      if (blob) {
-        // onCropBlob uploads the photo and then calls guardarPerfilEditado internally
-        this.ctrl.onCropBlob(blob);
-        return;
-      } else {
-        this.ctrl.subiendoFoto = false;
-      }
+  /** Llamado desde el botón "Guardar Foto" dentro del modal de recorte */
+  async guardarFoto() {
+    if (!this.cropperRef) return;
+    this.ctrl.subiendoFoto = true;
+    const blob = await this.cropperRef.getBlob();
+    if (blob) {
+      // Sube la foto y cierra el modal de recorte; la foto quedará actualizada en el edit modal
+      this.ctrl.onCropBlob(blob);
+    } else {
+      this.ctrl.subiendoFoto = false;
     }
-    this.ctrl.guardarPerfilEditado();
   }
 }

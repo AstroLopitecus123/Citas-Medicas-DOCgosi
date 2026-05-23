@@ -17,6 +17,7 @@ export class Usuario {
   dni?: string;
   correoUsuario?: string; 
   configuracionVisual?: string;
+  fotoUrl?: string;
   constructor(data?: any) {
     if (data) {
       Object.assign(this, data);

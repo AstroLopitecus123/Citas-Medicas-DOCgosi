@@ -17,6 +17,7 @@ export class UsuarioFull {
   pais: Pais = new Pais();
   especialidad?: Especialidad;         
   especialidadSeleccionada?: Especialidad; 
+  fotoUrl: string = '';
 
   constructor(data?: any) {
     if (data) {
@@ -36,6 +37,7 @@ export class UsuarioFull {
       this.fechaNacimiento = usuario.fechaNacimiento ?? '';
       this.dni = usuario.dni ?? '';
       this.pais = new Pais(usuario.pais);
+      this.fotoUrl = usuario.fotoUrl ?? '';
 
       this.especialidad = data.especialidad ?? undefined;
       this.especialidadSeleccionada = this.especialidad;

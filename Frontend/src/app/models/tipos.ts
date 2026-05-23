@@ -16,6 +16,7 @@ export interface Usuario {
   nombre?: string;
   correo?: string;
   rol?: RolUsuario;
+  fotoUrl?: string;
   [key: string]: any;
 }
 

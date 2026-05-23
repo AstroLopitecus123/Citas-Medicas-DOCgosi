@@ -240,18 +240,18 @@ export class AvatarCropperComponent implements AfterViewInit, OnChanges, OnDestr
 
     ctx.drawImage(this.img, ix, iy, scaledW, scaledH);
 
-    // Dark overlay outside the circle
+    // Light gray overlay outside the circle
     ctx.save();
-    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillStyle = 'rgba(200, 210, 220, 0.75)';
     ctx.beginPath();
     ctx.rect(0, 0, size, size);
     ctx.arc(cx, cy, r, 0, Math.PI * 2, true); // cutout (counter-clockwise)
     ctx.fill('evenodd');
     ctx.restore();
 
-    // Circle border
+    // Circle border (visible on light gray)
     ctx.save();
-    ctx.strokeStyle = '#ffffff';
+    ctx.strokeStyle = 'rgba(15, 191, 106, 0.9)';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
@@ -259,10 +259,10 @@ export class AvatarCropperComponent implements AfterViewInit, OnChanges, OnDestr
     ctx.restore();
   }
 
-  confirmar() {
-    if (!this.imgLoaded) return;
+  /** Called by parent (via @ViewChild) when user clicks 'Guardar Cambios' */
+  getBlob(): Promise<Blob | null> {
+    if (!this.imgLoaded) return Promise.resolve(null);
 
-    // Export only the circle content to a 256x256 canvas
     const exportCanvas = document.createElement('canvas');
     exportCanvas.width = 256;
     exportCanvas.height = 256;
@@ -273,7 +273,6 @@ export class AvatarCropperComponent implements AfterViewInit, OnChanges, OnDestr
     const cy = size / 2;
     const r = this.CIRCLE_RADIUS;
 
-    // Source rect (the circle area in the main canvas)
     const srcX = cx - r;
     const srcY = cy - r;
     const srcSize = r * 2;
@@ -284,14 +283,8 @@ export class AvatarCropperComponent implements AfterViewInit, OnChanges, OnDestr
       0, 0, 256, 256
     );
 
-    exportCanvas.toBlob((blob) => {
-      if (blob) {
-        this.cropBlob.emit(blob);
-      }
-    }, 'image/png');
-  }
-
-  onCancelar() {
-    this.cancelar.emit();
+    return new Promise((resolve) => {
+      exportCanvas.toBlob((blob) => resolve(blob), 'image/png');
+    });
   }
 }

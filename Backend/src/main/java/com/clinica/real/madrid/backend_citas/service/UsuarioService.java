@@ -232,6 +232,10 @@ public class UsuarioService {
         usuario.setTelefono(datos.getTelefono());
         usuario.setFechaNacimiento(datos.getFechaNacimiento());
         usuario.setDni(datos.getDni());
+        
+        if (datos.getFotoUrl() != null) {
+            usuario.setFotoUrl(datos.getFotoUrl());
+        }
 
         if (datos.getPais() != null && datos.getPais().getId() != null) {
             Pais pais = paisRepository.findById(datos.getPais().getId())

@@ -56,6 +56,9 @@
             </td>
             <td>
               <div class="actions-flex justify-center">
+                <button class="btn-table-action btn-edit" (click)="ctrl.abrirModalEditarPerfil(medico)" title="Editar Perfil">
+                  <i class="fa-solid fa-user-pen"></i> Editar
+                </button>
                 <button class="btn-table-action btn-assign" (click)="ctrl.abrirModalAsignar(medico)" title="Asignar Especialidad">
                   <i class="fa-solid fa-id-card-clip"></i> Especialidad
                 </button>
@@ -109,6 +112,73 @@
         <button class="btn-cancel-glass" (click)="ctrl.cerrarModal()">Cancelar</button>
         <button class="btn-confirm-glass" (click)="ctrl.asignarEspecialidades()">
           <i class="fa-solid fa-floppy-disk"></i> Guardar Asignación
+        </button>
+    </div>
+  </div>
+
+  <!-- Modal Editar Perfil -->
+  <div class="glass-overlay" *ngIf="ctrl.mostrandoModalEditarPerfil" (click)="ctrl.cerrarModalEditarPerfil()">
+    <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
+      <div class="modal-header-glass">
+        <div class="header-info">
+          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
+            <i class="fa-solid fa-user-pen"></i>
+          </div>
+          <div>
+            <h3>Editar Perfil de Médico</h3>
+            <p>Modifica los datos personales y foto del profesional.</p>
+          </div>
+        </div>
+        <button class="btn-close-glass" (click)="ctrl.cerrarModalEditarPerfil()">&times;</button>
+      </div>
+
+      <div class="modal-body-glass">
+        <!-- Foto de Perfil Upload -->
+        <div class="edit-avatar-section mb-4" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 25px;">
+          <div class="avatar-wrapper-edit" style="position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0fbf6a; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden;">
+            <img *ngIf="ctrl.fotoUrlEditado; else defaultEditAvatar" [src]="ctrl.fotoUrlEditado" style="width: 100%; height: 100%; object-fit: cover;" alt="Vista previa de foto">
+            <ng-template #defaultEditAvatar>
+              <i class="fa-solid fa-user-doctor" style="font-size: 3rem; color: #94a3b8;"></i>
+            </ng-template>
+            
+            <label class="avatar-upload-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.6); color: white; text-align: center; padding: 4px 0; font-size: 0.8rem; cursor: pointer; transition: 0.2s;" title="Cambiar foto de perfil">
+              <i class="fa-solid fa-camera" *ngIf="!ctrl.subiendoFoto"></i>
+              <i class="fa-solid fa-circle-notch fa-spin" *ngIf="ctrl.subiendoFoto"></i>
+              <input type="file" (change)="ctrl.onFotoSelected($event)" accept="image/*" style="display: none;">
+            </label>
+          </div>
+          <span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">Presiona la cámara para cambiar foto</span>
+        </div>
+
+        <!-- Campos de Datos -->
+        <div class="form-grid-edit" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left;">
+          <div class="form-group-modern" style="display: flex; flex-direction: column; gap: 6px;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">Nombres</label>
+            <input type="text" class="form-control-text" [(ngModel)]="ctrl.nombreEditado" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem;">
+          </div>
+          <div class="form-group-modern" style="display: flex; flex-direction: column; gap: 6px;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">Apellidos</label>
+            <input type="text" class="form-control-text" [(ngModel)]="ctrl.apellidoEditado" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem;">
+          </div>
+          <div class="form-group-modern" style="display: flex; flex-direction: column; gap: 6px; grid-column: span 2;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">Correo Electrónico</label>
+            <input type="email" class="form-control-text" [(ngModel)]="ctrl.correoEditado" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem;">
+          </div>
+          <div class="form-group-modern" style="display: flex; flex-direction: column; gap: 6px;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">Teléfono</label>
+            <input type="text" class="form-control-text" [(ngModel)]="ctrl.telefonoEditado" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem;">
+          </div>
+          <div class="form-group-modern" style="display: flex; flex-direction: column; gap: 6px;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">Documento DNI</label>
+            <input type="text" class="form-control-text" [(ngModel)]="ctrl.dniEditado" style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem;">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-glass">
+        <button class="btn-cancel-glass" (click)="ctrl.cerrarModalEditarPerfil()">Cancelar</button>
+        <button class="btn-confirm-glass" (click)="ctrl.guardarPerfilEditado()" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
         </button>
       </div>
     </div>

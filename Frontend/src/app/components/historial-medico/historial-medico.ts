@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { HistorialService } from '../../services/historial.service';
 import { Historial } from '../../models/historial.model';
 import { NotificationService } from '../../services/notification.service';
@@ -10,12 +11,14 @@ import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-historial-medico',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './historial-medico.html',
   styleUrls: ['./historial-medico.css']
 })
 export class HistorialMedicoComponent implements OnInit {
   historiales: Historial[] = [];
+  historialesFiltrados: Historial[] = [];
+  filtroBusqueda = '';
   cargando = true;
   usuario: any = null;
   pacienteId: number | null = null;
@@ -64,6 +67,7 @@ export class HistorialMedicoComponent implements OnInit {
     request$.subscribe({
       next: (data) => {
         this.historiales = data;
+        this.filtrarHistoriales();
         this.cargando = false;
       },
       error: (err) => {
@@ -72,6 +76,30 @@ export class HistorialMedicoComponent implements OnInit {
         this.cargando = false;
       }
     });
+  }
+
+  filtrarHistoriales() {
+    if (!this.filtroBusqueda.trim()) {
+      this.historialesFiltrados = this.historiales;
+      return;
+    }
+    const q = this.filtroBusqueda.toLowerCase().trim();
+    this.historialesFiltrados = this.historiales.filter(h => {
+      const nombrePaciente = `${h.cita.paciente.nombre} ${h.cita.paciente.apellido}`.toLowerCase();
+      const nombreMedico = `${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`.toLowerCase();
+      const especialidad = h.cita.medico.especialidad ? h.cita.medico.especialidad.nombre.toLowerCase() : '';
+      const diagnostico = h.diagnostico ? h.diagnostico.toLowerCase() : '';
+      const receta = h.receta ? h.receta.toLowerCase() : '';
+      return nombrePaciente.includes(q) || nombreMedico.includes(q) || especialidad.includes(q) || diagnostico.includes(q) || receta.includes(q);
+    });
+  }
+
+  obtenerRutaVolver(): string {
+    if (!this.usuario) return '/login';
+    if (this.usuario.rol === 'ADMIN') return '/admin';
+    if (this.usuario.rol === 'MEDICO') return '/medico/dashboard';
+    if (this.usuario.rol === 'RECEPCION') return '/recepcion/dashboard';
+    return '/paciente/dashboard';
   }
 
   descargarPDF(h: Historial) {

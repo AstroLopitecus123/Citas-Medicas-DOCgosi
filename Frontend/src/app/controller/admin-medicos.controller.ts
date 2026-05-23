@@ -1,5 +1,6 @@
 import { MedicoService } from '../services/medico.service';
 import { EspecialidadService } from '../services/especialidad.service';
+import { UsuarioService } from '../services/usuario.service';
 import { UsuarioFull } from '../models/usuario-full.model';
 import { Especialidad } from '../models/especialidad.model';
 import { Router } from '@angular/router';
@@ -19,12 +20,24 @@ export class AdminMedicosController {
   medicoSeleccionado: UsuarioFull = new UsuarioFull();
   especialidadSeleccionada?: Especialidad;
   mostrandoModalAsignar = false;
+  
+  // Profile edit properties
+  mostrandoModalEditarPerfil = false;
+  subiendoFoto = false;
+  nombreEditado = '';
+  apellidoEditado = '';
+  correoEditado = '';
+  telefonoEditado = '';
+  dniEditado = '';
+  fotoUrlEditado = '';
+
   error = '';
   cargando = false;
 
   constructor(
     private medicoService: MedicoService,
     private especialidadService: EspecialidadService,
+    private usuarioService: UsuarioService,
     private router: Router
   ) { }
 
@@ -99,5 +112,63 @@ export class AdminMedicosController {
   modificarHorario(medico: UsuarioFull) {
     console.log('Modificar horario del médico:', medico.nombre, medico.id);
     this.router.navigate(['/gestionar-disponibilidad', medico.medicoId]);
+  }
+
+  abrirModalEditarPerfil(medico: UsuarioFull) {
+    this.medicoSeleccionado = medico;
+    this.nombreEditado = medico.nombre;
+    this.apellidoEditado = medico.apellido;
+    this.correoEditado = medico.correo;
+    this.telefonoEditado = medico.telefono;
+    this.dniEditado = medico.dni;
+    this.fotoUrlEditado = medico.fotoUrl;
+    this.mostrandoModalEditarPerfil = true;
+  }
+
+  cerrarModalEditarPerfil() {
+    this.mostrandoModalEditarPerfil = false;
+  }
+
+  onFotoSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.subiendoFoto = true;
+      this.usuarioService.subirFoto(this.medicoSeleccionado.id, file).subscribe({
+        next: (data) => {
+          this.fotoUrlEditado = data.fotoUrl;
+          this.subiendoFoto = false;
+        },
+        error: (err) => {
+          console.error('Error al subir foto:', err);
+          this.subiendoFoto = false;
+        }
+      });
+    }
+  }
+
+  guardarPerfilEditado() {
+    if (!this.nombreEditado || !this.apellidoEditado || !this.correoEditado) {
+      this.error = 'Los campos Nombre, Apellido y Correo son obligatorios';
+      return;
+    }
+
+    const datosActualizados = new UsuarioFull(this.medicoSeleccionado);
+    datosActualizados.nombre = this.nombreEditado;
+    datosActualizados.apellido = this.apellidoEditado;
+    datosActualizados.correo = this.correoEditado;
+    datosActualizados.telefono = this.telefonoEditado;
+    datosActualizados.dni = this.dniEditado;
+    datosActualizados.fotoUrl = this.fotoUrlEditado;
+
+    this.usuarioService.actualizarUsuario(datosActualizados).subscribe({
+      next: (updated) => {
+        this.cerrarModalEditarPerfil();
+        this.cargarMedicos();
+      },
+      error: (err) => {
+        console.error('Error al actualizar médico:', err);
+        this.error = 'Error al guardar los cambios del perfil';
+      }
+    });
   }
 }

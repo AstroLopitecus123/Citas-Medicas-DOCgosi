@@ -66,7 +66,10 @@
           
           <!-- Vista para el Paciente: Ve la foto e información del Doctor -->
           <div class="doctor-info" *ngIf="usuario?.rol === 'PACIENTE'" style="display: flex; align-items: center; gap: 15px;">
-            <img [src]="h.cita.medico.usuario.fotoUrl || ('https://ui-avatars.com/api/?name=' + h.cita.medico.usuario.nombre + '+' + h.cita.medico.usuario.apellido + '&background=0D8ABC&color=fff')" alt="Doctor" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid #ebf8ff;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; border: 2px solid #ebf8ff; overflow: hidden; flex-shrink: 0; background: #ebf8ff; display: flex; align-items: center; justify-content: center;">
+              <img *ngIf="h.cita.medico.usuario.fotoUrl" [src]="h.cita.medico.usuario.fotoUrl" alt="Doctor" style="width: 100%; height: 100%; object-fit: cover;">
+              <i *ngIf="!h.cita.medico.usuario.fotoUrl" class="fa-solid fa-user-doctor" style="font-size: 1.4rem; color: #2b6cb0;"></i>
+            </div>
             <div>
               <h4 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">Dr. {{ h.cita.medico.usuario.nombre }} {{ h.cita.medico.usuario.apellido }}</h4>
               <span class="especialidad-tag" *ngIf="h.cita.medico.especialidad" style="display: inline-block; background: #ebf8ff; color: #2b6cb0; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; margin-top: 4px;">{{ h.cita.medico.especialidad.nombre }}</span>
@@ -75,7 +78,10 @@
 
           <!-- Vista para el Admin, Médico o Recepción: Ve la foto e información del Paciente -->
           <div class="doctor-info" *ngIf="usuario?.rol !== 'PACIENTE'" style="display: flex; align-items: center; gap: 15px;">
-            <img [src]="h.cita.paciente.fotoUrl || ('https://ui-avatars.com/api/?name=' + h.cita.paciente.nombre + '+' + h.cita.paciente.apellido + '&background=10B981&color=fff')" alt="Paciente" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid #ecfdf5;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; border: 2px solid #ecfdf5; overflow: hidden; flex-shrink: 0; background: #ecfdf5; display: flex; align-items: center; justify-content: center;">
+              <img *ngIf="h.cita.paciente.fotoUrl" [src]="h.cita.paciente.fotoUrl" alt="Paciente" style="width: 100%; height: 100%; object-fit: cover;">
+              <i *ngIf="!h.cita.paciente.fotoUrl" class="fa-solid fa-user" style="font-size: 1.4rem; color: #10B981;"></i>
+            </div>
             <div>
               <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #10B981;">Paciente: {{ h.cita.paciente.nombre }} {{ h.cita.paciente.apellido }}</h4>
               <span class="especialidad-tag" style="display: inline-block; background: #f0fdf4; color: #166534; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 8px; margin-top: 4px; border: 1px solid #dcfce7;">

@@ -55,6 +55,11 @@ public class HistorialController {
         return historialService.listarTodos();
     }
 
+    @GetMapping("/todas-con-citas")
+    public List<Historial> listarTodasConCitas() {
+        return historialService.listarTodasConCitas();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Historial> actualizarHistorial(
             @PathVariable Long id,

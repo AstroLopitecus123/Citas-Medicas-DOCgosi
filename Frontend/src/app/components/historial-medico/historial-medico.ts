@@ -61,7 +61,7 @@ export class HistorialMedicoComponent implements OnInit {
       request$ = this.historialService.obtenerHistorialPorPaciente(this.pacienteId);
     } else {
 
-      request$ = this.historialService.listarHistoriales();
+      request$ = this.historialService.listarTodasConCitas();
     }
 
     request$.subscribe({

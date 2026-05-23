@@ -85,4 +85,11 @@ export class HistorialService {
       { headers: this.getAuthHeaders() }
     );
   }
+
+  listarTodasConCitas(): Observable<Historial[]> {
+    return this.http.get<Historial[]>(
+      `${this.apiUrl}/todas-con-citas`,
+      { headers: this.getAuthHeaders() }
+    );
+  }
 }

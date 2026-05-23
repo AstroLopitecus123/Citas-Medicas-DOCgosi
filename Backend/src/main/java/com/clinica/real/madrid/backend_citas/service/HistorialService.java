@@ -63,4 +63,26 @@ public class HistorialService {
     public List<Historial> listarPorPaciente(Long pacienteId) {
         return historialRepository.findByCitaPacienteIdOrderByCitaFechaDesc(pacienteId);
     }
+
+    /**
+     * Returns a Historial entry for EVERY CONFIRMED appointment.
+     * - If a real historial exists for that cita, it is returned.
+     * - If not, a transient (unsaved) placeholder Historial is created so the cita
+     *   still shows up in the "Historias Clínicas" view.
+     */
+    public List<Historial> listarTodasConCitas() {
+        List<Cita> citasConfirmadas = citaRepository.findByEstadoOrderByFechaDesc(
+                com.clinica.real.madrid.backend_citas.model.EstadoCita.CONFIRMADA);
+
+        return citasConfirmadas.stream().map(cita -> {
+            return historialRepository.findByCitaId(cita.getId()).orElseGet(() -> {
+                Historial placeholder = new Historial();
+                placeholder.setCita(cita);
+                placeholder.setDiagnostico("Pendiente de registro médico");
+                placeholder.setReceta("Sin receta aún");
+                placeholder.setNotas(null);
+                return placeholder;
+            });
+        }).collect(java.util.stream.Collectors.toList());
+    }
 }

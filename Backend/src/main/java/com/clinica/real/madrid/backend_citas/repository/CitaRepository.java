@@ -51,4 +51,6 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     int actualizarEstado(@Param("id") Long id, @Param("nuevoEstado") EstadoCita nuevoEstado);
 
     List<Cita> findByFechaBetweenAndEstado(LocalDateTime desde, LocalDateTime hasta, EstadoCita estado);
+
+    List<Cita> findByEstadoOrderByFechaDesc(EstadoCita estado);
 }

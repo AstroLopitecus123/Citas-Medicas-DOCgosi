@@ -23,8 +23,16 @@
 
         <div class="premium-card profile-main-card">
             <div class="profile-banner">
-                <div class="avatar-wrapper">
-                    <i class="fa-solid fa-user-circle"></i>
+                <div class="avatar-wrapper position-relative">
+                    <img *ngIf="usuario.fotoUrl; else defaultAvatar" [src]="usuario.fotoUrl" class="user-avatar" alt="Foto de perfil">
+                    <ng-template #defaultAvatar>
+                        <i class="fa-solid fa-user-circle"></i>
+                    </ng-template>
+                    <label class="avatar-upload-btn" title="Cambiar foto de perfil">
+                        <i class="fa-solid fa-camera" *ngIf="!subiendoFoto"></i>
+                        <i class="fa-solid fa-circle-notch fa-spin" *ngIf="subiendoFoto"></i>
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+                    </label>
                 </div>
                 <div class="banner-info">
                     <h3>{{ usuario.nombre }} {{ usuario.apellido }}</h3>

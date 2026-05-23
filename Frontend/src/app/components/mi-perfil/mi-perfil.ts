@@ -19,6 +19,7 @@ export class MiPerfilComponent implements OnInit {
   listaPaises: Pais[] = [];
   editando = false;
   cargando = true;
+  subiendoFoto = false;
 
   mostrarModalPassword = false;
   pwdActual = '';
@@ -130,5 +131,38 @@ export class MiPerfilComponent implements OnInit {
         this.ns.error(msg);
       }
     });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        this.ns.error('Por favor, selecciona una imagen válida');
+        return;
+      }
+
+      this.subiendoFoto = true;
+      this.usuarioService.subirFoto(this.usuario.id, file).subscribe({
+        next: (data) => {
+          this.usuario.fotoUrl = data.fotoUrl;
+          this.usuarioEditado.fotoUrl = data.fotoUrl;
+
+          const localUser = localStorage.getItem('usuario');
+          if (localUser) {
+            const userObj = JSON.parse(localUser);
+            userObj.fotoUrl = data.fotoUrl;
+            localStorage.setItem('usuario', JSON.stringify(userObj));
+          }
+
+          this.subiendoFoto = false;
+          this.ns.success('Foto de perfil actualizada correctamente');
+        },
+        error: (err) => {
+          console.error('Error al subir la foto:', err);
+          this.subiendoFoto = false;
+          this.ns.error('No se pudo subir la foto de perfil');
+        }
+      });
+    }
   }
 }

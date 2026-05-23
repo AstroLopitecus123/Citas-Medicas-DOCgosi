@@ -134,4 +134,12 @@ export class UsuarioService {
         })
       );
   }
+
+  subirFoto(id: number, archivo: File): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    const headers = { Authorization: `Bearer ${token}` };
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    return this.http.post(`${this.usuariosUrl}/${id}/foto`, formData, { headers });
+  }
 }

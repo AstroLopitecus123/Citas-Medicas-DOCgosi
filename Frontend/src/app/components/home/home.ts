@@ -1,8 +1,9 @@
-import { Component, AfterViewInit, HostListener } from '@angular/core';
+import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NarratorDirective } from '../../directives/narrator.directive';
 import { UsuarioService } from '../../services/usuario.service';
+import { MedicoService } from '../../services/medico.service';
 
 declare var L: any;
 
@@ -13,7 +14,7 @@ declare var L: any;
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit {
   especialidades = [
     { titulo: 'Cardiología', descripcion: 'Especialistas en la salud de su corazón y sistema circulatorio.', imagen: 'assets/images/ServiceEmergency.png' },
     { titulo: 'Pediatría', descripcion: 'Atención médica integral para el crecimiento sano de sus hijos.', imagen: 'assets/images/ServiceNurse.png' },
@@ -21,11 +22,7 @@ export class HomeComponent implements AfterViewInit {
     { titulo: 'Ginecología', descripcion: 'Cuidado especializado para la salud integral de la mujer.', imagen: 'assets/images/ServiceLab.png' }
   ];
 
-  doctores = [
-    { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.png' },
-    { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.png' },
-    { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.png' }
-  ];
+  doctores: any[] = [];
 
   sedes = [
     { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/SedeMiraflores.jpg' },
@@ -36,8 +33,41 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private medicoService: MedicoService
   ) {}
+
+  ngOnInit() {
+    this.cargarDoctores();
+  }
+
+  cargarDoctores() {
+    this.medicoService.listarMedicosPublico().subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          this.doctores = data.map(doc => ({
+            nombre: `Dr. ${doc.usuario.nombre} ${doc.usuario.apellido}`,
+            cargo: doc.especialidad ? doc.especialidad.nombre : 'Médico General',
+            foto: doc.usuario.fotoUrl || 'assets/images/HomeDoctor.png'
+          }));
+        } else {
+          this.usarDoctoresFallback();
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar médicos en el Home:', err);
+        this.usarDoctoresFallback();
+      }
+    });
+  }
+
+  private usarDoctoresFallback() {
+    this.doctores = [
+      { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.png' },
+      { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.png' },
+      { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.png' }
+    ];
+  }
 
   ngAfterViewInit() {
     this.initMap();

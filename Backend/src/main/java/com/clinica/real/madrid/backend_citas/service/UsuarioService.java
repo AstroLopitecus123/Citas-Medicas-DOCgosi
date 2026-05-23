@@ -299,5 +299,13 @@ public class UsuarioService {
         usuario.setContrasena(passwordEncoder.encode(nuevaPassword));
         usuarioRepository.save(usuario);
     }
+
+    @Transactional
+    public Usuario actualizarFoto(Long id, String url) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        usuario.setFotoUrl(url);
+        return usuarioRepository.save(usuario);
+    }
 }
 

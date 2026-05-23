@@ -133,8 +133,13 @@ public class Usuario {
 		this.tokenExpira = tokenExpira;
 	}
 
+    @Column(name = "foto_url", length = 255)
+    private String fotoUrl;
+
     public String getConfiguracionVisual() { return configuracionVisual; }
     public void setConfiguracionVisual(String configuracionVisual) { this.configuracionVisual = configuracionVisual; }
 
+    public String getFotoUrl() { return fotoUrl; }
+    public void setFotoUrl(String fotoUrl) { this.fotoUrl = fotoUrl; }
 }
 

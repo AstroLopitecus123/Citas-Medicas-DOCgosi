@@ -5,6 +5,7 @@ import com.clinica.real.madrid.backend_citas.dto.UsuarioRegistroRequest;
 import com.clinica.real.madrid.backend_citas.model.EstadoUsuario;
 import com.clinica.real.madrid.backend_citas.model.Usuario;
 import com.clinica.real.madrid.backend_citas.service.UsuarioService;
+import com.clinica.real.madrid.backend_citas.service.CloudinaryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,10 +34,12 @@ import java.util.Map;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, CloudinaryService cloudinaryService) {
         this.usuarioService = usuarioService;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping
@@ -115,6 +121,23 @@ public class UsuarioController {
             @RequestBody PasswordChangeRequest request) {
         usuarioService.cambiarPassword(id, request.getActualPassword(), request.getNuevapassword());
         return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    }
+
+    @PostMapping("/{id}/foto")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public ResponseEntity<?> subirFoto(
+            @PathVariable Long id,
+            @RequestParam("archivo") MultipartFile archivo) {
+        try {
+            Map uploadResult = cloudinaryService.upload(archivo);
+            String secureUrl = (String) uploadResult.get("secure_url");
+            Usuario usuario = usuarioService.actualizarFoto(id, secureUrl);
+            usuario.setContrasena(null);
+            return ResponseEntity.ok(usuario);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al subir la imagen a Cloudinary: " + e.getMessage());
+        }
     }
 }
 

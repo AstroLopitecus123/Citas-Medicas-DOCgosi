@@ -31,6 +31,10 @@ export class MedicoService {
     return this.http.get<UsuarioFull[]>(this.apiUrl, { headers: this.getAuthHeaders() });
   }
 
+  listarMedicosPublico(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
   obtenerPorUsuarioId(usuarioId: number): Observable<Medico> {
     const url = `${this.apiUrl}/usuario/${usuarioId}`;
     const headers = this.getAuthHeaders();

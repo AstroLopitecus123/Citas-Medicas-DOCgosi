@@ -26,6 +26,8 @@ export class MiPerfilComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   mostrandoCropper = false;
+  transform: any = {};
+  zoomVal: number = 1;
 
   mostrarModalPassword = false;
   pwdActual = '';
@@ -150,10 +152,19 @@ export class MiPerfilComponent implements OnInit {
     this.croppedImage = event.blob;
   }
 
+  updateZoom() {
+    this.transform = {
+      ...this.transform,
+      scale: this.zoomVal
+    };
+  }
+
   cancelarRecorte() {
     this.mostrandoCropper = false;
     this.imageChangedEvent = '';
     this.croppedImage = '';
+    this.zoomVal = 1;
+    this.transform = {};
   }
 
   confirmarRecorte() {

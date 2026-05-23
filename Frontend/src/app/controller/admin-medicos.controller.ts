@@ -35,6 +35,8 @@ export class AdminMedicosController {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   mostrandoCropper = false;
+  transform: any = {};
+  zoomVal: number = 1;
 
   error = '';
   cargando = false;
@@ -145,10 +147,19 @@ export class AdminMedicosController {
     this.croppedImage = event.blob;
   }
 
+  updateZoom() {
+    this.transform = {
+      ...this.transform,
+      scale: this.zoomVal
+    };
+  }
+
   cancelarRecorte() {
     this.mostrandoCropper = false;
     this.imageChangedEvent = '';
     this.croppedImage = '';
+    this.zoomVal = 1;
+    this.transform = {};
   }
 
   confirmarRecorte() {

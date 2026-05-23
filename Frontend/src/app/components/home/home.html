@@ -128,10 +128,7 @@
         <div class="doctor-card" *ngFor="let doc of doctores; let i = index">
           <!-- Medalla de ranking -->
           <div class="rank-badge" [class.gold]="i === 0" [class.silver]="i === 1" [class.bronze]="i === 2" [class.rank4]="i === 3">
-            <span *ngIf="i === 0">🥇</span>
-            <span *ngIf="i === 1">🥈</span>
-            <span *ngIf="i === 2">🥉</span>
-            <span *ngIf="i === 3">#4</span>
+            <span>#{{ i + 1 }}</span>
           </div>
 
           <div class="doc-pic">

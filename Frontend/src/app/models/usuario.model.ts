@@ -37,6 +37,7 @@ export class LoginResponse {
   dni?: string;
   paisNombre?: string;
   rol?: string;
+  fotoUrl?: string;
 
   constructor(data?: any) {
     if (data) {

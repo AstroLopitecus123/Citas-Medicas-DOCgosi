@@ -15,6 +15,7 @@ public class UsuarioResponse {
     private String dni;
     private String paisNombre;
     private String rol; 
+    private String fotoUrl;
 
     public UsuarioResponse(String token, Usuario usuario) {
         this.token = token;
@@ -28,6 +29,7 @@ public class UsuarioResponse {
             this.dni = usuario.getDni();
             this.paisNombre = usuario.getPais() != null ? usuario.getPais().getNombre() : null;
             this.rol = usuario.getRol() != null ? usuario.getRol().name() : null;
+            this.fotoUrl = usuario.getFotoUrl();
         }
     }
 
@@ -41,4 +43,5 @@ public class UsuarioResponse {
     public String getDni() { return dni; }
     public String getPaisNombre() { return paisNombre; }
     public String getRol() { return rol; }
+    public String getFotoUrl() { return fotoUrl; }
 }

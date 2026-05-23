@@ -78,7 +78,7 @@ public class MedicoService {
     }
 
     public List<Map<String, Object>> top4PorCitas() {
-        List<Object[]> rows = citaRepository.findTopMedicosByCitaCount(
+        List<Object[]> rows = medicoRepository.findTopMedicosByCitaCount(
             org.springframework.data.domain.PageRequest.of(0, 4)
         );
         List<Map<String, Object>> result = new ArrayList<>();

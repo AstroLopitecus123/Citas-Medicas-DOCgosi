@@ -5,11 +5,12 @@ import { UsuarioService } from '../../services/usuario.service';
 import { NotificationService } from '../../services/notification.service';
 import { UsuarioFull } from '../../models/usuario-full.model';
 import { Pais } from '../../models/pais.model';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ImageCropperComponent],
   templateUrl: './mi-perfil.html',
   styleUrls: ['./mi-perfil.css']
 })
@@ -20,6 +21,11 @@ export class MiPerfilComponent implements OnInit {
   editando = false;
   cargando = true;
   subiendoFoto = false;
+
+  // Cropper properties
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  mostrandoCropper = false;
 
   mostrarModalPassword = false;
   pwdActual = '';
@@ -134,14 +140,26 @@ export class MiPerfilComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        this.ns.error('Por favor, selecciona una imagen válida');
-        return;
-      }
+    if (event.target.files && event.target.files.length > 0) {
+      this.imageChangedEvent = event;
+      this.mostrandoCropper = true;
+    }
+  }
 
+  imageCropped(event: any) {
+    this.croppedImage = event.blob;
+  }
+
+  cancelarRecorte() {
+    this.mostrandoCropper = false;
+    this.imageChangedEvent = '';
+    this.croppedImage = '';
+  }
+
+  confirmarRecorte() {
+    if (this.croppedImage) {
       this.subiendoFoto = true;
+      const file = new File([this.croppedImage], 'perfil_recortado.png', { type: 'image/png' });
       this.usuarioService.subirFoto(this.usuario.id, file).subscribe({
         next: (data) => {
           this.usuario.fotoUrl = data.fotoUrl;
@@ -155,11 +173,14 @@ export class MiPerfilComponent implements OnInit {
           }
 
           this.subiendoFoto = false;
+          this.mostrandoCropper = false;
+          this.imageChangedEvent = '';
           this.ns.success('Foto de perfil actualizada correctamente');
         },
         error: (err) => {
           console.error('Error al subir la foto:', err);
           this.subiendoFoto = false;
+          this.mostrandoCropper = false;
           this.ns.error('No se pudo subir la foto de perfil');
         }
       });

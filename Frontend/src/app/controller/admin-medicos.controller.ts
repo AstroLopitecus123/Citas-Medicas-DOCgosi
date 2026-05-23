@@ -30,6 +30,11 @@ export class AdminMedicosController {
   telefonoEditado = '';
   dniEditado = '';
   fotoUrlEditado = '';
+  
+  // Cropper properties
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  mostrandoCropper = false;
 
   error = '';
   cargando = false;
@@ -130,17 +135,37 @@ export class AdminMedicosController {
   }
 
   onFotoSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.imageChangedEvent = event;
+      this.mostrandoCropper = true;
+    }
+  }
+
+  imageCropped(event: any) {
+    this.croppedImage = event.blob;
+  }
+
+  cancelarRecorte() {
+    this.mostrandoCropper = false;
+    this.imageChangedEvent = '';
+    this.croppedImage = '';
+  }
+
+  confirmarRecorte() {
+    if (this.croppedImage) {
       this.subiendoFoto = true;
+      const file = new File([this.croppedImage], 'perfil_recortado.png', { type: 'image/png' });
       this.usuarioService.subirFoto(this.medicoSeleccionado.id, file).subscribe({
         next: (data) => {
           this.fotoUrlEditado = data.fotoUrl;
           this.subiendoFoto = false;
+          this.mostrandoCropper = false;
+          this.imageChangedEvent = '';
         },
         error: (err) => {
           console.error('Error al subir foto:', err);
           this.subiendoFoto = false;
+          this.mostrandoCropper = false;
         }
       });
     }

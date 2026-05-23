@@ -163,8 +163,8 @@ export class HistorialMedicoComponent implements OnInit {
     return '/paciente/dashboard';
   }
 
-  /** Carga el logo como base64 para incluirlo en el PDF */
-  private cargarLogoBase64(): Promise<string> {
+  /** Carga el logo como base64 y devuelve sus dimensiones originales */
+  private cargarLogoBase64(): Promise<{ url: string; w: number; h: number }> {
     return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
@@ -176,12 +176,16 @@ export class HistorialMedicoComponent implements OnInit {
           const ctx = canvas.getContext('2d');
           if (ctx) {
             ctx.drawImage(img, 0, 0);
-            resolve(canvas.toDataURL('image/png'));
-          } else { resolve(''); }
-        } catch { resolve(''); }
+            resolve({
+              url: canvas.toDataURL('image/png'),
+              w: img.naturalWidth,
+              h: img.naturalHeight
+            });
+          } else { resolve({ url: '', w: 0, h: 0 }); }
+        } catch { resolve({ url: '', w: 0, h: 0 }); }
       };
-      img.onerror = () => resolve('');
-      img.src = '/assets/images/LogoSOLO.png';
+      img.onerror = () => resolve({ url: '', w: 0, h: 0 });
+      img.src = '/assets/images/LogoSOLO2.png';
     });
   }
 
@@ -198,8 +202,8 @@ export class HistorialMedicoComponent implements OnInit {
     const grisMedio:  [number,number,number] = [100,116, 139];   // #64748b
     const blanco:     [number,number,number] = [255,255, 255];
 
-    // Cargar logo
-    const logoBase64 = await this.cargarLogoBase64();
+    // Cargar logo y dimensiones
+    const logoData = await this.cargarLogoBase64();
 
     // ── Helper: encabezado de página ──────────────────────────────
     const dibujarEncabezado = () => {
@@ -210,13 +214,33 @@ export class HistorialMedicoComponent implements OnInit {
       doc.setFillColor(...verdeClaro);
       doc.rect(0, 46, PAGE_W, 4, 'F');
 
-      // Logo
-      if (logoBase64) {
-        doc.addImage(logoBase64, 'PNG', MARGIN, 9, 26, 26);
+      let textX = MARGIN;
+
+      // Logo con proporciones correctas
+      if (logoData.url && logoData.w && logoData.h) {
+        const maxH = 34; // alto máximo en mm
+        const maxW = 55; // ancho máximo en mm
+        let finalW = logoData.w;
+        let finalH = logoData.h;
+
+        // Escalar manteniendo proporción
+        if (finalH > maxH) {
+          finalW = (maxH / finalH) * finalW;
+          finalH = maxH;
+        }
+        if (finalW > maxW) {
+          finalH = (maxW / finalW) * finalH;
+          finalW = maxW;
+        }
+
+        // Centrar verticalmente en el espacio disponible (46mm)
+        const yOffset = (46 - finalH) / 2;
+        doc.addImage(logoData.url, 'PNG', MARGIN, yOffset, finalW, finalH);
+        
+        textX = MARGIN + finalW + 5; // Dejar un espacio a la derecha del logo
       }
 
       // Nombre clínica
-      const textX = logoBase64 ? MARGIN + 31 : MARGIN;
       doc.setTextColor(...blanco);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(17);

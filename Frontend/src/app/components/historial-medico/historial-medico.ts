@@ -163,100 +163,236 @@ export class HistorialMedicoComponent implements OnInit {
     return '/paciente/dashboard';
   }
 
+  /** Carga el logo como base64 para incluirlo en el PDF */
+  private cargarLogoBase64(): Promise<string> {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || 100;
+          canvas.height = img.naturalHeight || 100;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+          } else { resolve(''); }
+        } catch { resolve(''); }
+      };
+      img.onerror = () => resolve('');
+      img.src = '/assets/images/LogoSOLO.png';
+    });
+  }
+
   /** PDF completo de un paciente agrupado (todas sus citas) */
-  descargarPDFPaciente(grupo: PacienteAgrupado) {
-    const doc = new jsPDF();
-    const primaryColor: [number, number, number] = [9, 122, 74];
-    const blueColor: [number, number, number] = [26, 115, 232];
+  async descargarPDFPaciente(grupo: PacienteAgrupado) {
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const PAGE_W = 210;
+    const MARGIN = 15;
+    const CONTENT_W = PAGE_W - MARGIN * 2;
 
-    // Encabezado
-    doc.setFillColor(...primaryColor);
-    doc.rect(0, 0, 210, 45, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(22);
-    doc.setFont('helvetica', 'bold');
-    doc.text('R.E.T.O SALUD', 105, 18, { align: 'center' });
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    doc.text('HISTORIA CLÍNICA COMPLETA DEL PACIENTE', 105, 30, { align: 'center' });
-    doc.setFontSize(9);
-    doc.text(`Generado el: ${new Date().toLocaleDateString('es-PE')}`, 105, 40, { align: 'center' });
+    const verde:      [number,number,number] = [9,   74,  43];   // #094a2b
+    const verdeClaro: [number,number,number] = [15, 191, 106];   // #0fbf6a
+    const grisOscuro: [number,number,number] = [30,  41,  59];   // #1e293b
+    const grisMedio:  [number,number,number] = [100,116, 139];   // #64748b
+    const blanco:     [number,number,number] = [255,255, 255];
 
-    // Datos del paciente
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(13);
-    doc.setFont('helvetica', 'bold');
-    doc.text(`Paciente: ${grupo.pacienteNombre} ${grupo.pacienteApellido}`, 15, 58);
+    // Cargar logo
+    const logoBase64 = await this.cargarLogoBase64();
 
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80, 80, 80);
-    doc.text(`Total de consultas registradas: ${grupo.historiales.length}`, 15, 65);
+    // ── Helper: encabezado de página ──────────────────────────────
+    const dibujarEncabezado = () => {
+      // Fondo header verde oscuro
+      doc.setFillColor(...verde);
+      doc.rect(0, 0, PAGE_W, 50, 'F');
+      // Franja verde claro decorativa inferior
+      doc.setFillColor(...verdeClaro);
+      doc.rect(0, 46, PAGE_W, 4, 'F');
 
-    let currentY = 75;
-
-    // Una sección por cada cita
-    grupo.historiales.forEach((h, index) => {
-      // Verificar si necesitamos nueva página
-      if (currentY > 240) {
-        doc.addPage();
-        currentY = 20;
+      // Logo
+      if (logoBase64) {
+        doc.addImage(logoBase64, 'PNG', MARGIN, 9, 26, 26);
       }
 
-      // Separador de cita
-      doc.setFillColor(...blueColor);
-      doc.rect(15, currentY, 180, 8, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(9);
+      // Nombre clínica
+      const textX = logoBase64 ? MARGIN + 31 : MARGIN;
+      doc.setTextColor(...blanco);
       doc.setFont('helvetica', 'bold');
-      const fechaCita = h.cita.fecha ? new Date(h.cita.fecha).toLocaleDateString('es-PE') : 'Sin fecha';
-      const horaCita = h.cita.fecha ? new Date(h.cita.fecha).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }) : '';
-      doc.text(`CONSULTA #${index + 1} — ${fechaCita} ${horaCita}`, 18, currentY + 5.5);
-      currentY += 12;
+      doc.setFontSize(17);
+      doc.text('R.E.T.O. SALUD', textX, 21);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(180, 230, 205);
+      doc.text('Sistema Integrado de Gestión Médica', textX, 28);
 
-      // Info del médico
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(10);
+      // Título derecha
+      doc.setTextColor(...blanco);
       doc.setFont('helvetica', 'bold');
-      doc.text(`Dr. ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`, 15, currentY);
+      doc.setFontSize(11);
+      doc.text('HISTORIA CLÍNICA', PAGE_W - MARGIN, 18, { align: 'right' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(180, 230, 205);
+      doc.text('EXPEDIENTE COMPLETO DEL PACIENTE', PAGE_W - MARGIN, 25, { align: 'right' });
+      doc.setFontSize(7.5);
+      const fechaEmision = new Date().toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+      doc.text(`Emitido: ${fechaEmision}`, PAGE_W - MARGIN, 32, { align: 'right' });
+    };
+
+    // ── Helper: pie de página en todas las páginas ───────────────
+    const agregarPiePagina = () => {
+      const totalPages = (doc as any).internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        doc.setDrawColor(...verdeClaro);
+        doc.setLineWidth(0.4);
+        doc.line(MARGIN, 286, PAGE_W - MARGIN, 286);
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...grisMedio);
+        doc.text('R.E.T.O Salud — Documento oficial de historia clínica del paciente', MARGIN, 291);
+        doc.text(`Página ${i} de ${totalPages}`, PAGE_W - MARGIN, 291, { align: 'right' });
+      }
+    };
+
+    // ── Página 1: encabezado + datos del paciente ─────────────────
+    dibujarEncabezado();
+    let yPos = 60;
+
+    // Tarjeta datos del paciente
+    doc.setFillColor(244, 253, 248);
+    doc.setDrawColor(...verdeClaro);
+    doc.setLineWidth(0.7);
+    doc.roundedRect(MARGIN, yPos, CONTENT_W, 30, 4, 4, 'FD');
+    // Barra izquierda verde
+    doc.setFillColor(...verdeClaro);
+    doc.roundedRect(MARGIN, yPos, 4, 30, 2, 2, 'F');
+    // Nombre paciente
+    doc.setTextColor(...grisOscuro);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text(`${grupo.pacienteNombre} ${grupo.pacienteApellido}`, MARGIN + 10, yPos + 12);
+    // Subtexto
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...grisMedio);
+    doc.text(`Total de consultas en este expediente: ${grupo.historiales.length}`, MARGIN + 10, yPos + 21);
+    // Badge PACIENTE
+    doc.setFillColor(...verde);
+    doc.roundedRect(PAGE_W - MARGIN - 32, yPos + 9, 30, 11, 3, 3, 'F');
+    doc.setTextColor(...blanco);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.text('PACIENTE', PAGE_W - MARGIN - 17, yPos + 16, { align: 'center' });
+
+    yPos += 40;
+
+    // ── Consultas ─────────────────────────────────────────────────
+    grupo.historiales.forEach((h, index) => {
+      // Salto de página si no hay espacio
+      const altEst = 50 + (h.notas ? 15 : 0);
+      if (yPos + altEst > 276) {
+        doc.addPage();
+        dibujarEncabezado();
+        yPos = 60;
+      }
+
+      // Círculo numerado
+      doc.setFillColor(...verde);
+      doc.circle(MARGIN + 5, yPos + 5, 5, 'F');
+      doc.setTextColor(...blanco);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text(`${index + 1}`, MARGIN + 5, yPos + 6.3, { align: 'center' });
+
+      // Título consulta
+      const fechaCita = h.cita.fecha
+        ? new Date(h.cita.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' })
+        : 'Sin fecha';
+      const horaCita = h.cita.fecha
+        ? new Date(h.cita.fecha).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
+        : '';
+      doc.setTextColor(...grisOscuro);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10.5);
+      doc.text(`Consulta  —  ${fechaCita}  ${horaCita}`, MARGIN + 14, yPos + 6);
+      yPos += 14;
+
+      // Bloque médico (fondo verde suave)
+      doc.setFillColor(240, 253, 244);
+      doc.setDrawColor(187, 247, 208);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(MARGIN, yPos, CONTENT_W, 15, 3, 3, 'FD');
+      doc.setTextColor(22, 101, 52);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9.5);
+      doc.text(
+        `Dr. ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`,
+        MARGIN + 6, yPos + 7
+      );
       if (h.cita.medico.especialidad) {
         doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(80, 80, 80);
-        doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, currentY + 6);
-        currentY += 6;
+        doc.setFontSize(8.5);
+        doc.setTextColor(...grisMedio);
+        doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, MARGIN + 6, yPos + 12.5);
       }
-      currentY += 6;
+      yPos += 19;
 
-      // Tabla con diagnóstico, receta y notas
-      autoTable(doc, {
-        startY: currentY,
-        head: [['Concepto', 'Detalle']],
-        body: [
-          ['Diagnóstico', h.diagnostico || 'Pendiente de registro'],
-          ['Receta / Tratamiento', h.receta || 'Sin indicaciones'],
-          ...(h.notas ? [['Notas Adicionales', h.notas]] : [])
+      // Tabla clínica sin encabezado, filas alternas
+      const filas: any[] = [
+        [
+          { content: 'Diagnóstico', styles: { fontStyle: 'bold', textColor: grisOscuro, fillColor: [248, 250, 252] } },
+          { content: h.diagnostico || 'Pendiente de registro médico', styles: { fillColor: [248, 250, 252] } }
         ],
-        headStyles: { fillColor: primaryColor, fontSize: 9 },
-        styles: { cellPadding: 4, fontSize: 9, valign: 'middle' },
-        columnStyles: { 0: { cellWidth: 45, fontStyle: 'bold' } },
-        margin: { left: 15, right: 15 }
+        [
+          { content: 'Receta / Tratamiento', styles: { fontStyle: 'bold', textColor: [29, 78, 216] as any, fillColor: [239, 246, 255] } },
+          { content: h.receta || 'Sin receta aún', styles: { textColor: [30, 58, 138] as any, fillColor: [239, 246, 255] } }
+        ],
+      ];
+      if (h.notas) {
+        filas.push([
+          { content: 'Notas Adicionales', styles: { fontStyle: 'bold', textColor: grisOscuro, fillColor: [248, 250, 252] } },
+          { content: h.notas, styles: { fillColor: [248, 250, 252] } }
+        ]);
+      }
+
+      autoTable(doc, {
+        startY: yPos,
+        body: filas,
+        styles: {
+          cellPadding: { top: 4, bottom: 4, left: 6, right: 6 },
+          fontSize: 9,
+          valign: 'middle',
+          lineColor: [226, 232, 240] as any,
+          lineWidth: 0.25,
+        },
+        columnStyles: {
+          0: { cellWidth: 50 },
+          1: { cellWidth: CONTENT_W - 50 }
+        },
+        margin: { left: MARGIN, right: MARGIN },
+        tableLineColor: [226, 232, 240] as any,
+        tableLineWidth: 0.3,
       });
 
-      currentY = (doc as any).lastAutoTable.finalY + 10;
+      yPos = (doc as any).lastAutoTable.finalY + 7;
+
+      // Línea separadora punteada entre consultas
+      if (index < grupo.historiales.length - 1) {
+        doc.setDrawColor(203, 213, 225);
+        doc.setLineWidth(0.35);
+        doc.setLineDashPattern([2, 2], 0);
+        doc.line(MARGIN + 8, yPos, PAGE_W - MARGIN - 8, yPos);
+        doc.setLineDashPattern([], 0);
+        yPos += 8;
+      }
     });
 
-    // Pie de página
-    const totalPages = (doc as any).internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      doc.setPage(i);
-      doc.setFontSize(7);
-      doc.setTextColor(150, 150, 150);
-      doc.text('Este documento es una representación digital del historial clínico del paciente. R.E.T.O Salud.', 105, 290, { align: 'center' });
-      doc.text(`Página ${i} de ${totalPages}`, 190, 290, { align: 'right' });
-    }
+    agregarPiePagina();
 
-    const nombreArchivo = `Historia_Clinica_${grupo.pacienteNombre}_${grupo.pacienteApellido}.pdf`.replace(/\s+/g, '_');
+    const nombreArchivo = `Historia_Clinica_${grupo.pacienteNombre}_${grupo.pacienteApellido}.pdf`
+      .replace(/\s+/g, '_');
     doc.save(nombreArchivo);
     this.ns.success(`Historia clínica de ${grupo.pacienteNombre} generada con éxito`);
   }

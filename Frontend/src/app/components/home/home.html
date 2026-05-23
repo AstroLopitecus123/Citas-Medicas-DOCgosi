@@ -116,17 +116,34 @@
 
   <section class="doctors">
     <div class="section-container">
-      <h2 class="section-title">Nuestros Doctores</h2>
+      <span class="sub-title" style="display:block; text-align:center; margin-bottom:8px;">Reconocimiento a la excelencia</span>
+      <h2 class="section-title">Top Doctores del Mes</h2>
       <div class="section-underline"></div>
+      <p class="doctors-subtitle">
+        Conoce a los profesionales de salud más solicitados de R.E.T.O Salud, 
+        seleccionados según la confianza de nuestros pacientes.
+      </p>
 
       <div class="doctors-grid">
-        <div class="doctor-card" *ngFor="let doc of doctores">
+        <div class="doctor-card" *ngFor="let doc of doctores; let i = index">
+          <!-- Medalla de ranking -->
+          <div class="rank-badge" [class.gold]="i === 0" [class.silver]="i === 1" [class.bronze]="i === 2" [class.rank4]="i === 3">
+            <span *ngIf="i === 0">🥇</span>
+            <span *ngIf="i === 1">🥈</span>
+            <span *ngIf="i === 2">🥉</span>
+            <span *ngIf="i === 3">#4</span>
+          </div>
+
           <div class="doc-pic">
             <img [src]="doc.foto" [alt]="doc.nombre" appNarrator [altText]="'Foto del ' + doc.nombre">
           </div>
           <div class="doc-info">
             <h4>{{ doc.nombre }}</h4>
             <span class="cargo">{{ doc.cargo }}</span>
+            <div class="citas-badge">
+              <i class="fa-solid fa-calendar-check"></i>
+              <span>{{ doc.totalCitas }} citas atendidas</span>
+            </div>
           </div>
         </div>
       </div>

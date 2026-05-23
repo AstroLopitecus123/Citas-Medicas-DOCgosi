@@ -54,6 +54,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers("/api/disponibilidades/medico/*/rango").permitAll()
                 .requestMatchers("/api/medicos").permitAll()
+                .requestMatchers("/api/medicos/top4").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/solicitudes").permitAll()
                 .anyRequest().authenticated()
             )

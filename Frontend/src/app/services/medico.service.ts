@@ -35,6 +35,11 @@ export class MedicoService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  /** Top 4 médicos con más citas — endpoint público, sin token */
+  top4Publico(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/top4`);
+  }
+
   obtenerPorUsuarioId(usuarioId: number): Observable<Medico> {
     const url = `${this.apiUrl}/usuario/${usuarioId}`;
     const headers = this.getAuthHeaders();

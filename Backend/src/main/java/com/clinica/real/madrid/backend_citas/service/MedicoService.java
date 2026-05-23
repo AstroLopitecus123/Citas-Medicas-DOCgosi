@@ -4,6 +4,7 @@ import com.clinica.real.madrid.backend_citas.exception.ResourceNotFoundException
 import com.clinica.real.madrid.backend_citas.model.Especialidad;
 import com.clinica.real.madrid.backend_citas.model.Medico;
 import com.clinica.real.madrid.backend_citas.model.Disponibilidad;
+import com.clinica.real.madrid.backend_citas.repository.CitaRepository;
 import com.clinica.real.madrid.backend_citas.repository.DisponibilidadRepository;
 import com.clinica.real.madrid.backend_citas.repository.EspecialidadRepository;
 import com.clinica.real.madrid.backend_citas.repository.MedicoRepository;
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +26,9 @@ public class MedicoService {
 
     private final MedicoRepository medicoRepository;
     private final EspecialidadRepository especialidadRepository;
+
+    @Autowired
+    private CitaRepository citaRepository;
 
     @Autowired
     private DisponibilidadRepository disponibilidadRepository;
@@ -68,5 +75,25 @@ public class MedicoService {
                 .filter(d -> d.getFecha().equals(fecha))
                 .map(d -> d.getHoraInicio()) 
                 .collect(Collectors.toList());
+    }
+
+    public List<Map<String, Object>> top4PorCitas() {
+        List<Object[]> rows = citaRepository.findTopMedicosByCitaCount(
+            org.springframework.data.domain.PageRequest.of(0, 4)
+        );
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Object[] row : rows) {
+            Medico m = (Medico) row[0];
+            Long count = (Long) row[1];
+            Map<String, Object> item = new HashMap<>();
+            item.put("medicoId", m.getId());
+            item.put("nombre", m.getUsuario().getNombre());
+            item.put("apellido", m.getUsuario().getApellido());
+            item.put("fotoUrl", m.getUsuario().getFotoUrl());
+            item.put("especialidad", m.getEspecialidad() != null ? m.getEspecialidad().getNombre() : "Médico General");
+            item.put("totalCitas", count);
+            result.add(item);
+        }
+        return result;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/medicos")
@@ -25,6 +26,11 @@ public class MedicoController {
     @GetMapping
     public ResponseEntity<List<Medico>> listarMedicos() {
         return ResponseEntity.ok(medicoService.listarTodos());
+    }
+
+    @GetMapping("/top4")
+    public ResponseEntity<List<Map<String, Object>>> top4MedicosPorCitas() {
+        return ResponseEntity.ok(medicoService.top4PorCitas());
     }
 
     @PutMapping("/{id}/especialidad/{espId}")

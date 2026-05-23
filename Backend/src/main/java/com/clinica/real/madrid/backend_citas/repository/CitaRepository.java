@@ -53,4 +53,10 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     List<Cita> findByFechaBetweenAndEstado(LocalDateTime desde, LocalDateTime hasta, EstadoCita estado);
 
     List<Cita> findByEstadoOrderByFechaDesc(EstadoCita estado);
+
+    @Query("SELECT c.medico, COUNT(c) as total " +
+           "FROM Cita c " +
+           "GROUP BY c.medico " +
+           "ORDER BY total DESC")
+    List<Object[]> findTopMedicosByCitaCount(org.springframework.data.domain.Pageable pageable);
 }

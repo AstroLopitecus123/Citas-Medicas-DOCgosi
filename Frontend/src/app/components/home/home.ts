@@ -42,20 +42,21 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   cargarDoctores() {
-    this.medicoService.listarMedicosPublico().subscribe({
+    this.medicoService.top4Publico().subscribe({
       next: (data) => {
         if (data && data.length > 0) {
-          this.doctores = data.map(doc => ({
-            nombre: `Dr. ${doc.usuario.nombre} ${doc.usuario.apellido}`,
-            cargo: doc.especialidad ? doc.especialidad.nombre : 'Médico General',
-            foto: doc.usuario.fotoUrl || 'assets/images/HomeDoctor.png'
+          this.doctores = data.map((doc: any, index: number) => ({
+            nombre: `Dr. ${doc.nombre} ${doc.apellido}`,
+            cargo: doc.especialidad || 'Médico General',
+            foto: doc.fotoUrl || 'assets/images/HomeDoctor.png',
+            totalCitas: doc.totalCitas || 0,
+            ranking: index + 1
           }));
         } else {
           this.usarDoctoresFallback();
         }
       },
-      error: (err) => {
-        console.error('Error al cargar médicos en el Home:', err);
+      error: () => {
         this.usarDoctoresFallback();
       }
     });
@@ -63,9 +64,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private usarDoctoresFallback() {
     this.doctores = [
-      { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.png' },
-      { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.png' },
-      { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.png' }
+      { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 1 },
+      { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 2 },
+      { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 3 }
     ];
   }
 

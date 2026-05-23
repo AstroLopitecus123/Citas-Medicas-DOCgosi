@@ -239,7 +239,7 @@
 
 <!-- Modal Cropper de Foto (modal separado encima de todo) -->
 <div class="glass-overlay" *ngIf="mostrandoCropper" style="z-index: 1100;" (click)="cancelarRecorte()">
-    <div class="glass-modal premium-card animation-pop-in" style="max-width: 420px;" (click)="$event.stopPropagation()">
+    <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
         <div class="modal-header-glass">
             <div class="header-info">
                 <div class="header-icon-box" style="background: rgba(15,191,106,0.1); color: #0fbf6a;">
@@ -264,11 +264,11 @@
             </div>
         </div>
 
-        <div class="modal-footer-glass">
-            <button class="btn-action outline" (click)="cancelarRecorte()">
+        <div class="cropper-footer">
+            <button class="btn-cropper-cancel" (click)="cancelarRecorte()">
                 <i class="fa-solid fa-xmark"></i> Cancelar
             </button>
-            <button class="btn-action primary" (click)="guardarFoto()" [disabled]="subiendoFoto">
+            <button class="btn-cropper-save" (click)="guardarFoto()" [disabled]="subiendoFoto">
                 <i class="fa-solid fa-check" *ngIf="!subiendoFoto"></i>
                 <i class="fa-solid fa-circle-notch fa-spin" *ngIf="subiendoFoto"></i> Guardar Foto
             </button>

@@ -186,7 +186,7 @@
 
   <!-- Modal Cropper de Foto (encima del modal de editar) -->
   <div class="glass-overlay" *ngIf="ctrl.mostrandoCropper" style="z-index: 1100;" (click)="ctrl.cancelarRecorte()">
-    <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()" style="max-width: 420px;">
+    <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
         <div class="header-info">
           <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
@@ -211,11 +211,11 @@
         </div>
       </div>
 
-      <div class="modal-footer-glass">
-        <button class="btn-cancel-glass" (click)="ctrl.cancelarRecorte()">
+      <div class="cropper-footer">
+        <button class="btn-cropper-cancel" (click)="ctrl.cancelarRecorte()">
           <i class="fa-solid fa-xmark"></i> Cancelar
         </button>
-        <button class="btn-confirm-glass" (click)="guardarFoto()" [disabled]="ctrl.subiendoFoto" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
+        <button class="btn-cropper-save" (click)="guardarFoto()" [disabled]="ctrl.subiendoFoto">
           <i class="fa-solid fa-check" *ngIf="!ctrl.subiendoFoto"></i>
           <i class="fa-solid fa-circle-notch fa-spin" *ngIf="ctrl.subiendoFoto"></i> Guardar Foto
         </button>

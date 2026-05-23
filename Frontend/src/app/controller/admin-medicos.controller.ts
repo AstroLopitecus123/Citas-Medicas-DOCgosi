@@ -32,11 +32,8 @@ export class AdminMedicosController {
   fotoUrlEditado = '';
   
   // Cropper properties
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
+  selectedImageFile: File | null = null;
   mostrandoCropper = false;
-  transform: any = {};
-  zoomVal: number = 1;
 
   error = '';
   cargando = false;
@@ -138,48 +135,32 @@ export class AdminMedicosController {
 
   onFotoSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
-      this.imageChangedEvent = event;
+      this.selectedImageFile = event.target.files[0];
       this.mostrandoCropper = true;
     }
   }
 
-  imageCropped(event: any) {
-    this.croppedImage = event.blob;
-  }
-
-  updateZoom() {
-    this.transform = {
-      ...this.transform,
-      scale: this.zoomVal
-    };
-  }
-
   cancelarRecorte() {
     this.mostrandoCropper = false;
-    this.imageChangedEvent = '';
-    this.croppedImage = '';
-    this.zoomVal = 1;
-    this.transform = {};
+    this.selectedImageFile = null;
   }
 
-  confirmarRecorte() {
-    if (this.croppedImage) {
-      this.subiendoFoto = true;
-      const file = new File([this.croppedImage], 'perfil_recortado.png', { type: 'image/png' });
-      this.usuarioService.subirFoto(this.medicoSeleccionado.id, file).subscribe({
-        next: (data) => {
-          this.fotoUrlEditado = data.fotoUrl;
-          this.subiendoFoto = false;
-          this.mostrandoCropper = false;
-          this.imageChangedEvent = '';
-        },
-        error: (err) => {
-          console.error('Error al subir foto:', err);
-          this.subiendoFoto = false;
-          this.mostrandoCropper = false;
-        }
-      });
-    }
+  onCropBlob(blob: Blob) {
+    this.subiendoFoto = true;
+    const file = new File([blob], 'perfil_recortado.png', { type: 'image/png' });
+    this.usuarioService.subirFoto(this.medicoSeleccionado.id, file).subscribe({
+      next: (data) => {
+        this.fotoUrlEditado = data.fotoUrl;
+        this.subiendoFoto = false;
+        this.mostrandoCropper = false;
+        this.selectedImageFile = null;
+      },
+      error: (err) => {
+        console.error('Error al subir foto:', err);
+        this.subiendoFoto = false;
+        this.mostrandoCropper = false;
+      }
+    });
   }
 
   guardarPerfilEditado() {

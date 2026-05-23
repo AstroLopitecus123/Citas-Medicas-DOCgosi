@@ -135,38 +135,14 @@
 
       <div class="modal-body-glass">
         <!-- Foto de Perfil Upload -->
-        <div *ngIf="ctrl.mostrandoCropper" style="display:flex; flex-direction:column; align-items:center; gap: 15px; margin-bottom: 25px;">
-          <div style="width: 100%; position: relative; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; overflow: hidden; max-height: 400px; display: flex; justify-content: center; align-items: center;">
-            <image-cropper
-              [imageChangedEvent]="ctrl.imageChangedEvent"
-              [maintainAspectRatio]="true"
-              [aspectRatio]="1 / 1"
-              [cropperStaticWidth]="256"
-              [cropperStaticHeight]="256"
-              [hideResizeSquares]="true"
-              [allowMoveImage]="true"
-              [roundCropper]="true"
-              [transform]="ctrl.transform"
-              [canvasRotation]="0"
-              [alignImage]="'center'"
-              format="png"
-              (imageCropped)="ctrl.imageCropped($event)"
-              style="max-height: 400px; width: auto; margin: 0 auto;"
-            ></image-cropper>
-          </div>
-          
-          <div class="zoom-controls" style="display: flex; align-items: center; gap: 12px; width: 80%; max-width: 300px; padding: 5px 0;">
-            <i class="fa-solid fa-image" style="font-size: 0.8rem; color: #64748b;"></i>
-            <input type="range" min="1" max="3" step="0.1" [(ngModel)]="ctrl.zoomVal" (ngModelChange)="ctrl.updateZoom()" style="flex: 1; accent-color: #0fbf6a;">
-            <i class="fa-solid fa-image" style="font-size: 1.2rem; color: #64748b;"></i>
-          </div>
-
-          <div style="display:flex; gap:10px;">
-            <button class="btn-cancel-glass" (click)="ctrl.cancelarRecorte()">Cancelar</button>
-            <button class="btn-confirm-glass" (click)="ctrl.confirmarRecorte()" [disabled]="ctrl.subiendoFoto">
-              <i class="fa-solid fa-check" *ngIf="!ctrl.subiendoFoto"></i>
-              <i class="fa-solid fa-circle-notch fa-spin" *ngIf="ctrl.subiendoFoto"></i> Recortar y Subir
-            </button>
+        <div *ngIf="ctrl.mostrandoCropper" style="margin-bottom: 20px;">
+          <app-avatar-cropper
+            [imageFile]="ctrl.selectedImageFile"
+            (cropBlob)="ctrl.onCropBlob($event)"
+            (cancelar)="ctrl.cancelarRecorte()"
+          ></app-avatar-cropper>
+          <div *ngIf="ctrl.subiendoFoto" style="text-align:center; margin-top: 10px; color: #0fbf6a; font-weight: 600;">
+            <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
           </div>
         </div>
 

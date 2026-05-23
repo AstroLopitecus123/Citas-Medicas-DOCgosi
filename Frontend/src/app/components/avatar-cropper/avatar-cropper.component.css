@@ -1,0 +1,105 @@
+.avatar-cropper-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.cropper-canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cropper-canvas {
+  border-radius: 12px;
+  display: block;
+  max-width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  background: #1e293b;
+}
+
+.cropper-canvas:active {
+  cursor: grabbing;
+}
+
+.drag-hint {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-align: center;
+  margin: 0;
+}
+
+.drag-hint i {
+  margin-right: 4px;
+}
+
+/* Zoom row */
+.zoom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 80%;
+  max-width: 300px;
+}
+
+.zoom-icon-sm {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.zoom-icon-lg {
+  font-size: 1.1rem;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.zoom-slider {
+  flex: 1;
+  accent-color: #0fbf6a;
+  cursor: pointer;
+  height: 4px;
+}
+
+/* Action buttons */
+.cropper-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-cancel-crop,
+.btn-confirm-crop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel-crop {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-cancel-crop:hover {
+  background: #e2e8f0;
+}
+
+.btn-confirm-crop {
+  background: linear-gradient(135deg, #0fbf6a, #0d9f58);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(15, 191, 106, 0.35);
+}
+
+.btn-confirm-crop:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(15, 191, 106, 0.45);
+}

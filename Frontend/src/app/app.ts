@@ -84,6 +84,20 @@ export class AppComponent {
         this.cargarConteoNotificaciones();
       }
     }, 30000);
+
+    // Detectar cambios en el usuario desde otras partes de la app (ej: actualización de foto en mi-perfil)
+    window.addEventListener('usuarioActualizado', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail) {
+        try {
+          const parsedUsuario = customEvent.detail;
+          parsedUsuario.rol = this.normalizarRol(parsedUsuario.rol);
+          this.usuario = { ...parsedUsuario };
+        } catch (e) {
+          console.error('Error al actualizar usuario desde evento', e);
+        }
+      }
+    });
   }
 
   abrirModalCerrarSesion() {

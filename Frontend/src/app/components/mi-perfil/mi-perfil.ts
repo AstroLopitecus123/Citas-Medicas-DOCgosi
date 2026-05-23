@@ -104,6 +104,7 @@ export class MiPerfilComponent implements OnInit {
             const userObj = JSON.parse(localUser);
             userObj.fotoUrl = data.fotoUrl;
             localStorage.setItem('usuario', JSON.stringify(userObj));
+            window.dispatchEvent(new CustomEvent('usuarioActualizado', { detail: userObj }));
           }
           this.subiendoFoto = false;
           this.mostrandoCropper = false;
@@ -200,6 +201,7 @@ export class MiPerfilComponent implements OnInit {
           const userObj = JSON.parse(localUser);
           userObj.fotoUrl = data.fotoUrl;
           localStorage.setItem('usuario', JSON.stringify(userObj));
+          window.dispatchEvent(new CustomEvent('usuarioActualizado', { detail: userObj }));
         }
 
         this.subiendoFoto = false;

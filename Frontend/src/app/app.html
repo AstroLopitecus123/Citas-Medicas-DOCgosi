@@ -22,7 +22,11 @@
     <nav class="nav-links" [ngClass]="{'open': isMenuOpen}" (click)="isMenuOpen = false">
 
       <a *ngIf="isLoggedIn" [routerLink]="getDashboardRoute()" class="header-user-link">
-        <i class="fa-solid fa-circle-user"></i> <span>{{ usuario?.nombre || 'Mi Panel' }}</span>
+        <span class="header-avatar-wrap">
+          <img *ngIf="usuario?.fotoUrl" [src]="usuario!.fotoUrl" alt="Foto perfil" class="header-avatar-img">
+          <i *ngIf="!usuario?.fotoUrl" class="fa-solid fa-circle-user"></i>
+        </span>
+        <span>{{ usuario?.nombre || 'Mi Panel' }}</span>
       </a>
 
       <a *ngIf="!isLoggedIn" routerLink="/registrar">
@@ -164,8 +168,9 @@
 
   <div class="sidebar-footer">
     <div class="admin-profile">
-      <div class="admin-avatar">
-        <i class="fa-solid fa-user-shield"></i>
+      <div class="admin-avatar" [class.has-photo]="usuario?.fotoUrl">
+        <img *ngIf="usuario?.fotoUrl" [src]="usuario!.fotoUrl" alt="Foto de perfil" class="sidebar-user-photo">
+        <i *ngIf="!usuario?.fotoUrl" class="fa-solid fa-user-shield"></i>
       </div>
       <div class="admin-info">
         <span class="admin-name">{{ usuario?.nombre }}</span>

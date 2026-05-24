@@ -185,7 +185,7 @@ export class HistorialMedicoComponent implements OnInit {
         } catch { resolve({ url: '', w: 0, h: 0 }); }
       };
       img.onerror = () => resolve({ url: '', w: 0, h: 0 });
-      img.src = '/assets/images/LogoSOLO2.png';
+      img.src = '/assets/images/LogoSOLO2.webp';
     });
   }
 

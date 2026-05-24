@@ -9,9 +9,10 @@ const DIST_FOLDER = path.join(__dirname, 'browser');
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://m.stripe.network https://accounts.google.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://fonts.googleapis.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.basemaps.cartocdn.com https://res.cloudinary.com https://ui-avatars.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https://backend-citas-production-4c29.up.railway.app https://api.stripe.com https://m.stripe.network https://accounts.google.com wss://backend-citas-production-4c29.up.railway.app; frame-src 'self' https://js.stripe.com https://accounts.google.com; worker-src 'self' blob:; object-src 'none'; frame-ancestors 'self';");
   next();
 });
 

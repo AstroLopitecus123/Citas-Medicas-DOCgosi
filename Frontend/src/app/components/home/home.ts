@@ -16,10 +16,10 @@ declare var L: any;
 })
 export class HomeComponent implements AfterViewInit, OnInit {
   especialidades = [
-    { titulo: 'Cardiología', descripcion: 'Especialistas en la salud de su corazón y sistema circulatorio.', imagen: 'assets/images/ServiceEmergency.png' },
-    { titulo: 'Pediatría', descripcion: 'Atención médica integral para el crecimiento sano de sus hijos.', imagen: 'assets/images/ServiceNurse.png' },
-    { titulo: 'Medicina General', descripcion: 'Chequeos preventivos y diagnóstico clínico de primer nivel.', imagen: 'assets/images/HomeDoctor.png' },
-    { titulo: 'Ginecología', descripcion: 'Cuidado especializado para la salud integral de la mujer.', imagen: 'assets/images/ServiceLab.png' }
+    { titulo: 'Cardiología', descripcion: 'Especialistas en la salud de su corazón y sistema circulatorio.', imagen: 'assets/images/ServiceEmergency.webp' },
+    { titulo: 'Pediatría', descripcion: 'Atención médica integral para el crecimiento sano de sus hijos.', imagen: 'assets/images/ServiceNurse.webp' },
+    { titulo: 'Medicina General', descripcion: 'Chequeos preventivos y diagnóstico clínico de primer nivel.', imagen: 'assets/images/HomeDoctor.webp' },
+    { titulo: 'Ginecología', descripcion: 'Cuidado especializado para la salud integral de la mujer.', imagen: 'assets/images/ServiceLab.webp' }
   ];
 
   doctores: any[] = [];
@@ -48,7 +48,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
           this.doctores = data.map((doc: any, index: number) => ({
             nombre: `Dr. ${doc.nombre} ${doc.apellido}`,
             cargo: doc.especialidad || 'Médico General',
-            foto: doc.fotoUrl || 'assets/images/HomeDoctor.png',
+            foto: doc.fotoUrl || 'assets/images/HomeDoctor.webp',
             totalCitas: doc.totalCitas || 0,
             ranking: index + 1
           }));
@@ -64,9 +64,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   private usarDoctoresFallback() {
     this.doctores = [
-      { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 1 },
-      { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 2 },
-      { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.png', totalCitas: 0, ranking: 3 }
+      { nombre: 'Dr. Carlos Ruiz', cargo: 'Cardiólogo Senior', foto: 'assets/images/HomeDoctor.webp', totalCitas: 0, ranking: 1 },
+      { nombre: 'Dra. Ana Torres', cargo: 'Pediatra Especialista', foto: 'assets/images/HomeDoctor.webp', totalCitas: 0, ranking: 2 },
+      { nombre: 'Dr. Luis Mendez', cargo: 'Médico de Familia', foto: 'assets/images/HomeDoctor.webp', totalCitas: 0, ranking: 3 }
     ];
   }
 

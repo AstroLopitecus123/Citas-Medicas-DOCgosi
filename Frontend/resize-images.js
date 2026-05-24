@@ -4,13 +4,15 @@ const path = require('path');
 
 const imgDir = path.join(__dirname, 'src', 'assets', 'images');
 
+// Dimensiones exactas según Lighthouse: usar el tamaño renderizado en pantalla de escritorio
+// Lighthouse evalúa a 1350px de ancho, por lo que usamos 1x (no 2x) para que no sean gigantes
 const resizeTasks = [
-  { file: 'ServiceLab.webp', width: 440, height: 440 },
-  { file: 'ServiceNurse.webp', width: 900, height: 900 },
-  { file: 'ServiceEmergency.webp', width: 440, height: 440 },
-  { file: 'HomeDoctor.webp', width: 640, height: 640 },
-  { file: 'LogoFull2.webp', width: 778, height: 424 },
-  { file: 'LogoSOLO.webp', width: 440, height: 240 }
+  { file: 'ServiceLab.webp', width: 220, height: 220 },
+  { file: 'ServiceNurse.webp', width: 450, height: 450 },
+  { file: 'ServiceEmergency.webp', width: 220, height: 220 },
+  { file: 'HomeDoctor.webp', width: 320, height: 320 },
+  { file: 'LogoFull2.webp', width: 389, height: 212 },
+  { file: 'LogoSOLO.webp', width: 220, height: 120 }
 ];
 
 async function resizeImages() {
@@ -20,16 +22,15 @@ async function resizeImages() {
       console.log(`Skipping ${task.file}, file not found.`);
       continue;
     }
-    
-    // Read the file to a buffer first to avoid locking issues
+
     const buffer = fs.readFileSync(inputPath);
-    
+
     try {
       await sharp(buffer)
-        .resize({ width: task.width, height: task.height, fit: 'inside' })
-        .webp({ quality: 85, effort: 6 })
+        .resize({ width: task.width, height: task.height, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: 82, effort: 6 })
         .toFile(inputPath);
-      console.log(`✅ Resized ${task.file} to ${task.width}x${task.height}`);
+      console.log(`✅ Resized ${task.file} to max ${task.width}x${task.height}`);
     } catch (err) {
       console.error(`❌ Error resizing ${task.file}:`, err);
     }

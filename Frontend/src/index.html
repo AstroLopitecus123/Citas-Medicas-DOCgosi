@@ -8,16 +8,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="assets/images/LogoSOLO.webp">
 
-  <!-- PRECONNECT a CDNs críticos (sin crossorigin para stylesheets) -->
+  <!-- PRECONNECT: solo orígenes críticos del critical path -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://unpkg.com">
-  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <link rel="preconnect" href="https://backend-citas-production-4c29.up.railway.app" crossorigin>
+  <link rel="preconnect" href="https://js.stripe.com" crossorigin>
 
-  <!-- PRELOAD del logo principal (imagen LCP) -->
-  <link rel="preload" as="image" href="assets/images/LogoFull2.webp">
+  <!-- PRELOAD del LCP real (logo de carga) -->
+  <link rel="preload" as="image" href="assets/images/LogoSOLO.webp">
 
-  <!-- FONT-AWESOME: carga no bloqueante con fallback -->
+  <!-- FONT-AWESOME: carga no bloqueante con font-display swap -->
+  <style>
+    @font-face {
+      font-family: 'Font Awesome 6 Free';
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Font Awesome 6 Brands';
+      font-display: swap;
+    }
+  </style>
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     media="print" onload="this.media='all'">

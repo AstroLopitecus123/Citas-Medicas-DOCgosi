@@ -15,12 +15,14 @@
   box-shadow: 0 4px 15px rgba(15, 191, 106, 0.4);
   cursor: pointer;
   z-index: 9999;
-  transition: all 0.3s ease;
+  /* Solo transiciones composited (transform y opacity) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
 }
 
 .chatbot-fab:hover {
   transform: scale(1.1);
-  background: #0a7c4a;
+  box-shadow: 0 6px 20px rgba(15, 191, 106, 0.6);
 }
 
 .chatbot-fab.hidden {

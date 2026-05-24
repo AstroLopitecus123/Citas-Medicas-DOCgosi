@@ -18,7 +18,8 @@ export class PagoService {
   private cardElement: StripeCardElement | null = null;
 
   constructor(private http: HttpClient) {
-    this.initializeStripe();
+    // Stripe se inicializa SOLO cuando se necesita (lazy load)
+    // No llamar initializeStripe() aquí para no bloquear el render inicial
   }
 
   private async initializeStripe(): Promise<void> {

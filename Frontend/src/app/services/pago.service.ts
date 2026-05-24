@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Pago } from '../models/pago.model';
 import { environment } from '../../environments/environment';
-import { loadStripe, Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js/pure';
+import { loadStripe } from '@stripe/stripe-js/pure';
+import type { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
 import { STRIPE_CONFIG } from '../config/stripe.config';
 
 @Injectable({

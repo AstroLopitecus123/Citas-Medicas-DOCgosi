@@ -286,9 +286,32 @@
   align-items: center;
   gap: 80px;
   max-width: 1400px;
+  margin: 0 auto;
 }
 
 .services-content { flex: 1; }
+
+.expertise-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 191, 106, 0.08);
+  color: #0fbf6a;
+  padding: 14px 25px;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-top: 35px;
+  border: 1px solid rgba(15, 191, 106, 0.2);
+  transition: all 0.3s ease;
+}
+.expertise-tag:hover {
+  background: rgba(15, 191, 106, 0.15);
+  transform: translateY(-3px);
+}
+.expertise-tag i {
+  font-size: 1.3rem;
+}
 
 /* ─── WRAPPER ─── */
 .hex-grid-container {
@@ -329,7 +352,7 @@
 .honeycomb-cell:nth-child(4),
 .honeycomb-cell:nth-child(5),
 .honeycomb-cell:nth-child(6) {
-  margin-top: -50px; /* Sube para encajar */
+  margin-top: -75px; /* Sube para encajar perfectamente como panal */
 }
 
 .honeycomb-cell:nth-child(4) {

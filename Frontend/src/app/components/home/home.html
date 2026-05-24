@@ -162,14 +162,6 @@
           
           <div class="sidebar-header">
             <h3>{{ sedes.length }} Locales Encontrados</h3>
-            <p>Encontrar un local cerca de usted</p>
-            <div class="search-box">
-              <input type="text" placeholder="Escriba la dirección o el código postal">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            <a href="javascript:void(0)" class="use-location">
-              <i class="fa-solid fa-location-arrow"></i> Usar mi ubicación actual
-            </a>
           </div>
 
           <div class="sede-list-item" *ngFor="let sede of sedes" (click)="centrarMapa(sede)">
@@ -177,7 +169,6 @@
               <img [src]="sede.img" [alt]="sede.nombre">
             </div>
             <div class="sede-info">
-              <span class="sede-horario">{{ sede.horario }}</span>
               <h4 class="sede-title">{{ sede.nombre }}</h4>
               <p class="sede-address">{{ sede.direccion }}</p>
               <span class="sede-phone">Llame al {{ sede.telefono }}</span>
@@ -197,12 +188,6 @@
         <!-- Mapa -->
         <div class="map-wrapper">
           <div id="map"></div>
-          <div class="map-overlay">
-            <div class="overlay-card">
-              <i class="fas fa-location-dot"></i>
-              <span>{{ sedes.length }} Sedes en Lima</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

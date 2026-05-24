@@ -110,16 +110,31 @@ export class HomeComponent implements AfterViewInit, OnInit {
       `;
 
       const customIcon = L.divIcon({
-        className: 'custom-marker',
+        className: '',
         html: `
-          <div class="marker-pin">
-            <i class="fa-solid fa-heart-pulse"></i>
+          <div style="
+            width:38px;height:38px;
+            background:linear-gradient(135deg,#0a7c4a,#0fbf6a);
+            color:white;
+            border-radius:50% 50% 50% 0;
+            display:flex;align-items:center;justify-content:center;
+            transform:rotate(-45deg);
+            box-shadow:0 4px 15px rgba(15,191,106,0.6);
+            position:relative;z-index:9999;
+            border:2px solid white;
+          ">
+            <i class="fa-solid fa-heart-pulse" style="transform:rotate(45deg);font-size:1rem;"></i>
           </div>
-          <div class="marker-glow"></div>
+          <div style="
+            position:absolute;top:-8px;left:50%;
+            width:46px;height:46px;margin-left:-23px;
+            background:rgba(15,191,106,0.25);border-radius:50%;
+            animation:markerPulse 2s infinite ease-out;pointer-events:none;
+          "></div>
         `,
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -45]
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -42]
       });
 
       const marker = L.marker([sede.lat, sede.lng], { icon: customIcon }).addTo(this.map);

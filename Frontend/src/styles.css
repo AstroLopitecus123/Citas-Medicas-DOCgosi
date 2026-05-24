@@ -183,3 +183,9 @@ body.focus-pro *:focus-visible {
   80% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+/* Animación para el halo del marcador de mapa (Leaflet divIcon) */
+@keyframes markerPulse {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}

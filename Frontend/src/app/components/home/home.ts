@@ -81,8 +81,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     this.map = L.map('map', {
       scrollWheelZoom: false,
-      attributionControl: false 
-    }).setView([-12.095, -77.01], 13);
+      attributionControl: false
+    });
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 20
@@ -147,6 +147,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
         minWidth: 280
       });
     });
+
+    // Auto-encuadra el mapa para mostrar todas las sedes
+    const bounds = L.latLngBounds(this.sedes.map(s => [s.lat, s.lng]));
+    this.map.fitBounds(bounds, { padding: [50, 50] });
   }
 
   @HostListener('window:agendar-cita-mapa', ['$event'])

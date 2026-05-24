@@ -760,6 +760,10 @@
 
 .sede-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
 }
 
 .sede-horario {
@@ -771,25 +775,25 @@
 }
 
 .sede-title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: #0a7c4a;
-  margin-bottom: 10px;
+  margin: 0 0 4px 0;
   line-height: 1.2;
 }
 
 .sede-address {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: #475569;
-  margin-bottom: 15px !important;
-  line-height: 1.4 !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
 }
 
 .sede-phone {
   display: inline-block;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: #0a7c4a;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
 .sede-item-actions {

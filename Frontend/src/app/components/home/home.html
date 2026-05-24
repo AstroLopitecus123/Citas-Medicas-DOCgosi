@@ -156,13 +156,37 @@
         <p class="sedes-subtitle">Explora nuestras ubicaciones y agenda tu cita en la sede más cercana.</p>
       </div>
 
-      <div class="map-wrapper anim-fade-in">
-        <div id="map"></div>
+      <div class="sedes-layout anim-fade-in">
+        <!-- Panel lateral con la lista de sedes -->
+        <div class="sedes-sidebar">
+          <div class="sede-list-item" *ngFor="let sede of sedes" (click)="centrarMapa(sede)">
+            <div class="sede-item-header">
+              <h4>{{ sede.nombre }}</h4>
+              <span class="badge-abierto">Abierto ahora</span>
+            </div>
+            <div class="sede-item-body">
+              <p><i class="fa-solid fa-location-dot"></i> {{ sede.direccion }}</p>
+              <p><i class="fa-solid fa-phone"></i> Llamar al {{ sede.telefono }}</p>
+            </div>
+            <div class="sede-item-actions">
+              <a href="javascript:void(0)" (click)="sacarCita(); $event.stopPropagation()">
+                <i class="fa-solid fa-calendar-check"></i> Solicitar una cita
+              </a>
+              <a href="javascript:void(0)" (click)="centrarMapa(sede); $event.stopPropagation()">
+                <i class="fa-solid fa-map"></i> Ver en mapa
+              </a>
+            </div>
+          </div>
+        </div>
 
-        <div class="map-overlay">
-          <div class="overlay-card">
-            <i class="fas fa-location-dot"></i>
-            <span>4 Sedes en Lima</span>
+        <!-- Mapa -->
+        <div class="map-wrapper">
+          <div id="map"></div>
+          <div class="map-overlay">
+            <div class="overlay-card">
+              <i class="fas fa-location-dot"></i>
+              <span>{{ sedes.length }} Sedes en Lima</span>
+            </div>
           </div>
         </div>
       </div>

@@ -629,16 +629,114 @@
   margin: 0 auto;
 }
 
-/* CONTENEDOR DEL MAPA */
-.map-wrapper {
-  position: relative;
-  width: 100%;
-  height: 550px;
-  border-radius: 40px;
+/* NUEVO LAYOUT: SIDEBAR + MAPA */
+.sedes-layout {
+  display: flex;
+  gap: 30px;
+  max-width: 1300px;
+  margin: 0 auto;
+  height: 600px;
+  background: #0a2e1f;
+  border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #0a2e1f;
+}
+
+.sedes-sidebar {
+  flex: 0 0 380px;
+  background: #ffffff;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar for sidebar */
+.sedes-sidebar::-webkit-scrollbar { width: 6px; }
+.sedes-sidebar::-webkit-scrollbar-track { background: #f1f5f9; }
+.sedes-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+.sedes-sidebar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.sede-list-item {
+  padding: 25px;
+  border-bottom: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #1e293b;
+}
+
+.sede-list-item:hover {
+  background: #f8fafc;
+  border-left: 4px solid #0fbf6a;
+}
+
+.sede-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.sede-item-header h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0fbf6a;
+  margin: 0;
+}
+
+.badge-abierto {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.sede-item-body p {
+  font-size: 0.95rem;
+  color: #475569;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sede-item-body p i {
+  color: #0fbf6a;
+  width: 16px;
+  text-align: center;
+}
+
+.sede-item-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.sede-item-actions a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0a7c4a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.sede-item-actions a:hover {
+  color: #044b2d;
+  text-decoration: underline;
+}
+
+/* CONTENEDOR DEL MAPA (AHORA ES FLEXIBLE) */
+.map-wrapper {
+  position: relative;
+  flex: 1;
+  height: 100%;
 }
 
 #map {

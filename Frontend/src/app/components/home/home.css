@@ -231,6 +231,16 @@
   text-align: center;
 }
 
+.tech-badge {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.4);
+}
+
+.tech-badge .years i {
+  color: #0fbf6a;
+  font-size: 2.8rem;
+}
+
 .about-text {
   flex: 1;
   text-align: left;

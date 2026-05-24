@@ -24,6 +24,9 @@ public class Especialidad {
 
     private String descripcion;
 
+    @Column(name = "precio_base", nullable = false)
+    private Double precioBase = 0.0;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoEspecialidad estado = EstadoEspecialidad.ACTIVA;
@@ -69,6 +72,14 @@ public class Especialidad {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Double getPrecioBase() {
+        return precioBase;
+    }
+
+    public void setPrecioBase(Double precioBase) {
+        this.precioBase = precioBase;
     }
 }
 

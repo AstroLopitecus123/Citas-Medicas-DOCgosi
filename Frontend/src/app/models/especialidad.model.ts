@@ -9,6 +9,7 @@ export class Especialidad {
   estado!: EstadoEspecialidad;
   fechaCreacion!: string;
   descripcion?: string; 
+  precioBase?: number;
 
   constructor(data?: any) {
 

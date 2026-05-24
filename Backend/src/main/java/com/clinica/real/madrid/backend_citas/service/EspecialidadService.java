@@ -24,6 +24,9 @@ public class EspecialidadService {
         if (repo.existsByNombre(especialidad.getNombre())) {
             throw new RuntimeException("La especialidad '" + especialidad.getNombre() + "' ya existe.");
         }
+        if (especialidad.getPrecioBase() == null) {
+            especialidad.setPrecioBase(0.0);
+        }
         return repo.save(especialidad);
     }
 
@@ -34,6 +37,9 @@ public class EspecialidadService {
         existente.setNombre(especialidad.getNombre());
         existente.setDescripcion(especialidad.getDescripcion());
         existente.setEstado(especialidad.getEstado());
+        if (especialidad.getPrecioBase() != null) {
+            existente.setPrecioBase(especialidad.getPrecioBase());
+        }
 
         return repo.save(existente);
     }

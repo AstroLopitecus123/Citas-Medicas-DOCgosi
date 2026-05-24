@@ -665,13 +665,14 @@
   font-size: 1.5rem;
   color: #94a3b8;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
   line-height: 1;
 }
 
 .btn-close-glass:hover {
   color: #ef4444;
-  transform: rotate(90deg);
+  background: #fee2e2;
+  transform: scale(1.1);
 }
 
 .modal-header-glass i {
@@ -1033,6 +1034,10 @@
 }
 
 .btn-close-glass {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
   background: #f1f5f9 !important;
   width: 32px !important; height: 32px !important;
   border-radius: 50% !important;
@@ -1041,15 +1046,15 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: 0.2s !important;
+  transition: all 0.2s ease !important;
   color: #64748b !important;
   font-size: 1.2rem !important;
 }
 
 .btn-close-glass:hover { 
-  background: #ef4444 !important; 
-  color: white !important; 
-  transform: rotate(90deg) !important; 
+  background: #fee2e2 !important; 
+  color: #ef4444 !important; 
+  transform: translateY(-50%) scale(1.1) !important; 
 }
 
 .modal-body-glass {

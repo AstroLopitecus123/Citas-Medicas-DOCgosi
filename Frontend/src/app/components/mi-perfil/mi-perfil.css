@@ -196,30 +196,7 @@
     color: #64748b;
 }
 
-.btn-close-glass {
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 35px;
-    height: 35px;
-    background: #f1f5f9;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    color: #64748b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
-.btn-close-glass:hover {
-    background: #e2e8f0;
-    color: #1e293b;
-    transform: translateY(-50%) scale(1.1);
-}
 
 /* Cropper Modal Premium Buttons */
 .cropper-footer {

@@ -186,8 +186,7 @@
 .modal-header-glass h3 { margin: 0; font-size: 1.35rem; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
 .modal-header-glass p { margin: 2px 0 0; font-size: 0.9rem; color: #64748b; font-weight: 500; }
 .header-icon-box { width: 48px; height: 48px; background: rgba(15, 191, 106, 0.1); color: #0fbf6a; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: inset 0 0 0 1px rgba(15, 191, 106, 0.1); }
-.btn-close-glass { position: absolute; right: 22px; top: 22px; width: 32px; height: 32px; background: #f1f5f9; border-radius: 50%; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.btn-close-glass:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
+
 
 .modal-body-glass { padding: 25px; max-height: 65vh; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
 .selection-grid-modern { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 25px; background: #f8fafc; padding: 22px; border-radius: 18px; align-items: end; border: 1px solid #eef2f6; }

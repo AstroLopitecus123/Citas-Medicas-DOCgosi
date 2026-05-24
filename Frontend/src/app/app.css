@@ -95,7 +95,7 @@
 
 .header-user-link {
   background: #f0fdf4;
-  color: #16a34a !important;
+  color: #15803d !important;
   padding: 10px 18px;
   border-radius: 30px;
   border: 1px solid rgba(22, 163, 74, 0.1);
@@ -107,7 +107,7 @@
 }
 
 .cerrar-sesion {
-  color: #e53e3e !important;
+  color: #dc2626 !important;
   cursor: pointer;
 }
 

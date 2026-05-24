@@ -19,34 +19,7 @@
   <!-- PRELOAD del loader logo -->
   <link rel="preload" as="image" href="assets/images/LogoSOLO.webp">
 
-  <!-- FONT-AWESOME: override font-display antes de que cargue el CDN -->
-  <style>
-    /* Override font-display ANTES del CDN para que el browser use swap */
-    @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 900;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Font Awesome 6 Brands';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf') format('truetype');
-    }
-  </style>
+  <!-- FONT-AWESOME: carga no bloqueante (media=print evita bloquear render) -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     media="print" onload="this.media='all'">

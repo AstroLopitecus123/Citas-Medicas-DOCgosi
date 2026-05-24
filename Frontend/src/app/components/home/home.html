@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="hero-image">
-        <img src="assets/images/LogoFull2.png" alt="Logo R.E.T.O Salud" appNarrator>
+        <img src="assets/images/LogoFull2.png" width="580" height="200" alt="Logo R.E.T.O Salud" appNarrator>
       </div>
     </div>
   </section>
@@ -29,8 +29,8 @@
     <div class="section-container about-flex">
       <div class="about-images">
         <div class="img-collage">
-          <img src="assets/images/ServiceNurse.png" class="img-1" alt="Enfermera" appNarrator altText="Enfermera profesional brindando cuidados domiciliarios">
-          <img src="assets/images/HomeDoctor.png" class="img-2" alt="Equipo Medico" appNarrator altText="Equipo médico de R.E.T.O Salud colaborando para tu bienestar">
+          <img src="assets/images/ServiceNurse.png" width="350" height="450" class="img-1" alt="Enfermera" appNarrator altText="Enfermera profesional brindando cuidados domiciliarios">
+          <img src="assets/images/HomeDoctor.png" width="350" height="320" class="img-2" alt="Equipo Medico" appNarrator altText="Equipo médico de R.E.T.O Salud colaborando para tu bienestar">
           <div class="experience-badge tech-badge">
             <span class="years"><i class="fa-solid fa-laptop-medical"></i></span>
             <span class="txt">100% Digital</span>
@@ -78,15 +78,15 @@
             <div class="honeycomb-cell__wrapper">
 
               <div class="honeycomb-cell__front">
-                <img [src]="e.imagen" class="honeycomb-cell__image" [alt]="e.titulo">
+                <img [src]="e.imagen" width="220" height="254" class="honeycomb-cell__image" [alt]="e.titulo">
                 <div class="honeycomb-cell__overlay"></div>
-                <h4 class="honeycomb-cell__title">{{ e.titulo }}</h4>
+                <h3 class="honeycomb-cell__title">{{ e.titulo }}</h3>
               </div>
 
               <div class="honeycomb-cell__back">
                 <div class="back-content">
                   <p>{{ e.descripcion }}</p>
-                  <button (click)="sacarCita()" class="honeycomb-btn-flip">
+                  <button aria-label="Sacar Cita" (click)="sacarCita()" class="honeycomb-btn-flip">
                     Sacar Cita <i class="fas fa-calendar-plus"></i>
                   </button>
                 </div>
@@ -98,12 +98,12 @@
             <div class="honeycomb-cell__wrapper">
               <div class="honeycomb-cell__front">
                 <div class="honeycomb-cell__image more-bg"></div>
-                <h4 class="honeycomb-cell__title">¡Y mucho más!</h4>
+                <h3 class="honeycomb-cell__title">¡Y mucho más!</h3>
               </div>
               <div class="honeycomb-cell__back">
                 <div class="back-content">
                   <p>Descubre todas nuestras coberturas médicas y convenios institucionales.</p>
-                  <a href="#" class="honeycomb-btn-flip">Explorar <i class="fa-solid fa-angles-right"></i></a>
+                  <a href="#" aria-label="Explorar Convenios" class="honeycomb-btn-flip">Explorar <i class="fa-solid fa-angles-right"></i></a>
                 </div>
               </div>
             </div>
@@ -133,10 +133,10 @@
           </div>
 
           <div class="doc-pic">
-            <img [src]="doc.foto" [alt]="doc.nombre" appNarrator [altText]="'Foto del ' + doc.nombre">
+            <img [src]="doc.foto" width="160" height="160" [alt]="doc.nombre" appNarrator [altText]="'Foto del ' + doc.nombre">
           </div>
           <div class="doc-info">
-            <h4>{{ doc.nombre }}</h4>
+            <h3>{{ doc.nombre }}</h3>
             <span class="cargo">{{ doc.cargo }}</span>
             <div class="citas-badge">
               <i class="fa-solid fa-calendar-check"></i>

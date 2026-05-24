@@ -25,10 +25,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
   doctores: any[] = [];
 
   sedes = [
-    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', telefono: '01-555-1234', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/SedeMiraflores.jpg' },
-    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', telefono: '01-555-5678', icono: 'fa-building', lat: -12.0722, lng: -76.9450, img: 'assets/images/SedeMolina.jpg' },
-    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', telefono: '01-555-9012', icono: 'fa-clinic-medical', lat: -12.1167, lng: -76.9833, img: 'assets/images/SedeSurco.jpg' },
-    { nombre: 'Sede Santa Anita', direccion: 'Av. Ruiseñores 120', telefono: '01-555-3456', icono: 'fa-house-medical', lat: -12.0433, lng: -76.9536, img: 'assets/images/SedeSantaAnita.jpg' }
+    { nombre: 'Sede Miraflores', direccion: 'Av. Larco 123', telefono: '972 746 609', horario: 'Abre Lunes a las 8:00 a.m.', icono: 'fa-hospital', lat: -12.1227, lng: -77.0296, img: 'assets/images/SedeMiraflores.jpg' },
+    { nombre: 'Sede La Molina', direccion: 'Av. Javier Prado 456', telefono: '993 421 655', horario: 'Abre Lunes a las 8:00 a.m.', icono: 'fa-building', lat: -12.0722, lng: -76.9450, img: 'assets/images/SedeMolina.jpg' },
+    { nombre: 'Sede Surco', direccion: 'Av. Primavera 789', telefono: '904 042 627', horario: 'Abre Martes a las 9:00 a.m.', icono: 'fa-clinic-medical', lat: -12.1167, lng: -76.9833, img: 'assets/images/SedeSurco.jpg' },
+    { nombre: 'Sede Santa Anita', direccion: 'Av. Ruiseñores 120', telefono: '924 656 793', horario: 'Abre Lunes a las 8:30 a.m.', icono: 'fa-house-medical', lat: -12.0433, lng: -76.9536, img: 'assets/images/SedeSantaAnita.jpg' }
   ];
 
   private map: any;

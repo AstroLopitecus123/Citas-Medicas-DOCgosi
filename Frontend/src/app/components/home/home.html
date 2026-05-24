@@ -159,22 +159,37 @@
       <div class="sedes-layout anim-fade-in">
         <!-- Panel lateral con la lista de sedes -->
         <div class="sedes-sidebar">
+          
+          <div class="sidebar-header">
+            <h3>{{ sedes.length }} Locales Encontrados</h3>
+            <p>Encontrar un local cerca de usted</p>
+            <div class="search-box">
+              <input type="text" placeholder="Escriba la dirección o el código postal">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <a href="javascript:void(0)" class="use-location">
+              <i class="fa-solid fa-location-arrow"></i> Usar mi ubicación actual
+            </a>
+          </div>
+
           <div class="sede-list-item" *ngFor="let sede of sedes" (click)="centrarMapa(sede)">
-            <div class="sede-item-header">
-              <h4>{{ sede.nombre }}</h4>
-              <span class="badge-abierto">Abierto ahora</span>
+            <div class="sede-image">
+              <img [src]="sede.img" [alt]="sede.nombre">
             </div>
-            <div class="sede-item-body">
-              <p><i class="fa-solid fa-location-dot"></i> {{ sede.direccion }}</p>
-              <p><i class="fa-solid fa-phone"></i> Llamar al {{ sede.telefono }}</p>
-            </div>
-            <div class="sede-item-actions">
-              <a href="javascript:void(0)" (click)="sacarCita(); $event.stopPropagation()">
-                <i class="fa-solid fa-calendar-check"></i> Solicitar una cita
-              </a>
-              <a href="javascript:void(0)" (click)="centrarMapa(sede); $event.stopPropagation()">
-                <i class="fa-solid fa-map"></i> Ver en mapa
-              </a>
+            <div class="sede-info">
+              <span class="sede-horario">{{ sede.horario }}</span>
+              <h4 class="sede-title">{{ sede.nombre }}</h4>
+              <p class="sede-address">{{ sede.direccion }}</p>
+              <a href="tel:{{ sede.telefono }}" class="sede-phone" (click)="$event.stopPropagation()">Llame al {{ sede.telefono }}</a>
+              
+              <div class="sede-item-actions">
+                <a href="javascript:void(0)" (click)="sacarCita(); $event.stopPropagation()">
+                  <i class="fa-solid fa-mobile-screen"></i> Solicitar una cita >
+                </a>
+                <a href="javascript:void(0)" (click)="centrarMapa(sede); $event.stopPropagation()">
+                  <i class="fa-solid fa-location-dot"></i> Cómo llegar >
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -191,4 +191,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  scrollTo(sectionId: string, event: Event) {
+    event.preventDefault();
+    const element = document.querySelector(`.${sectionId}`) || document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (sectionId === 'inicio') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 }

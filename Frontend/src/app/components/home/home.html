@@ -192,4 +192,34 @@
       </div>
     </div>
   </section>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <img src="assets/images/LogoFull2.webp" width="180" alt="Logo R.E.T.O Salud" class="footer-logo">
+        <p class="footer-tagline">Tecnología y vocación al servicio de tu salud.</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-column">
+          <a href="#inicio" (click)="scrollTo('inicio', $event)">Inicio</a>
+          <a href="#about" (click)="scrollTo('about', $event)">Sobre Nosotros</a>
+          <a href="#doctores" (click)="scrollTo('doctores', $event)">Nuestro Equipo</a>
+        </div>
+        <div class="footer-column">
+          <a href="#servicios" (click)="scrollTo('servicios', $event)">Nuestros Servicios</a>
+          <a href="#sedes" (click)="scrollTo('sedes', $event)">Nuestras Sedes</a>
+          <a href="javascript:void(0)" (click)="sacarCita()">Agendar una Cita</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p class="copyright">© 2026 R.E.T.O Salud. Todos los derechos reservados.</p>
+      <div class="legal-links">
+        <a href="javascript:void(0)">Política de Privacidad</a> | 
+        <a href="javascript:void(0)">Términos de Uso</a>
+      </div>
+    </div>
+  </footer>
 </div>

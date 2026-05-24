@@ -16,7 +16,7 @@
       <h3>¿En qué puedo ayudarte?</h3>
       <p>Con unas pocas palabras, indícame en qué te puedo ayudar.</p>
     </div>
-    <button class="btn-close" (click)="toggleChat()">
+    <button class="btn-close" aria-label="Cerrar chat" (click)="toggleChat()">
       <i class="fa-solid fa-minus"></i>
     </button>
   </div>
@@ -67,7 +67,7 @@
       (keyup.enter)="sendMessage()"
       [disabled]="isLoading"
     />
-    <button (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
+    <button aria-label="Enviar mensaje" (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
       <i class="fa-solid fa-paper-plane"></i>
     </button>
   </div>

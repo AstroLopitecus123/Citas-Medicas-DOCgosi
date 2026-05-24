@@ -247,8 +247,8 @@
 }
 
 .sub-title {
-  color: #0fbf6a;
-  font-weight: 700;
+  color: #0a7c4a;
+  font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
   font-size: 1rem;
@@ -295,8 +295,8 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: rgba(15, 191, 106, 0.08);
-  color: #0fbf6a;
+  background: rgba(10, 124, 74, 0.08);
+  color: #0a7c4a;
   padding: 14px 25px;
   border-radius: 40px;
   font-weight: 700;
@@ -574,7 +574,7 @@
 .doc-pic img { width: 100%; height: 100%; object-fit: cover; }
 
 .doc-info h4 { font-size: 1.3rem; color: #1a2a3a; margin-bottom: 6px; font-weight: 800; }
-.doc-info .cargo { display:block; color: #0fbf6a; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+.doc-info .cargo { display:block; color: #0a7c4a; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
 
 /* Citas Badge */
 .citas-badge {

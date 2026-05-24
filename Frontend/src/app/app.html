@@ -1,6 +1,6 @@
 <div class="page-loader" *ngIf="loading">
   <div class="loader-content">
-    <img src="/assets/images/LogoSOLO.png" alt="Cargando..." class="loader-logo">
+    <img src="/assets/images/LogoSOLO.png" width="220" height="120" alt="Cargando..." class="loader-logo">
     <div class="loader-spinner"></div>
   </div>
 </div>
@@ -8,7 +8,7 @@
 <header class="header" *ngIf="!isPanelRoute">
   <div class="header-container">
     <a class="titulo" routerLink="/" tabindex="0" role="link" (keydown.enter)="irAHome($event)" aria-label="R.E.T.O Salud - Volver al Inicio">
-      <img src="/assets/images/LogoSOLO.png" alt="RETO Logo" class="header-logo" style="height: 48px; width: auto;">
+      <img src="/assets/images/LogoSOLO.png" width="88" height="48" alt="RETO Logo" class="header-logo" style="height: 48px; width: auto;">
       <div class="logo-text-stack">
         <span class="reto-text">R.E.T.O.</span>
         <span class="salud-text">Salud</span>
@@ -45,7 +45,7 @@
 
 <aside class="dashboard-sidebar" *ngIf="isPanelRoute">
   <div class="sidebar-brand">
-    <img src="/assets/images/LogoSOLO.png" alt="Logo" class="sidebar-logo" style="height: 44px; width: auto;" />
+    <img src="/assets/images/LogoSOLO.png" width="80" height="44" alt="Logo" class="sidebar-logo" style="height: 44px; width: auto;" />
     <div class="brand-text">
       <span class="brand-name">R.E.T.O</span>
       <span class="brand-sub">Panel {{ usuario?.rol || 'Dashboard' }}</span>

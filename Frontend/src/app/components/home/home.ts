@@ -109,19 +109,24 @@ export class HomeComponent implements AfterViewInit, OnInit {
         </div>
       `;
 
-      const circle = L.circleMarker([sede.lat, sede.lng], {
-        radius: 12,
-        fillColor: "#00ff88",
-        color: "#fff",
-        weight: 3,
-        opacity: 1,
-        fillOpacity: 0.9,
-        className: 'pulse-marker' 
-      }).addTo(this.map);
+      const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `
+          <div class="marker-pin">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <div class="marker-glow"></div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -45]
+      });
 
-      this.markers.push({ sede, marker: circle });
+      const marker = L.marker([sede.lat, sede.lng], { icon: customIcon }).addTo(this.map);
 
-      circle.bindPopup(popupContent, {
+      this.markers.push({ sede, marker });
+
+      marker.bindPopup(popupContent, {
         closeButton: false,
         className: 'premium-glass-popup',
         minWidth: 280

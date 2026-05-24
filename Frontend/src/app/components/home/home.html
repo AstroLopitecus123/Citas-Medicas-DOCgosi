@@ -180,7 +180,7 @@
               <span class="sede-horario">{{ sede.horario }}</span>
               <h4 class="sede-title">{{ sede.nombre }}</h4>
               <p class="sede-address">{{ sede.direccion }}</p>
-              <a href="tel:{{ sede.telefono }}" class="sede-phone" (click)="$event.stopPropagation()">Llame al {{ sede.telefono }}</a>
+              <span class="sede-phone">Llame al {{ sede.telefono }}</span>
               
               <div class="sede-item-actions">
                 <a href="javascript:void(0)" (click)="sacarCita(); $event.stopPropagation()">

@@ -8,15 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="assets/images/LogoSOLO.png">
 
-  <!-- ✅ 1. PRECONNECT: El navegador abre conexión anticipada a los CDNs críticos -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <!-- PRECONNECT a CDNs críticos (sin crossorigin para stylesheets) -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="preconnect" href="https://backend-citas-production-4c29.up.railway.app" crossorigin>
 
-  <!-- ✅ 2. PRELOAD: Carga anticipada de la imagen LCP (el logo principal) -->
-  <link rel="preload" as="image" href="assets/images/LogoFull2.png" fetchpriority="high">
+  <!-- PRELOAD del logo principal (imagen LCP) -->
+  <link rel="preload" as="image" href="assets/images/LogoFull2.png">
 
-  <!-- ✅ 3. FONT-AWESOME: Carga no bloqueante (media trick para font-display) -->
+  <!-- LEAFLET JS: SINCRÓNICO (Angular lo necesita al inicializar el mapa) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- LEAFLET CSS: Después del JS para no bloquear render visual -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <!-- FONT-AWESOME: carga no bloqueante con fallback -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     media="print" onload="this.media='all'">
@@ -24,18 +31,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </noscript>
 
-  <!-- ✅ 4. LEAFLET CSS: Carga no bloqueante -->
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  </noscript>
-
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://m.stripe.network https://accounts.google.com https://unpkg.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.basemaps.cartocdn.com https://res.cloudinary.com https://ui-avatars.com;">
 
-  <!-- ✅ 5. LEAFLET JS: defer para no bloquear el render inicial -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 </head>

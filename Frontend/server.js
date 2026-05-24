@@ -22,6 +22,9 @@ app.use(express.static(DIST_FOLDER, {
     // index.html y ngsw.json nunca deben cachearse (para que Angular actualice)
     if (filePath.endsWith('.html') || filePath.endsWith('ngsw.json')) {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else {
+      // Forzar caché explícito para Lighthouse (1 año = 31536000 segundos)
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     }
   }
 }));

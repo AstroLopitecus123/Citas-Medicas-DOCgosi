@@ -15,8 +15,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Servir archivos estáticos
-app.use(express.static(DIST_FOLDER));
+// Servir archivos estáticos con caché largo (1 año para assets con hash, sin caché para HTML)
+app.use(express.static(DIST_FOLDER, {
+  maxAge: '1y',
+  setHeaders: (res, filePath) => {
+    // index.html y ngsw.json nunca deben cachearse (para que Angular actualice)
+    if (filePath.endsWith('.html') || filePath.endsWith('ngsw.json')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  }
+}));
 
 // Redirigir todo a index.html (SPA fallback)
 app.get('*', (req, res) => {

@@ -8,6 +8,28 @@
   to { opacity: 1; }
 }
 
+/* ═══════════════════════════════════════════════════
+   WAVE SECTION DIVIDERS (SVG inline, peso cero)
+   ═══════════════════════════════════════════════════ */
+.wave-divider {
+  display: block;
+  line-height: 0;
+  overflow: hidden;
+  margin: -2px 0; /* Elimina el gap de 1px que dejan algunos navegadores */
+}
+
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Fondo de cada onda = el color de la sección ANTERIOR */
+.wave-white-to-faint { background: #ffffff; }
+.wave-faint-to-white { background: #f8faff; }
+.wave-white-to-dark  { background: #ffffff; }
+.wave-dark-to-footer { background: #061d12; }
+
 /* SECTION COMMON */
 .section-container {
   max-width: 1200px;

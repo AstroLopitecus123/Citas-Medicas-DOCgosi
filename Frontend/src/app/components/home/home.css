@@ -631,14 +631,21 @@
 
 .sedes {
   background: #1e5c37; /* Fondo oscuro medicinal */
-  padding: 100px 0;
+  padding: 40px 0;
   position: relative;
   color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.sedes .section-container {
+  width: 100%;
 }
 
 .sedes-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .sedes .section-title {
@@ -660,7 +667,9 @@
   gap: 30px;
   max-width: 1300px;
   margin: 0 auto;
-  height: 600px;
+  height: calc(100vh - 220px);
+  min-height: 450px;
+  max-height: 600px;
   background: #245e3a;
   border-radius: 30px;
   overflow: hidden;

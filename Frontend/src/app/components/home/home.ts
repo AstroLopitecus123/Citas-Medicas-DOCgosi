@@ -180,7 +180,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
       if (usuario.rol === 'PACIENTE' || usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION') {
         this.router.navigate(['/mis-citas'], { queryParams: { accion: 'nueva-cita' } });
       } else if (usuario.rol === 'MEDICO') {
-        this.router.navigate(['/medico-dashboard']);
+        this.router.navigate(['/medico/dashboard']);
       }
     } else {
 

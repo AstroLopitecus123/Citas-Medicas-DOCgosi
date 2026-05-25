@@ -28,7 +28,7 @@
 .wave-white-to-faint { background: #ffffff; }
 .wave-faint-to-white { background: #f8faff; }
 .wave-white-to-dark  { background: #ffffff; }
-.wave-dark-to-footer { background: #0d3320; }
+.wave-dark-to-footer { background: #1e5c37; }
 
 /* SECTION COMMON */
 .section-container {
@@ -631,7 +631,7 @@
    ═══════════════════════════════════════════════════ */
 
 .sedes {
-  background: #0d3320; /* Fondo oscuro medicinal */
+  background: #1e5c37; /* Fondo oscuro medicinal */
   padding: 100px 0;
   position: relative;
   color: #fff;
@@ -662,7 +662,7 @@
   max-width: 1300px;
   margin: 0 auto;
   height: 600px;
-  background: #143d28;
+  background: #245e3a;
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
@@ -1085,7 +1085,7 @@
   color: #f1f5f9;
   padding: 60px 5% 30px;
   font-family: 'Outfit', system-ui, sans-serif;
-  border-top: 5px solid #0fbf6a;
+  border-top: none;
 }
 
 .footer-container {

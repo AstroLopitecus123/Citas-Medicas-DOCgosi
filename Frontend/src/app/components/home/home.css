@@ -67,6 +67,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 .hero > .hero-content {
@@ -185,10 +186,11 @@
 .about {
   background: #ffffff;
   padding: 40px 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 .about > .section-container {
@@ -328,10 +330,11 @@
 .services {
   background: #f8faff;
   padding: 40px 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 .services > .section-container {
@@ -561,31 +564,49 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
+/* SCROLL DOWN ARROW */
 .scroll-down-btn {
   position: absolute;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  color: #0a7c4a;
-  font-size: 2rem;
-  animation: bounce 2s infinite;
+  width: 50px;
+  height: 50px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  color: #0fbf6a;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  animation: bounceDown 2s infinite;
   z-index: 10;
+  transition: all 0.3s;
+  padding: 0;
 }
-
-@keyframes bounce {
+.scroll-down-btn:hover {
+  background: #f8fafc;
+  color: #0a7c4a;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+@keyframes bounceDown {
   0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-  40% { transform: translateY(-15px) translateX(-50%); }
-  60% { transform: translateY(-7px) translateX(-50%); }
+  40% { transform: translateY(-10px) translateX(-50%); }
+  60% { transform: translateY(-5px) translateX(-50%); }
 }
 
 /* DOCTORES - TOP 4 RANKING */
 .doctors { 
   background: white; 
   padding: 40px 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 .doctors > .section-container {
@@ -686,9 +707,10 @@
   padding: 40px 0;
   position: relative;
   color: #fff;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
+  scroll-margin-top: 80px;
 }
 
 .sedes .section-container {

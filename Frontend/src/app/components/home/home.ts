@@ -190,9 +190,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   scrollTo(sectionId: string, event: Event) {
     event.preventDefault();
-    const element = document.querySelector(`.${sectionId}`) || document.getElementById(sectionId);
+    const element = document.querySelector(`.${sectionId}`) as HTMLElement || document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const headerHeight = 90;
+      const elementTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementTop - headerHeight, behavior: 'smooth' });
     } else if (sectionId === 'inicio') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }

@@ -60,9 +60,16 @@
 /* HERO SECTION (RETO) */
 .hero {
   background: linear-gradient(135deg, #ffffff 0%, #f4fdf7 100%);
-  padding: 100px 0 80px;
+  padding: 40px 0;
   overflow: hidden;
   margin-top: 0 !important;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+}
+
+.hero > .hero-content {
+  width: 100%;
 }
 
 .hero-content {
@@ -176,7 +183,14 @@
 
 .about {
   background: #ffffff;
-  padding: 120px 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.about > .section-container {
+  width: 100%;
 }
 
 .about-flex {
@@ -311,7 +325,14 @@
 
 .services {
   background: #f8faff;
-  padding: 120px 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.services > .section-container {
+  width: 100%;
 }
 
 .services-flex {
@@ -538,7 +559,17 @@
 }
 
 /* DOCTORES - TOP 4 RANKING */
-.doctors { background: white; padding: 100px 0 60px; }
+.doctors { 
+  background: white; 
+  padding: 40px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.doctors > .section-container {
+  width: 100%;
+}
 .doctors-subtitle { text-align: center; color: #64748b; max-width: 600px; margin: 0 auto 50px; font-size: 1.15rem; line-height: 1.7; }
 .doctors-grid { 
   display: grid; 

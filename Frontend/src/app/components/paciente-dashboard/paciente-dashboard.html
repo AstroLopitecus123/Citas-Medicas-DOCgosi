@@ -55,7 +55,7 @@
     <div class="premium-card">
       <h3 class="card-title">Acciones del Paciente</h3>
       <div class="quick-actions">
-        <button class="action-btn" routerLink="/mis-citas">
+        <button class="action-btn" [routerLink]="['/mis-citas']" [queryParams]="{accion: 'nueva-cita'}">
           <i class="fa-solid fa-calendar-plus"></i>
           <div class="btn-content">
             <strong>Reservar Cita</strong>

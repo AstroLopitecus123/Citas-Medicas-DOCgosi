@@ -177,14 +177,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
     if (usuarioJson) {
       const usuario = JSON.parse(usuarioJson);
 
-      if (usuario.rol === 'PACIENTE') {
-        this.router.navigate(['/paciente-dashboard']);
+      if (usuario.rol === 'PACIENTE' || usuario.rol === 'ADMIN' || usuario.rol === 'RECEPCION') {
+        this.router.navigate(['/mis-citas'], { queryParams: { accion: 'nueva-cita' } });
       } else if (usuario.rol === 'MEDICO') {
         this.router.navigate(['/medico-dashboard']);
-      } else if (usuario.rol === 'ADMIN') {
-        this.router.navigate(['/admin-dashboard']);
-      } else if (usuario.rol === 'RECEPCION') {
-        this.router.navigate(['/recepcion-dashboard']);
       }
     } else {
 

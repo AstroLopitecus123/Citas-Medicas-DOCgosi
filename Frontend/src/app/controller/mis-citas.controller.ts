@@ -248,6 +248,17 @@ export class MisCitasController {
     const idCita = Number(this.route.snapshot.queryParamMap.get('idCita'));
     const accion = this.route.snapshot.queryParamMap.get('accion');
 
+    if (accion === 'nueva-cita') {
+      console.log(' Acción detectada: nueva-cita');
+      this.abrirModalCita();
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { accion: null },
+        queryParamsHandling: 'merge'
+      });
+      return;
+    }
+
     if (idCita && accion) {
       console.log(' Acción pendiente detectada:', accion, 'para cita:', idCita);
       const cita = this.citas.find(c => c.id === idCita);

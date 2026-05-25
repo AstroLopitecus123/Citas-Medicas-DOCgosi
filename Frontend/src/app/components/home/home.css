@@ -63,11 +63,12 @@
   padding: 40px 0;
   overflow: hidden;
   margin-top: 0 !important;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   position: relative;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
+  box-sizing: border-box;
 }
 
 .hero > .hero-content {
@@ -186,11 +187,12 @@
 .about {
   background: #ffffff;
   padding: 40px 0;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   position: relative;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
+  box-sizing: border-box;
 }
 
 .about > .section-container {
@@ -330,11 +332,12 @@
 .services {
   background: #f8faff;
   padding: 40px 0;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   position: relative;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
+  box-sizing: border-box;
 }
 
 .services > .section-container {
@@ -567,7 +570,7 @@
 /* SCROLL DOWN ARROW */
 .scroll-down-btn {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 50px;
@@ -602,11 +605,12 @@
 .doctors { 
   background: white; 
   padding: 40px 0;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   position: relative;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
+  box-sizing: border-box;
 }
 
 .doctors > .section-container {
@@ -707,10 +711,11 @@
   padding: 40px 0;
   position: relative;
   color: #fff;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
+  box-sizing: border-box;
 }
 
 .sedes .section-container {

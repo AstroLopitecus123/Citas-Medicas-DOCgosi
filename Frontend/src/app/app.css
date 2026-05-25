@@ -220,6 +220,7 @@
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.3) !important;
   z-index: 1 !important;
   flex-shrink: 0 !important;
+  overflow: hidden !important;
 }
 
 .welcome-text {

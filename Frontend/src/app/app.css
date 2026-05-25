@@ -279,19 +279,52 @@
   margin-bottom: 20px !important;
 }
 
-/* BUSCADOR PREMIUM */
-.premium-search-input {
-  border-radius: 30px !important;
-  padding: 12px 20px 12px 48px !important;
-  border: 1px solid #cbd5e1 !important;
-  background-color: white !important;
-  transition: all 0.3s ease !important;
-  font-weight: 500 !important;
-  color: #0f4a2b !important;
+/* PREMIUM FILTERS BAR (UNIFICADO PARA TODOS LOS DASHBOARDS) */
+.filters-bar-premium {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  gap: 25px;
+  margin-bottom: 25px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 191, 106, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
 }
-.premium-search-input:focus {
-  border-color: #0c8c4c !important;
-  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.15) !important;
+
+.search-box-modern {
+  position: relative;
+  flex: 1;
+  max-width: 450px;
+}
+
+.search-box-modern i {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.search-box-modern input {
+  width: 100%;
+  padding: 12px 18px 12px 48px;
+  border-radius: 14px;
+  border: 2px solid #f1f5f9;
+  background: #f8fafc;
+  color: #1e293b;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-box-modern input:focus {
+  border-color: #0fbf6a;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
+  outline: none;
 }
 
 /* SELECT PREMIUM (BORRA EL DISEÃ‘O SIMPLE) */

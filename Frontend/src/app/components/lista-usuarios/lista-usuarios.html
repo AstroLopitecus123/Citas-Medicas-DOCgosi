@@ -10,13 +10,16 @@
        <p>Control de accesos, roles y estados de los usuarios del sistema.</p>
     </div>
     <div class="header-actions">
-       <div class="buscador-wrapper" style="position: relative; min-width: 320px;">
-         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 14px; color: #64748b; z-index: 10;"></i>
-         <input type="text" class="form-control-text premium-search-input" placeholder="Buscar por Nombre, Rol o País..." [(ngModel)]="ctrl.filtro"
-           (input)="ctrl.filtrarUsuarios()" />
-       </div>
+       <!-- Acciones del header (vacío ahora, pero listo para botones si los hay) -->
     </div>
   </header>
+
+  <div class="filters-bar-premium">
+    <div class="search-box-modern" style="max-width: 100%;">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Buscar por Nombre, Rol o País..." [(ngModel)]="ctrl.filtro" (input)="ctrl.filtrarUsuarios()" />
+    </div>
+  </div>
 
   <div class="premium-card">
     <div class="modern-table-container">

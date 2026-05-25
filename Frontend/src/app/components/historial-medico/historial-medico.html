@@ -44,10 +44,10 @@
     </div>
 
     <!-- Barra de búsqueda -->
-    <div class="search-filter-bar" *ngIf="!cargando && historiales.length > 0" style="margin-bottom: 30px;">
-      <div class="search-input-wrapper" style="position: relative; display: flex; align-items: center; background: white; border: 1.5px solid #cbd5e1; border-radius: 16px; padding: 12px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s;">
-        <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8; font-size: 1.1rem; margin-right: 12px;"></i>
-        <input type="text" [(ngModel)]="filtroBusqueda" (ngModelChange)="filtrarHistoriales()" placeholder="Buscar por paciente, médico, especialidad o diagnóstico..." style="border: none; outline: none; width: 100%; font-size: 0.95rem; font-weight: 600; color: #1e293b;">
+    <div class="filters-bar-premium" *ngIf="!cargando && historiales.length > 0">
+      <div class="search-box-modern" style="max-width: 100%;">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" [(ngModel)]="filtroBusqueda" (ngModelChange)="filtrarHistoriales()" placeholder="Buscar por paciente, médico, especialidad o diagnóstico...">
       </div>
     </div>
 

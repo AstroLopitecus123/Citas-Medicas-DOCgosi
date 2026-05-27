@@ -615,6 +615,7 @@
 
 .doctors > .section-container {
   width: 100%;
+  padding: 0 20px;
 }
 .doctors-subtitle { text-align: center; color: #64748b; max-width: 600px; margin: 0 auto 50px; font-size: 1.15rem; line-height: 1.7; }
 .doctors-grid { 
@@ -720,6 +721,7 @@
 
 .sedes .section-container {
   width: 100%;
+  padding: 0 20px;
 }
 
 .sedes-header {

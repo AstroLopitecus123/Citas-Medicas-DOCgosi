@@ -479,20 +479,28 @@
     justify-content: flex-end;
 }
 
-.pdf-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 12px 25px;
+.pdf-btn-sm {
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
-    font-weight: 600;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    flex-shrink: 0;
 }
-.pdf-btn:hover { background: #dc2626; }
+.pdf-btn-sm:hover {
+    background: #ffe4e6;
+    color: #be123c;
+    border-color: #fda4af;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
+}
 
 /* ============================================================
    ANIMACIONES

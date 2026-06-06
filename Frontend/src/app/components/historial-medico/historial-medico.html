@@ -152,54 +152,54 @@
 
 
     <!-- =========================================================
-         VISTA PACIENTE: sus propias citas (sin agrupar)
+         VISTA PACIENTE: sus propias citas (diseño estilo Admin)
          ========================================================= -->
     <div *ngIf="!cargando && usuario?.rol === 'PACIENTE' && historialesFiltrados.length > 0"
-         class="historial-list" style="display: flex; flex-direction: column; gap: 25px;">
+         class="historial-list" style="display: flex; flex-direction: column; gap: 20px;">
 
-      <div class="historial-item-card" *ngFor="let h of historialesFiltrados" style="background: white; border-radius: 22px; border: 1.5px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.02); overflow: hidden; transition: 0.3s; padding: 25px;">
-        <div class="item-header" style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
-          <div class="doctor-info" style="display: flex; align-items: center; gap: 15px;">
-            <div style="width: 52px; height: 52px; border-radius: 50%; border: 2px solid #ebf8ff; overflow: hidden; flex-shrink: 0; background: #ebf8ff; display: flex; align-items: center; justify-content: center;">
-              <img *ngIf="h.cita.medico.usuario.fotoUrl" [src]="h.cita.medico.usuario.fotoUrl" alt="Doctor" style="width: 100%; height: 100%; object-fit: cover;">
-              <i *ngIf="!h.cita.medico.usuario.fotoUrl" class="fa-solid fa-user-doctor" style="font-size: 1.4rem; color: #2b6cb0;"></i>
+      <div class="paciente-card" style="overflow: hidden;">
+        <div class="citas-acordeon expandido" style="max-height: unset; border-top: none;">
+          <div class="cita-item" *ngFor="let h of historialesFiltrados; let i = index">
+            <div class="cita-numero">#{{ historialesFiltrados.length - i }}</div>
+            <div class="cita-content">
+              <div class="cita-header-row">
+                <div class="medico-info-cita">
+                  <div class="medico-avatar-sm">
+                    <img *ngIf="h.cita.medico.usuario.fotoUrl" [src]="h.cita.medico.usuario.fotoUrl" alt="Médico">
+                    <i *ngIf="!h.cita.medico.usuario.fotoUrl" class="fa-solid fa-user-doctor"></i>
+                  </div>
+                  <div>
+                    <span class="medico-nombre">Dr. {{ h.cita.medico.usuario.nombre }} {{ h.cita.medico.usuario.apellido }}</span>
+                    <span class="especialidad-chip" *ngIf="h.cita.medico.especialidad">{{ h.cita.medico.especialidad.nombre }}</span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <div class="fecha-cita">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    {{ h.cita.fecha | date:'dd/MM/yyyy HH:mm' }}
+                  </div>
+                  <button class="pdf-btn-sm" (click)="descargarPDF(h)" title="Descargar Historial">
+                    <i class="fa-solid fa-file-pdf"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="cita-detalles">
+                <div class="detalle-item">
+                  <label><i class="fa-solid fa-stethoscope"></i> Diagnóstico</label>
+                  <p>{{ h.diagnostico || 'Pendiente de registro médico' }}</p>
+                </div>
+                <div class="detalle-item highlight">
+                  <label><i class="fa-solid fa-pills"></i> Receta y Tratamiento</label>
+                  <p>{{ h.receta || 'Sin receta aún' }}</p>
+                </div>
+                <div class="detalle-item notas" *ngIf="h.notas">
+                  <label><i class="fa-solid fa-comment-medical"></i> Notas Adicionales</label>
+                  <p>{{ h.notas }}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">Dr. {{ h.cita.medico.usuario.nombre }} {{ h.cita.medico.usuario.apellido }}</h4>
-              <span class="especialidad-tag" *ngIf="h.cita.medico.especialidad" style="display: inline-block; background: #ebf8ff; color: #2b6cb0; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; margin-top: 4px;">{{ h.cita.medico.especialidad.nombre }}</span>
-            </div>
           </div>
-          <div class="date-info" style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 700; color: #64748b; background: #f8fafc; padding: 6px 14px; border-radius: 10px;">
-            <i class="fa-solid fa-calendar-check" style="color: #3b82f6;"></i>
-            {{ h.cita.fecha | date:'dd/MM/yyyy HH:mm' }}
-          </div>
-        </div>
-
-        <div class="item-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-          <div class="info-group" style="display: flex; flex-direction: column; gap: 8px;">
-            <label style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-stethoscope" style="color: #3b82f6;"></i> Diagnóstico
-            </label>
-            <p style="margin: 0; font-size: 0.95rem; color: #334155; font-weight: 600; line-height: 1.5; background: #f8fafc; padding: 12px 16px; border-radius: 12px; border: 1px solid #f1f5f9;">{{ h.diagnostico }}</p>
-          </div>
-          <div class="info-group highlight" style="display: flex; flex-direction: column; gap: 8px;">
-            <label style="font-size: 0.8rem; font-weight: 800; color: #2b6cb0; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-pills" style="color: #3182ce;"></i> Receta y Tratamiento
-            </label>
-            <p style="margin: 0; font-size: 0.95rem; color: #1e3a8a; font-weight: 700; line-height: 1.5; background: #ebf8ff; padding: 12px 16px; border-radius: 12px; border: 1px solid #e0f2fe;">{{ h.receta }}</p>
-          </div>
-          <div class="info-group" *ngIf="h.notas" style="grid-column: span 2; display: flex; flex-direction: column; gap: 8px;">
-            <label style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-comment-medical" style="color: #64748b;"></i> Notas Adicionales
-            </label>
-            <p style="margin: 0; font-size: 0.95rem; color: #475569; font-weight: 500; line-height: 1.5; background: #f8fafc; padding: 12px 16px; border-radius: 12px; border: 1px solid #f1f5f9;">{{ h.notas }}</p>
-          </div>
-        </div>
-
-        <div class="item-footer" style="border-top: 1.5px solid #f1f5f9; padding-top: 20px; display: flex; justify-content: flex-end;">
-          <button class="pdf-btn" (click)="descargarPDF(h)" style="background: #fff1f2; border: 1px solid #ffe4e6; color: #be123c; border-radius: 12px; padding: 10px 20px; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;">
-            <i class="fa-solid fa-file-pdf"></i> Descargar Receta (PDF)
-          </button>
         </div>
       </div>
     </div>

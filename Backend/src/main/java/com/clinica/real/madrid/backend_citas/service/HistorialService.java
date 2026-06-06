@@ -61,7 +61,19 @@ public class HistorialService {
     }
 
     public List<Historial> listarPorPaciente(Long pacienteId) {
-        return historialRepository.findByCitaPacienteIdOrderByCitaFechaDesc(pacienteId);
+        List<Cita> citasConfirmadas = citaRepository.findByPacienteIdAndEstadoOrderByFechaDesc(
+                pacienteId, com.clinica.real.madrid.backend_citas.model.EstadoCita.CONFIRMADA);
+
+        return citasConfirmadas.stream().map(cita -> {
+            return historialRepository.findByCitaId(cita.getId()).orElseGet(() -> {
+                Historial placeholder = new Historial();
+                placeholder.setCita(cita);
+                placeholder.setDiagnostico("Pendiente de registro médico");
+                placeholder.setReceta("Sin receta aún");
+                placeholder.setNotas(null);
+                return placeholder;
+            });
+        }).collect(java.util.stream.Collectors.toList());
     }
 
     /**

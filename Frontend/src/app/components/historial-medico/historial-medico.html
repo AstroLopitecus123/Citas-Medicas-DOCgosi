@@ -157,6 +157,31 @@
     <div *ngIf="!cargando && usuario?.rol === 'PACIENTE' && historialesFiltrados.length > 0"
          class="historial-list" style="display: flex; flex-direction: column; gap: 20px;">
 
+      <!-- Cabecera del Paciente con botón de descarga -->
+      <div class="paciente-card" style="margin-bottom: 5px;">
+        <div class="paciente-card-header" style="cursor: default;">
+          <div class="paciente-info-left">
+            <div class="paciente-avatar">
+              <img *ngIf="usuario?.fotoUrl" [src]="usuario.fotoUrl" alt="Paciente">
+              <i *ngIf="!usuario?.fotoUrl" class="fa-solid fa-user"></i>
+            </div>
+            <div class="paciente-text">
+              <h3>{{ usuario?.nombre }} {{ usuario?.apellido }}</h3>
+              <div class="consultas-badge">
+                <i class="fa-solid fa-stethoscope"></i>
+                {{ historialesFiltrados.length }} {{ historialesFiltrados.length === 1 ? 'consulta registrada' : 'consultas registradas' }}
+              </div>
+            </div>
+          </div>
+          <div class="paciente-actions">
+            <button class="btn-descargar-historia" (click)="descargarHistorialCompletoPaciente()">
+              <i class="fa-solid fa-file-pdf"></i>
+              <span>Descargar Historia Clínica</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="paciente-card" style="overflow: hidden;">
         <div class="citas-acordeon expandido" style="max-height: unset; border-top: none;">
           <div class="cita-item" *ngFor="let h of historialesFiltrados; let i = index">
@@ -178,9 +203,6 @@
                     <i class="fa-solid fa-calendar-check"></i>
                     {{ h.cita.fecha | date:'dd/MM/yyyy HH:mm' }}
                   </div>
-                  <button class="pdf-btn-sm" (click)="descargarPDF(h)" title="Descargar Historial">
-                    <i class="fa-solid fa-file-pdf"></i>
-                  </button>
                 </div>
               </div>
 

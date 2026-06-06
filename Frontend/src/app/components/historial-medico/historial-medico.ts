@@ -421,51 +421,19 @@ export class HistorialMedicoComponent implements OnInit {
     this.ns.success(`Historia clínica de ${grupo.pacienteNombre} generada con éxito`);
   }
 
-  /** PDF simple de una sola cita (para vista de paciente) */
-  descargarPDF(h: Historial) {
-    const doc = new jsPDF();
-    const primaryColor: [number, number, number] = [26, 115, 232];
+  /** Descarga el PDF con el historial completo del propio paciente */
+  descargarHistorialCompletoPaciente() {
+    if (!this.usuario) return;
+    
+    const grupo: PacienteAgrupado = {
+      pacienteId: this.usuario.id,
+      pacienteNombre: this.usuario.nombre,
+      pacienteApellido: this.usuario.apellido,
+      fotoUrl: this.usuario.fotoUrl,
+      historiales: this.historialesFiltrados,
+      expandido: true
+    };
 
-    doc.setFillColor(...primaryColor);
-    doc.rect(0, 0, 210, 40, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(22);
-    doc.text('R.E.T.O SALUD', 105, 20, { align: 'center' });
-    doc.setFontSize(12);
-    doc.text('INFORME MÉDICO Y RECETA', 105, 30, { align: 'center' });
-
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(10);
-    doc.text(`Paciente: ${h.cita.paciente.nombre} ${h.cita.paciente.apellido}`, 15, 50);
-    doc.text(`Fecha de Consulta: ${h.cita.fecha.split('T')[0]}`, 15, 55);
-    doc.text(`Doctor: ${h.cita.medico.usuario.nombre} ${h.cita.medico.usuario.apellido}`, 15, 60);
-    if (h.cita.medico.especialidad) {
-      doc.text(`Especialidad: ${h.cita.medico.especialidad.nombre}`, 15, 65);
-    }
-
-    autoTable(doc, {
-      startY: 75,
-      head: [['Concepto', 'Detalle']],
-      body: [
-        ['Diagnóstico', h.diagnostico || 'No especificado'],
-        ['Receta / Tratamiento', h.receta || 'Sin indicaciones'],
-        ['Notas Adicionales', h.notas || 'Ninguna']
-      ],
-      headStyles: { fillColor: primaryColor as any },
-      styles: { cellPadding: 5, fontSize: 11, valign: 'middle' },
-      columnStyles: { 0: { cellWidth: 50, fontStyle: 'bold' } }
-    });
-
-    const finalY = (doc as any).lastAutoTable.finalY || 150;
-    doc.setDrawColor(200, 200, 200);
-    doc.line(120, finalY + 40, 190, finalY + 40);
-    doc.text('Firma y Sello del Médico', 155, finalY + 45, { align: 'center' });
-
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text('Este documento es una representación digital del historial clínico del paciente.', 105, 285, { align: 'center' });
-
-    doc.save(`Historial_Medico_${h.cita.paciente.nombre}_${h.cita.fecha.split('T')[0]}.pdf`);
-    this.ns.success('Documento generado con éxito');
+    this.descargarPDFPaciente(grupo);
   }
 }

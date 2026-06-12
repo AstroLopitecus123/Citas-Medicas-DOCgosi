@@ -257,6 +257,14 @@ export class MiPerfilComponent implements OnInit {
     return;
   }
 
+  // Sin caracteres especiales
+  if (!/^[a-zA-Z0-9]+$/.test(nueva)) {
+    this.ns.error(
+      'La nueva contraseña no debe contener caracteres especiales.'
+    );
+    return;
+  }
+
   this.usuarioService
     .cambiarPassword(this.usuario.id, actual, nueva)
     .subscribe({

@@ -94,15 +94,25 @@
         <div class="form-grid">
           <div class="input-group">
             <label for="contrasena">Contraseña</label>
-            <input id="contrasena" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
-                [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••" required minlength="8"
-                maxlength="15" aria-label="Crea una contraseña segura">
+            <div class="input-icon-wrapper">
+              <input id="contrasena" [type]="ctrl.mostrarContrasena ? 'text' : 'password'"
+                  [(ngModel)]="ctrl.usuario.contrasena" name="contrasena" placeholder="••••••••" required minlength="8"
+                  maxlength="15" aria-label="Crea una contraseña segura">
+              <button type="button" class="eye-btn" (click)="ctrl.togglePassword()" aria-label="Mostrar u ocultar contraseña">
+                <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
+              </button>
+            </div>
           </div>
           <div class="input-group">
             <label for="confirmar">Confirmación</label>
-            <input id="confirmar" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'" 
-                [(ngModel)]="ctrl.confirmarContrasena" name="confirmar" placeholder="Repite tu contraseña" required
-                minlength="8" maxlength="15" aria-label="Confirma tu contraseña escribiéndola de nuevo">
+            <div class="input-icon-wrapper">
+              <input id="confirmar" [type]="ctrl.mostrarConfirmarContrasena ? 'text' : 'password'"
+                  [(ngModel)]="ctrl.confirmarContrasena" name="confirmar" placeholder="Repite tu contraseña" required
+                  minlength="8" maxlength="15" aria-label="Confirma tu contraseña escribiéndola de nuevo">
+              <button type="button" class="eye-btn" (click)="ctrl.toggleConfirmarPassword()" aria-label="Mostrar u ocultar confirmación">
+                <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarConfirmarContrasena" [class.fa-eye-slash]="ctrl.mostrarConfirmarContrasena"></i>
+              </button>
+            </div>
           </div>
         </div>
 

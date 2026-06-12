@@ -35,13 +35,6 @@ export class LoginController {
       return;
     }
 
-    // Correo entre 11 y 50 caracteres
-    if (correo.length < 11 || correo.length > 50) {
-      this.error = 'El correo debe tener entre 11 y 50 caracteres.';
-      if (this.ns) this.ns.error(this.error);
-      return;
-    }
-
     // Contraseña obligatoria
     if (!contrasena) {
       this.error = 'Debes ingresar tu contraseña.';
@@ -49,9 +42,9 @@ export class LoginController {
       return;
     }
 
-    // Contraseña entre 8 y 15 caracteres
-    if (contrasena.length < 8 || contrasena.length > 15) {
-      this.error = 'La contraseña debe tener entre 8 y 15 caracteres.';
+    // Contraseña mínimo 8 caracteres
+    if (contrasena.length < 8) {
+      this.error = 'La contraseña debe tener al menos 8 caracteres.';
       if (this.ns) this.ns.error(this.error);
       return;
     }

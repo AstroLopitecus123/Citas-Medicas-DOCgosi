@@ -80,8 +80,19 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async procesarPago(): Promise<void> {
     if (this.cargando || !this.cardElementMontado) return;
-    if (!this.nombreTitular.trim()) {
+    const nombre = this.nombreTitular.trim();
+    if (!nombre) {
       this.ns.error('Por favor escribe tu nombre completo.');
+      return;
+    }
+
+    if (nombre.length < 2 || nombre.length > 50) {
+      this.ns.error('El nombre del titular debe tener entre 2 y 50 caracteres.');
+      return;
+    }
+
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(nombre)) {
+      this.ns.error('El nombre del titular solo puede contener letras y espacios.');
       return;
     }
 

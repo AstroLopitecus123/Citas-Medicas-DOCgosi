@@ -121,6 +121,9 @@
           [(ngModel)]="nombreTitular"
           placeholder="Nombre como aparece en la tarjeta"
           autocomplete="cc-name"
+          minlength="2"
+          maxlength="50"
+          pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+"
         />
       </div>
 

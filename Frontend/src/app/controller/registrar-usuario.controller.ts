@@ -71,18 +71,31 @@ export class RegistrarUsuarioController {
   get nombreValido(): boolean {
     const n = this.usuario.nombre?.trim() || '';
 
-    return n.length > 0 && n.length <= 50 && !/\d/.test(n);
+    return (
+      n.length >= 2 &&
+      n.length <= 50 &&
+      /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(n)
+    );
   }
 
   get apellidoValido(): boolean {
     const a = this.usuario.apellido?.trim() || '';
 
-    return a.length > 0 && a.length <= 50 && !/\d/.test(a);
+    return (
+      a.length >= 2 &&
+      a.length <= 50 &&
+      /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(a)
+    );
   }
 
   get emailValido(): boolean {
     const correoUsuario = this.usuario.correoUsuario?.trim() || '';
-    return correoUsuario.length > 0 && /^[a-zA-Z0-9._-]+$/.test(correoUsuario);
+
+    return (
+      correoUsuario.length >= 2 &&
+      correoUsuario.length <= 50 &&
+      /^[a-zA-Z0-9._-]+$/.test(correoUsuario)
+    );
   }
 
   get fechaFutura(): boolean {
@@ -92,16 +105,24 @@ export class RegistrarUsuarioController {
     return fecha > hoy;
   }
 
+  get menorDeEdad(): boolean {
+    if (!this.usuario.fechaNacimiento) return false;
+    const hoy = new Date();
+    const fecha = new Date(this.usuario.fechaNacimiento);
+    const edadMinima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate());
+    return fecha > edadMinima;
+  }
+
   get dniValido(): boolean {
     const dniStr = (this.usuario.dni || '').toString().trim();
 
-    return /^\d{1,8}$/.test(dniStr);
+    return /^\d{8}$/.test(dniStr);
   }
 
   get telefonoValido(): boolean {
     const telStr = (this.usuario.telefono || '').toString().trim();
 
-    return /^\d{1,9}$/.test(telStr);
+    return /^\d{9}$/.test(telStr);
   }
 
   get passwordChecks() {
@@ -110,7 +131,7 @@ export class RegistrarUsuarioController {
     const camposTocados = Object.values(this.touched).some(v => v);
 
     return {
-      length: pass.length >= 8,
+      length: pass.length >= 8 && pass.length <= 15,
       uppercase: /[A-Z]/.test(pass),
       number: /\d/.test(pass),
       empty: camposTocados && !pass && !confirm,
@@ -128,6 +149,7 @@ export class RegistrarUsuarioController {
       this.telefonoValido &&
       this.usuario.fechaNacimiento &&
       !this.fechaFutura &&
+      !this.menorDeEdad &&
       this.usuario.paisId &&
       this.passwordChecks.length &&
       this.passwordChecks.uppercase &&
@@ -238,21 +260,23 @@ export class RegistrarUsuarioController {
     if (!this.formularioValido) {
       if (this.ns) {
         if (!this.nombreValido) {
-          this.ns.error('El nombre es obligatorio, no debe contener números y máximo 50 caracteres.');
+          this.ns.error('El nombre es obligatorio, debe tener entre 2 y 50 caracteres y solo puede contener letras.');
         } else if (!this.apellidoValido) {
-          this.ns.error('El apellido es obligatorio, no debe contener números y máximo 50 caracteres.');
+          this.ns.error('El apellido es obligatorio, debe tener entre 2 y 50 caracteres y solo puede contener letras y espacios.');
         } else if (!this.usuario.correoUsuario || !this.emailValido) {
-          this.ns.error('Por favor ingresa un nombre de correo válido.');
+          this.ns.error('El correo debe tener entre 2 y 50 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos.');
         } else if (!this.passwordChecks.length || !this.passwordChecks.uppercase || !this.passwordChecks.number) {
-          this.ns.error('La contraseña debe tener 8 caracteres, mayúsculas y números.');
+          this.ns.error('La contraseña debe tener entre 8 y 15 caracteres, incluir al menos una letra mayúscula y un número.');
         } else if (!this.passwordChecks.match) {
           this.ns.error('Las contraseñas no coinciden.');
         } else if (!this.dniValido) {
-          this.ns.error('El DNI debe contener exactamente 8 números, sin letras ni espacios.');
+          this.ns.error('El DNI debe contener exactamente 8 dígitos numéricos, sin letras ni caracteres especiales.');
         } else if (!this.telefonoValido) {
-          this.ns.error('El teléfono debe contener exactamente 9 números.');
+          this.ns.error('El teléfono debe contener exactamente 9 dígitos numéricos, sin letras ni caracteres especiales.');
         } else if (!this.usuario.fechaNacimiento || this.fechaFutura) {
-          this.ns.error('La fecha de nacimiento ingresada no es válida.');
+          this.ns.error('La fecha de nacimiento debe ser válida y anterior a la fecha actual.');
+        } else if (this.menorDeEdad) {
+          this.ns.error('Debes ser mayor de 18 años para registrarte.');
         } else if (!this.usuario.paisId) {
           this.ns.error('Debes seleccionar un país de residencia.');
         } else {

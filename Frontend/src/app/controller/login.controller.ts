@@ -24,6 +24,38 @@ export class LoginController {
 
   iniciarSesion() {
     this.error = '';
+
+    const correo = this.correo.trim();
+    const contrasena = this.contrasena.trim();
+
+    // Correo obligatorio
+    if (!correo) {
+      this.error = 'Debes ingresar tu correo.';
+      if (this.ns) this.ns.error(this.error);
+      return;
+    }
+
+    // Correo entre 11 y 50 caracteres
+    if (correo.length < 11 || correo.length > 50) {
+      this.error = 'El correo debe tener entre 11 y 50 caracteres.';
+      if (this.ns) this.ns.error(this.error);
+      return;
+    }
+
+    // Contraseña obligatoria
+    if (!contrasena) {
+      this.error = 'Debes ingresar tu contraseña.';
+      if (this.ns) this.ns.error(this.error);
+      return;
+    }
+
+    // Contraseña entre 8 y 15 caracteres
+    if (contrasena.length < 8 || contrasena.length > 15) {
+      this.error = 'La contraseña debe tener entre 8 y 15 caracteres.';
+      if (this.ns) this.ns.error(this.error);
+      return;
+    }
+
     this.usuarioService.login({ correo: this.correo, contrasena: this.contrasena }).subscribe({
       next: (res) => {
         if ('id' in res) {

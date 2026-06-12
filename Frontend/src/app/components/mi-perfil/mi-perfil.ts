@@ -85,6 +85,74 @@ export class MiPerfilComponent implements OnInit {
   }
 
   guardarCambios() {
+    const nombre = this.usuarioEditado.nombre?.trim() || '';
+    const apellido = this.usuarioEditado.apellido?.trim() || '';
+    const correo = this.usuarioEditado.correo?.trim() || '';
+    const telefono = this.usuarioEditado.telefono?.trim() || '';
+    const fechaNacimiento = this.usuarioEditado.fechaNacimiento;
+    const pais = this.usuarioEditado.pais;
+
+    // Nombre
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,50}$/.test(nombre)) {
+      this.ns.error(
+        'El nombre es obligatorio, debe tener entre 2 y 50 caracteres y solo puede contener letras.'
+      );
+      return;
+    }
+
+    // Apellido
+    if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$/.test(apellido)) {
+      this.ns.error(
+        'El apellido es obligatorio, debe tener entre 2 y 50 caracteres y solo puede contener letras y espacios.'
+      );
+      return;
+    }
+
+    // Correo
+    if (
+      correo.length < 11 ||
+      correo.length > 50 ||
+      !correo.toLowerCase().endsWith('@gmail.com')
+    ) {
+      this.ns.error(
+        'El correo debe terminar en @gmail.com y tener entre 11 y 50 caracteres.'
+      );
+      return;
+    }
+
+    // Teléfono
+    if (!/^\d{9}$/.test(telefono)) {
+      this.ns.error(
+        'El teléfono debe contener exactamente 9 dígitos numéricos.'
+      );
+      return;
+    }
+
+    // Fecha de nacimiento
+    const fecha = new Date(fechaNacimiento);
+    const hoy = new Date();
+
+    if (!fechaNacimiento || isNaN(fecha.getTime()) || fecha >= hoy) {
+      this.ns.error(
+        'La fecha de nacimiento debe ser válida y anterior a la fecha actual.'
+      );
+      return;
+    }
+
+    // Edad mínima 18 años
+    const edadMinima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate());
+    if (fecha > edadMinima) {
+      this.ns.error('Debes ser mayor de 18 años para actualizar tu perfil.');
+      return;
+    }
+
+    // País
+    if (!pais) {
+      this.ns.error('Debes seleccionar un país.');
+      return;
+    }
+
+    // Si todo es válido
     this.guardarDatosFormulario();
   }
 
@@ -149,32 +217,60 @@ export class MiPerfilComponent implements OnInit {
   }
 
   ejecutarCambioPassword() {
-    if (!this.pwdActual || !this.pwdNueva || !this.pwdConfirmar) {
-      this.ns.error('Todos los campos son obligatorios');
-      return;
-    }
+  const actual = this.pwdActual?.trim() || '';
+  const nueva = this.pwdNueva?.trim() || '';
+  const confirmar = this.pwdConfirmar?.trim() || '';
 
-    if (this.pwdNueva !== this.pwdConfirmar) {
-      this.ns.error('Las nuevas contraseñas no coinciden');
-      return;
-    }
+  // Campos obligatorios
+  if (!actual || !nueva || !confirmar) {
+    this.ns.error('Todos los campos son obligatorios.');
+    return;
+  }
 
-    if (this.pwdNueva.length < 8) {
-      this.ns.error('La nueva contraseña debe tener al menos 8 caracteres');
-      return;
-    }
+  // Coincidencia de contraseñas
+  if (nueva !== confirmar) {
+    this.ns.error('Las nuevas contraseñas no coinciden.');
+    return;
+  }
 
-    this.usuarioService.cambiarPassword(this.usuario.id, this.pwdActual, this.pwdNueva).subscribe({
-      next: (res) => {
+  // Longitud entre 8 y 15
+  if (nueva.length < 8 || nueva.length > 15) {
+    this.ns.error(
+      'La nueva contraseña debe tener entre 8 y 15 caracteres.'
+    );
+    return;
+  }
+
+  // Al menos una mayúscula
+  if (!/[A-Z]/.test(nueva)) {
+    this.ns.error(
+      'La nueva contraseña debe contener al menos una letra mayúscula.'
+    );
+    return;
+  }
+
+  // Al menos un número
+  if (!/\d/.test(nueva)) {
+    this.ns.error(
+      'La nueva contraseña debe contener al menos un número.'
+    );
+    return;
+  }
+
+  this.usuarioService
+    .cambiarPassword(this.usuario.id, actual, nueva)
+    .subscribe({
+      next: () => {
         this.ns.success('¡Contraseña actualizada correctamente!');
         this.cerrarModalPassword();
       },
       error: (err) => {
-        const msg = err.error?.message || 'Error al cambiar la contraseña';
+        const msg =
+          err.error?.message || 'Error al cambiar la contraseña';
         this.ns.error(msg);
       }
     });
-  }
+}
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {

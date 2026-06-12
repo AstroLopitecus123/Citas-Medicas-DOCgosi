@@ -36,27 +36,78 @@ export class AdminEspecialidadesController {
   }
 
   guardar(): void {
-    if (this.editando) {
+
+  const especialidad = this.editando ?? this.nueva;
+
+  const nombre = especialidad.nombre?.trim() || '';
+  const descripcion = especialidad.descripcion?.trim() || '';
+  const precio = Number(especialidad.precioBase);
+
+  // Nombre obligatorio
+  if (!nombre) {
+    this.error = 'El nombre de la especialidad es obligatorio.';
+    return;
+  }
+
+  // Nombre entre 2 y 50 caracteres
+  if (nombre.length < 2 || nombre.length > 50) {
+    this.error = 'El nombre de la especialidad debe tener entre 2 y 50 caracteres.';
+    return;
+  }
+
+  // Solo letras y espacios
+  if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/.test(nombre)) {
+    this.error = 'El nombre de la especialidad solo puede contener letras.';
+    return;
+  }
+
+  // Precio obligatorio
+  if (isNaN(precio)) {
+    this.error = 'El precio es obligatorio.';
+    return;
+  }
+
+  // Rango de precio
+  if (precio < 50 || precio > 5000) {
+    this.error = 'El precio debe estar entre S/ 50 y S/ 5000.';
+    return;
+  }
+
+  // Descripción obligatoria
+  if (!descripcion) {
+    this.error = 'La descripción es obligatoria.';
+    return;
+  }
+
+  // Descripción entre 2 y 300 caracteres
+  if (descripcion.length < 2 || descripcion.length > 300) {
+    this.error = 'La descripción debe tener entre 2 y 300 caracteres.';
+    return;
+  }
+
+  this.error = '';
+
+  if (this.editando) {
       this.especialidadService.actualizar(this.editando.id, this.editando).subscribe({
         next: () => {
-          this.mensaje = ' Especialidad actualizada correctamente.';
+          this.mensaje = 'Especialidad actualizada correctamente.';
           this.cerrarModal();
           this.listar();
         },
-        error: () => this.error = '❌ Error al actualizar la especialidad.'
+        error: () => this.error = 'Error al actualizar la especialidad.'
       });
     } else {
       this.especialidadService.crear(this.nueva).subscribe({
         next: () => {
-          this.mensaje = ' Especialidad creada correctamente.';
+          this.mensaje = 'Especialidad creada correctamente.';
           this.nueva = new Especialidad();
           this.cerrarModal();
           this.listar();
         },
-        error: () => this.error = '❌ Error al crear la especialidad.'
+        error: () => this.error = 'Error al crear la especialidad.'
       });
     }
-  }
+}
 
   abrirModalNuevo(): void {
     this.nueva = new Especialidad();

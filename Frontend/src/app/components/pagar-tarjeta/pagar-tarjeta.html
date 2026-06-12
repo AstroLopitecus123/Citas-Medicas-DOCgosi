@@ -147,6 +147,9 @@
           class="stripe-element-container"
           [class.element-visible]="cardElementMontado"
         ></div>
+        <div class="msg-error-mini" *ngIf="errorTarjeta" style="position: relative; bottom: 0; margin-top: 5px; font-size: 0.8rem;">
+          {{ errorTarjeta }}
+        </div>
       </div>
 
       <div class="test-hint">
@@ -156,7 +159,7 @@
 
       <button
         class="btn-pagar"
-        [disabled]="!cardElementMontado || cargando"
+        [disabled]="!cardElementMontado || cargando || !tarjetaCompleta || !nombreTitular"
         (click)="procesarPago()"
       >
         <i class="fa-solid fa-lock"></i>

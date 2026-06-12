@@ -25,6 +25,8 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   cardBrand = 'unknown';
   cardLast4 = '••••';
+  tarjetaCompleta = false;
+  errorTarjeta = '';
 
   monto = 100.00;
 
@@ -65,6 +67,13 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         element.on('change', (event: any) => {
           this.cardBrand = event.brand || 'unknown';
+          this.tarjetaCompleta = event.complete;
+
+          if (event.error) {
+            this.errorTarjeta = this.traducirErrorStripe(event.error);
+          } else {
+            this.errorTarjeta = '';
+          }
         });
 
       } else {
@@ -80,6 +89,11 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async procesarPago(): Promise<void> {
     if (this.cargando || !this.cardElementMontado) return;
+    if (!this.tarjetaCompleta) {
+      this.ns.error('Por favor completa todos los datos de la tarjeta correctamente.');
+      return;
+    }
+    
     const nombre = this.nombreTitular.trim();
     if (!nombre) {
       this.ns.error('Por favor escribe tu nombre completo.');
@@ -189,5 +203,19 @@ export class PagarTarjetaComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     return mensajes[code] || resultado.error || 'No se pudo procesar el pago. Verifique sus datos e intente de nuevo.';
+  }
+
+  private traducirErrorStripe(error: any): string {
+    const code = error.code;
+    switch(code) {
+      case 'incomplete_number': return 'El número de tarjeta está incompleto.';
+      case 'incomplete_cvc': return 'El código CVC está incompleto (deben ser 3 o 4 dígitos).';
+      case 'incomplete_expiry': return 'La fecha de vencimiento está incompleta.';
+      case 'invalid_number': return 'El número de tarjeta es inválido.';
+      case 'invalid_expiry_year_past': return 'El año de vencimiento está en el pasado.';
+      case 'invalid_cvc': return 'El código CVC es inválido.';
+      case 'incorrect_number': return 'El número de tarjeta es incorrecto.';
+      default: return error.message || 'Datos de la tarjeta inválidos.';
+    }
   }
 }

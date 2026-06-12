@@ -109,13 +109,15 @@ export class MiPerfilComponent implements OnInit {
     }
 
     // Correo
+    const correoLocal = correo.split('@')[0];
     if (
       correo.length < 11 ||
       correo.length > 50 ||
-      !correo.toLowerCase().endsWith('@gmail.com')
+      !correo.toLowerCase().endsWith('@gmail.com') ||
+      !/^[a-zA-Z0-9._-]+$/.test(correoLocal)
     ) {
       this.ns.error(
-        'El correo debe terminar en @gmail.com y tener entre 11 y 50 caracteres.'
+        'El correo debe terminar en @gmail.com, tener entre 11 y 50 caracteres, y no contener caracteres especiales.'
       );
       return;
     }
@@ -131,11 +133,18 @@ export class MiPerfilComponent implements OnInit {
     // Fecha de nacimiento
     const fecha = new Date(fechaNacimiento);
     const hoy = new Date();
+    const limitePasado = new Date(1900, 0, 1);
 
     if (!fechaNacimiento || isNaN(fecha.getTime()) || fecha >= hoy) {
       this.ns.error(
         'La fecha de nacimiento debe ser válida y anterior a la fecha actual.'
       );
+      return;
+    }
+
+    // Límite de año 1900
+    if (fecha < limitePasado) {
+      this.ns.error('La fecha de nacimiento no puede ser anterior al año 1900.');
       return;
     }
 
@@ -224,6 +233,12 @@ export class MiPerfilComponent implements OnInit {
   // Campos obligatorios
   if (!actual || !nueva || !confirmar) {
     this.ns.error('Todos los campos son obligatorios.');
+    return;
+  }
+
+  // Contraseña actual sin caracteres especiales
+  if (!/^[a-zA-Z0-9]+$/.test(actual)) {
+    this.ns.error('La contraseña actual no debe contener caracteres especiales.');
     return;
   }
 

@@ -113,6 +113,13 @@ export class RegistrarUsuarioController {
     return fecha > edadMinima;
   }
 
+  get fechaMuyPasada(): boolean {
+    if (!this.usuario.fechaNacimiento) return false;
+    const fecha = new Date(this.usuario.fechaNacimiento);
+    const limite = new Date(1900, 0, 1);
+    return fecha < limite;
+  }
+
   get dniValido(): boolean {
     const dniStr = (this.usuario.dni || '').toString().trim();
 
@@ -134,6 +141,7 @@ export class RegistrarUsuarioController {
       length: pass.length >= 8 && pass.length <= 15,
       uppercase: /[A-Z]/.test(pass),
       number: /\d/.test(pass),
+      noSpecial: pass.length > 0 ? /^[a-zA-Z0-9]+$/.test(pass) : false,
       empty: camposTocados && !pass && !confirm,
       match: camposTocados && pass === confirm && !!pass
     };
@@ -149,11 +157,13 @@ export class RegistrarUsuarioController {
       this.telefonoValido &&
       this.usuario.fechaNacimiento &&
       !this.fechaFutura &&
+      !this.fechaMuyPasada &&
       !this.menorDeEdad &&
       this.usuario.paisId &&
       this.passwordChecks.length &&
       this.passwordChecks.uppercase &&
       this.passwordChecks.number &&
+      this.passwordChecks.noSpecial &&
       this.passwordChecks.match
     );
   }
@@ -265,14 +275,16 @@ export class RegistrarUsuarioController {
           this.ns.error('El apellido es obligatorio, debe tener entre 2 y 50 caracteres y solo puede contener letras y espacios.');
         } else if (!this.usuario.correoUsuario || !this.emailValido) {
           this.ns.error('El correo debe tener entre 2 y 50 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos.');
-        } else if (!this.passwordChecks.length || !this.passwordChecks.uppercase || !this.passwordChecks.number) {
-          this.ns.error('La contraseña debe tener entre 8 y 15 caracteres, incluir al menos una letra mayúscula y un número.');
+        } else if (!this.passwordChecks.length || !this.passwordChecks.uppercase || !this.passwordChecks.number || !this.passwordChecks.noSpecial) {
+          this.ns.error('La contraseña debe tener entre 8 y 15 caracteres, incluir 1 mayúscula, 1 número y NO debe contener caracteres especiales.');
         } else if (!this.passwordChecks.match) {
           this.ns.error('Las contraseñas no coinciden.');
         } else if (!this.dniValido) {
           this.ns.error('El DNI debe contener exactamente 8 dígitos numéricos, sin letras ni caracteres especiales.');
         } else if (!this.telefonoValido) {
           this.ns.error('El teléfono debe contener exactamente 9 dígitos numéricos, sin letras ni caracteres especiales.');
+        } else if (this.fechaMuyPasada) {
+          this.ns.error('La fecha de nacimiento no puede ser anterior al año 1900.');
         } else if (!this.usuario.fechaNacimiento || this.fechaFutura) {
           this.ns.error('La fecha de nacimiento debe ser válida y anterior a la fecha actual.');
         } else if (this.menorDeEdad) {

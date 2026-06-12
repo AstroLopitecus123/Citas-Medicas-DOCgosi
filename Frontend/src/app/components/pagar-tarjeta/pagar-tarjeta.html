@@ -159,7 +159,7 @@
 
       <button
         class="btn-pagar"
-        [disabled]="!cardElementMontado || cargando || !tarjetaCompleta || !nombreTitular"
+        [disabled]="!cardElementMontado || cargando"
         (click)="procesarPago()"
       >
         <i class="fa-solid fa-lock"></i>

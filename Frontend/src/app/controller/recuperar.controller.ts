@@ -10,8 +10,19 @@ export class RecuperarController {
   enviado: boolean = false;
 
   recuperar() {
-    if (!this.correo) {
+    const email = this.correo.trim();
+    if (!email) {
       this.error = 'Por favor, ingrese su correo electrónico.';
+      return;
+    }
+
+    if (
+      email.length < 11 ||
+      email.length > 50 ||
+      !email.toLowerCase().endsWith('@gmail.com') ||
+      !/^[a-zA-Z0-9._-]+$/.test(email.split('@')[0])
+    ) {
+      this.error = 'Por favor, ingrese un correo válido que termine en @gmail.com (sin caracteres especiales).';
       return;
     }
 

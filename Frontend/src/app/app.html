@@ -78,9 +78,7 @@
         <span><i class="fa-solid fa-bell"></i> Avisos / Alertas</span>
         <span class="notif-badge" *ngIf="notificacionesNoLeidas > 0">{{ notificacionesNoLeidas }}</span>
       </a>
-      <a class="nav-item" routerLink="/mi-perfil" routerLinkActive="active">
-        <i class="fa-solid fa-user-circle"></i> <span>Mi Perfil</span>
-      </a>
+
     </ng-container>
 
     <ng-container *ngIf="usuario?.rol === 'MEDICO'">
@@ -101,9 +99,7 @@
       <a class="nav-item" routerLink="/historial-clinico" routerLinkActive="active">
         <i class="fa-solid fa-file-medical-alt"></i> <span>Historias Clínicas</span>
       </a>
-      <a class="nav-item" routerLink="/mi-perfil" routerLinkActive="active">
-        <i class="fa-solid fa-user-circle"></i> <span>Mi Perfil</span>
-      </a>
+
     </ng-container>
 
     <ng-container *ngIf="usuario?.rol === 'RECEPCION'">
@@ -121,9 +117,7 @@
         <span><i class="fa-solid fa-bell"></i> Mis Notificaciones</span>
         <span class="notif-badge" *ngIf="notificacionesNoLeidas > 0">{{ notificacionesNoLeidas }}</span>
       </a>
-      <a class="nav-item" routerLink="/mi-perfil" routerLinkActive="active">
-        <i class="fa-solid fa-user-circle"></i> <span>Mi Perfil</span>
-      </a>
+
     </ng-container>
 
     <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
@@ -143,13 +137,15 @@
         <span><i class="fa-solid fa-bell"></i> Mis Notificaciones</span>
         <span class="notif-badge" *ngIf="notificacionesNoLeidas > 0">{{ notificacionesNoLeidas }}</span>
       </a>
-      <a class="nav-item" routerLink="/mi-perfil" routerLinkActive="active">
-          <i class="fa-solid fa-user-circle"></i> <span>Mi Perfil</span>
-      </a>
+
     </ng-container>
 
     <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active" *ngIf="usuario?.rol !== 'PACIENTE'">
       <i class="fa-solid fa-calendar-days"></i> <span>Gestión Citas</span>
+    </a>
+
+    <a class="nav-item" routerLink="/mi-perfil" routerLinkActive="active">
+      <i class="fa-solid fa-user-circle"></i> <span>Mi Perfil</span>
     </a>
 
     <a class="nav-item" routerLink="/" routerLinkActive="active">

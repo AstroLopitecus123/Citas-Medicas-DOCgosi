@@ -252,6 +252,7 @@
     padding: 30px;
     max-height: 70vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .modal-footer-glass {

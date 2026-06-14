@@ -397,6 +397,13 @@ export class MisCitasController {
       return;
     }
 
+    if (!this.motivoCita || this.motivoCita.trim() === '') {
+      if (this.ns) {
+        this.ns.error(this.modoReprogramacion ? 'Por favor, ingresa el motivo del cambio de cita.' : 'Por favor, ingresa el motivo de tu consulta.');
+      }
+      return;
+    }
+
     this.procesandoAccion = true;
 
     const fecha = this.horarioSeleccionado.fecha;
@@ -525,6 +532,13 @@ export class MisCitasController {
     }
 
     const rol = this.usuario?.rol?.toUpperCase();
+
+    if (rol === 'PACIENTE' && (!this.motivoCancelacion || this.motivoCancelacion.trim() === '')) {
+      if (this.ns) {
+        this.ns.error('Por favor, ingresa un motivo para poder procesar la cancelación.');
+      }
+      return;
+    }
 
     this.procesandoAccion = true;
 

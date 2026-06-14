@@ -318,7 +318,7 @@
                 <ng-container *ngIf="ctrl.usuario.rol === 'PACIENTE' || ctrl.citaACancelar?.estado !== 'SOLICITUD_CANCELACION'">
                     <button class="btn-cancel-glass" (click)="ctrl.cerrarModalCancelar()" [disabled]="ctrl.procesandoAccion">Mantener Cita</button>
                     <button class="btn-confirm-glass bg-gradient-danger" 
-                            [disabled]="(ctrl.usuario.rol === 'PACIENTE' && !ctrl.motivoCancelacion) || ctrl.procesandoAccion"
+                            [disabled]="ctrl.procesandoAccion"
                             (click)="ctrl.confirmarCancelacionProceso()">
                         <i class="fa-solid" [class.fa-spinner]="ctrl.procesandoAccion" [class.fa-spin]="ctrl.procesandoAccion" [class.fa-paper-plane]="!ctrl.procesandoAccion && ctrl.usuario.rol === 'PACIENTE'" [class.fa-check]="!ctrl.procesandoAccion && ctrl.usuario.rol !== 'PACIENTE'"></i>
                         {{ ctrl.procesandoAccion ? 'Procesando...' : (ctrl.usuario.rol === 'PACIENTE' ? 'Enviar Solicitud' : 'Confirmar Cancelación') }}

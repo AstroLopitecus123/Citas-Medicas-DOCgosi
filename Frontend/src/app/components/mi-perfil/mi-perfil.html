@@ -159,12 +159,12 @@
             </div>
         </div>
 
-        <div class="modal-footer-glass">
-            <button class="btn-action primary w-100" (click)="guardarCambios()">
-                <i class="fa-solid fa-check"></i> Guardar Cambios
-            </button>
-            <button class="btn-action outline w-100 mt-2" (click)="cancelarEdicion()">
+        <div class="modal-footer-glass flex-row" style="display: flex; gap: 15px; width: 100%;">
+            <button class="btn-cancel-glass" (click)="cancelarEdicion()">
                 Cancelar
+            </button>
+            <button class="btn-confirm-glass" style="flex: 1;" (click)="guardarCambios()">
+                <i class="fa-solid fa-check"></i> Guardar Cambios
             </button>
         </div>
     </div>
@@ -226,12 +226,12 @@
             </div>
         </div>
 
-        <div class="modal-footer-glass">
-            <button class="btn-action primary w-100" (click)="ejecutarCambioPassword()">
-                <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
-            </button>
-            <button class="btn-action outline w-100 mt-2" (click)="cerrarModalPassword()">
+        <div class="modal-footer-glass flex-row" style="display: flex; gap: 15px; width: 100%;">
+            <button class="btn-cancel-glass" (click)="cerrarModalPassword()">
                 Cancelar
+            </button>
+            <button class="btn-confirm-glass" style="flex: 1;" (click)="ejecutarCambioPassword()">
+                <i class="fa-solid fa-save"></i> Guardar Nueva Contraseña
             </button>
         </div>
     </div>

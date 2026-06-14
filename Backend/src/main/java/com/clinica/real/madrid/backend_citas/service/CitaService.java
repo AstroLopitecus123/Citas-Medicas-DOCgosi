@@ -66,6 +66,27 @@ public class CitaService {
         citaRepository.deleteByPacienteId(usuarioId);
     }
 
+    @Transactional
+    public void abandonarCheckout(Long id) {
+        Cita cita = citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
+
+        if (cita.getEstado() != EstadoCita.PENDIENTE) {
+            throw new RuntimeException("Solo se pueden abandonar reservas en estado PENDIENTE");
+        }
+
+        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+            cita.getMedico().getId(), 
+            cita.getFecha().toLocalDate(), 
+            cita.getFecha().toLocalTime()
+        ).ifPresent(disp -> {
+            disp.setEstado(Disponibilidad.EstadoDisponibilidad.DISPONIBLE);
+            disponibilidadRepository.save(disp);
+        });
+
+        citaRepository.delete(cita);
+    }
+
     public List<Cita> obtenerCitasPorMedico(Long idMedico) {
         return citaRepository.findByMedicoIdOrderByFechaDesc(idMedico);
     }

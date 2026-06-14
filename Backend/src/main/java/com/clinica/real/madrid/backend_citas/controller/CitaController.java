@@ -43,6 +43,17 @@ public class CitaController {
         return ResponseEntity.ok("Cita eliminada correctamente");
     }
 
+    @DeleteMapping("/{id}/abandonar")
+    @PreAuthorize("hasRole('PACIENTE')")
+    public ResponseEntity<?> abandonarCheckout(@PathVariable Long id) {
+        try {
+            citaService.abandonarCheckout(id);
+            return ResponseEntity.ok(Map.of("mensaje", "Reserva abandonada y horario liberado"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+        }
+    }
+
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> listarCitasPorUsuario(@PathVariable Long id) {
         List<Cita> citas = citaService.obtenerCitasPorPaciente(id);

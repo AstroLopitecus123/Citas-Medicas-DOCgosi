@@ -48,6 +48,18 @@ export class CheckoutComponent implements OnInit {
   }
 
   volverDashboard() {
-    this.router.navigate(['/paciente/dashboard']);
+    if (this.citaId) {
+      this.citaService.abandonarCheckout(this.citaId).subscribe({
+        next: () => {
+          this.router.navigate(['/paciente/mis-citas']);
+        },
+        error: (err) => {
+          console.error('Error al abandonar checkout', err);
+          this.router.navigate(['/paciente/mis-citas']);
+        }
+      });
+    } else {
+      this.router.navigate(['/paciente/mis-citas']);
+    }
   }
 }

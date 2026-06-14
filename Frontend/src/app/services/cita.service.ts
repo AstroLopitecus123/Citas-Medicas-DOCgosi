@@ -60,6 +60,12 @@ export class CitaService {
     });
   }
 
+  abandonarCheckout(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/citas/${id}/abandonar`, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
   solicitarReprogramar(id: number, cita: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/citas/${id}/solicitar-reprogramar`, cita, {
       headers: this.getAuthHeaders()

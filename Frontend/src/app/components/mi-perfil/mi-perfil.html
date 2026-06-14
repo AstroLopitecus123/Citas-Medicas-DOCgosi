@@ -129,37 +129,41 @@
         </div>
 
         <div class="modal-body-glass">
-            <div class="form-group-modern mb-3">
-                <label class="svg-label">Nombres</label>
-                <div class="input-glass-container">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.nombre">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group-modern" style="margin-bottom: 0;">
+                    <label class="svg-label">Nombres</label>
+                    <div class="input-glass-container">
+                        <input type="text" class="form-control" [(ngModel)]="usuarioEditado.nombre">
+                    </div>
+                </div>
+                <div class="form-group-modern" style="margin-bottom: 0;">
+                    <label class="svg-label">Apellidos</label>
+                    <div class="input-glass-container">
+                        <input type="text" class="form-control" [(ngModel)]="usuarioEditado.apellido">
+                    </div>
                 </div>
             </div>
-            <div class="form-group-modern mb-3">
-                <label class="svg-label">Apellidos</label>
-                <div class="input-glass-container">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.apellido">
-                </div>
-            </div>
-            <div class="form-group-modern mb-3">
+            <div class="form-group-modern" style="margin-bottom: 15px;">
                 <label class="svg-label">Correo</label>
                 <div class="input-glass-container">
                     <input type="email" class="form-control" [(ngModel)]="usuarioEditado.correo">
                 </div>
             </div>
-            <div class="form-group-modern mb-3">
-                <label class="svg-label">Teléfono</label>
-                <div class="input-glass-container">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioEditado.telefono">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group-modern" style="margin-bottom: 0;">
+                    <label class="svg-label">Teléfono</label>
+                    <div class="input-glass-container">
+                        <input type="text" class="form-control" [(ngModel)]="usuarioEditado.telefono">
+                    </div>
+                </div>
+                <div class="form-group-modern" style="margin-bottom: 0;">
+                    <label class="svg-label">Nacimiento</label>
+                    <div class="input-glass-container">
+                        <input type="date" class="form-control" [(ngModel)]="usuarioEditado.fechaNacimiento">
+                    </div>
                 </div>
             </div>
-            <div class="form-group-modern mb-3">
-                <label class="svg-label">Fecha Nacimiento</label>
-                <div class="input-glass-container">
-                    <input type="date" class="form-control" [(ngModel)]="usuarioEditado.fechaNacimiento">
-                </div>
-            </div>
-            <div class="form-group-modern mb-3">
+            <div class="form-group-modern" style="margin-bottom: 0;">
                 <label class="svg-label">País</label>
                 <div class="input-glass-container">
                     <select class="form-control-text premium-select" [(ngModel)]="usuarioEditado.pais" [compareWith]="comparePais" style="width: 100%; padding: 14px 18px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b; font-size: 0.95rem;">

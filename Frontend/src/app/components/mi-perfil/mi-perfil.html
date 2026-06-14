@@ -129,30 +129,40 @@
         </div>
 
         <div class="modal-body-glass">
-            <div class="form-grid">
-                <div class="form-group-modern">
-                    <label>Nombres</label>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Nombres</label>
+                <div class="input-glass-container">
                     <input type="text" class="form-control" [(ngModel)]="usuarioEditado.nombre">
                 </div>
-                <div class="form-group-modern">
-                    <label>Apellidos</label>
+            </div>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Apellidos</label>
+                <div class="input-glass-container">
                     <input type="text" class="form-control" [(ngModel)]="usuarioEditado.apellido">
                 </div>
-                <div class="form-group-modern">
-                    <label>Correo</label>
+            </div>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Correo</label>
+                <div class="input-glass-container">
                     <input type="email" class="form-control" [(ngModel)]="usuarioEditado.correo">
                 </div>
-                <div class="form-group-modern">
-                    <label>Teléfono</label>
+            </div>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Teléfono</label>
+                <div class="input-glass-container">
                     <input type="text" class="form-control" [(ngModel)]="usuarioEditado.telefono">
                 </div>
-                <div class="form-group-modern">
-                    <label>Fecha Nacimiento</label>
+            </div>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">Fecha Nacimiento</label>
+                <div class="input-glass-container">
                     <input type="date" class="form-control" [(ngModel)]="usuarioEditado.fechaNacimiento">
                 </div>
-                <div class="form-group-modern">
-                    <label>País</label>
-                    <select class="form-control-text premium-select" [(ngModel)]="usuarioEditado.pais" [compareWith]="comparePais">
+            </div>
+            <div class="form-group-modern mb-3">
+                <label class="svg-label">País</label>
+                <div class="input-glass-container">
+                    <select class="form-control-text premium-select" [(ngModel)]="usuarioEditado.pais" [compareWith]="comparePais" style="width: 100%; padding: 14px 18px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b; font-size: 0.95rem;">
                         <option *ngFor="let p of listaPaises" [ngValue]="p">{{ p.nombre }}</option>
                     </select>
                 </div>

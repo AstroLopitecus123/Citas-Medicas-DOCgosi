@@ -15,6 +15,8 @@ import com.clinica.real.madrid.backend_citas.repository.PaisRepository;
 import com.clinica.real.madrid.backend_citas.repository.UsuarioRepository;
 import com.clinica.real.madrid.backend_citas.repository.PagoRepository;
 import com.clinica.real.madrid.backend_citas.repository.NotificacionRepository;
+import com.clinica.real.madrid.backend_citas.repository.ComprobanteRepository;
+import com.clinica.real.madrid.backend_citas.model.Pago;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -52,6 +54,9 @@ public class UsuarioService {
 
     @Autowired
     private PagoRepository pagoRepository;
+
+    @Autowired
+    private ComprobanteRepository comprobanteRepository;
 
     @Autowired
     private NotificacionRepository notificacionRepository;
@@ -139,6 +144,12 @@ public class UsuarioService {
         }
 
         notificacionRepository.deleteByUsuarioDestinoId(id);
+        
+        List<Pago> pagos = pagoRepository.findByUsuarioId(id);
+        for(Pago p : pagos) {
+            comprobanteRepository.deleteByPagoId(p.getId());
+        }
+        
         pagoRepository.deleteByUsuarioId(id);
         citaService.eliminarHistorialesPorUsuario(id);
         citaService.eliminarPorUsuario(id);

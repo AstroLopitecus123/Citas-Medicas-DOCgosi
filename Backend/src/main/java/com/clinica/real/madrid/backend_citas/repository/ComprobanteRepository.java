@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ComprobanteRepository extends JpaRepository<Comprobante, Long> {
     Optional<Comprobante> findByNumero(String numero);
+    void deleteByPagoId(Long pagoId);
 }

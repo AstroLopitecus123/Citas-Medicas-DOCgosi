@@ -9,6 +9,8 @@ import com.clinica.real.madrid.backend_citas.service.CloudinaryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import com.clinica.real.madrid.backend_citas.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -35,6 +39,9 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final CloudinaryService cloudinaryService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService, CloudinaryService cloudinaryService) {
@@ -97,11 +104,25 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
-    public ResponseEntity<Usuario> actualizarUsuario(
+    public ResponseEntity<?> actualizarUsuario(
             @PathVariable Long id,
             @RequestBody Usuario usuario) {
+            
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario oldUser = usuarioService.obtenerUsuarioPorId(id);
+        boolean isOwner = auth != null && auth.getName().equals(oldUser.getCorreo());
+        
         Usuario actualizado = usuarioService.actualizarUsuario(id, usuario);
-        return ResponseEntity.ok(actualizado);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("usuario", actualizado);
+        
+        if (isOwner) {
+            String nuevoToken = jwtUtil.generateToken(actualizado.getCorreo());
+            response.put("token", nuevoToken);
+        }
+        
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}/configuracion-visual")

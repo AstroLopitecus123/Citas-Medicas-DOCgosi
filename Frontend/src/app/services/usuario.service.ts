@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { LoginResponse, Usuario } from '../models/usuario.model';
 import { UsuarioFull } from '../models/usuario-full.model';
 import { environment } from '../../environments/environment';
@@ -84,7 +84,17 @@ export class UsuarioService {
     const token = localStorage.getItem('token') || '';
     const headers = { Authorization: `Bearer ${token}` };
 
-    return this.http.put<UsuarioFull>(`${this.usuariosUrl}/${usuario.id}`, usuario, { headers });
+    return this.http.put<any>(`${this.usuariosUrl}/${usuario.id}`, usuario, { headers }).pipe(
+      map(response => {
+        if (response && response.usuario) {
+          if (response.token) {
+            localStorage.setItem('token', response.token);
+          }
+          return response.usuario as UsuarioFull;
+        }
+        return response as UsuarioFull;
+      })
+    );
   }
 
   listarPaises(): Observable<Pais[]> {

@@ -13,6 +13,8 @@ import com.clinica.real.madrid.backend_citas.repository.EspecialidadRepository;
 import com.clinica.real.madrid.backend_citas.repository.MedicoRepository;
 import com.clinica.real.madrid.backend_citas.repository.PaisRepository;
 import com.clinica.real.madrid.backend_citas.repository.UsuarioRepository;
+import com.clinica.real.madrid.backend_citas.repository.PagoRepository;
+import com.clinica.real.madrid.backend_citas.repository.NotificacionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -47,6 +49,12 @@ public class UsuarioService {
 
     @Autowired
     private EspecialidadRepository especialidadRepository;
+
+    @Autowired
+    private PagoRepository pagoRepository;
+
+    @Autowired
+    private NotificacionRepository notificacionRepository;
 
     @Value("${google.client.id}")
     private String googleClientId;
@@ -130,6 +138,8 @@ public class UsuarioService {
             throw new ResourceNotFoundException("Usuario con ID " + id + " no existe");
         }
 
+        notificacionRepository.deleteByUsuarioDestinoId(id);
+        pagoRepository.deleteByUsuarioId(id);
         citaService.eliminarHistorialesPorUsuario(id);
         citaService.eliminarPorUsuario(id);
         usuarioRepository.deleteById(id);

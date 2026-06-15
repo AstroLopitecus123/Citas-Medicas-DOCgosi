@@ -15,4 +15,6 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
 
     @Query("SELECT COUNT(n) FROM Notificacion n WHERE ((n.usuarioDestino IS NOT NULL AND n.usuarioDestino.id = :usuarioId) OR n.rolDestino = :rol) AND n.leida = false AND n.fechaCreacion >= :fechaRegistro")
     long countUnreadByUsuarioOrRolDestino(@Param("usuarioId") Long usuarioId, @Param("rol") String rol, @Param("fechaRegistro") LocalDateTime fechaRegistro);
+
+    void deleteByUsuarioDestinoId(Long usuarioDestinoId);
 }

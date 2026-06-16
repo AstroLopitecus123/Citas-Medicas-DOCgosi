@@ -98,6 +98,9 @@ public class CitaService {
         if (cita.getFecha() == null) {
             throw new RuntimeException("La fecha de la cita es obligatoria");
         }
+        if (cita.getFecha().isBefore(java.time.LocalDateTime.now())) {
+            throw new RuntimeException("No puedes agendar una cita en una fecha u hora que ya pasó");
+        }
 
         List<Disponibilidad> disponibles = disponibilidadRepository
             .findByMedicoIdAndEstado(cita.getMedico().getId(), Disponibilidad.EstadoDisponibilidad.DISPONIBLE);

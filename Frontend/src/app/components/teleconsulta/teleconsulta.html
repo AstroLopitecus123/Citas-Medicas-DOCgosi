@@ -44,12 +44,9 @@
             <div class="user-label">{{ nombresRemotos[user.uid] || 'Conectando...' }}</div>
           </div>
 
-          <!-- Waiting Placeholder if alone -->
-          <div class="video-box waiting-box" *ngIf="remoteUsers.length === 0">
-             <div class="loader-video" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #64748b;">
-               <i class="fa-solid fa-user-clock" style="font-size: 3rem; margin-bottom: 10px; color: #cbd5e1;"></i>
-               Esperando a otros participantes...
-             </div>
+          <!-- Waiting floating alert -->
+          <div class="waiting-alert" *ngIf="remoteUsers.length === 0">
+              <i class="fa-solid fa-user-clock"></i> Esperando a otros participantes...
           </div>
 
         </div>

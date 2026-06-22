@@ -42,6 +42,11 @@ public class TeleconsultaController {
             aCert = System.getenv("AGORA_APP_CERTIFICATE");
         }
 
+        System.out.println("DEBUG RAILWAY: agoraAppId from @Value=" + agoraAppId);
+        System.out.println("DEBUG RAILWAY: AGORA_APP_ID env=" + System.getenv("AGORA_APP_ID"));
+        System.out.println("DEBUG RAILWAY: agoraAppCertificate from @Value=" + agoraAppCertificate);
+        System.out.println("DEBUG RAILWAY: AGORA_APP_CERTIFICATE env=" + System.getenv("AGORA_APP_CERTIFICATE"));
+
         config.put("agoraAppId", (aId != null && !aId.isEmpty()) ? aId : "AGORA_NOT_FOUND");
         config.put("deepgramApiKey", (dKey != null && !dKey.isEmpty()) ? dKey : "DEEPGRAM_NOT_FOUND");
 
@@ -60,6 +65,8 @@ public class TeleconsultaController {
             } catch (Exception e) {
                 config.put("agoraToken", "ERROR_GENERATING_TOKEN");
             }
+        } else {
+            config.put("agoraToken", "MISSING_VARIABLES_OR_CANAL");
         }
 
         return ResponseEntity.ok(config);

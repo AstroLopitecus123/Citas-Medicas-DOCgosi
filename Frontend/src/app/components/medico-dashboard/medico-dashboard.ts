@@ -56,10 +56,14 @@ export class MedicoDashboardComponent implements OnInit {
           horasDisponibles: 0 
         };
 
+        const hoyInicio = new Date();
+        hoyInicio.setHours(0, 0, 0, 0);
+
         this.proximasCitas = citas
           .filter(c => c.estado !== 'CANCELADA' && c.estado !== 'SOLICITUD_CANCELACION')
+          .filter(c => new Date(c.fecha) >= hoyInicio)
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
-          .slice(0, 5); 
+          .slice(0, 5);
 
         this.cargando = false;
       },

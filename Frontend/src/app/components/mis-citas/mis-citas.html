@@ -63,7 +63,7 @@
                             <tr>
                                 <th>Fecha y Hora</th>
                                 <th *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">Paciente</th>
-                                <th>{{ ctrl.usuario.rol === 'MEDICO' ? 'Paciente' : 'Personal Médico' }}</th>
+                                <th>Personal Médico</th>
                                 <th>Especialidad</th>
                                 <th>Estado</th>
                                 <th>Motivo</th>
@@ -85,13 +85,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION' || ctrl.usuario.rol === 'PACIENTE'">
+                                    <div class="user-info-stack">
                                         <strong>{{ cita?.medico?.usuario?.nombre }} {{ cita?.medico?.usuario?.apellido }}</strong>
                                         <span class="sub-txt">Matrícula: {{ cita?.medico?.id }}</span>
-                                    </div>
-                                    <div class="user-info-stack" *ngIf="ctrl.usuario.rol === 'MEDICO'">
-                                        <strong>{{ cita?.paciente?.nombre }} {{ cita?.paciente?.apellido }}</strong>
-                                        <span class="sub-txt">ID Paciente: {{ cita?.paciente?.id }}</span>
                                     </div>
                                 </td>
                                 <td>
@@ -168,7 +164,7 @@
                                         </button>
 
                                         <button class="btn-table-action btn-medical" 
-                                                *ngIf="(ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
+                                                *ngIf="ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial"
                                                 (click)="ctrl.abrirModalHistorial(cita)" 
                                                 title="Ver diagnóstico">
                                             <i class="fa-solid fa-file-waveform"></i>

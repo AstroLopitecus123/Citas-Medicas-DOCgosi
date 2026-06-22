@@ -216,8 +216,15 @@
                             </div>
 
                             <button class="btn-secondary-action" 
+                                    routerLink="/historial-clinico/{{cita.paciente?.id}}"
+                                    title="Ver Expediente Médico del Paciente"
+                                    style="color: #6366f1; border-color: #6366f1;">
+                                <i class="fa-solid fa-address-book"></i>
+                            </button>
+
+                            <button class="btn-secondary-action" 
                                     (click)="ctrl.abrirModalHistorial(cita)" 
-                                    [title]="cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico'">
+                                    [title]="cita.tieneHistorial ? 'Ver diagnóstico de esta cita' : 'Registrar diagnóstico para esta cita'">
                                 <i class="fa-solid" [ngClass]="cita.tieneHistorial ? 'fa-file-medical' : 'fa-stethoscope'"></i>
                             </button>
 

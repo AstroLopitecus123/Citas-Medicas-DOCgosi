@@ -50,7 +50,8 @@ public class SecurityConfig {
                     "/api/paises/**",
                     "/api/chatbot/**",
                     "/api/especialidades",
-                    "/api/teleconsulta/config"
+                    "/api/teleconsulta/config",
+                    "/api/teleconsulta/debug"
                 ).permitAll()
                 .requestMatchers("/api/disponibilidades/medico/*/rango").permitAll()
                 .requestMatchers("/api/medicos").permitAll()

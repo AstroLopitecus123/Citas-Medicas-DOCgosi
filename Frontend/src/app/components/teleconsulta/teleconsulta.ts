@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -42,12 +42,17 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   private deepgramApiKey: string = '';
   private deepgramSocket: any = null;
   private mediaRecorder: MediaRecorder | null = null;
-
   private apiUrl = environment.apiUrl;
 
   private infoIntervalId: any;
   nombreLocal: string = '';
   nombresRemotos: { [uid: string]: string } = {};
+
+  // Chat y Grid properties
+  isChatOpen: boolean = false;
+  mensajesChat: any[] = [];
+  nuevoMensaje: string = '';
+  @ViewChild('chatContainer') chatContainer!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,7 +101,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.activeSpeakers.clear();
       let localIsSpeaking = false;
       volumes.forEach((volume) => {
-        if (volume.level > 5) { 
+        // Aumentado a 15 para evitar falsos positivos con ruido de fondo
+        if (volume.level > 15) { 
           if (volume.uid === this.rtcClient.uid) {
              localIsSpeaking = true;
           } else {
@@ -157,6 +163,13 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
         if (data.type === 'INFO') {
            this.nombresRemotos[uid.toString()] = `${data.rol} (${data.nombre})`;
            this.cdr.detectChanges();
+        } else if (data.type === 'CHAT') {
+           this.mensajesChat.push(data);
+           this.cdr.detectChanges();
+           this.scrollToBottom();
+           if (!this.isChatOpen) {
+              this.ns.success(`Nuevo mensaje de ${data.nombre}`);
+           }
         } else if (data.type === 'SUBTITULO') {
            this.recibirSubtitulo(data.texto, data.emisor);
         }
@@ -234,6 +247,54 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   isSpeaking(uid: any): boolean {
     return this.activeSpeakers.has(uid.toString());
+  }
+
+  getGridClass(): string {
+    const total = 1 + this.remoteUsers.length;
+    if (total === 1) return 'grid-1';
+    if (total === 2) return 'grid-2';
+    if (total === 3) return 'grid-3';
+    if (total === 4) return 'grid-4';
+    if (total >= 5) return 'grid-5';
+    return '';
+  }
+
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+    if (this.isChatOpen) {
+      setTimeout(() => this.scrollToBottom(), 100);
+    }
+  }
+
+  enviarMensaje() {
+    if (!this.nuevoMensaje.trim()) return;
+    const msgObj = {
+      type: 'CHAT',
+      uid: this.uidLocal,
+      nombre: this.nombreLocal,
+      texto: this.nuevoMensaje.trim()
+    };
+    
+    // Add locally
+    this.mensajesChat.push(msgObj);
+    this.nuevoMensaje = '';
+    
+    // Broadcast
+    try {
+      const payload = JSON.stringify(msgObj);
+      const encoded = new TextEncoder().encode(payload);
+      (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+    } catch(e) {}
+    
+    setTimeout(() => this.scrollToBottom(), 100);
+  }
+
+  scrollToBottom() {
+    try {
+      if (this.chatContainer) {
+        this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+      }
+    } catch(err) {}
   }
 
   async toggleDeepgram() {

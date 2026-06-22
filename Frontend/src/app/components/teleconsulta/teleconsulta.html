@@ -9,55 +9,76 @@
       </div>
     </header>
 
-    <div class="video-grid">
+    <div class="main-content">
+      <div class="video-grid" [class.chat-open]="isChatOpen">
 
-      <div class="dynamic-grid" [hidden]="!unido">
+        <div class="dynamic-grid" [ngClass]="getGridClass()" [hidden]="!unido">
 
-        <!-- Local Video -->
-        <div class="video-box" [class.speaking]="localSpeaking">
-          <div class="video-stream" id="local-video"></div>
-          
-          <div class="status-overlay" *ngIf="!camOn">
-            <i class="fa-solid fa-video-slash"></i>
+          <!-- Local Video -->
+          <div class="video-box" [class.speaking]="localSpeaking">
+            <div class="video-stream" id="local-video"></div>
+            
+            <div class="status-overlay" *ngIf="!camOn">
+              <i class="fa-solid fa-video-slash"></i>
+            </div>
+            
+            <div class="mic-muted-icon" *ngIf="!micOn">
+              <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
+            </div>
+
+            <div class="user-label">Tú ({{ rol }} - {{ nombreLocal }})</div>
           </div>
-          
-          <div class="mic-muted-icon" *ngIf="!micOn">
-            <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
+
+          <!-- Remote Videos -->
+          <div class="video-box" *ngFor="let user of remoteUsers" [class.speaking]="isSpeaking(user.uid)">
+            <div class="video-stream" [id]="'remote-video-' + user.uid"></div>
+
+            <div class="status-overlay" *ngIf="!user.hasVideo">
+              <i class="fa-solid fa-video-slash"></i>
+            </div>
+
+            <div class="mic-muted-icon" *ngIf="!user.hasAudio">
+              <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
+            </div>
+
+            <div class="user-label">{{ nombresRemotos[user.uid] || 'Conectando...' }}</div>
           </div>
 
-          <div class="user-label">Tú ({{ rol }} - {{ nombreLocal }})</div>
+          <!-- Waiting Placeholder if alone -->
+          <div class="video-box waiting-box" *ngIf="remoteUsers.length === 0">
+             <div class="loader-video" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #64748b;">
+               <i class="fa-solid fa-user-clock" style="font-size: 3rem; margin-bottom: 10px; color: #cbd5e1;"></i>
+               Esperando a otros participantes...
+             </div>
+          </div>
+
         </div>
 
-        <!-- Remote Videos -->
-        <div class="video-box" *ngFor="let user of remoteUsers" [class.speaking]="isSpeaking(user.uid)">
-          <div class="video-stream" [id]="'remote-video-' + user.uid"></div>
-
-          <div class="status-overlay" *ngIf="!user.hasVideo">
-            <i class="fa-solid fa-video-slash"></i>
+        <div class="smart-subtitles" *ngIf="unido && mostrarSubtitulos">
+          <div class="subtitle-box">
+              <span class="badge-speaker">{{ mensajeActualEmisor }}</span>
+              <p>{{ mensajeActualTranscrito || '...' }}</p>
           </div>
-
-          <div class="mic-muted-icon" *ngIf="!user.hasAudio">
-            <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
-          </div>
-
-          <div class="user-label">{{ nombresRemotos[user.uid] || 'Conectando...' }}</div>
-        </div>
-
-        <!-- Waiting Placeholder if alone -->
-        <div class="video-box waiting-box" *ngIf="remoteUsers.length === 0">
-           <div class="loader-video" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #64748b;">
-             <i class="fa-solid fa-user-clock" style="font-size: 3rem; margin-bottom: 10px; color: #cbd5e1;"></i>
-             Esperando a otros participantes...
-           </div>
         </div>
 
       </div>
 
-      <div class="smart-subtitles" *ngIf="unido && mostrarSubtitulos">
-        <div class="subtitle-box">
-            <span class="badge-speaker">{{ mensajeActualEmisor }}</span>
-            <p>{{ mensajeActualTranscrito || '...' }}</p>
-        </div>
+      <!-- Chat Sidebar -->
+      <div class="chat-sidebar" [class.closed]="!isChatOpen">
+         <div class="chat-header">
+           <span>Mensajes en la llamada</span>
+           <button class="chat-close-btn" (click)="toggleChat()"><i class="fa-solid fa-times"></i></button>
+         </div>
+         <div class="chat-messages" #chatContainer>
+           <div class="chat-message" *ngFor="let msg of mensajesChat" [class.me]="msg.uid === uidLocal">
+              <div class="chat-sender">{{ msg.nombre }}</div>
+              <div class="chat-text">{{ msg.texto }}</div>
+           </div>
+         </div>
+         <div class="chat-input-area">
+           <input type="text" placeholder="Envía un mensaje" [(ngModel)]="nuevoMensaje" (keyup.enter)="enviarMensaje()">
+           <button (click)="enviarMensaje()"><i class="fa-solid fa-paper-plane"></i></button>
+         </div>
       </div>
 
     </div>
@@ -70,6 +91,10 @@
 
         <button class="btn-control" (click)="toggleCam()" [class.danger]="!camOn" [title]="camOn ? 'Apagar Cámara' : 'Encender Cámara'">
             <i class="fa-solid" [class.fa-video]="camOn" [class.fa-video-slash]="!camOn"></i>
+        </button>
+
+        <button class="btn-control" [class.active-sub]="isChatOpen" (click)="toggleChat()" title="Chat de la reunión">
+            <i class="fa-solid fa-comment-dots"></i>
         </button>
 
         <button class="btn-control danger" style="background: #ef4444; color: white; width: 60px; height: 60px;" (click)="salirDeSala()" title="Finalizar Consulta">

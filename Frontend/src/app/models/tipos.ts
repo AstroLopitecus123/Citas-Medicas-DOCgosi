@@ -13,6 +13,7 @@ export type EstadoCita = 'PENDIENTE' | 'CONFIRMADA' | 'REPROGRAMADA' | 'CANCELAD
 
 export interface Usuario {
   id?: number;
+  medicoId?: number;
   nombre?: string;
   correo?: string;
   rol?: RolUsuario;

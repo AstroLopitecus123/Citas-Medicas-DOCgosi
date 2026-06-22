@@ -5,7 +5,7 @@
 .teleconsulta-wrapper {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: #0f172a; /* Dark background para inmersión */
+  background: #f8fafc; /* Light background as requested */
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -13,17 +13,17 @@
 
 .teleconsulta-header {
   height: 70px;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(10px);
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .brand-title {
-  color: white;
+  color: #1e293b;
   font-size: 1.2rem;
   font-weight: 800;
   display: flex;
@@ -39,13 +39,23 @@
   gap: 15px;
 }
 
+.badge-role {
+  background: #0fbf6a;
+  color: white;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
 .btn-control {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   border: none;
-  background: rgba(255,255,255,0.1);
-  color: white;
+  background: #e2e8f0;
+  color: #475569;
   font-size: 1.1rem;
   cursor: pointer;
   display: flex;
@@ -54,10 +64,10 @@
   transition: all 0.3s;
 }
 
-.btn-control:hover { background: rgba(255,255,255,0.2); }
-.btn-control.danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.btn-control:hover { background: #cbd5e1; }
+.btn-control.danger { background: #fee2e2; color: #ef4444; }
 .btn-control.danger:hover { background: #ef4444; color: white; }
-.btn-control.active-sub { background: rgba(15, 191, 106, 0.2); color: #34d399; }
+.btn-control.active-sub { background: #d1fae5; color: #10b981; }
 .btn-control.active-sub:hover { background: #0fbf6a; color: white; }
 
 .video-grid {
@@ -68,33 +78,92 @@
   padding: 20px;
   gap: 20px;
   position: relative;
+  width: 100%;
 }
 
-.video-container {
-  border-radius: 20px;
+.dynamic-grid {
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 1fr;
+  align-content: center;
+  justify-content: center;
+}
+
+.video-box {
+  background: #1e293b;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  background: #1e293b;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  min-height: 250px;
 }
 
-.video-remote {
+.video-box.speaking {
+  border-color: #0fbf6a;
+  box-shadow: 0 0 20px rgba(15, 191, 106, 0.4);
+}
+
+.video-stream {
   width: 100%;
-  max-width: 1200px;
   height: 100%;
-  max-height: 80vh;
+  position: absolute;
+  top: 0; left: 0;
 }
 
-.video-local {
+.status-overlay {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 240px;
-  height: 160px;
-  border-radius: 15px;
-  border: 2px solid rgba(255,255,255,0.1);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.status-overlay i {
+  font-size: 4rem;
+  color: #475569;
+}
+
+.mic-muted-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ef4444;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.user-label {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 20;
+}
+
+.waiting-box {
+  background: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  box-shadow: none;
 }
 
 .join-modal {

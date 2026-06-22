@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NotificationService } from '../../services/notification.service';
-import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, IMicrophoneAudioTrack, IAgoraRTCRemoteUser } from 'agora-rtc-sdk-ng';
 
 import { environment } from '../../../environments/environment';
 
@@ -19,11 +19,15 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   citaId: string = '';
   rol: string = 'PACIENTE'; 
+  uidLocal: string = '';
 
   unido: boolean = false;
   micOn: boolean = true;
   camOn: boolean = true;
-  remoteUserJoined: boolean = false;
+  localSpeaking: boolean = false;
+  
+  remoteUsers: IAgoraRTCRemoteUser[] = [];
+  activeSpeakers: Set<string> = new Set();
 
   mostrarSubtitulos: boolean = false;
   deepgramActive: boolean = false;
@@ -75,15 +79,42 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   async prepararAgora() {
     this.rtcClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
 
+    // Habilitar indicador de volumen de voz (cada 200ms)
+    this.rtcClient.enableAudioVolumeIndicator();
+
+    this.rtcClient.on("volume-indicator", volumes => {
+      this.activeSpeakers.clear();
+      let localIsSpeaking = false;
+      volumes.forEach((volume) => {
+        if (volume.level > 5) { 
+          if (volume.uid === this.rtcClient.uid) {
+             localIsSpeaking = true;
+          } else {
+             this.activeSpeakers.add(volume.uid.toString());
+          }
+        }
+      });
+      this.localSpeaking = localIsSpeaking;
+    });
+
+    this.rtcClient.on('user-joined', (user) => {
+      if (!this.remoteUsers.find(u => u.uid === user.uid)) {
+        this.remoteUsers.push(user);
+      }
+    });
+
     this.rtcClient.on('user-published', async (user, mediaType) => {
       await this.rtcClient.subscribe(user, mediaType);
+      
+      if (!this.remoteUsers.find(u => u.uid === user.uid)) {
+        this.remoteUsers.push(user);
+      }
 
       if (mediaType === 'video') {
         const remoteVideoTrack = user.videoTrack;
-        this.remoteUserJoined = true;
         setTimeout(() => {
-          remoteVideoTrack?.play('remote-video');
-        }, 300);
+          remoteVideoTrack?.play(`remote-video-${user.uid}`);
+        }, 100);
       }
 
       if (mediaType === 'audio') {
@@ -92,9 +123,18 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.rtcClient.on('user-unpublished', (user) => {
-       console.log('Usuario se fue', user);
-       this.remoteUserJoined = false;
+    this.rtcClient.on('user-unpublished', (user, mediaType) => {
+      if (mediaType === 'video') {
+        user.videoTrack?.stop();
+      }
+      if (mediaType === 'audio') {
+        user.audioTrack?.stop();
+      }
+    });
+
+    this.rtcClient.on('user-left', (user) => {
+      this.remoteUsers = this.remoteUsers.filter(u => u.uid !== user.uid);
+      this.activeSpeakers.delete(user.uid.toString());
     });
 
     this.rtcClient.on('stream-message', (uid, payload) => {
@@ -110,9 +150,9 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     }
 
     try {
-
       const canalUID = `cita-${this.citaId}`;
-      await this.rtcClient.join(this.agoraAppId, canalUID, this.agoraToken, null);
+      const uid = await this.rtcClient.join(this.agoraAppId, canalUID, this.agoraToken, null);
+      this.uidLocal = uid.toString();
 
       this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -120,7 +160,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.unido = true;
       setTimeout(() => {
         this.localVideoTrack.play('local-video');
-      }, 300);
+      }, 100);
 
       await this.rtcClient.publish([this.localAudioTrack, this.localVideoTrack]);
 
@@ -149,7 +189,16 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     this.localVideoTrack?.close();
     await this.rtcClient?.leave();
     this.ngOnDestroy();
-    this.router.navigate(['/']);
+    
+    if (this.rol === 'MEDICO') {
+      this.router.navigate(['/medico/agenda']);
+    } else {
+      this.router.navigate(['/paciente/mis-citas']);
+    }
+  }
+
+  isSpeaking(uid: any): boolean {
+    return this.activeSpeakers.has(uid.toString());
   }
 
   async toggleDeepgram() {
@@ -208,11 +257,9 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   enviarSubtituloAlPaciente(texto: string) {
-
       console.log('Emitiendo:', texto);
       try {
         const encoded = new TextEncoder().encode(texto);
-
         this.recibirSubtitulo(texto, "Dr. Muñoz");
       } catch(e) {
         console.warn("Fallo envio Agora, mostrando localmente: ", e);

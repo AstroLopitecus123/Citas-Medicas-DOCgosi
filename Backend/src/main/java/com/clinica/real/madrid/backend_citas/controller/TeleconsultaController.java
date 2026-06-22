@@ -16,11 +16,15 @@ public class TeleconsultaController {
     @Value("${AGORA_APP_ID:}")
     private String agoraAppId;
 
+    @Value("${AGORA_APP_CERTIFICATE:}")
+    private String agoraAppCertificate;
+
     @Value("${DEEPGRAM_API_KEY:}")
     private String deepgramApiKey;
 
     @GetMapping("/config")
-    public ResponseEntity<Map<String, String>> getConfig() {
+    public ResponseEntity<Map<String, String>> getConfig(
+            @org.springframework.web.bind.annotation.RequestParam(value = "canal", required = false) String canal) {
         Map<String, String> config = new HashMap<>();
 
         String dKey = deepgramApiKey;
@@ -33,8 +37,30 @@ public class TeleconsultaController {
             aId = System.getenv("AGORA_APP_ID");
         }
 
+        String aCert = agoraAppCertificate;
+        if (aCert == null || aCert.isEmpty() || aCert.equals("CERT_NOT_FOUND")) {
+            aCert = System.getenv("AGORA_APP_CERTIFICATE");
+        }
+
         config.put("agoraAppId", (aId != null && !aId.isEmpty()) ? aId : "AGORA_NOT_FOUND");
         config.put("deepgramApiKey", (dKey != null && !dKey.isEmpty()) ? dKey : "DEEPGRAM_NOT_FOUND");
+
+        // Generar Token de Agora si se pasó un canal y se tiene el certificado
+        if (canal != null && !canal.isEmpty() && aId != null && !aId.isEmpty() && aCert != null && !aCert.isEmpty()) {
+            try {
+                io.agora.media.RtcTokenBuilder2 tokenBuilder = new io.agora.media.RtcTokenBuilder2();
+                // Expira en 2 horas (7200 segundos)
+                int expirationTimeInSeconds = 7200;
+                int timestamp = (int)(System.currentTimeMillis() / 1000 + expirationTimeInSeconds);
+                
+                String result = tokenBuilder.buildTokenWithUid(
+                    aId, aCert, canal, 0, io.agora.media.RtcTokenBuilder2.Role.ROLE_PUBLISHER, timestamp, timestamp);
+                
+                config.put("agoraToken", result);
+            } catch (Exception e) {
+                config.put("agoraToken", "ERROR_GENERATING_TOKEN");
+            }
+        }
 
         return ResponseEntity.ok(config);
     }

@@ -57,12 +57,15 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     this.obtenerConfiguracion();
   }
 
-  obtenerConfiguracion() {
+  private agoraToken: string | null = null;
 
-    this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config`).subscribe({
+  obtenerConfiguracion() {
+    const canalUID = `cita-${this.citaId}`;
+    this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config?canal=${canalUID}`).subscribe({
       next: (config) => {
         this.agoraAppId = config.agoraAppId;
         this.deepgramApiKey = config.deepgramApiKey;
+        this.agoraToken = config.agoraToken || null;
         this.prepararAgora();
       },
       error: (err) => console.error("Error al obtener credenciales", err)
@@ -109,7 +112,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     try {
 
       const canalUID = `cita-${this.citaId}`;
-      await this.rtcClient.join(this.agoraAppId, canalUID, null, null);
+      await this.rtcClient.join(this.agoraAppId, canalUID, this.agoraToken, null);
 
       this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -49,7 +49,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private ns: NotificationService
+    private ns: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -70,7 +71,10 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
         this.agoraAppId = config.agoraAppId;
         this.deepgramApiKey = config.deepgramApiKey;
         this.agoraToken = config.agoraToken || null;
-        this.prepararAgora();
+        this.prepararAgora().then(() => {
+           // Auto-entrar a la sala
+           this.unirseASala();
+        });
       },
       error: (err) => console.error("Error al obtener credenciales", err)
     });
@@ -95,6 +99,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
         }
       });
       this.localSpeaking = localIsSpeaking;
+      // Forzar actualización de Angular para limpiar o añadir el borde
+      this.cdr.detectChanges();
     });
 
     this.rtcClient.on('user-joined', (user) => {

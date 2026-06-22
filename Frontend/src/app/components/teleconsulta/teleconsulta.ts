@@ -45,6 +45,10 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   private apiUrl = environment.apiUrl;
 
+  private infoIntervalId: any;
+  nombreLocal: string = '';
+  nombresRemotos: { [uid: string]: string } = {};
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -57,7 +61,9 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     this.citaId = this.route.snapshot.paramMap.get('id') || '0';
     const usuarioString = localStorage.getItem('usuario');
     if (usuarioString) {
-      this.rol = JSON.parse(usuarioString).rol;
+      const u = JSON.parse(usuarioString);
+      this.rol = u.rol;
+      this.nombreLocal = u.nombre + " " + (u.apellido || "");
     }
     this.obtenerConfiguracion();
   }
@@ -141,11 +147,23 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     this.rtcClient.on('user-left', (user) => {
       this.remoteUsers = this.remoteUsers.filter(u => u.uid !== user.uid);
       this.activeSpeakers.delete(user.uid.toString());
+      delete this.nombresRemotos[user.uid.toString()];
     });
 
     this.rtcClient.on('stream-message', (uid, payload) => {
       const texto = new TextDecoder().decode(payload);
-      this.recibirSubtitulo(texto);
+      try {
+        const data = JSON.parse(texto);
+        if (data.type === 'INFO') {
+           this.nombresRemotos[uid.toString()] = `${data.rol} (${data.nombre})`;
+           this.cdr.detectChanges();
+        } else if (data.type === 'SUBTITULO') {
+           this.recibirSubtitulo(data.texto, data.emisor);
+        }
+      } catch(e) {
+        // Fallback for raw text
+        this.recibirSubtitulo(texto);
+      }
     });
   }
 
@@ -169,6 +187,17 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       }, 100);
 
       await this.rtcClient.publish([this.localAudioTrack, this.localVideoTrack]);
+
+      // Broadcast mi información cada 3 segundos a los demás
+      this.infoIntervalId = setInterval(() => {
+        if (this.unido && this.rtcClient) {
+           const msg = JSON.stringify({ type: 'INFO', nombre: this.nombreLocal, rol: this.rol });
+           const encoded = new TextEncoder().encode(msg);
+           try {
+             (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+           } catch(e) {}
+        }
+      }, 3000);
 
     } catch (e) {
       console.error('Fallo al entrar a sala', e);

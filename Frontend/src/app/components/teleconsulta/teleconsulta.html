@@ -11,15 +11,7 @@
 
     <div class="video-grid">
 
-      <div class="join-modal" *ngIf="!unido">
-        <h2 style="color: #1e293b; font-weight: 800; font-size: 1.5rem;">Sala de Espera Virtual</h2>
-        <p style="color: #64748b; margin-bottom: 25px;">Verifique su conexión antes de ingresar a la consulta.</p>
-        <button class="btn-confirm-glass" style="width: 100%; border-radius: 12px; font-size: 1.1rem; padding: 15px;" (click)="unirseASala()">
-            <i class="fa-solid fa-video"></i> Ingresar a Consulta
-        </button>
-      </div>
-
-      <div class="dynamic-grid" [class.grid-layout]="unido" [hidden]="!unido">
+      <div class="dynamic-grid" [hidden]="!unido">
 
         <!-- Local Video -->
         <div class="video-box" [class.speaking]="localSpeaking">
@@ -33,7 +25,7 @@
             <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
           </div>
 
-          <div class="user-label">Tú ({{ rol }})</div>
+          <div class="user-label">Tú ({{ rol }} - {{ nombreLocal }})</div>
         </div>
 
         <!-- Remote Videos -->
@@ -48,7 +40,7 @@
             <i class="fa-solid fa-microphone-slash" style="color: white; font-size: 14px;"></i>
           </div>
 
-          <div class="user-label">Participante</div>
+          <div class="user-label">{{ nombresRemotos[user.uid] || 'Conectando...' }}</div>
         </div>
 
         <!-- Waiting Placeholder if alone -->

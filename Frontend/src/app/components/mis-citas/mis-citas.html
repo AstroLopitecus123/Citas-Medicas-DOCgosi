@@ -6,11 +6,13 @@
                 <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="welcome-text">
-                <div class="badge-role" [style.background]="ctrl.usuario.rol === 'ADMIN' ? 'rgba(245,158,11,0.1)' : ''" [style.color]="ctrl.usuario.rol === 'ADMIN' ? '#b45309' : ''">
-                    {{ ctrl.usuario.rol === 'ADMIN' ? 'ADMINISTRADOR' : 'PACIENTE / STAFF' }}
+                <div class="badge-role"
+                    [style.background]="ctrl.usuario.rol === 'ADMIN' ? 'rgba(245,158,11,0.1)' : ctrl.usuario.rol === 'MEDICO' ? 'rgba(15,191,106,0.12)' : ''"
+                    [style.color]="ctrl.usuario.rol === 'ADMIN' ? '#b45309' : ctrl.usuario.rol === 'MEDICO' ? '#0a7a44' : ''">
+                    {{ ctrl.usuario.rol === 'ADMIN' ? 'ADMINISTRADOR' : ctrl.usuario.rol === 'MEDICO' ? 'MÉDICO' : 'PACIENTE / STAFF' }}
                 </div>
-                <h1>{{ ctrl.usuario.rol === 'ADMIN' ? 'Gestión Global de Citas' : 'Mis Citas Médicas' }}</h1>
-                <p>{{ ctrl.usuario.rol === 'ADMIN' ? 'Panel de supervisión y control de la agenda institucional.' : 'Gestiona tus consultas y revisa tu historial médico institucional en un solo lugar.' }}</p>
+                <h1>{{ ctrl.usuario.rol === 'ADMIN' ? 'Gestión Global de Citas' : ctrl.usuario.rol === 'MEDICO' ? 'Mi Agenda de Citas' : 'Mis Citas Médicas' }}</h1>
+                <p>{{ ctrl.usuario.rol === 'ADMIN' ? 'Panel de supervisión y control de la agenda institucional.' : ctrl.usuario.rol === 'MEDICO' ? 'Consulta y gestiona tus citas ordenadas por fecha.' : 'Gestiona tus consultas y revisa tu historial médico institucional en un solo lugar.' }}</p>
             </div>
             <div class="header-actions">
                 <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
@@ -28,7 +30,7 @@
             <div class="premium-card filters-bar-premium">
                 <div class="search-box-modern">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" [(ngModel)]="ctrl.textoBusqueda" placeholder="Buscar por paciente, médico o especialidad...">
+                    <input type="text" [(ngModel)]="ctrl.textoBusqueda" [placeholder]="ctrl.usuario.rol === 'MEDICO' ? 'Buscar por paciente, fecha (dd/mm/aaaa)...' : 'Buscar por paciente, médico o especialidad...'">
                 </div>
 
                 <div class="status-tabs-modern">
@@ -37,6 +39,20 @@
                     <button [class.active-tab]="ctrl.filtroEstado === 'CONFIRMADA'" (click)="ctrl.filtroEstado = 'CONFIRMADA'">Confirmadas</button>
                     <button [class.active-tab]="ctrl.filtroEstado === 'SOLICITUD_CANCELACION'" (click)="ctrl.filtroEstado = 'SOLICITUD_CANCELACION'">Solicitudes</button>
                     <button [class.active-tab]="ctrl.filtroEstado === 'CANCELADA'" (click)="ctrl.filtroEstado = 'CANCELADA'">Canceladas</button>
+                </div>
+            </div>
+
+            <!-- Filtros de tiempo: solo para el rol MÉDICO -->
+            <div class="premium-card filters-bar-premium" *ngIf="ctrl.usuario.rol === 'MEDICO'" style="padding: 12px 20px;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
+                    <i class="fa-solid fa-calendar-days" style="margin-right:6px;"></i>Período:
+                </span>
+                <div class="status-tabs-modern">
+                    <button [class.active-tab]="ctrl.filtroTiempo === 'TODAS'"  (click)="ctrl.filtroTiempo = 'TODAS'"  style="gap:4px;"><i class="fa-solid fa-list"></i> Todas</button>
+                    <button [class.active-tab]="ctrl.filtroTiempo === 'HOY'"    (click)="ctrl.filtroTiempo = 'HOY'"    style="gap:4px;"><i class="fa-solid fa-sun"></i> Hoy</button>
+                    <button [class.active-tab]="ctrl.filtroTiempo === 'SEMANA'" (click)="ctrl.filtroTiempo = 'SEMANA'" style="gap:4px;"><i class="fa-solid fa-calendar-week"></i> Esta Semana</button>
+                    <button [class.active-tab]="ctrl.filtroTiempo === 'MES'"    (click)="ctrl.filtroTiempo = 'MES'"    style="gap:4px;"><i class="fa-solid fa-calendar"></i> Este Mes</button>
+                    <button [class.active-tab]="ctrl.filtroTiempo === 'PASADAS'" (click)="ctrl.filtroTiempo = 'PASADAS'" style="gap:4px;"><i class="fa-solid fa-clock-rotate-left"></i> Pasadas</button>
                 </div>
             </div>
 

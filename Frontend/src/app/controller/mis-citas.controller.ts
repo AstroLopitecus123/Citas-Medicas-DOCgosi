@@ -37,24 +37,66 @@ export class MisCitasController {
 
   citas: Cita[] = [];
   filtroEstado: string = 'TODAS';
+  filtroTiempo: string = 'TODAS';
   textoBusqueda: string = '';
   procesandoAccion: boolean = false;
 
   get citasFiltradas() {
-    let lista = this.citas;
+    // Ordenar por fecha descendente (más reciente primero)
+    let lista = [...this.citas].sort((a, b) =>
+      new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+    );
+
+    // Filtro por período de tiempo
+    if (this.filtroTiempo !== 'TODAS') {
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      if (this.filtroTiempo === 'HOY') {
+        const finDeHoy = new Date(hoy);
+        finDeHoy.setHours(23, 59, 59, 999);
+        lista = lista.filter(c => {
+          const f = new Date(c.fecha);
+          return f >= hoy && f <= finDeHoy;
+        });
+      } else if (this.filtroTiempo === 'SEMANA') {
+        const finSemana = new Date(hoy);
+        finSemana.setDate(hoy.getDate() + 6);
+        finSemana.setHours(23, 59, 59, 999);
+        lista = lista.filter(c => {
+          const f = new Date(c.fecha);
+          return f >= hoy && f <= finSemana;
+        });
+      } else if (this.filtroTiempo === 'MES') {
+        lista = lista.filter(c => {
+          const f = new Date(c.fecha);
+          return f.getFullYear() === hoy.getFullYear() && f.getMonth() === hoy.getMonth();
+        });
+      } else if (this.filtroTiempo === 'PASADAS') {
+        lista = lista.filter(c => new Date(c.fecha) < hoy);
+      }
+    }
+
+    // Filtro por estado
     if (this.filtroEstado !== 'TODAS') {
       lista = lista.filter(c => c.estado === this.filtroEstado);
     }
+
+    // Búsqueda por texto (paciente, médico, especialidad, fecha, ID)
     if (this.textoBusqueda) {
       const b = this.textoBusqueda.toLowerCase();
-      lista = lista.filter(c =>
-        c.paciente?.nombre?.toLowerCase().includes(b) ||
-        c.paciente?.apellido?.toLowerCase().includes(b) ||
-        c.medico?.usuario?.nombre?.toLowerCase().includes(b) ||
-        c.medico?.usuario?.apellido?.toLowerCase().includes(b) ||
-        c.medico?.especialidad?.nombre?.toLowerCase().includes(b) ||
-        c.id.toString() === b
-      );
+      lista = lista.filter(c => {
+        const fechaStr = c.fecha ? new Date(c.fecha).toLocaleDateString('es-PE') : '';
+        return (
+          c.paciente?.nombre?.toLowerCase().includes(b) ||
+          c.paciente?.apellido?.toLowerCase().includes(b) ||
+          c.medico?.usuario?.nombre?.toLowerCase().includes(b) ||
+          c.medico?.usuario?.apellido?.toLowerCase().includes(b) ||
+          c.medico?.especialidad?.nombre?.toLowerCase().includes(b) ||
+          c.id.toString() === b ||
+          fechaStr.includes(b)
+        );
+      });
     }
     return lista;
   }

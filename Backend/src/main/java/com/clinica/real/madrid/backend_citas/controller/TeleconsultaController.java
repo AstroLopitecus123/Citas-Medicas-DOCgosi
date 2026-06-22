@@ -39,12 +39,20 @@ public class TeleconsultaController {
 
         String aId = agoraAppId;
         if (aId == null || aId.isEmpty() || aId.equals("AGORA_NOT_FOUND")) {
-            aId = System.getenv("AGORA_APP_ID");
+            for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
+                if (entry.getKey().contains("AGORA_APP_ID") && entry.getValue() != null && !entry.getValue().isEmpty()) {
+                    aId = entry.getValue();
+                }
+            }
         }
 
         String aCert = agoraAppCertificate;
         if (aCert == null || aCert.isEmpty() || aCert.equals("CERT_NOT_FOUND")) {
-            aCert = System.getenv("AGORA_APP_CERTIFICATE");
+            for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
+                if (entry.getKey().contains("AGORA_APP_CERTIFICATE") && entry.getValue() != null && !entry.getValue().isEmpty()) {
+                    aCert = entry.getValue();
+                }
+            }
         }
 
         System.out.println("DEBUG RAILWAY: agoraAppId from @Value=" + agoraAppId);

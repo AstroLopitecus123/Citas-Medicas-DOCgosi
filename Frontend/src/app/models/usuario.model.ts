@@ -5,6 +5,7 @@ export class Usuario {
 
   correo!: string;
   id?: number;
+  medicoId?: number;
   nombre?: string;
   apellido?: string;
   contrasena?: string;
@@ -38,6 +39,7 @@ export class LoginResponse {
   paisNombre?: string;
   rol?: string;
   fotoUrl?: string;
+  medicoId?: number;
 
   constructor(data?: any) {
     if (data) {

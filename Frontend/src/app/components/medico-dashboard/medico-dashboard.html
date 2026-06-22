@@ -40,9 +40,9 @@
     </div>
   </div>
 
-  <div class="dashboard-split-view">
+  <div class="dashboard-split-view" style="grid-template-columns: 1fr;">
 
-    <div class="primary-column">
+    <div class="primary-column" style="grid-column: 1 / -1;">
 
       <div class="premium-card appointment-preview" style="height: 100%;">
         <div class="card-header">
@@ -96,22 +96,6 @@
         <div class="loading-state" *ngIf="cargando" style="padding: 40px; text-align: center; color: #0d9488;">
            <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
            <p>Sincronizando agenda...</p>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="secondary-column">
-
-      <div class="premium-card notifications-panel">
-        <div class="card-header border-bottom">
-          <h3 class="card-title" style="margin: 0; font-size: 1.1rem;">
-            <i class="fa-solid fa-bell" style="color: #f59e0b; margin-right: 8px;"></i> Centro de Avisos
-          </h3>
-        </div>
-
-        <div class="compact-notifications-wrapper">
-          <app-notificaciones [modoDashboard]="true"></app-notificaciones>
         </div>
       </div>
 

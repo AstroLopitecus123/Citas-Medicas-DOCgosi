@@ -45,6 +45,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/medico-dashboard/medico-dashboard').then(m => m.MedicoDashboardComponent),
     title: 'Panel Médico', canActivate: [MedicoGuard]
   },
+  { path: 'medico/agenda', component: MisCitasComponent, title: 'Mi Agenda de Citas', canActivate: [MedicoGuard] },
   { path: 'medico/pagos', loadComponent: () => import('./components/mis-pagos/mis-pagos').then(m => m.MisPagosComponent), title: 'Mis Ingresos', canActivate: [MedicoGuard] },
 
   { path: 'gestionar-disponibilidad/:id', component: GestionarDisponibilidadComponent, title: 'Disponibilidad', canActivate: [MedicoGuard] },

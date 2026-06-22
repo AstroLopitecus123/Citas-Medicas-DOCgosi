@@ -88,6 +88,9 @@
       <a class="nav-item" [routerLink]="['/gestionar-disponibilidad', usuario?.medicoId || usuario?.id]" routerLinkActive="active">
         <i class="fa-solid fa-clock"></i> <span>Disponibilidad</span>
       </a>
+      <a class="nav-item" routerLink="/medico/agenda" routerLinkActive="active">
+        <i class="fa-solid fa-calendar-days"></i> <span>Gestión Citas</span>
+      </a>
 
       <a class="nav-item" routerLink="/notificaciones" routerLinkActive="active" style="position:relative; display:flex; justify-content:space-between; align-items:center;">
         <span><i class="fa-solid fa-bell"></i> Mis Notificaciones</span>
@@ -137,7 +140,7 @@
 
     </ng-container>
 
-    <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active" *ngIf="usuario?.rol !== 'PACIENTE'">
+    <a class="nav-item" routerLink="/mis-citas" routerLinkActive="active" *ngIf="usuario?.rol === 'ADMIN' || usuario?.rol === 'RECEPCION'">
       <i class="fa-solid fa-calendar-days"></i> <span>Gestión Citas</span>
     </a>
 

@@ -35,6 +35,9 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private com.clinica.real.madrid.backend_citas.service.MedicoService medicoService;
+
     @PostMapping("/registro")
     public ResponseEntity<?> registro(@RequestBody UsuarioRegistroRequest request) {
         try {
@@ -91,7 +94,15 @@ public class AuthController {
 
             String token = jwtUtil.generateToken(usuario.getCorreo());
 
-            return ResponseEntity.ok(new UsuarioResponse(token, usuario));
+            UsuarioResponse response = new UsuarioResponse(token, usuario);
+            if ("MEDICO".equals(usuario.getRol().name())) {
+                com.clinica.real.madrid.backend_citas.model.Medico medico = medicoService.obtenerPorUsuarioId(usuario.getId());
+                if (medico != null) {
+                    response.setMedicoId(medico.getId());
+                }
+            }
+
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
             boolean existe = usuarioService.listarUsuarios().stream().anyMatch(u -> u.getCorreo().equalsIgnoreCase(correo));

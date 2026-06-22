@@ -16,6 +16,7 @@ public class UsuarioResponse {
     private String paisNombre;
     private String rol; 
     private String fotoUrl;
+    private Long medicoId;
 
     public UsuarioResponse(String token, Usuario usuario) {
         this.token = token;
@@ -44,4 +45,6 @@ public class UsuarioResponse {
     public String getPaisNombre() { return paisNombre; }
     public String getRol() { return rol; }
     public String getFotoUrl() { return fotoUrl; }
+    public Long getMedicoId() { return medicoId; }
+    public void setMedicoId(Long medicoId) { this.medicoId = medicoId; }
 }

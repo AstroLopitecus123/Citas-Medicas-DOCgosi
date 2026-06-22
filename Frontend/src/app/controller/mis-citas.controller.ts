@@ -42,10 +42,17 @@ export class MisCitasController {
   procesandoAccion: boolean = false;
 
   get citasFiltradas() {
-    // Ordenar por fecha descendente (más reciente primero)
-    let lista = [...this.citas].sort((a, b) =>
-      new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-    );
+    // Ordenar por fecha descendente, pero si es MEDICO, priorizar las confirmadas
+    let lista = [...this.citas].sort((a, b) => {
+      if (this.usuario?.rol?.toUpperCase() === 'MEDICO') {
+        const aConfirmada = (a.estado === 'CONFIRMADA' || a.estado === 'REPROGRAMADA') ? 1 : 0;
+        const bConfirmada = (b.estado === 'CONFIRMADA' || b.estado === 'REPROGRAMADA') ? 1 : 0;
+        if (aConfirmada !== bConfirmada) {
+          return bConfirmada - aConfirmada;
+        }
+      }
+      return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+    });
 
     // Filtro por período de tiempo
     if (this.filtroTiempo !== 'TODAS') {

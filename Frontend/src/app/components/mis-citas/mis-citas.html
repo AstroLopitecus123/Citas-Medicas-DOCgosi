@@ -215,48 +215,6 @@
                                 {{ cita.estado.replace('_', ' ') }}
                             </div>
 
-                            <button class="btn-table-action btn-confirm" 
-                                    *ngIf="cita.estado === 'PENDIENTE'"
-                                    (click)="ctrl.confirmarCita(cita)" 
-                                    title="Confirmar Cita">
-                                <i class="fa-solid fa-check"></i>
-                            </button>
-
-                            <button class="btn-table-action btn-confirm" 
-                                    *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'"
-                                    (click)="ctrl.aprobarReprogramacion(cita)" 
-                                    title="Aprobar Cambio">
-                                <i class="fa-solid fa-calendar-check"></i>
-                            </button>
-
-                            <button class="btn-table-action btn-cancel" 
-                                    *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'"
-                                    (click)="ctrl.rechazarReprogramacion(cita)" 
-                                    title="Rechazar Cambio">
-                                <i class="fa-solid fa-calendar-xmark"></i>
-                            </button>
-
-                            <button class="btn-table-action btn-cancel" 
-                                    *ngIf="cita.estado === 'SOLICITUD_CANCELACION'"
-                                    (click)="ctrl.cancelarCita(cita)" 
-                                    title="Confirmar Cancelación">
-                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                            </button>
-
-                            <button class="btn-table-action btn-reprogram" 
-                                    *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
-                                    (click)="ctrl.reprogramarCita(cita)" 
-                                    title="Reprogramar">
-                                <i class="fa-solid fa-clock-rotate-left"></i>
-                            </button>
-
-                            <button class="btn-table-action btn-cancel" 
-                                    *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
-                                    (click)="ctrl.cancelarCita(cita)" 
-                                    title="Cancelar">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-
                             <button class="btn-secondary-action" 
                                     (click)="ctrl.abrirModalHistorial(cita)" 
                                     [title]="cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico'">

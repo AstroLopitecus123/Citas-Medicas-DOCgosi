@@ -201,10 +201,10 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
       await this.rtcClient.publish([this.localAudioTrack, this.localVideoTrack]);
 
-      // Broadcast mi información cada 3 segundos a los demás
+      // Iniciar el broadcast de nuestra info (para que otros sepan nuestro nombre)
       this.infoIntervalId = setInterval(() => {
-        if (this.unido && this.rtcClient) {
-           const msg = JSON.stringify({ type: 'INFO', nombre: this.nombreLocal, rol: this.rol });
+        if (this.unido && this.rtcClient && this.rtcClient.connectionState === 'CONNECTED') {
+           const msg = JSON.stringify({ type: 'INFO', rol: this.rol, nombre: this.nombreLocal });
            const encoded = new TextEncoder().encode(msg);
            try {
              (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
@@ -281,9 +281,11 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     
     // Broadcast
     try {
-      const payload = JSON.stringify(msgObj);
-      const encoded = new TextEncoder().encode(payload);
-      (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+      if (this.rtcClient && this.rtcClient.connectionState === 'CONNECTED') {
+        const payload = JSON.stringify(msgObj);
+        const encoded = new TextEncoder().encode(payload);
+        (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+      }
     } catch(e) {}
     
     setTimeout(() => this.scrollToBottom(), 100);
@@ -306,6 +308,11 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   async iniciarReconocimientoVoz() {
+    if (!this.deepgramApiKey) {
+      this.ns.error('La clave de API de Deepgram no está configurada en el servidor.');
+      return;
+    }
+    
     this.deepgramActive = true;
 
     try {
@@ -336,9 +343,16 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
         }
       };
 
+      this.deepgramSocket.onerror = (e: any) => {
+        console.error('WebSocket Error:', e);
+        this.ns.error('Fallo en la conexión con el servidor de subtítulos.');
+        this.detenerReconocimientoVoz();
+      };
+
     } catch (e) {
       console.error('Error con Deepgram', e);
       this.deepgramActive = false;
+      this.ns.error('Error al iniciar el micrófono para subtítulos.');
     }
   }
 
@@ -375,8 +389,11 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
            texto: texto,
            emisor: `${this.rol} (${this.nombreLocal})`
         };
-        const encoded = new TextEncoder().encode(JSON.stringify(msgObj));
-        (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+        
+        if (this.rtcClient && this.rtcClient.connectionState === 'CONNECTED') {
+          const encoded = new TextEncoder().encode(JSON.stringify(msgObj));
+          (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+        }
         this.recibirSubtitulo(texto, "Tú");
       } catch(e) {
         console.warn("Fallo envio Agora, mostrando localmente: ", e);

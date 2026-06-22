@@ -22,6 +22,11 @@ public class TeleconsultaController {
     @Value("${DEEPGRAM_API_KEY:}")
     private String deepgramApiKey;
 
+    @GetMapping("/debug")
+    public ResponseEntity<Map<String, String>> debug() {
+        return ResponseEntity.ok(System.getenv());
+    }
+
     @GetMapping("/config")
     public ResponseEntity<Map<String, String>> getConfig(
             @org.springframework.web.bind.annotation.RequestParam(value = "canal", required = false) String canal) {

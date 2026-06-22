@@ -54,10 +54,15 @@
 
         </div>
 
-        <div class="smart-subtitles" *ngIf="unido && mostrarSubtitulos">
-          <div class="subtitle-box">
-              <span class="badge-speaker">{{ mensajeActualEmisor }}</span>
-              <p>{{ mensajeActualTranscrito || '...' }}</p>
+        <div class="smart-subtitles" *ngIf="unido && mostrarSubtitulos && mensajeActualTranscrito">
+          <div class="subtitle-layout">
+            <div class="subtitle-avatar">
+              {{ getInitials(mensajeActualEmisor) }}
+            </div>
+            <div class="subtitle-content">
+              <span class="subtitle-name">{{ mensajeActualEmisor }}</span>
+              <p class="subtitle-text">{{ mensajeActualTranscrito }}</p>
+            </div>
           </div>
         </div>
 

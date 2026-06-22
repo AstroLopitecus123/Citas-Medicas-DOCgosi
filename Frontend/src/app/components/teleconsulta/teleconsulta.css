@@ -309,4 +309,57 @@
   .chat-sidebar { position: absolute; right: 0; height: 100%; z-index: 900; }
 }
 
-.smart-subtitles { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); width: 80%; max-width: 800px; z-index: 100; pointer-events: none; } .subtitle-box { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px) saturate(180%); border: 1px solid rgba(255,255,255,0.1); padding: 20px 30px; border-radius: 20px; color: white; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: all 0.3s; } .subtitle-box p { margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5); } .badge-speaker { display: inline-block; background: rgba(15, 191, 106, 0.3); color: #a7f3d0; font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; text-transform: uppercase; }
+/* Google Meet Style Subtitles */
+.smart-subtitles {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: 80%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.subtitle-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background: transparent;
+  color: white;
+  text-shadow: 0px 1px 3px rgba(0,0,0,0.8);
+}
+
+.subtitle-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #d97706; /* Naranja/marrón estilo Meet */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+
+.subtitle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subtitle-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.subtitle-text {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: white;
+}

@@ -352,11 +352,32 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     }
   }
 
+  getInitials(name: string): string {
+    if (!name) return 'U';
+    // Si tiene el formato ROL (Nombre), extraemos el nombre. Ej: "MEDICO (Juan)" -> "Juan"
+    let cleanName = name;
+    const match = name.match(/\((.*?)\)/);
+    if (match && match[1]) {
+      cleanName = match[1];
+    }
+    const words = cleanName.trim().split(' ').filter(w => w.length > 0);
+    if (words.length >= 2) {
+       return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    return cleanName.substring(0, 2).toUpperCase();
+  }
+
   enviarSubtituloAlPaciente(texto: string) {
       console.log('Emitiendo:', texto);
       try {
-        const encoded = new TextEncoder().encode(texto);
-        this.recibirSubtitulo(texto, "Dr. Muñoz");
+        const msgObj = {
+           type: 'SUBTITULO',
+           texto: texto,
+           emisor: `${this.rol} (${this.nombreLocal})`
+        };
+        const encoded = new TextEncoder().encode(JSON.stringify(msgObj));
+        (this.rtcClient as any).sendStreamMessage({ payload: encoded, syncWithAudio: false });
+        this.recibirSubtitulo(texto, "Tú");
       } catch(e) {
         console.warn("Fallo envio Agora, mostrando localmente: ", e);
       }

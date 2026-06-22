@@ -56,8 +56,8 @@
                 </div>
             </div>
 
-            <div class="premium-card">
-                <div class="modern-table-container" *ngIf="ctrl.citasFiltradas.length; else noCitas">
+            <div class="premium-card" *ngIf="ctrl.usuario.rol !== 'MEDICO'">
+                <div class="modern-table-container" *ngIf="ctrl.citasFiltradas.length; else noCitasTable">
                     <table class="modern-table">
                         <thead>
                             <tr>
@@ -168,10 +168,10 @@
                                         </button>
 
                                         <button class="btn-table-action btn-medical" 
-                                                *ngIf="(ctrl.usuario.rol === 'MEDICO') || (ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
+                                                *ngIf="(ctrl.usuario.rol === 'PACIENTE' && cita.tieneHistorial)"
                                                 (click)="ctrl.abrirModalHistorial(cita)" 
-                                                [title]="ctrl.usuario.rol === 'MEDICO' ? (cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico') : 'Ver diagnóstico'">
-                                            <i class="fa-solid" [ngClass]="ctrl.usuario.rol === 'MEDICO' ? 'fa-stethoscope' : 'fa-file-waveform'"></i>
+                                                title="Ver diagnóstico">
+                                            <i class="fa-solid fa-file-waveform"></i>
                                         </button>
                                     </div>
                                 </td>
@@ -179,12 +179,109 @@
                         </tbody>
                     </table>
                 </div>
-
-                <ng-template #noCitas>
+                <ng-template #noCitasTable>
                     <div class="empty-state">
                         <i class="fa-solid fa-calendar-xmark"></i>
-                        <p>Aún no tiene citas registradas</p>
-                        <span>Aquí aparecerán todas tus consultas médicas programadas, recordatorios e historial de atención.</span>
+                        <p>No se encontraron citas</p>
+                        <span>No hay resultados para los filtros o búsqueda actuales.</span>
+                    </div>
+                </ng-template>
+            </div>
+
+            <!-- Nuevo diseño tipo lista para el MEDICO -->
+            <div class="premium-card appointment-preview" *ngIf="ctrl.usuario.rol === 'MEDICO'" style="background: transparent; border: none; box-shadow: none; padding: 0;">
+                <div class="appointment-list" *ngIf="ctrl.citasFiltradas.length; else noCitasList">
+                    <div class="apt-item" *ngFor="let cita of ctrl.citasFiltradas">
+                        
+                        <div class="apt-time-block">
+                            <span class="apt-hour">{{ cita.fecha | date:'h:mm' }}</span>
+                            <span class="apt-meridian">{{ cita.fecha | date:'a' }}</span>
+                            <span style="font-size: 0.7rem; font-weight: 700; color: #64748b; margin-top: 4px;">{{ cita.fecha | date:'dd/MM' }}</span>
+                        </div>
+                        
+                        <div class="apt-patient-info" style="flex: 1;">
+                            <h4 style="margin: 0; font-weight: 700; color: #1e293b; font-size: 1.1rem;">{{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}</h4>
+                            <small style="color: #64748b; font-weight: 500;">
+                                <i class="fa-solid fa-notes-medical" style="margin-right: 4px;"></i> 
+                                <span *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'">Propone: {{ cita.fechaPropuesta | date:'dd/MM HH:mm' }}</span>
+                                <span *ngIf="cita.estado !== 'SOLICITUD_REPROGRAMACION'">{{ (cita.motivo && cita.motivo.length > 50) ? (cita.motivo.substring(0, 50) + '...') : (cita.motivo || 'Consulta general') }}</span>
+                            </small>
+                        </div>
+                        
+                        <div class="apt-actions" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
+                            
+                            <div class="apt-status" 
+                                 [ngClass]="{
+                                   'confirmed': cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA', 
+                                   'pending': cita.estado === 'PENDIENTE' || cita.estado === 'SOLICITUD_REPROGRAMACION' || cita.estado === 'SOLICITUD_CANCELACION',
+                                   'canceled': cita.estado === 'CANCELADA' || cita.estado === 'REPROGRAMACION_RECHAZADA'
+                                 }">
+                                {{ cita.estado.replace('_', ' ') }}
+                            </div>
+
+                            <button class="btn-table-action btn-confirm" 
+                                    *ngIf="cita.estado === 'PENDIENTE'"
+                                    (click)="ctrl.confirmarCita(cita)" 
+                                    title="Confirmar Cita">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button class="btn-table-action btn-confirm" 
+                                    *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'"
+                                    (click)="ctrl.aprobarReprogramacion(cita)" 
+                                    title="Aprobar Cambio">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </button>
+
+                            <button class="btn-table-action btn-cancel" 
+                                    *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'"
+                                    (click)="ctrl.rechazarReprogramacion(cita)" 
+                                    title="Rechazar Cambio">
+                                <i class="fa-solid fa-calendar-xmark"></i>
+                            </button>
+
+                            <button class="btn-table-action btn-cancel" 
+                                    *ngIf="cita.estado === 'SOLICITUD_CANCELACION'"
+                                    (click)="ctrl.cancelarCita(cita)" 
+                                    title="Confirmar Cancelación">
+                                <i class="fa-solid fa-hand-holding-dollar"></i>
+                            </button>
+
+                            <button class="btn-table-action btn-reprogram" 
+                                    *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
+                                    (click)="ctrl.reprogramarCita(cita)" 
+                                    title="Reprogramar">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </button>
+
+                            <button class="btn-table-action btn-cancel" 
+                                    *ngIf="cita.estado !== 'CANCELADA' && cita.estado !== 'SOLICITUD_CANCELACION'"
+                                    (click)="ctrl.cancelarCita(cita)" 
+                                    title="Cancelar">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+
+                            <button class="btn-secondary-action" 
+                                    (click)="ctrl.abrirModalHistorial(cita)" 
+                                    [title]="cita.tieneHistorial ? 'Ver diagnóstico' : 'Registrar diagnóstico'">
+                                <i class="fa-solid" [ngClass]="cita.tieneHistorial ? 'fa-file-medical' : 'fa-stethoscope'"></i>
+                            </button>
+
+                            <button class="btn-primary-action" 
+                                    *ngIf="cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA'" 
+                                    routerLink="/teleconsulta/{{cita.id}}" 
+                                    title="Entrar a Videollamada">
+                                <i class="fa-solid fa-video"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <ng-template #noCitasList>
+                    <div class="empty-state" style="background: white; border-radius: 20px; border: 1px solid #e2e8f0; padding: 40px;">
+                        <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
+                        <p style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin: 0;">No se encontraron citas</p>
+                        <span style="color: #64748b; font-size: 0.95rem;">Ajusta tus filtros o busca otro paciente.</span>
                     </div>
                 </ng-template>
             </div>

@@ -60,8 +60,8 @@ export const routes: Routes = [
     loadComponent: () => import('./components/paciente-dashboard/paciente-dashboard').then(m => m.PacienteDashboardComponent),
     title: 'Mi Panel', canActivate: [PacienteGuard]
   },
-  { path: 'mis-citas', component: MisCitasComponent, title: 'Mis Citas', canActivate: [PacienteGuard] },
-  { path: 'mis-citas/:id', component: MisCitasComponent, title: 'Detalle de Cita', canActivate: [PacienteGuard] },
+  { path: 'mis-citas', component: MisCitasComponent, title: 'Mis Citas', canActivate: [AuthGuard] },
+  { path: 'mis-citas/:id', component: MisCitasComponent, title: 'Detalle de Cita', canActivate: [AuthGuard] },
 
   { path: 'mi-perfil', loadComponent: () => import('./components/mi-perfil/mi-perfil').then(m => m.MiPerfilComponent), title: 'Mi Perfil', canActivate: [AuthGuard] },
   { path: 'historial-clinico', loadComponent: () => import('./components/historial-medico/historial-medico').then(m => m.HistorialMedicoComponent), title: 'Mi Historial Clínico', canActivate: [AuthGuard] },

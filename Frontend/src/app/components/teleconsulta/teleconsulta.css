@@ -30,7 +30,7 @@
   gap: 10px;
 }
 
-.brand-title i { color: #8ab4f8; } /* Google Meet light blue accent */
+.brand-title i { color: #0fbf6a; } /* Verde en lugar de azul */
 
 .controls-header {
   display: flex;
@@ -83,8 +83,8 @@
 .btn-control:hover { background: #5f6368; }
 .btn-control.danger { background: #ea4335; color: white; }
 .btn-control.danger:hover { background: #d93025; }
-.btn-control.active-sub { background: #8ab4f8; color: #202124; }
-.btn-control.active-sub:hover { background: #aecbfa; }
+.btn-control.active-sub { background: #0fbf6a; color: white; }
+.btn-control.active-sub:hover { background: #0b9e57; }
 
 .main-content {
   display: flex;
@@ -167,8 +167,8 @@
 }
 
 .video-box.speaking {
-  border-color: #8ab4f8; /* Google Meet blue */
-  box-shadow: 0 0 15px rgba(138, 180, 248, 0.4);
+  border-color: #0fbf6a; /* Green */
+  box-shadow: 0 0 15px rgba(15, 191, 106, 0.4);
 }
 
 .video-stream {
@@ -184,7 +184,7 @@
 }
 
 .video-stream video {
-  object-fit: cover !important;
+  object-fit: contain !important;
 }
 
 .status-overlay {

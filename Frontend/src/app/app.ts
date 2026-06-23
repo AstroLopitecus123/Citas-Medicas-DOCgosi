@@ -26,6 +26,10 @@ export class AppComponent {
   title = 'RETO Salud';
   usuario: Usuario | null = null;
   isLoggedIn = false;
+
+  get isTeleconsultaRoute(): boolean {
+    return this.router.url.includes('/teleconsulta');
+  }
   mostrarModal = false;
   loading = false;
   isMenuOpen = false;

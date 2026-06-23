@@ -340,12 +340,56 @@ El sistema incluye la configuración y relaciones de todas las entidades necesar
 - **Pagos** (Métodos, Transacciones)
 - **Especialidades** y asignación a médicos.
 
+### Datos de Prueba
+
+El script incluye:
+- 3 usuarios de prueba (Administrador, Médico, Paciente)
+- 4 especialidades médicas
+- Disponibilidad y horarios de prueba
+- 2 citas de ejemplo
+
 ### Documentación Adicional
 
-- Ver `Backend/README.md` para detalles del backend.
-- Ver `Frontend/README.md` para detalles del frontend.
+- Ver `Backend/README.md` para detalles del backend
+- Ver `Frontend/README.md` para detalles del frontend
 
 ---
 
 ## Soporte y Resolución de Problemas
-Para problemas relacionados a la infraestructura o integración de APIs, por favor verificar el correcto uso de los tokens en `application.properties` y `environment.ts`.
+
+### Problemas Comunes
+
+1. **Error de conexión a la base de datos:**
+   - Verificar que MySQL esté ejecutándose
+   - Revisar credenciales en `application.properties`
+   - Confirmar que la base de datos existe
+
+2. **Error de CORS:**
+   - Verificar configuración en el backend (WebConfig)
+   - Confirmar que el frontend esté en `localhost:4200`
+
+3. **Error de autenticación:**
+   - Verificar que el token JWT esté configurado
+   - Revisar expiración del token
+   - Confirmar que el usuario esté activo
+
+4. **Pagos con Stripe no funcionan:**
+   - Verificar claves de API en `application.properties` y `environment.ts`
+   - Confirmar que las claves sean de modo test
+   - Revisar logs del backend para errores
+
+5. **Problemas con Videollamadas o Subtítulos:**
+   - Verificar claves de Agora y Deepgram
+   - Asegurarse de dar permisos de micrófono/cámara en el navegador
+
+---
+
+## Licencia
+
+Este proyecto está en desarrollo y creación continua.
+
+---
+
+## Contacto
+
+Para preguntas o soporte, contacta al equipo de desarrollo.

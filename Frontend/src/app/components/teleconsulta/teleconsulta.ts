@@ -374,8 +374,10 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   async toggleDeepgram() {
     if(!this.deepgramActive) {
+      this.mostrarSubtitulos = true;
       this.iniciarReconocimientoVoz();
     } else {
+      this.mostrarSubtitulos = false;
       this.detenerReconocimientoVoz();
     }
   }
@@ -430,12 +432,14 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     } catch (e) {
       console.error('Error con Deepgram', e);
       this.deepgramActive = false;
+      this.mostrarSubtitulos = false;
       this.ns.error('Error al iniciar el micrófono para subtítulos.');
     }
   }
 
   detenerReconocimientoVoz() {
     this.deepgramActive = false;
+    this.mostrarSubtitulos = false;
     if(this.mediaRecorder) {
         this.mediaRecorder.stop();
     }
@@ -479,7 +483,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   }
 
   recibirSubtitulo(texto: string, emisor: string = "Médico") {
-      this.mostrarSubtitulos = true;
+      if (!this.mostrarSubtitulos) return; // Master Switch Check
+
       this.mensajeActualEmisor = emisor;
       this.mensajeActualTranscrito = texto;
       this.cdr.detectChanges();

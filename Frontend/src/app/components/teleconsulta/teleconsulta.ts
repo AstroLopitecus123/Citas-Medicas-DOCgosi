@@ -199,17 +199,39 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       const uid = await this.rtcClient.join(this.agoraAppId, canalUID, this.agoraToken, null);
       this.uidLocal = uid.toString();
 
-      this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+      let tracksToPublish = [];
+
+      try {
+        this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        tracksToPublish.push(this.localAudioTrack);
+      } catch(e) {
+        console.warn('No se pudo obtener acceso al micrófono', e);
+        this.micOn = false;
+      }
+
+      try {
+        this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        tracksToPublish.push(this.localVideoTrack);
+      } catch(e) {
+        console.warn('No se pudo obtener acceso a la cámara', e);
+        this.camOn = false;
+      }
 
       await this.loadDevices();
 
       this.unido = true;
-      setTimeout(() => {
-        this.localVideoTrack.play('local-video');
-      }, 100);
+      
+      if (this.localVideoTrack) {
+        setTimeout(() => {
+          this.localVideoTrack.play('local-video');
+        }, 100);
+      }
 
-      await this.rtcClient.publish([this.localAudioTrack, this.localVideoTrack]);
+      if (tracksToPublish.length > 0) {
+        await this.rtcClient.publish(tracksToPublish as any);
+      } else {
+        this.ns.error('No se pudo acceder ni a tu cámara ni a tu micrófono. Has entrado como espectador.');
+      }
 
       // Iniciar el broadcast de nuestra info (para que otros sepan nuestro nombre)
       this.infoIntervalId = setInterval(() => {

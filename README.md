@@ -3,7 +3,10 @@
 Sistema completo de gestión de citas médicas y teleconsultas desarrollado con **Angular** y **Spring Boot**, implementando arquitectura REST con autenticación JWT, integración de pagos con Stripe, videollamadas con Agora, y transcripción de voz (subtítulos) en tiempo real con Deepgram.
 
 ## Arquitectura General
-El backend está diseñado de manera modular para separar la gestión de citas, la pasarela de pagos, los correos electrónicos y la telemedicina.
+La arquitectura del sistema **RETO SALUD** está diseñada con un enfoque moderno y modular (Cliente-Servidor). Como se ilustra en el siguiente diagrama, la solución se divide en dos capas principales que se comunican mediante una API REST en formato JSON:
+
+1. **Capa Frontend (Angular):** Una Single Page Application (SPA) encargada de la experiencia de usuario, la cual consume APIs externas del lado del cliente como Agora (Videollamadas), Deepgram (Subtítulos), Stripe (Pagos) y Leaflet (Mapas).
+2. **Capa Backend (Spring Boot):** API robusta que centraliza la lógica de negocio, gestiona la persistencia en la base de datos MySQL y coordina servicios desde el servidor como Cloudinary (Imágenes), Gemini API (Chatbot IA) y Gmail SMTP (Correos).
 
 ![Arquitectura General](./assets/arquitectura.png)
 

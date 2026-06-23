@@ -194,7 +194,11 @@ export class VoiceAccessibilityService implements OnDestroy {
   }
 
   private focusNextElement(direction: number) {
-    const focusableElements = Array.from(document.querySelectorAll('input:not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])')) as HTMLElement[];
+    // Filtramos solo campos de formulario reales (ignorando botones o inputs ocultos)
+    const focusableElements = Array.from(document.querySelectorAll(
+      'input:not([disabled]):not([type="hidden"]):not([type="submit"]):not([type="button"]), textarea:not([disabled]), select:not([disabled])'
+    )) as HTMLElement[];
+    
     if (focusableElements.length === 0) return;
 
     const currentIndex = focusableElements.findIndex(el => el === document.activeElement);

@@ -42,9 +42,9 @@ export class VoiceAccessibilityService implements OnDestroy {
 
   stopListening() {
     this.isListening = false;
-    if (this.mediaRecorder) {
+    document.body.classList.remove('voice-active');
+    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
       this.mediaRecorder.stop();
-      this.mediaRecorder = null;
     }
     if (this.deepgramSocket) {
       this.deepgramSocket.close();
@@ -64,6 +64,7 @@ export class VoiceAccessibilityService implements OnDestroy {
 
       this.deepgramSocket.onopen = () => {
         console.log('Asistente de Voz DOCgosi: Activo');
+        document.body.classList.add('voice-active');
 
         this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
         this.mediaRecorder.ondataavailable = (e) => {
@@ -88,12 +89,15 @@ export class VoiceAccessibilityService implements OnDestroy {
         if (this.isListening) {
           console.warn('Conexión con Deepgram cerrada inesperadamente. Reintentando...');
           setTimeout(() => this.connectDeepgram(), 2000);
+        } else {
+          document.body.classList.remove('voice-active');
         }
       };
 
     } catch (e) {
       console.error('Error al iniciar micrófono para accesibilidad', e);
       this.isListening = false;
+      document.body.classList.remove('voice-active');
     }
   }
 

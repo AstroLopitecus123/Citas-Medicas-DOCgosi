@@ -1,59 +1,41 @@
-# FrontendCitas
+# DOCgosi - Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.
+El frontend de DOCgosi es una aplicación Single Page Application (SPA) desarrollada en Angular, enfocada en accesibilidad, usabilidad y rendimiento.
 
-## Development server
+## Tecnologías Principales
+- **Angular 17+**
+- **RxJS** (Programación reactiva)
+- **Agora SDK Web** (Videollamadas P2P)
+- **Deepgram WebSockets** (Transcripción de voz a texto)
+- **Stripe.js** (Elementos de pago seguros)
 
-To start a local development server, run:
+## Accesibilidad (Asistente de Voz)
+La aplicación cuenta con características avanzadas de accesibilidad impulsadas por IA:
+- **Navegación por Voz:** Los pacientes pueden navegar por la plataforma, agendar citas, moverse por los menús y rellenar formularios hablando directamente al micrófono sin usar el ratón.
+- **Subtítulos en Vivo:** Durante la teleconsulta, la voz se transcribirá en tiempo real (estilo Google Meet) en la pantalla para personas con discapacidad auditiva.
 
+## Configuración del Entorno
+
+1. Navega a `src/environments/` y edita `environment.ts` o `environment.development.ts`:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api/v1',
+  stripePublicKey: 'pk_test_tu_clave_publica_stripe'
+};
+```
+
+## Instalación y Ejecución
+
+1. Instalar las dependencias de Node:
+```bash
+npm install
+```
+
+2. Ejecutar el servidor de desarrollo:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+La aplicación estará disponible en `http://localhost:4200`.

@@ -344,7 +344,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
     const msgObj = {
       type: 'CHAT',
       uid: this.uidLocal,
-      nombre: this.nombreLocal,
+      nombre: `${this.rol} - ${this.nombreLocal}`,
       texto: this.nuevoMensaje.trim()
     };
     

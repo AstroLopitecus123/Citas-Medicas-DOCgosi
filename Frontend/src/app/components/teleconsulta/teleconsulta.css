@@ -301,22 +301,26 @@ footer.teleconsulta-header {
 }
 
 .chat-message.me {
-  background: #0fbf6a;
-  color: white;
+  background: #a7f3d0; /* Verde más tranquilo */
+  color: #0f172a; /* Texto negro */
   align-self: flex-end;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 4px;
 }
 
 .chat-sender {
-  font-size: 0.75rem;
-  color: #64748b;
+  font-size: 0.8rem;
+  color: #000000; /* Negro fuerte */
   margin-bottom: 4px;
-  font-weight: 700;
+  font-weight: 900; /* Fuerte */
 }
 .chat-message.me .chat-sender {
-  color: #d1fae5;
+  color: #000000;
   text-align: right;
+}
+
+.chat-text {
+  font-size: 1.05rem; /* Letra un poco más grande */
 }
 
 .chat-input-area {

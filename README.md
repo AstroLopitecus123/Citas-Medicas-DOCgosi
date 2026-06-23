@@ -5,33 +5,45 @@ Sistema completo de gestión de citas médicas y teleconsultas desarrollado con 
 ## Arquitectura General
 El backend está diseñado de manera modular para separar la gestión de citas, la pasarela de pagos, los correos electrónicos y la telemedicina.
 
-```text
-┌─────────────────┐    HTTP/REST    ┌─────────────────┐
-│     Angular     │ ◄─────────────► │   Spring Boot   │
-│   (Frontend)    │                 │   (Backend)     │
-│  localhost:4200 │                 │  localhost:8080 │
-└─────────────────┘                 └─────────────────┘
-         │                                   │
-         │                                   │
-    Agora (WebRTC)                     ┌─────────────┐
-    Deepgram (Voz)                     │   MySQL 8.0 │
-    Stripe.js                          │  (Database) │
-    Leaflet (Mapas)                    └─────────────┘
-                                               │
-                                       ┌─────────────┐
-                                       │ Cloudinary  │
-                                       │  (Imágenes) │
-                                       └─────────────┘
-                                               │
-                                       ┌─────────────┐
-                                       │ Gemini API  │
-                                       │  (Chatbot)  │
-                                       └─────────────┘
-                                               │
-                                       ┌─────────────┐
-                                       │ Gmail SMTP  │
-                                       │  (Correos)  │
-                                       └─────────────┘
+```mermaid
+flowchart TD
+    subgraph Frontend [Capa Frontend]
+        A[Angular<br>localhost:4200]
+    end
+
+    subgraph Backend [Capa Backend]
+        B[Spring Boot<br>localhost:8080]
+    end
+
+    subgraph Integraciones de Frontend [APIs Cliente]
+        A1[Agora SDK<br>WebRTC]
+        A2[Deepgram<br>Transcripción de Voz]
+        A3[Stripe.js<br>Pagos]
+        A4[Leaflet<br>Mapas Interactivos]
+    end
+
+    subgraph Integraciones de Backend [APIs Servidor]
+        C[(MySQL 8.0<br>Base de Datos)]
+        D[Cloudinary<br>Imágenes]
+        E[Gemini API<br>Chatbot IA]
+        F[Gmail SMTP<br>Correos]
+    end
+
+    A <-->|HTTP / REST| B
+    
+    A -.-> A1
+    A -.-> A2
+    A -.-> A3
+    A -.-> A4
+
+    B -.-> C
+    B -.-> D
+    B -.-> E
+    B -.-> F
+
+    style A fill:#dd0031,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#6db33f,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 ## Stack Tecnológico
@@ -246,7 +258,7 @@ El frontend estará disponible en: `http://localhost:4200`
 - ✅ Búsqueda de médicos por especialidad y disponibilidad
 - ✅ Reserva de citas médicas presenciales y virtuales
 - ✅ Pago en línea con tarjeta de crédito/débito (Stripe) o pago en efectivo
-- ✅ Teleconsulta con videollamada P2P (Agora)
+- ✅ Teleconsulta con videollamada (Agora)
 - ✅ Subtítulos en vivo para accesibilidad (Deepgram)
 - ✅ Asistente de IA (Chatbot) para responder dudas frecuentes (Gemini)
 - ✅ Mapa interactivo para ubicar la clínica física (Leaflet)
@@ -340,13 +352,6 @@ El sistema incluye la configuración y relaciones de todas las entidades necesar
 - **Pagos** (Métodos, Transacciones)
 - **Especialidades** y asignación a médicos.
 
-### Datos de Prueba
-
-El script incluye:
-- 3 usuarios de prueba (Administrador, Médico, Paciente)
-- 4 especialidades médicas
-- Disponibilidad y horarios de prueba
-- 2 citas de ejemplo
 
 ### Documentación Adicional
 

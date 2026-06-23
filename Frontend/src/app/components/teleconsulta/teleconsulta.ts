@@ -401,7 +401,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
         this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
         this.mediaRecorder.ondataavailable = (e) => {
-          if (e.data.size > 0 && this.deepgramSocket && this.deepgramSocket.readyState === 1) {
+          // Solo enviamos audio a Deepgram si el micrófono de Agora no está silenciado
+          if (this.micOn && e.data.size > 0 && this.deepgramSocket && this.deepgramSocket.readyState === 1) {
             this.deepgramSocket.send(e.data);
           }
         };

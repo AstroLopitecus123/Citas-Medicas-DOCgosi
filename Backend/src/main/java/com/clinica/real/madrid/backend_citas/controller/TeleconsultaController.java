@@ -34,7 +34,11 @@ public class TeleconsultaController {
 
         String dKey = deepgramApiKey;
         if (dKey == null || dKey.isEmpty() || dKey.equals("DEEPGRAM_NOT_FOUND")) {
-            dKey = System.getenv("DEEPGRAM_API_KEY");
+            for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
+                if (entry.getKey().contains("DEEPGRAM_API_KEY") && entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
+                    dKey = entry.getValue().trim();
+                }
+            }
         }
 
         String aId = agoraAppId;

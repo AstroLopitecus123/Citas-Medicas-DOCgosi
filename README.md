@@ -7,7 +7,7 @@ La arquitectura del sistema **RETO SALUD** está diseñada con un enfoque modern
 
 Ambas capas se integran de forma independiente con diversos servicios externos especializados para proveer una experiencia completa y escalable (videollamadas, accesibilidad por voz, mapas interactivos, pasarela de pagos, inteligencia artificial y gestión en la nube).
 
-![Arquitectura General](./assets/arquitectura.png)
+![Arquitectura General](./assets/arquitectura.png?v=2)
 
 ## Stack Tecnológico
 

@@ -121,11 +121,7 @@
             <i class="fa-solid fa-phone-slash"></i>
         </button>
 
-        <button *ngIf="rol === 'MEDICO'" class="btn-control" [class.active-sub]="deepgramActive" (click)="toggleDeepgram()" title="Transmitir Subtítulos en Vivo">
-            <i class="fa-solid fa-closed-captioning"></i>
-        </button>
-
-        <button *ngIf="rol === 'PACIENTE'" class="btn-control" [class.active-sub]="mostrarSubtitulos" (click)="mostrarSubtitulos = !mostrarSubtitulos" title="Ocultar/Mostrar Subtítulos">
+        <button class="btn-control" [class.active-sub]="deepgramActive" (click)="toggleDeepgram()" title="Activar Subtítulos (Transcribe tu voz)">
             <i class="fa-solid fa-closed-captioning"></i>
         </button>
 

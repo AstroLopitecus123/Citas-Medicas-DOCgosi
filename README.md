@@ -16,11 +16,16 @@ El backend está diseñado de manera modular para separar la gestión de citas, 
     Agora (WebRTC)                     ┌─────────────┐
     Deepgram (Voz)                     │   MySQL 8.0 │
     Stripe.js                          │  (Database) │
-                                       └─────────────┘
+    Leaflet (Mapas)                    └─────────────┘
                                                │
                                        ┌─────────────┐
                                        │ Cloudinary  │
                                        │  (Imágenes) │
+                                       └─────────────┘
+                                               │
+                                       ┌─────────────┐
+                                       │ Gemini API  │
+                                       │  (Chatbot)  │
                                        └─────────────┘
                                                │
                                        ┌─────────────┐
@@ -40,6 +45,8 @@ El backend está diseñado de manera modular para separar la gestión de citas, 
 | **Autenticación** | JWT | Tokens de autenticación segura |
 | **Videollamadas** | Agora SDK | Plataforma de Teleconsulta |
 | **IA / Accesibilidad** | Deepgram | Subtítulos en vivo y Navegación por Voz |
+| **Chatbot IA** | Gemini API | Asistente virtual inteligente |
+| **Mapas** | Leaflet | Ubicación de clínicas |
 | **Pagos** | Stripe | Pasarela de pagos segura |
 | **Imágenes** | Cloudinary | Almacenamiento de fotos de perfil |
 | **Email** | Gmail SMTP | Envío de confirmaciones y recuperación |

@@ -10,6 +10,7 @@ El backend de DOCgosi es una API RESTful construida con Spring Boot que gestiona
 - **Stripe API Java** (Pagos)
 - **Cloudinary SDK** (Imágenes)
 - **JavaMailSender** (Correos)
+- **Gemini API** (Chatbot IA)
 
 ## Configuración del Entorno
 
@@ -43,6 +44,9 @@ cloudinary.url=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
 agora.appId=tu_agora_app_id
 agora.appCertificate=tu_agora_certificate
 deepgram.api.key=tu_deepgram_api_key
+
+# IA (Chatbot)
+GEMINI_API_KEY=tu_gemini_api_key
 ```
 
 ## Ejecución

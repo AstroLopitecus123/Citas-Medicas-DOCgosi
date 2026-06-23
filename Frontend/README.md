@@ -8,6 +8,7 @@ El frontend de DOCgosi es una aplicación Single Page Application (SPA) desarrol
 - **Agora SDK Web** (Videollamadas P2P)
 - **Deepgram WebSockets** (Transcripción de voz a texto)
 - **Stripe.js** (Elementos de pago seguros)
+- **Leaflet** (Mapas interactivos)
 
 ## Accesibilidad (Asistente de Voz)
 La aplicación cuenta con características avanzadas de accesibilidad impulsadas por IA:

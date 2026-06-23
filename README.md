@@ -5,7 +5,7 @@ Sistema completo de gestión de citas médicas y teleconsultas desarrollado con 
 ## Arquitectura General
 El backend está diseñado de manera modular para separar la gestión de citas, la pasarela de pagos, los correos electrónicos y la telemedicina.
 
-![Arquitectura General](./assets/arquitectura.jpg)
+![Arquitectura General](./assets/arquitectura.png)
 
 ## Stack Tecnológico
 

@@ -262,3 +262,90 @@ El frontend estará disponible en: `http://localhost:4200`
 - ✅ Gestión de usuarios (Crear, Editar, Bloquear)
 - ✅ Gestión de especialidades médicas
 - ✅ Panel de métricas y notificaciones globales
+
+---
+
+## Comandos Útiles
+
+### Backend
+
+```bash
+# Compilar proyecto
+cd Backend
+mvn clean compile
+
+# Ejecutar aplicación
+mvn spring-boot:run
+
+# Limpiar y compilar
+mvn clean install
+```
+
+### Frontend
+
+```bash
+# Instalar dependencias
+cd Frontend
+npm install
+
+# Ejecutar en desarrollo
+ng serve
+
+# Ejecutar y abrir navegador
+ng serve -o
+
+# Compilar para producción
+ng build --configuration production
+```
+
+---
+
+## Seguridad
+
+- 🔒 Autenticación JWT con expiración configurable
+- 🔒 Encriptación de contraseñas con BCrypt
+- 🛡️ Validación de datos en frontend y backend
+- 🌐 CORS configurado para desarrollo y producción
+- 🔑 Variables de entorno protegidas (no versionadas)
+- 👮 Guards de autenticación por rol en Angular
+
+---
+
+## Características Especiales
+
+### Telemedicina Integrada
+- Videollamadas seguras P2P con Agora SDK.
+- Opciones de mutear micrófono y apagar cámara.
+
+### Accesibilidad Avanzada
+- **Subtítulos en Vivo:** Transcripción de voz a texto en tiempo real usando Deepgram para personas con problemas auditivos.
+- **Navegación por Voz:** Capacidad de dictar información directamente a la plataforma.
+
+### Integración de Pagos
+- Checkout seguro con Stripe para pagos con tarjeta.
+- Soporte nativo para registro de pagos en efectivo.
+
+### Chatbot Inteligente
+- Asistente de salud virtual potenciado por Gemini API.
+- Respuestas en tiempo real para dudas de usuarios.
+
+---
+
+## Base de Datos
+
+### Estructura Completa
+El sistema incluye la configuración y relaciones de todas las entidades necesarias para clínicas.
+- **Usuarios** (Paciente, Médico, Recepcionista, Administrador)
+- **Citas** (Horarios, Estados, Historial)
+- **Pagos** (Métodos, Transacciones)
+- **Especialidades** y asignación a médicos.
+
+### Documentación Adicional
+
+- Ver `Backend/README.md` para detalles del backend.
+- Ver `Frontend/README.md` para detalles del frontend.
+
+---
+
+## Soporte y Resolución de Problemas
+Para problemas relacionados a la infraestructura o integración de APIs, por favor verificar el correcto uso de los tokens en `application.properties` y `environment.ts`.

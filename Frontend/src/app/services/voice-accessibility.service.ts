@@ -123,19 +123,113 @@ export class VoiceAccessibilityService implements OnDestroy {
       this.router.navigate(['/login']);
       this.commandDetected.next('Yendo a Login');
     }
-    // CITAS
-    else if (cleanText.includes('mis citas') || cleanText.includes('ver citas') || cleanText.includes('ir a citas')) {
-      this.router.navigate(['/mis-citas']);
-      this.commandDetected.next('Abriendo Citas');
+    // MENÚS LATERALES (Hacer clic en los enlaces por su texto)
+    else if (cleanText.startsWith('menú ') || cleanText.startsWith('ir al menú ') || cleanText.startsWith('ir a menú ')) {
+      const menuText = cleanText.replace('ir al menú ', '').replace('ir a menú ', '').replace('menú ', '').trim();
+      const menuLink = Array.from(document.querySelectorAll('a, .nav-item')).find(el => el.textContent?.toLowerCase().includes(menuText)) as HTMLElement;
+      if (menuLink) {
+        menuLink.click();
+        this.commandDetected.next(`Abriendo menú: ${menuText}`);
+      }
+    }
+    // AGENDAR CITA
+    else if (cleanText.includes('nueva cita')) {
+      const btnNuevaCita = Array.from(document.querySelectorAll('button')).find(b => b.textContent?.toLowerCase().includes('nueva cita'));
+      if (btnNuevaCita) { btnNuevaCita.click(); this.commandDetected.next('Abriendo modal Nueva Cita'); }
+    }
+    // DROPDOWNS ESPECIALIDAD / ESPECIALISTA
+    else if (cleanText.startsWith('seleccionar especialidad')) {
+      const especialidad = cleanText.replace('seleccionar especialidad', '').trim();
+      const selects = document.querySelectorAll('select');
+      if (selects.length > 0 && especialidad) {
+        const select = selects[0] as HTMLSelectElement;
+        const optionToSelect = Array.from(select.options).find(opt => opt.text.toLowerCase().includes(especialidad));
+        if (optionToSelect) {
+          select.value = optionToSelect.value;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+          this.commandDetected.next(`Especialidad seleccionada: ${optionToSelect.text}`);
+        }
+      } else if (selects.length > 0) {
+        (selects[0] as HTMLSelectElement).focus();
+        this.commandDetected.next('Seleccione especialidad');
+      }
+    }
+    else if (cleanText.startsWith('seleccionar especialista') || cleanText.startsWith('seleccionar doctor')) {
+      const especialista = cleanText.replace('seleccionar especialista', '').replace('seleccionar doctor', '').trim();
+      const selects = document.querySelectorAll('select');
+      if (selects.length > 1 && especialista) {
+        const select = selects[1] as HTMLSelectElement;
+        const optionToSelect = Array.from(select.options).find(opt => opt.text.toLowerCase().includes(especialista));
+        if (optionToSelect) {
+          select.value = optionToSelect.value;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+          this.commandDetected.next(`Médico seleccionado: ${optionToSelect.text}`);
+        }
+      } else if (selects.length > 1) {
+        (selects[1] as HTMLSelectElement).focus();
+        this.commandDetected.next('Seleccione especialista');
+      }
+    }
+    // CALENDARIO
+    else if (cleanText.startsWith('seleccionar ') && cleanText.includes(' a las ')) {
+      const match = cleanText.match(/seleccionar (.*?) a las (\d{1,2})/);
+      if (match) {
+        const dia = match[1].trim();
+        let hora = match[2].trim();
+        const table = document.querySelector('.schedule-table') as HTMLTableElement;
+        if (table) {
+          const headers = Array.from(table.querySelectorAll('th.day-header .day-name'));
+          const colIndex = headers.findIndex(h => h.textContent?.toLowerCase().includes(dia));
+          if (colIndex !== -1) {
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            const row = rows.find(r => {
+              const timeCell = r.querySelector('.time-mark');
+              return timeCell && timeCell.textContent?.startsWith(hora + ':00');
+            });
+            if (row) {
+              const targetCell = row.children[colIndex + 1];
+              if (targetCell) {
+                const radio = targetCell.querySelector('input[type="radio"]') as HTMLInputElement;
+                if (radio && !radio.disabled) {
+                  radio.click();
+                  this.commandDetected.next(`Horario seleccionado: ${dia} a las ${hora}:00`);
+                } else {
+                  this.commandDetected.next('Horario no disponible u ocupado');
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    // INGRESAR MOTIVO
+    else if (cleanText.includes('ingresar motivo')) {
+      const textarea = document.querySelector('textarea') as HTMLTextAreaElement;
+      if (textarea) {
+        textarea.focus();
+        this.commandDetected.next('Motivo enfocado');
+      }
     }
     // PAGOS
-    else if (cleanText.includes('mis pagos') || cleanText.includes('ver pagos') || cleanText.includes('ir a pagos')) {
-      this.router.navigate(['/mis-pagos']);
-      this.commandDetected.next('Abriendo Pagos');
+    else if (cleanText.includes('seleccionar tarjeta') || cleanText.includes('pago con tarjeta')) {
+      const div = Array.from(document.querySelectorAll('div, button, a')).find(d => d.textContent?.toLowerCase().includes('pago seguro con tarjeta') || (d.textContent?.toLowerCase().includes('tarjeta') && d.textContent?.toLowerCase().includes('visa')));
+      if (div) { (div as HTMLElement).click(); this.commandDetected.next('Pago con tarjeta seleccionado'); }
     }
-
-    // BOTÓN DE ACCIÓN (SUBMIT)
-    if (cleanText.includes('pagar ahora') || cleanText.includes('finalizar registro') || cleanText.includes('confirmar cita') || cleanText.includes('entrar') || cleanText.includes('ingresar') || cleanText.includes('iniciar sesión') || cleanText.includes('iniciar sesion')) {
+    else if (cleanText.includes('seleccionar efectivo') || cleanText.includes('pago en efectivo')) {
+      const div = Array.from(document.querySelectorAll('div, button, a')).find(d => d.textContent?.toLowerCase().includes('pago en efectivo') && d.textContent?.toLowerCase().includes('caja'));
+      if (div) { (div as HTMLElement).click(); this.commandDetected.next('Pago en efectivo seleccionado'); }
+    }
+    // BOTONES MODAL (Confirmar / Cancelar) Y SUBMIT GENERAL
+    else if (cleanText.includes('confirmar reserva') || cleanText.includes('confirmar cita') || cleanText.includes('enviar solicitud')) {
+      const btn = Array.from(document.querySelectorAll('button')).find(b => b.textContent?.toLowerCase().includes('confirmar') || b.textContent?.toLowerCase().includes('enviar solicitud'));
+      if (btn) { btn.click(); this.commandDetected.next('Confirmando...'); }
+    }
+    else if (cleanText.includes('cancelar') || cleanText.includes('cerrar modal') || cleanText.includes('cerrar')) {
+      const btn = Array.from(document.querySelectorAll('button')).find(b => b.textContent?.toLowerCase().includes('cerrar') || b.textContent?.toLowerCase().includes('cancelar'));
+      if (btn) { btn.click(); this.commandDetected.next('Cerrando/Cancelando...'); }
+    }
+    // BOTÓN DE ACCIÓN (SUBMIT) GENÉRICO
+    else if (cleanText.includes('pagar ahora') || cleanText.includes('finalizar registro') || cleanText.includes('entrar') || cleanText.includes('ingresar') || cleanText.includes('iniciar sesión') || cleanText.includes('iniciar sesion')) {
       const btnSubmit = document.querySelector('button[type="submit"], button.btn-primary, button.btn-success') as HTMLButtonElement;
       if (btnSubmit) {
         btnSubmit.click();

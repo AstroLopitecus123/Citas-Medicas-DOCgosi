@@ -98,37 +98,55 @@ export class VoiceAccessibilityService implements OnDestroy {
   }
 
   private handleTranscripcion(text: string) {
-    console.log('Comando Voz:', text);
+    console.log('Comando Voz original:', text);
+    
+    // Limpiar puntuación que añade Deepgram (puntos, comas)
+    const cleanText = text.toLowerCase().replace(/[.,!¡¿?]/g, '').trim();
+    console.log('Comando Voz limpio:', cleanText);
 
-    if (text.includes('ir a inicio') || text.includes('vuelve al inicio')) {
+    // INICIO
+    if (cleanText.includes('ir a inicio') || cleanText.includes('ir al inicio') || cleanText.includes('vuelve al inicio') || cleanText.includes('volver al inicio')) {
       this.router.navigate(['/']);
       this.commandDetected.next('Navegando al Inicio');
     } 
-    else if (text.includes('ir a registro') || text.includes('crear cuenta')) {
+    // REGISTRO
+    else if (cleanText.includes('ir a registro') || cleanText.includes('ir al registro') || cleanText.includes('crear cuenta') || cleanText.includes('registrarse')) {
       this.router.navigate(['/registrar']);
       this.commandDetected.next('Abriendo Registro');
     }
-    else if (text.includes('ir a login') || text.includes('inicia sesión')) {
+    // LOGIN
+    else if (cleanText.includes('ir a login') || cleanText.includes('ir al login') || cleanText.includes('inicia sesión') || cleanText.includes('iniciar sesión') || cleanText.includes('inicia la sesión')) {
       this.router.navigate(['/login']);
       this.commandDetected.next('Yendo a Login');
     }
-    else if (text.includes('ir a mis citas') || text.includes('ver citas')) {
+    // CITAS
+    else if (cleanText.includes('mis citas') || cleanText.includes('ver citas') || cleanText.includes('ir a citas')) {
       this.router.navigate(['/mis-citas']);
       this.commandDetected.next('Abriendo Citas');
     }
-    else if (text.includes('ir a mis pagos')) {
+    // PAGOS
+    else if (cleanText.includes('mis pagos') || cleanText.includes('ver pagos') || cleanText.includes('ir a pagos')) {
       this.router.navigate(['/mis-pagos']);
       this.commandDetected.next('Abriendo Pagos');
     }
 
-    if (text.includes('pagar ahora') || text.includes('finalizar registro') || text.includes('confirmar cita')) {
-      const btnSubmit = document.querySelector('button[type="submit"]') as HTMLButtonElement;
+    // BOTÓN DE ACCIÓN (SUBMIT)
+    if (cleanText.includes('pagar ahora') || cleanText.includes('finalizar registro') || cleanText.includes('confirmar cita') || cleanText.includes('entrar') || cleanText.includes('ingresar') || cleanText.includes('iniciar sesión') || cleanText.includes('iniciar sesion')) {
+      const btnSubmit = document.querySelector('button[type="submit"], button.btn-primary, button.btn-success') as HTMLButtonElement;
       if (btnSubmit) {
         btnSubmit.click();
         this.commandDetected.next('Ejecutando acción principal...');
       }
     }
-    else if (text.includes('limpiar campo') || text.includes('borrar todo')) {
+    // NAVEGAR ENTRE CAMPOS (SIN MOUSE)
+    else if (cleanText.includes('siguiente campo') || cleanText.includes('pasar al siguiente')) {
+      this.focusNextElement(1);
+    }
+    else if (cleanText.includes('campo anterior') || cleanText.includes('volver al anterior')) {
+      this.focusNextElement(-1);
+    }
+    // LIMPIAR CAMPO
+    else if (cleanText.includes('limpiar campo') || cleanText.includes('borrar todo')) {
       const activeElement = document.activeElement as HTMLInputElement;
       if (activeElement && activeElement.value !== undefined) {
         activeElement.value = '';
@@ -137,11 +155,25 @@ export class VoiceAccessibilityService implements OnDestroy {
       }
     }
 
-    if (text.startsWith('escribe ') || text.startsWith('poner ')) {
-      const contenido = text.replace('escribe ', '').replace('poner ', '').trim();
-      this.inyectarTexto(contenido);
+    // ESCRIBIR EN FORMULARIOS
+    if (cleanText.startsWith('escribe ') || cleanText.startsWith('escribir ') || cleanText.startsWith('poner ') || cleanText.startsWith('pon ')) {
+      const activeElement = document.activeElement as HTMLInputElement;
+      if (activeElement && activeElement.value !== undefined) {
+        // Extraer el texto quitando la palabra clave
+        let value = cleanText
+          .replace('escribir ', '')
+          .replace('escribe ', '')
+          .replace('poner ', '')
+          .replace('pon ', '')
+          .trim();
+          
+        activeElement.value = value;
+        activeElement.dispatchEvent(new Event('input', { bubbles: true }));
+        this.commandDetected.next(`Texto escrito: ${value}`);
+      }
     }
   }
+
 
   private inyectarTexto(texto: string) {
     const activeElement = document.activeElement as HTMLInputElement | HTMLTextAreaElement;
@@ -155,6 +187,24 @@ export class VoiceAccessibilityService implements OnDestroy {
       activeElement.dispatchEvent(new Event('input', { bubbles: true }));
       this.commandDetected.next(`Escribiendo: ${texto}`);
     }
+  }
+
+  private focusNextElement(direction: number) {
+    const focusableElements = Array.from(document.querySelectorAll('input:not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])')) as HTMLElement[];
+    if (focusableElements.length === 0) return;
+
+    const currentIndex = focusableElements.findIndex(el => el === document.activeElement);
+    
+    let nextIndex = 0;
+    if (currentIndex !== -1) {
+      nextIndex = currentIndex + direction;
+      // Navegación circular
+      if (nextIndex >= focusableElements.length) nextIndex = 0;
+      if (nextIndex < 0) nextIndex = focusableElements.length - 1;
+    }
+
+    focusableElements[nextIndex].focus();
+    this.commandDetected.next(direction > 0 ? 'Siguiente campo' : 'Campo anterior');
   }
 
   ngOnDestroy() {

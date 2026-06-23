@@ -180,6 +180,31 @@ export class VoiceAccessibilityService implements OnDestroy {
           rawValue = rawValue.substring(0, rawValue.length - 1);
         }
 
+        // Detectar modificadores de formato dictados por el usuario
+        let isTodoJunto = false;
+        let isMayuscula = false;
+
+        if (rawValue.includes('todo junto') || rawValue.includes('sin espacios')) {
+          isTodoJunto = true;
+          rawValue = rawValue.replace(/todo junto/g, '').replace(/sin espacios/g, '').trim();
+        }
+
+        if (rawValue.includes('mayúscula') || rawValue.includes('mayuscula')) {
+          isMayuscula = true;
+          rawValue = rawValue.replace(/con mayúscula/g, '')
+                             .replace(/en mayúscula/g, '')
+                             .replace(/mayúscula inicial/g, '')
+                             .replace(/mayúscula/g, '')
+                             .replace(/con mayuscula/g, '')
+                             .replace(/en mayuscula/g, '')
+                             .replace(/mayuscula inicial/g, '')
+                             .replace(/mayuscula/g, '')
+                             .trim();
+          if (rawValue.endsWith(' con')) rawValue = rawValue.substring(0, rawValue.length - 4);
+          if (rawValue.endsWith(' en')) rawValue = rawValue.substring(0, rawValue.length - 3);
+          rawValue = rawValue.trim();
+        }
+
         // Traducir palabras dictadas a símbolos
         let finalValue = rawValue
           .replace(/ arroba /g, '@')
@@ -189,9 +214,14 @@ export class VoiceAccessibilityService implements OnDestroy {
           .replace(/ guión /g, '-')
           .replace(/ guion /g, '-');
           
-        // Si parece ser un correo electrónico (tiene @), le quitamos todos los espacios en blanco
-        if (finalValue.includes('@')) {
+        // Formateos automáticos (quitar espacios si es contraseña, si tiene @, o si el usuario lo pidió)
+        if (finalValue.includes('@') || isTodoJunto || activeElement.type === 'password') {
           finalValue = finalValue.replace(/\s+/g, '');
+        }
+
+        // Formateo de mayúscula inicial
+        if (isMayuscula && finalValue.length > 0) {
+          finalValue = finalValue.charAt(0).toUpperCase() + finalValue.slice(1);
         }
 
         activeElement.value = finalValue;

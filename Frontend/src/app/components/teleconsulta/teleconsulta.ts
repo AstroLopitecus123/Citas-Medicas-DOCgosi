@@ -54,6 +54,14 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
   nuevoMensaje: string = '';
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
+  // Device selection properties
+  microphones: MediaDeviceInfo[] = [];
+  cameras: MediaDeviceInfo[] = [];
+  selectedMicId: string = '';
+  selectedCamId: string = '';
+  showMicMenu: boolean = false;
+  showCamMenu: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -194,6 +202,8 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       this.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
+      await this.loadDevices();
+
       this.unido = true;
       setTimeout(() => {
         this.localVideoTrack.play('local-video');
@@ -230,6 +240,47 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.camOn = !this.camOn;
       await this.localVideoTrack.setEnabled(this.camOn);
     }
+  }
+
+  async loadDevices() {
+    try {
+      this.cameras = await AgoraRTC.getCameras();
+      this.microphones = await AgoraRTC.getMicrophones();
+      
+      // Intentar obtener el ID activo actual o usar el primero
+      this.selectedMicId = this.localAudioTrack?.getTrackLabel() || this.microphones[0]?.deviceId || '';
+      this.selectedCamId = this.localVideoTrack?.getTrackLabel() || this.cameras[0]?.deviceId || '';
+    } catch(e) {
+      console.warn('No se pudieron cargar los dispositivos', e);
+    }
+  }
+
+  onRightClickMic(event: MouseEvent) {
+    event.preventDefault();
+    this.showMicMenu = !this.showMicMenu;
+    this.showCamMenu = false;
+  }
+
+  onRightClickCam(event: MouseEvent) {
+    event.preventDefault();
+    this.showCamMenu = !this.showCamMenu;
+    this.showMicMenu = false;
+  }
+
+  async changeAudioDevice(deviceId: string) {
+    if (this.localAudioTrack) {
+      await this.localAudioTrack.setDevice(deviceId);
+      this.selectedMicId = deviceId;
+    }
+    this.showMicMenu = false;
+  }
+
+  async changeVideoDevice(deviceId: string) {
+    if (this.localVideoTrack) {
+      await this.localVideoTrack.setDevice(deviceId);
+      this.selectedCamId = deviceId;
+    }
+    this.showCamMenu = false;
   }
 
   async salirDeSala() {

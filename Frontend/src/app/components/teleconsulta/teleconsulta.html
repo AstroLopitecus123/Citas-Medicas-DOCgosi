@@ -87,13 +87,31 @@
 
     <footer class="teleconsulta-header" style="justify-content: center; gap: 20px;" *ngIf="unido">
 
-        <button class="btn-control" (click)="toggleMic()" [class.danger]="!micOn" [title]="micOn ? 'Silenciar' : 'Activar Micrófono'">
-            <i class="fa-solid" [class.fa-microphone]="micOn" [class.fa-microphone-slash]="!micOn"></i>
-        </button>
+        <div style="position: relative;">
+          <button class="btn-control" (click)="toggleMic()" (contextmenu)="onRightClickMic($event)" [class.danger]="!micOn" [title]="micOn ? 'Silenciar (Click derecho para opciones)' : 'Activar Micrófono (Click derecho para opciones)'">
+              <i class="fa-solid" [class.fa-microphone]="micOn" [class.fa-microphone-slash]="!micOn"></i>
+          </button>
+          
+          <div class="device-menu-container" *ngIf="showMicMenu" style="left: 0; bottom: 60px;">
+            <div style="padding: 10px 20px; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Micrófonos</div>
+            <button class="device-menu-item" *ngFor="let mic of microphones" (click)="changeAudioDevice(mic.deviceId)" [class.active]="selectedMicId === mic.deviceId">
+               <i class="fa-solid fa-check" [style.visibility]="selectedMicId === mic.deviceId ? 'visible' : 'hidden'"></i> {{ mic.label || 'Micrófono predeterminado' }}
+            </button>
+          </div>
+        </div>
 
-        <button class="btn-control" (click)="toggleCam()" [class.danger]="!camOn" [title]="camOn ? 'Apagar Cámara' : 'Encender Cámara'">
-            <i class="fa-solid" [class.fa-video]="camOn" [class.fa-video-slash]="!camOn"></i>
-        </button>
+        <div style="position: relative;">
+          <button class="btn-control" (click)="toggleCam()" (contextmenu)="onRightClickCam($event)" [class.danger]="!camOn" [title]="camOn ? 'Apagar Cámara (Click derecho para opciones)' : 'Encender Cámara (Click derecho para opciones)'">
+              <i class="fa-solid" [class.fa-video]="camOn" [class.fa-video-slash]="!camOn"></i>
+          </button>
+
+          <div class="device-menu-container" *ngIf="showCamMenu" style="left: 0; bottom: 60px;">
+            <div style="padding: 10px 20px; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Cámaras</div>
+            <button class="device-menu-item" *ngFor="let cam of cameras" (click)="changeVideoDevice(cam.deviceId)" [class.active]="selectedCamId === cam.deviceId">
+               <i class="fa-solid fa-check" [style.visibility]="selectedCamId === cam.deviceId ? 'visible' : 'hidden'"></i> {{ cam.label || 'Cámara predeterminada' }}
+            </button>
+          </div>
+        </div>
 
         <button class="btn-control" [class.active-sub]="isChatOpen" (click)="toggleChat()" title="Chat de la reunión">
             <i class="fa-solid fa-comment-dots"></i>

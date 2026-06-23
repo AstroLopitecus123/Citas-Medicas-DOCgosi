@@ -163,17 +163,40 @@ export class VoiceAccessibilityService implements OnDestroy {
     if (cleanText.startsWith('escribe ') || cleanText.startsWith('escribir ') || cleanText.startsWith('poner ') || cleanText.startsWith('pon ')) {
       const activeElement = document.activeElement as HTMLInputElement;
       if (activeElement && activeElement.value !== undefined) {
-        // Extraer el texto quitando la palabra clave
-        let value = cleanText
-          .replace('escribir ', '')
-          .replace('escribe ', '')
-          .replace('poner ', '')
-          .replace('pon ', '')
-          .trim();
+        
+        // Usamos el texto original (sin comas ni signos, pero preservando puntos reales)
+        let originalTextLow = text.toLowerCase().trim();
+        
+        // Quitar la palabra clave del inicio
+        let rawValue = originalTextLow;
+        if (rawValue.startsWith('escribir ')) rawValue = rawValue.replace('escribir ', '');
+        else if (rawValue.startsWith('escribe ')) rawValue = rawValue.replace('escribe ', '');
+        else if (rawValue.startsWith('poner ')) rawValue = rawValue.replace('poner ', '');
+        else if (rawValue.startsWith('pon ')) rawValue = rawValue.replace('pon ', '');
+        
+        // Limpiamos solo el punto final de la oración que suele poner Deepgram
+        rawValue = rawValue.trim();
+        if (rawValue.endsWith('.')) {
+          rawValue = rawValue.substring(0, rawValue.length - 1);
+        }
+
+        // Traducir palabras dictadas a símbolos
+        let finalValue = rawValue
+          .replace(/ arroba /g, '@')
+          .replace(/ punto /g, '.')
+          .replace(/ guión bajo /g, '_')
+          .replace(/ guion bajo /g, '_')
+          .replace(/ guión /g, '-')
+          .replace(/ guion /g, '-');
           
-        activeElement.value = value;
+        // Si parece ser un correo electrónico (tiene @), le quitamos todos los espacios en blanco
+        if (finalValue.includes('@')) {
+          finalValue = finalValue.replace(/\s+/g, '');
+        }
+
+        activeElement.value = finalValue;
         activeElement.dispatchEvent(new Event('input', { bubbles: true }));
-        this.commandDetected.next(`Texto escrito: ${value}`);
+        this.commandDetected.next(`Texto escrito: ${finalValue}`);
       }
     }
   }

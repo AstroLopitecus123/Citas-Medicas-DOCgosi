@@ -5,31 +5,7 @@ Sistema completo de gestión de citas médicas y teleconsultas desarrollado con 
 ## Arquitectura General
 El backend está diseñado de manera modular para separar la gestión de citas, la pasarela de pagos, los correos electrónicos y la telemedicina.
 
-```text
-+---------------------------------------------------------+
-|                    CAPA FRONTEND                        |
-|                                                         |
-|  [ Angular SPA ] -------- Integraciones:                |
-|  localhost:4200           ├─ Agora SDK (Videollamadas)  |
-|                           ├─ Deepgram (Subtítulos)      |
-|                           ├─ Stripe.js (Pagos)          |
-|                           └─ Leaflet (Mapas)            |
-+---------------------------------------------------------+
-             ▲
-             │ HTTP/REST (JSON)
-             ▼
-+---------------------------------------------------------+
-|                     CAPA BACKEND                        |
-|                                                         |
-|  [ Spring Boot ] -------- Base de Datos:                |
-|  localhost:8080           └─ [( MySQL 8.0 )]            |
-|                                                         |
-|                  -------- Integraciones:                |
-|                           ├─ Cloudinary (Imágenes)      |
-|                           ├─ Gemini API (Chatbot IA)    |
-|                           └─ Gmail SMTP (Correos)       |
-+---------------------------------------------------------+
-```
+![Arquitectura General](./assets/arquitectura.jpg)
 
 ## Stack Tecnológico
 

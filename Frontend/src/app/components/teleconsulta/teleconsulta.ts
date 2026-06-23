@@ -410,8 +410,13 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
         const data = JSON.parse(event.data);
         if (data.channel && data.channel.alternatives && data.channel.alternatives[0]) {
             const transcripcion = data.channel.alternatives[0].transcript;
-            if (transcripcion && transcripcion.trim().length > 0 && data.is_final) {
-                this.enviarSubtituloAlPaciente(transcripcion);
+            if (transcripcion && transcripcion.trim().length > 0) {
+                if (data.is_final) {
+                    this.enviarSubtituloAlPaciente(transcripcion);
+                } else {
+                    // Mostrar resultados intermedios de forma fluida (solo para el que habla, para no saturar la red)
+                    this.recibirSubtitulo(transcripcion, "Tú");
+                }
             }
         }
       };
@@ -477,10 +482,12 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
       this.mostrarSubtitulos = true;
       this.mensajeActualEmisor = emisor;
       this.mensajeActualTranscrito = texto;
+      this.cdr.detectChanges();
 
       setTimeout(() => {
           if(this.mensajeActualTranscrito === texto) {
               this.mensajeActualTranscrito = '';
+              this.cdr.detectChanges();
           }
       }, 5000);
   }

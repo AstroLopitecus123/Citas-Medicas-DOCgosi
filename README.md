@@ -5,45 +5,30 @@ Sistema completo de gestión de citas médicas y teleconsultas desarrollado con 
 ## Arquitectura General
 El backend está diseñado de manera modular para separar la gestión de citas, la pasarela de pagos, los correos electrónicos y la telemedicina.
 
-```mermaid
-flowchart TD
-    subgraph Frontend [Capa Frontend]
-        A[Angular<br>localhost:4200]
-    end
-
-    subgraph Backend [Capa Backend]
-        B[Spring Boot<br>localhost:8080]
-    end
-
-    subgraph Integraciones de Frontend [APIs Cliente]
-        A1[Agora SDK<br>WebRTC]
-        A2[Deepgram<br>Transcripción de Voz]
-        A3[Stripe.js<br>Pagos]
-        A4[Leaflet<br>Mapas Interactivos]
-    end
-
-    subgraph Integraciones de Backend [APIs Servidor]
-        C[(MySQL 8.0<br>Base de Datos)]
-        D[Cloudinary<br>Imágenes]
-        E[Gemini API<br>Chatbot IA]
-        F[Gmail SMTP<br>Correos]
-    end
-
-    A <-->|HTTP / REST| B
-    
-    A -.-> A1
-    A -.-> A2
-    A -.-> A3
-    A -.-> A4
-
-    B -.-> C
-    B -.-> D
-    B -.-> E
-    B -.-> F
-
-    style A fill:#dd0031,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#6db33f,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff
+```text
++---------------------------------------------------------+
+|                    CAPA FRONTEND                        |
+|                                                         |
+|  [ Angular SPA ] -------- Integraciones:                |
+|  localhost:4200           ├─ Agora SDK (Videollamadas)  |
+|                           ├─ Deepgram (Subtítulos)      |
+|                           ├─ Stripe.js (Pagos)          |
+|                           └─ Leaflet (Mapas)            |
++---------------------------------------------------------+
+             ▲
+             │ HTTP/REST (JSON)
+             ▼
++---------------------------------------------------------+
+|                     CAPA BACKEND                        |
+|                                                         |
+|  [ Spring Boot ] -------- Base de Datos:                |
+|  localhost:8080           └─ [( MySQL 8.0 )]            |
+|                                                         |
+|                  -------- Integraciones:                |
+|                           ├─ Cloudinary (Imágenes)      |
+|                           ├─ Gemini API (Chatbot IA)    |
+|                           └─ Gmail SMTP (Correos)       |
++---------------------------------------------------------+
 ```
 
 ## Stack Tecnológico

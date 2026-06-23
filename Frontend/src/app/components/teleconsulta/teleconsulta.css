@@ -35,7 +35,20 @@ footer.teleconsulta-header {
   gap: 10px;
 }
 
-.brand-title i { color: #0fbf6a; } /* Verde en lugar de azul */
+.teleconsulta-logo {
+  width: 24px;
+  height: 24px;
+  background-color: #0fbf6a; /* Color verde deseado */
+  -webkit-mask-image: url('../../../assets/images/LogoSOLO2.png');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url('../../../assets/images/LogoSOLO2.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: inline-block;
+}
 
 .controls-header {
   display: flex;

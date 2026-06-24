@@ -1,7 +1,11 @@
 # RETO SALUD
 
 <div align="center">
-  <img src="./assets/RETOSALUD.png" alt="Logo RETO SALUD" width="500"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/RETOSALUD-blanco.png">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/RETOSALUD.png">
+    <img alt="Logo RETO SALUD" src="./assets/RETOSALUD.png" width="500">
+  </picture>
 </div>
 
 Sistema completo de gestión de citas médicas y teleconsultas desarrollado con **Angular** y **Spring Boot**, implementando arquitectura REST con autenticación JWT, integración de pagos con Stripe, videollamadas con Agora, y transcripción de voz (subtítulos) en tiempo real con Deepgram.

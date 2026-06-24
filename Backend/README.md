@@ -16,20 +16,20 @@ Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, aute
 ┌─────────────────────────────────────────────────────────────┐
 │                    SPRING BOOT APPLICATION                  │
 ├─────────────────────────────────────────────────────────────┤
-│  Controllers Layer    │  @RestController, @RequestMapping  │
+│  Controllers          │  @RestController, @RequestMapping  │
 │  (Capa de Presentación)                                     │
 ├─────────────────────────────────────────────────────────────┤
-│  Service Layer        │  @Service, @Transactional          │
+│  Service              │  @Service, @Transactional          │
 │  (Lógica de Negocio)                                        │
 │   • Orquestación de Citas, Pagos, Telemedicina e IA         │
 ├─────────────────────────────────────────────────────────────┤
-│  Repository Layer    │  @Repository, JPA Repositories       │
+│  Repository          │  @Repository, JPA Repositories       │
 │  (Acceso a Datos)                                           │
 ├─────────────────────────────────────────────────────────────┤
 │  Entity / Model      │  @Entity, @Table, JPA Annotations   │
 │  (Dominio de Datos)                                         │
 ├─────────────────────────────────────────────────────────────┤
-│  Security Layer      │  JWT, BCrypt, CORS, Google Auth     │
+│  Security            │  JWT, BCrypt, CORS, Google Auth     │
 │  (Infraestructura)                                          │
 ├─────────────────────────────────────────────────────────────┤
 │  External Services   │  Stripe, Agora, Deepgram, Gemini    │

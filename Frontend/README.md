@@ -151,8 +151,8 @@ La aplicación se abrirá automáticamente y estará disponible en: `http://loca
 
 | Categoría | Funcionalidades Principales | Beneficio |
 |:---:|---|---|
-| **Visión y Daltonismo** | Filtros especializados (Deuteranopia, Protanopia, Tritanopia, Escala de grises). Incluye un **Test Rápido (Ishihara)** interactivo para autoconfigurar el perfil ideal. | Adapta la paleta de colores de la interfaz para pacientes con diferentes tipos de daltonismo o debilidad visual. |
-| **Audio y Voz (IA)** | Navegación por comandos de voz y transcripción en tiempo real (subtítulos) durante las teleconsultas. | Indispensable para personas con discapacidad auditiva o motriz, asegurando una comunicación efectiva. |
-| **Zoom y Escala** | Control dinámico del tamaño de la interfaz gráfica y la tipografía. | Facilita la lectura para usuarios con vista cansada o baja visión. |
-| **Contraste** | Modos de alto contraste y ajustes de iluminación de la interfaz. | Reduce la fatiga visual y mejora la legibilidad de los textos y formularios. |
-| **Navegación por Teclado** | Atajos de teclado y navegación secuencial (focus) por toda la aplicación. | Permite el uso completo de la plataforma sin necesidad de un ratón. |
+| **Visión y Daltonismo** | Filtros especializados (Deuteranopia, Protanopia, Tritanopia, Escala de grises). Incluye un **Test Rápido (Ishihara)** interactivo para autoconfigurar el perfil ideal. | Adapta la paleta de colores para pacientes con diferentes tipos de daltonismo o debilidad visual. |
+| **Audio y Voz (IA)** | **Comandos de Voz** (Deepgram), **Narrador de Imágenes/Página**, **Sonidos del Sistema** y transcripción en vivo (subtítulos) durante teleconsultas. | Indispensable para personas con discapacidad visual, auditiva o motriz. |
+| **Zoom y Escala** | Control dinámico del tamaño de la interfaz gráfica y la tipografía (hasta 200%+). | Facilita la lectura para usuarios con vista cansada o baja visión. |
+| **Contraste** | **Modo Alto Contraste** para mejorar legibilidad de textos/bordes, y opciones para **personalizar colores** de fondo y texto. | Reduce la fatiga visual y adapta la interfaz a sensibilidades lumínicas específicas. |
+| **Navegación por Teclado** | **Modo Teclado Pro** con resaltado de foco ultra-visible. Soporte nativo para navegar con `Flechas`/`Tab` y confirmar con `Enter`. | Permite el uso fluido y rápido de la plataforma sin necesidad de un ratón. |

@@ -73,16 +73,16 @@ USE db_reto_salud;
 | Tabla | Propósito | Columnas Clave | Relaciones |
 |---|---|---|---|
 | **`paises`** | Catálogo de países con su prefijo telefónico. | `id`, `nombre`, `prefijo_telefono` | Ninguna |
-| **`especialidades`** | Catálogo de especialidades médicas. | `id`, `nombre`, `descripcion` | Ninguna |
+| **`especialidades`** | Catálogo de especialidades médicas. | `id`, `nombre`, `precio_base`, `descripcion` | Ninguna |
 | **`usuarios`** | Todos los usuarios (pacientes, doctores, admin). | `id`, `correo`, `contrasena`, `rol` | FK: `pais_id` |
-| **`medicos`** | Información de doctores (extiende usuarios). | `id`, `tarifa_consulta`, `link_reunion` | PK/FK: `id` -> `usuarios` |
+| **`medicos`** | Información de doctores (extiende usuarios). | `id`, `estado`, `fecha_creacion` | FKs: `usuario_id`, `especialidad_id` |
 | **`medico_especialidades`** | Puente que asocia médicos con especialidades. | `usuario_id`, `especialidad_id` | FKs: `usuario_id`, `especialidad_id` |
 | **`citas`** | Registro de reservas médicas y su estado. | `id`, `fecha`, `estado`, `motivo` | FKs: `paciente_id`, `medico_id` |
 | **`disponibilidades`**| Horarios habilitados por el médico para citas. | `id`, `fecha`, `hora_inicio`, `hora_fin` | FK: `medico_id` |
-| **`historia_clinica`**| Notas, diagnósticos y tratamientos de una cita. | `id`, `diagnostico`, `tratamiento` | FKs: `cita_id`, `paciente_id`, `medico_id` |
-| **`pagos`** | Transacciones procesadas vía Stripe o transferencias. | `id`, `monto`, `estado`, `metodo_pago` | FK: `cita_id` |
+| **`historial`**| Notas, diagnósticos y tratamientos de una cita. | `id`, `diagnostico`, `receta`, `notas` | FK: `cita_id` |
+| **`pagos`** | Transacciones procesadas vía Stripe o transferencias. | `id`, `monto`, `metodo`, `estado_pago` | FKs: `cita_id`, `usuario_id` |
 | **`comprobantes`** | Recibos generados al completar un pago. | `id`, `numero`, `fecha`, `archivo_url` | FK: `pago_id` |
-| **`notificaciones`** | Avisos y alertas del sistema para los usuarios. | `id`, `mensaje`, `leido` | FK: `usuario_id` |
+| **`notificaciones`** | Avisos y alertas del sistema para los usuarios. | `id`, `titulo`, `mensaje`, `leida` | FK: `usuario_destino_id` |
 | **`solicitudes_empleo`** | Postulaciones para trabajar en la clínica. | `id`, `nombre`, `puesto`, `estado` | Ninguna |
 
 ### 2. Variables de Entorno

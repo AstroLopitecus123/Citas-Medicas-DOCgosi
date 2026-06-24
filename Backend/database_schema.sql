@@ -7,7 +7,7 @@ CREATE TABLE `paises` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `prefijo_telefono` varchar(10) DEFAULT NULL,
-  `estado` enum('ACTIVADO','DESACTIVADO') NOT NULL DEFAULT 'ACTIVADO',
+  `estado` enum('ACTIVO','INACTIVO') NOT NULL DEFAULT 'ACTIVO',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -15,8 +15,9 @@ CREATE TABLE `especialidades` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `imagen_url` varchar(255) DEFAULT NULL,
-  `estado` enum('ACTIVADO','DESACTIVADO') NOT NULL DEFAULT 'ACTIVADO',
+  `precio_base` double DEFAULT 0.0,
+  `estado` enum('ACTIVA','INACTIVA') NOT NULL DEFAULT 'ACTIVA',
+  `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -42,17 +43,7 @@ CREATE TABLE `usuarios` (
   FOREIGN KEY (`pais_id`) REFERENCES `paises` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 4. Crear tablas que dependen de Usuarios
-CREATE TABLE `medicos` (
-  `id` bigint NOT NULL,
-  `tarifa_consulta` decimal(10,2) NOT NULL,
-  `comision_clinica` decimal(10,2) NOT NULL,
-  `dias_trabajo` varchar(255) DEFAULT NULL,
-  `link_reunion` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+-- 4. Crear tabla puente de Especialidades y Usuarios (si aplica)
 CREATE TABLE `medico_especialidades` (
   `usuario_id` bigint NOT NULL,
   `especialidad_id` bigint NOT NULL,
@@ -61,17 +52,20 @@ CREATE TABLE `medico_especialidades` (
   FOREIGN KEY (`especialidad_id`) REFERENCES `especialidades` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `notificaciones` (
+-- 5. Crear tabla de Médicos
+CREATE TABLE `medicos` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `usuario_id` bigint NOT NULL,
-  `mensaje` varchar(255) NOT NULL,
-  `leido` boolean DEFAULT FALSE,
+  `usuario_id` bigint NOT NULL UNIQUE,
+  `especialidad_id` bigint NOT NULL,
+  `estado` enum('ACTIVO','INACTIVO') NOT NULL DEFAULT 'ACTIVO',
   `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`especialidad_id`) REFERENCES `especialidades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 5. Crear tabla de Citas y Disponibilidades (dependen de Médicos y Pacientes)
+-- 6. Crear tabla de Citas y Disponibilidades
 CREATE TABLE `disponibilidades` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `medico_id` bigint NOT NULL,
@@ -80,9 +74,9 @@ CREATE TABLE `disponibilidades` (
   `hora_fin` time NOT NULL,
   `estado` enum('DISPONIBLE','NO_DISPONIBLE') DEFAULT 'DISPONIBLE',
   `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `fecha_actualizacion` datetime(6) DEFAULT NULL,
+  `fecha_actualizacion` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`medico_id`) REFERENCES `medicos` (`id`)
+  FOREIGN KEY (`medico_id`) REFERENCES `medicos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `citas` (
@@ -90,27 +84,29 @@ CREATE TABLE `citas` (
   `paciente_id` bigint NOT NULL,
   `medico_id` bigint NOT NULL,
   `fecha` datetime NOT NULL,
-  `estado` enum('PENDIENTE','CONFIRMADA','REPROGRAMADA','CANCELADA','SOLICITUD_REPROGRAMACION','SOLICITUD_CANCELACION','REPROGRAMACION_ACEPTADA','REPROGRAMACION_RECHAZADA') NOT NULL,
+  `estado` enum('PENDIENTE','CONFIRMADA','REPROGRAMADA','CANCELADA','SOLICITUD_REPROGRAMACION','SOLICITUD_CANCELACION','REPROGRAMACION_ACEPTADA','REPROGRAMACION_RECHAZADA') NOT NULL DEFAULT 'PENDIENTE',
   `motivo` varchar(255) DEFAULT NULL,
   `fecha_propuesta` datetime DEFAULT NULL,
   `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
   `fecha_actualizacion` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`paciente_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`medico_id`) REFERENCES `medicos` (`id`)
+  FOREIGN KEY (`medico_id`) REFERENCES `medicos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 6. Crear tablas derivadas de las Citas (Pagos e Historias Clínicas)
+-- 7. Crear tablas derivadas de las Citas (Pagos e Historial Médico)
 CREATE TABLE `pagos` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `cita_id` bigint NOT NULL UNIQUE,
+  `cita_id` bigint NOT NULL,
+  `usuario_id` bigint NOT NULL,
   `monto` decimal(10,2) NOT NULL,
+  `metodo` enum('TARJETA','PAYPAL','EFECTIVO','TRANSFERENCIA') DEFAULT NULL,
+  `estado_pago` enum('PENDIENTE','COMPLETADO','FALLIDO','REEMBOLSADO') NOT NULL DEFAULT 'PENDIENTE',
   `fecha_pago` datetime DEFAULT NULL,
-  `metodo_pago` enum('TARJETA','PAYPAL','EFECTIVO','TRANSFERENCIA') DEFAULT NULL,
-  `estado` enum('PENDIENTE','COMPLETADO','FALLIDO','REEMBOLSADO') NOT NULL DEFAULT 'PENDIENTE',
-  `stripe_payment_id` varchar(255) DEFAULT NULL,
+  `transaccion_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `comprobantes` (
@@ -120,27 +116,35 @@ CREATE TABLE `comprobantes` (
   `fecha` datetime(6) NOT NULL,
   `archivo_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`pago_id`) REFERENCES `pagos` (`id`)
+  FOREIGN KEY (`pago_id`) REFERENCES `pagos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `historia_clinica` (
+CREATE TABLE `historial` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `paciente_id` bigint NOT NULL,
-  `medico_id` bigint NOT NULL,
   `cita_id` bigint NOT NULL UNIQUE,
-  `diagnostico` text NOT NULL,
-  `tratamiento` text NOT NULL,
+  `diagnostico` text,
+  `receta` text,
   `notas` text,
-  `archivos_adjuntos` varchar(255) DEFAULT NULL,
-  `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `fecha_registro` timestamp DEFAULT CURRENT_TIMESTAMP,
   `fecha_actualizacion` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`paciente_id`) REFERENCES `usuarios` (`id`),
-  FOREIGN KEY (`medico_id`) REFERENCES `medicos` (`id`),
-  FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`)
+  FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 7. Crear otras tablas independientes
+-- 8. Crear otras tablas independientes
+CREATE TABLE `notificaciones` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) DEFAULT NULL,
+  `mensaje` varchar(255) NOT NULL,
+  `fecha_creacion` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `leida` boolean DEFAULT FALSE,
+  `rol_destino` varchar(50) DEFAULT NULL,
+  `usuario_destino_id` bigint DEFAULT NULL,
+  `referencia_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`usuario_destino_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `solicitudes_empleo` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -150,7 +154,7 @@ CREATE TABLE `solicitudes_empleo` (
   `telefono` varchar(255) NOT NULL,
   `puesto` enum('MEDICO','RECEPCION') NOT NULL,
   `estado` enum('PENDIENTE','APROBADA','RECHAZADA') NOT NULL DEFAULT 'PENDIENTE',
-  `mensaje` varchar(255) DEFAULT NULL,
+  `mensaje` text DEFAULT NULL,
   `fecha_solicitud` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

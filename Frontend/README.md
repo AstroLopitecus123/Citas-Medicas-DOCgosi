@@ -1,5 +1,12 @@
 # DOCgosi - Frontend (Angular)
 
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../assets/RETO%20SALUD%20FRONTEND-blanco.png">
+    <source media="(prefers-color-scheme: light)" srcset="../assets/RETO%20SALUD%20FRONTEND.png">
+    <img alt="Logo RETO SALUD Frontend" src="../assets/RETO%20SALUD%20FRONTEND.png" width="500">
+  </picture>
+</div>
 El frontend de DOCgosi es una aplicación Single Page Application (SPA) desarrollada en Angular, enfocada en accesibilidad, usabilidad y rendimiento.
 
 ## Tecnologías Principales

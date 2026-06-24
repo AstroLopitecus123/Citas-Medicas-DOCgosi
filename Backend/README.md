@@ -66,7 +66,7 @@ CREATE DATABASE db_reto_salud;
 USE db_reto_salud;
 ```
 
-> **Nota:** Puedes crear todas las tablas ejecutando el script [`database_schema.sql`](database_schema.sql) incluido en este repositorio.
+> **Nota:** Puedes crear todas las tablas ejecutando el script [`reto_salud.sql`](reto_salud.sql) incluido en este repositorio.
 
 #### Estructura de Tablas
 

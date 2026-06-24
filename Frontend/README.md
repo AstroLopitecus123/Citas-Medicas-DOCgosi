@@ -103,15 +103,15 @@ src/
 │   │   └── ver-comprobante/  # Visualizador de recibos
 │   │
 │   ├── controller/           # Controladores de lógica (Patrón MVC en Angular)
-│   │   ├── admin-especialidades.controller.ts
-│   │   ├── admin-medicos.controller.ts
-│   │   ├── gestionar-disponibilidad.controller.ts
-│   │   ├── lista-usuarios.controller.ts
-│   │   ├── login.controller.ts
-│   │   ├── mis-citas.controller.ts
-│   │   ├── recuperar.controller.ts
-│   │   ├── registrar-usuario.controller.ts
-│   │   └── restablecer.controller.ts
+│   │   ├── admin-especialidades.controller.ts # Lógica de gestión de especialidades
+│   │   ├── admin-medicos.controller.ts        # Lógica de gestión de médicos
+│   │   ├── gestionar-disponibilidad.controller.ts # Lógica de horarios médicos
+│   │   ├── lista-usuarios.controller.ts       # Lógica de panel de usuarios
+│   │   ├── login.controller.ts                # Lógica de inicio de sesión
+│   │   ├── mis-citas.controller.ts            # Lógica de citas de paciente
+│   │   ├── recuperar.controller.ts            # Lógica de solicitud de clave
+│   │   ├── registrar-usuario.controller.ts    # Lógica de creación de cuenta
+│   │   └── restablecer.controller.ts          # Lógica de reseteo con token
 │   │
 │   ├── guards/               # Guards funcionales (CanActivateFn)
 │   │   ├── admin.guard.ts    # Protege rutas de administrador
@@ -121,35 +121,35 @@ src/
 │   │   └── recepcion.guard.ts# Protege rutas de recepción
 │   │
 │   ├── models/               # Interfaces y tipos TypeScript (.model.ts)
-│   │   ├── cita.model.ts
-│   │   ├── comprobante.model.ts
-│   │   ├── disponibilidad.model.ts
-│   │   ├── especialidad.model.ts
-│   │   ├── historial.model.ts
-│   │   ├── medico.model.ts
-│   │   ├── pago.model.ts
-│   │   ├── pais.model.ts
-│   │   ├── tipos.ts
-│   │   ├── usuario-full.model.ts
-│   │   ├── usuario-login.model.ts
-│   │   └── usuario.model.ts
+│   │   ├── cita.model.ts             # Interfaz de datos de reservas
+│   │   ├── comprobante.model.ts      # Interfaz de recibos de pago
+│   │   ├── disponibilidad.model.ts   # Interfaz de horarios habilitados
+│   │   ├── especialidad.model.ts     # Interfaz de ramas médicas
+│   │   ├── historial.model.ts        # Interfaz de historia clínica
+│   │   ├── medico.model.ts           # Interfaz de doctores
+│   │   ├── pago.model.ts             # Interfaz de transacciones
+│   │   ├── pais.model.ts             # Interfaz de catálogos de países
+│   │   ├── tipos.ts                  # Tipos globales personalizados
+│   │   ├── usuario-full.model.ts     # Interfaz completa de usuario
+│   │   ├── usuario-login.model.ts    # Interfaz para autenticación
+│   │   └── usuario.model.ts          # Interfaz básica de usuario
 │   │
 │   ├── services/             # Servicios Inyectables (Lógica e Integración)
-│   │   ├── chatbot.service.ts
-│   │   ├── cita.service.ts
-│   │   ├── comprobante.service.ts
-│   │   ├── disponibilidad.service.ts
-│   │   ├── especialidad.service.ts
-│   │   ├── historial.service.ts
-│   │   ├── medico.service.ts
-│   │   ├── narrator.service.ts
-│   │   ├── notificacion.service.ts
-│   │   ├── notification.service.ts
-│   │   ├── pago.service.ts
-│   │   ├── pais.service.ts
-│   │   ├── solicitud.service.ts
-│   │   ├── usuario.service.ts
-│   │   └── voice-accessibility.service.ts
+│   │   ├── chatbot.service.ts        # Integración de IA conversacional
+│   │   ├── cita.service.ts           # CRUD y gestión de reservas
+│   │   ├── comprobante.service.ts    # Generación y descarga de recibos
+│   │   ├── disponibilidad.service.ts # Gestión de horarios y fechas
+│   │   ├── especialidad.service.ts   # Catálogo de especialidades médicas
+│   │   ├── historial.service.ts      # Diagnósticos y recetas
+│   │   ├── medico.service.ts         # Operaciones de doctores
+│   │   ├── narrator.service.ts       # Síntesis de voz (Text-to-Speech)
+│   │   ├── notificacion.service.ts   # Alertas de notificaciones
+│   │   ├── notification.service.ts   # Componente global de toast
+│   │   ├── pago.service.ts           # Pasarela de pagos (Stripe)
+│   │   ├── pais.service.ts           # Listado de países y prefijos
+│   │   ├── solicitud.service.ts      # Postulaciones de empleo
+│   │   ├── usuario.service.ts        # Operaciones CRUD de usuarios
+│   │   └── voice-accessibility.service.ts # Comandos de voz (Speech-to-Text)
 │   │
 │   ├── config/               # Configuraciones globales
 │   │   └── stripe.config.ts

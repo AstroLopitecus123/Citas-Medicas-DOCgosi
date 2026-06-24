@@ -68,19 +68,22 @@ USE db_reto_salud;
 
 > **Nota:** Puedes crear todas las tablas ejecutando el script [`database_schema.sql`](database_schema.sql) incluido en este repositorio.
 
-#### 📊 Diccionario de Datos (Principales)
+#### Estructura de Tablas
 
 | Tabla | Propósito | Columnas Clave | Relaciones |
 |---|---|---|---|
-| **`usuarios`** | Almacena a todos los usuarios del sistema (pacientes, doctores, admin). | `id`, `nombre`, `correo`, `contrasena`, `rol`, `estado` | FK: `pais_id` |
-| **`medicos`** | Información específica de los doctores (extiende usuarios). | `id`, `tarifa_consulta`, `link_reunion` | PK/FK: `id` -> `usuarios` |
-| **`citas`** | Registro de reservas médicas y su estado (confirmada, cancelada). | `id`, `fecha`, `estado`, `motivo` | FKs: `paciente_id`, `medico_id` |
-| **`disponibilidades`**| Horarios libres que el médico habilita para recibir citas. | `id`, `fecha`, `hora_inicio`, `hora_fin` | FK: `medico_id` |
-| **`historia_clinica`**| Notas, diagnósticos y tratamientos de una cita finalizada. | `id`, `diagnostico`, `tratamiento` | FKs: `cita_id`, `paciente_id` |
+| **`paises`** | Catálogo de países con su prefijo telefónico. | `id`, `nombre`, `prefijo_telefono` | Ninguna |
+| **`especialidades`** | Catálogo de especialidades médicas. | `id`, `nombre`, `descripcion` | Ninguna |
+| **`usuarios`** | Todos los usuarios (pacientes, doctores, admin). | `id`, `correo`, `contrasena`, `rol` | FK: `pais_id` |
+| **`medicos`** | Información de doctores (extiende usuarios). | `id`, `tarifa_consulta`, `link_reunion` | PK/FK: `id` -> `usuarios` |
+| **`medico_especialidades`** | Puente que asocia médicos con especialidades. | `usuario_id`, `especialidad_id` | FKs: `usuario_id`, `especialidad_id` |
+| **`citas`** | Registro de reservas médicas y su estado. | `id`, `fecha`, `estado`, `motivo` | FKs: `paciente_id`, `medico_id` |
+| **`disponibilidades`**| Horarios habilitados por el médico para citas. | `id`, `fecha`, `hora_inicio`, `hora_fin` | FK: `medico_id` |
+| **`historia_clinica`**| Notas, diagnósticos y tratamientos de una cita. | `id`, `diagnostico`, `tratamiento` | FKs: `cita_id`, `paciente_id`, `medico_id` |
 | **`pagos`** | Transacciones procesadas vía Stripe o transferencias. | `id`, `monto`, `estado`, `metodo_pago` | FK: `cita_id` |
-| **`comprobantes`** | Recibos/Facturas generadas al completar un pago. | `id`, `numero`, `fecha`, `archivo_url` | FK: `pago_id` |
-
-*(Para ver la estructura completa de las 12 tablas con sus tipos de datos, revisa el archivo SQL)*.
+| **`comprobantes`** | Recibos generados al completar un pago. | `id`, `numero`, `fecha`, `archivo_url` | FK: `pago_id` |
+| **`notificaciones`** | Avisos y alertas del sistema para los usuarios. | `id`, `mensaje`, `leido` | FK: `usuario_id` |
+| **`solicitudes_empleo`** | Postulaciones para trabajar en la clínica. | `id`, `nombre`, `puesto`, `estado` | Ninguna |
 
 ### 2. Variables de Entorno
 Configurar las siguientes propiedades en `src/main/resources/application.properties`:

@@ -13,7 +13,7 @@ Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, aute
 ## Arquitectura del Backend
 
 <div align="center">
-  <img src="../assets/estructura_backend.png" alt="Arquitectura del Backend" width="800"/>
+  <img src="../assets/arquitectura_backend.png" alt="Arquitectura del Backend" width="800"/>
 </div>
 
 ## Stack Tecnológico
@@ -33,6 +33,10 @@ Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, aute
 | **Asistente IA**| Gemini API | Chatbot inteligente de salud | - |
 
 ## Estructura de Capas
+
+<div align="center">
+  <img src="../assets/estructura_backend.png" alt="Estructura de Capas" width="800"/>
+</div>
 
 ### Capa de Controladores (`controller/`)
 - **Endpoints REST** - Exponen la API al frontend Angular.

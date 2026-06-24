@@ -74,20 +74,44 @@ src/
 │   │   ├── admin-dashboard/  # Panel de administración principal
 │   │   ├── admin-especialidades/ # Gestión de especialidades
 │   │   ├── admin-medicos/    # Gestión de doctores
+│   │   ├── admin-notificaciones/ # Gestión de notificaciones
+│   │   ├── admin-solicitudes/ # Gestión de solicitudes de empleo
+│   │   ├── avatar-cropper/   # Recorte de foto de perfil
 │   │   ├── chatbot/          # Chatbot asistente virtual
 │   │   ├── checkout/         # Proceso de pago de citas
+│   │   ├── gestionar-disponibilidad/ # Horarios de médicos
 │   │   ├── google-callback/  # Callback para autenticación OAuth
 │   │   ├── historial-medico/ # Vista de historia clínica
+│   │   ├── home/             # Página de inicio (Landing page)
+│   │   ├── lista-usuarios/   # Administración de usuarios
 │   │   ├── login/            # Autenticación de usuarios
 │   │   ├── medico-dashboard/ # Panel exclusivo para doctores
+│   │   ├── mi-perfil/        # Configuración de cuenta
+│   │   ├── mis-citas/        # Gestión de citas del paciente
+│   │   ├── mis-pagos/        # Historial de pagos
+│   │   ├── notificaciones/   # Bandeja de notificaciones
 │   │   ├── paciente-dashboard/ # Panel exclusivo para pacientes
+│   │   ├── pagar-efectivo/   # Flujo de pago manual
+│   │   ├── pagar-tarjeta/    # Flujo de pago con Stripe
+│   │   ├── recepcion-dashboard/ # Panel para el área de recepción
+│   │   ├── recuperar/        # Recuperación de contraseña
+│   │   ├── registrar-usuario/ # Formulario de registro
+│   │   ├── restablecer/      # Reset de contraseña con token
 │   │   ├── teleconsulta/     # Videollamadas integradas
-│   │   └── ...
+│   │   ├── toast/            # Alertas emergentes (Notificaciones UI)
+│   │   ├── trabaja-con-nosotros/ # Formulario de empleo
+│   │   └── ver-comprobante/  # Visualizador de recibos
 │   │
 │   ├── controller/           # Controladores de lógica (Patrón MVC en Angular)
+│   │   ├── admin-especialidades.controller.ts
+│   │   ├── admin-medicos.controller.ts
+│   │   ├── gestionar-disponibilidad.controller.ts
+│   │   ├── lista-usuarios.controller.ts
 │   │   ├── login.controller.ts
 │   │   ├── mis-citas.controller.ts
-│   │   └── ...
+│   │   ├── recuperar.controller.ts
+│   │   ├── registrar-usuario.controller.ts
+│   │   └── restablecer.controller.ts
 │   │
 │   ├── guards/               # Guards funcionales (CanActivateFn)
 │   │   ├── admin.guard.ts    # Protege rutas de administrador
@@ -98,16 +122,34 @@ src/
 │   │
 │   ├── models/               # Interfaces y tipos TypeScript (.model.ts)
 │   │   ├── cita.model.ts
-│   │   ├── usuario.model.ts
+│   │   ├── comprobante.model.ts
+│   │   ├── disponibilidad.model.ts
+│   │   ├── especialidad.model.ts
+│   │   ├── historial.model.ts
 │   │   ├── medico.model.ts
-│   │   └── ...
+│   │   ├── pago.model.ts
+│   │   ├── pais.model.ts
+│   │   ├── tipos.ts
+│   │   ├── usuario-full.model.ts
+│   │   ├── usuario-login.model.ts
+│   │   └── usuario.model.ts
 │   │
 │   ├── services/             # Servicios Inyectables (Lógica e Integración)
-│   │   ├── usuario.service.ts# Gestión de usuarios
-│   │   ├── cita.service.ts   # CRUD de citas médicas
-│   │   ├── pago.service.ts   # Pasarela de pago y comprobantes
-│   │   ├── narrator.service.ts # Servicio de dictado (Accesibilidad)
-│   │   └── voice-accessibility.service.ts # Controles por voz
+│   │   ├── chatbot.service.ts
+│   │   ├── cita.service.ts
+│   │   ├── comprobante.service.ts
+│   │   ├── disponibilidad.service.ts
+│   │   ├── especialidad.service.ts
+│   │   ├── historial.service.ts
+│   │   ├── medico.service.ts
+│   │   ├── narrator.service.ts
+│   │   ├── notificacion.service.ts
+│   │   ├── notification.service.ts
+│   │   ├── pago.service.ts
+│   │   ├── pais.service.ts
+│   │   ├── solicitud.service.ts
+│   │   ├── usuario.service.ts
+│   │   └── voice-accessibility.service.ts
 │   │
 │   ├── config/               # Configuraciones globales (e.g., stripe.config.ts)
 │   ├── directives/           # Directivas personalizadas (e.g., narrator.directive.ts)

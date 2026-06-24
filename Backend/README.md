@@ -62,8 +62,8 @@ Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, aute
 ### 1. Base de Datos
 Crear la base de datos en MySQL:
 ```sql
-CREATE DATABASE bd_citas_medicas;
-USE bd_citas_medicas;
+CREATE DATABASE db_reto_salud;
+USE db_reto_salud;
 ```
 
 ### 2. Variables de Entorno
@@ -71,7 +71,7 @@ Configurar las siguientes propiedades en `src/main/resources/application.propert
 
 ```properties
 # Base de Datos
-spring.datasource.url=jdbc:mysql://localhost:3306/bd_citas_medicas?serverTimezone=UTC
+spring.datasource.url=jdbc:mysql://localhost:3306/db_reto_salud?serverTimezone=UTC
 spring.datasource.username=root
 spring.datasource.password=tu_password
 

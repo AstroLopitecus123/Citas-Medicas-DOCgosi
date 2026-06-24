@@ -84,25 +84,33 @@ src/
 │   │   ├── teleconsulta/     # Videollamadas integradas
 │   │   └── ...
 │   │
-│   ├── guards/               # Guards funcionales (CanActivateFn)
-│   │   ├── auth.guard.ts     # Protege rutas privadas
-│   │   ├── role.guard.ts     # Protege rutas según ROL
+│   ├── controller/           # Controladores de lógica (Patrón MVC en Angular)
+│   │   ├── login.controller.ts
+│   │   ├── mis-citas.controller.ts
 │   │   └── ...
 │   │
-│   ├── models/               # Interfaces y tipos TypeScript
-│   │   ├── cita.interface.ts
-│   │   ├── usuario.interface.ts
-│   │   └── medico.interface.ts
+│   ├── guards/               # Guards funcionales (CanActivateFn)
+│   │   ├── admin.guard.ts    # Protege rutas de administrador
+│   │   ├── auth.guard.ts     # Protege rutas que requieren login
+│   │   ├── medico.guard.ts   # Protege rutas de doctores
+│   │   ├── paciente.guard.ts # Protege rutas de pacientes
+│   │   └── recepcion.guard.ts# Protege rutas de recepción
+│   │
+│   ├── models/               # Interfaces y tipos TypeScript (.model.ts)
+│   │   ├── cita.model.ts
+│   │   ├── usuario.model.ts
+│   │   ├── medico.model.ts
+│   │   └── ...
 │   │
 │   ├── services/             # Servicios Inyectables (Lógica e Integración)
-│   │   ├── auth.service.ts   # Manejo de JWT y Sesión
+│   │   ├── usuario.service.ts# Gestión de usuarios
 │   │   ├── cita.service.ts   # CRUD de citas médicas
-│   │   ├── stripe.service.ts # Pasarela de pago Stripe
-│   │   ├── agora.service.ts  # Servicio de Videollamadas (Agora)
-│   │   └── speech.service.ts # Transcripción (Deepgram)
+│   │   ├── pago.service.ts   # Pasarela de pago y comprobantes
+│   │   ├── narrator.service.ts # Servicio de dictado (Accesibilidad)
+│   │   └── voice-accessibility.service.ts # Controles por voz
 │   │
-│   ├── config/               # Configuraciones globales
-│   ├── directives/           # Directivas personalizadas
+│   ├── config/               # Configuraciones globales (e.g., stripe.config.ts)
+│   ├── directives/           # Directivas personalizadas (e.g., narrator.directive.ts)
 │   ├── app.routes.ts         # Definición de rutas y lazy loading
 │   └── app.config.ts         # Proveedores principales (Providers)
 ```

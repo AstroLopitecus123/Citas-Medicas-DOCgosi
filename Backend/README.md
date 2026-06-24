@@ -79,17 +79,36 @@ spring.datasource.password=tu_password
 jwt.secret=tu_clave_secreta_super_segura
 jwt.expirationMs=86400000
 
-# Servicios Externos
-stripe.secret-key=sk_test_tu_clave_secreta_stripe
+# Correo (Gmail SMTP)
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
 spring.mail.username=tu_correo@gmail.com
 spring.mail.password=tu_contraseña_de_aplicacion
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+# Stripe (Pagos)
+stripe.secret-key=sk_test_tu_clave_secreta_stripe
+
+# Cloudinary (Imágenes)
 cloudinary.cloud-name=tu_cloud_name
 cloudinary.api-key=tu_api_key
 cloudinary.api-secret=tu_api_secret
+
+# Teleconsulta (Agora & Deepgram)
 agora.appId=tu_agora_app_id
 agora.appCertificate=tu_agora_certificate
 deepgram.apiKey=tu_deepgram_api_key
+
+# Inteligencia Artificial (Gemini)
+GEMINI_API_KEY=tu_gemini_api_key
+
+# Google Auth
 google.client.id=tu_google_client_id
+
+# Twilio (WhatsApp - Opcional)
+twilio.account.sid=tu_sid
+twilio.auth.token=tu_token
 ```
 
 ### 3. Ejecutar el Proyecto

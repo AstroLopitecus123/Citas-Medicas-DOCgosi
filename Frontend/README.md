@@ -144,10 +144,15 @@ La aplicación se abrirá automáticamente y estará disponible en: `http://loca
 ## Características Especiales de Accesibilidad
 
 > [!TIP]
-> **Integración Avanzada con Inteligencia Artificial**  
-> La aplicación está diseñada pensando en la inclusión, ofreciendo herramientas de accesibilidad de última generación para todos los pacientes.
+> **Plataforma 100% Inclusiva e Integración con IA**  
+> La aplicación está diseñada pensando en la inclusión total, ofreciendo un panel de accesibilidad avanzado con múltiples perfiles y herramientas de última generación.
 
-| Funcionalidad | Descripción | Beneficio |
+### Panel de Accesibilidad Integral
+
+| Categoría | Funcionalidades Principales | Beneficio |
 |:---:|---|---|
-| **Navegación por Voz** | Permite interactuar con la plataforma, agendar citas y rellenar formularios hablando directamente al micrófono. | Facilita el uso para pacientes con movilidad reducida o dificultades visuales. |
-| **Subtítulos en Vivo** | Transcripción en tiempo real de la voz durante la teleconsulta (estilo Google Meet). | Indispensable para personas con discapacidad auditiva, asegurando una comunicación efectiva. |
+| **Visión y Daltonismo** | Filtros especializados (Deuteranopia, Protanopia, Tritanopia, Escala de grises). Incluye un **Test Rápido (Ishihara)** interactivo para autoconfigurar el perfil ideal. | Adapta la paleta de colores de la interfaz para pacientes con diferentes tipos de daltonismo o debilidad visual. |
+| **Audio y Voz (IA)** | Navegación por comandos de voz y transcripción en tiempo real (subtítulos) durante las teleconsultas. | Indispensable para personas con discapacidad auditiva o motriz, asegurando una comunicación efectiva. |
+| **Zoom y Escala** | Control dinámico del tamaño de la interfaz gráfica y la tipografía. | Facilita la lectura para usuarios con vista cansada o baja visión. |
+| **Contraste** | Modos de alto contraste y ajustes de iluminación de la interfaz. | Reduce la fatiga visual y mejora la legibilidad de los textos y formularios. |
+| **Navegación por Teclado** | Atajos de teclado y navegación secuencial (focus) por toda la aplicación. | Permite el uso completo de la plataforma sin necesidad de un ratón. |

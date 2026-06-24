@@ -12,30 +12,9 @@ Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, aute
 
 ## Arquitectura del Backend
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SPRING BOOT APPLICATION                  │
-├─────────────────────────────────────────────────────────────┤
-│  Controllers          │  @RestController, @RequestMapping  │
-│  (Capa de Presentación)                                     │
-├─────────────────────────────────────────────────────────────┤
-│  Service              │  @Service, @Transactional          │
-│  (Lógica de Negocio)                                        │
-│   • Orquestación de Citas, Pagos, Telemedicina e IA         │
-├─────────────────────────────────────────────────────────────┤
-│  Repository          │  @Repository, JPA Repositories       │
-│  (Acceso a Datos)                                           │
-├─────────────────────────────────────────────────────────────┤
-│  Entity / Model      │  @Entity, @Table, JPA Annotations   │
-│  (Dominio de Datos)                                         │
-├─────────────────────────────────────────────────────────────┤
-│  Security            │  JWT, BCrypt, CORS, Google Auth     │
-│  (Infraestructura)                                          │
-├─────────────────────────────────────────────────────────────┤
-│  External Services   │  Stripe, Agora, Deepgram, Gemini    │
-│  (Integraciones)                                            │
-└─────────────────────────────────────────────────────────────┘
-```
+<div align="center">
+  <img src="../assets/estructura_backend.png" alt="Arquitectura del Backend" width="800"/>
+</div>
 
 ## Stack Tecnológico
 

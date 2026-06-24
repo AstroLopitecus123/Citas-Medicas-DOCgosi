@@ -4,7 +4,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="../assets/RETO%20SALUD%20BACKEND-blanco.png">
     <source media="(prefers-color-scheme: light)" srcset="../assets/RETO%20SALUD%20BACKEND.png">
-    <img alt="Logo RETO SALUD Backend" src="../assets/RETO%20SALUD%20BACKEND.png" width="400">
+    <img alt="Logo RETO SALUD Backend" src="../assets/RETO%20SALUD%20BACKEND.png" width="500">
   </picture>
 </div>
 

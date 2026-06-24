@@ -142,5 +142,5 @@ La aplicación se abrirá automáticamente y estará disponible en: `http://loca
 
 | Funcionalidad | Descripción | Beneficio |
 |:---:|---|---|
-| 🎙️ **Navegación por Voz** | Permite interactuar con la plataforma, agendar citas y rellenar formularios hablando directamente al micrófono. | Facilita el uso para pacientes con movilidad reducida o dificultades visuales. |
-| 💬 **Subtítulos en Vivo** | Transcripción en tiempo real de la voz durante la teleconsulta (estilo Google Meet). | Indispensable para personas con discapacidad auditiva, asegurando una comunicación efectiva. |
+| **Navegación por Voz** | Permite interactuar con la plataforma, agendar citas y rellenar formularios hablando directamente al micrófono. | Facilita el uso para pacientes con movilidad reducida o dificultades visuales. |
+| **Subtítulos en Vivo** | Transcripción en tiempo real de la voz durante la teleconsulta (estilo Google Meet). | Indispensable para personas con discapacidad auditiva, asegurando una comunicación efectiva. |

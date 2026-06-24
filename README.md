@@ -200,35 +200,9 @@ El frontend estará disponible en: `http://localhost:4200`
 
 ## Estructura del Proyecto
 
-```text
-├── Backend/
-│   ├── src/main/java/com/clinica/real/madrid/backend_citas/
-│   │   ├── config/          # Configuraciones de servicios externos
-│   │   ├── controller/      # Controladores REST API
-│   │   ├── dto/             # Objetos de Transferencia de Datos
-│   │   ├── exception/       # Manejo global de excepciones
-│   │   ├── model/           # Entidades JPA
-│   │   ├── repository/      # Repositorios Spring Data
-│   │   ├── security/        # Configuración JWT y Roles
-│   │   └── service/         # Lógica de negocio (Citas, Pagos, etc.)
-│   ├── src/main/resources/
-│   │   └── application.properties # Variables de entorno
-│   └── pom.xml              # Dependencias Maven
-│
-└── Frontend/
-    ├── src/app/
-    │   ├── components/      # Componentes Angular (Dashboard, Teleconsulta, etc.)
-    │   ├── config/          # Configuraciones específicas del frontend
-    │   ├── controller/      # Lógica de controladores frontend
-    │   ├── directives/      # Directivas personalizadas de Angular
-    │   ├── guards/          # Protección de rutas por Rol
-    │   ├── models/          # Interfaces TypeScript
-    │   ├── services/        # Servicios (Llamadas HTTP, WebSockets)
-    │   └── app.routes.ts    # Configuración principal de rutas
-    ├── src/assets/          # Imágenes y recursos estáticos
-    ├── src/environments/    # Variables de entorno frontend
-    └── package.json         # Dependencias Node
-```
+<div align="center">
+  <img src="./assets/estructura.png" alt="Estructura del Proyecto RETO SALUD" width="800"/>
+</div>
 
 ---
 

@@ -41,6 +41,7 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 - `/` - Landing page (R.E.T.O Salud)
 - `/login` - Inicio de sesión
 - `/registrar` - Registro de usuario
+- `/auth/google/callback` - Callback de autenticación con Google OAuth
 - `/recuperar` - Recuperación de contraseña
 - `/restablecer` - Restablecer contraseña con token
 - `/trabaja-con-nosotros` - Oportunidades de empleo
@@ -49,9 +50,13 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 - `/paciente/dashboard` - Panel de control del paciente (`PacienteGuard`)
 - `/mis-citas` - Gestión y detalle de citas (`AuthGuard`)
 - `/mi-perfil` - Perfil del usuario (`AuthGuard`)
-- `/historial-clinico` - Historial médico (`AuthGuard`)
+- `/historial-clinico` - Historial médico y expediente (`AuthGuard`)
+- `/mi-historial` - Historial de pagos (`AuthGuard`)
+- `/notificaciones` - Bandeja de notificaciones (`AuthGuard`)
 - `/teleconsulta/:id` - Sala de videollamada (`AuthGuard`)
-- `/checkout/:id` - Proceso de pago (`AuthGuard`)
+- `/checkout/:id` - Resumen previo al proceso de pago (`AuthGuard`)
+- `/pagar-efectivo/:id` - Flujo para pago manual en sucursal (`AuthGuard`)
+- `/pagar-tarjeta/:id` - Flujo para pago en línea con Stripe (`AuthGuard`)
 
 ### Rutas de Médico
 - `/medico/dashboard` - Panel exclusivo para doctores (`MedicoGuard`)
@@ -68,8 +73,10 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 - `/usuarios` - Gestión de usuarios (`AdminGuard`)
 - `/medicos` - Gestión de personal médico (`AdminGuard`)
 - `/especialidades` - Catálogo de especialidades (`AdminGuard`)
+- `/admin/pagos` - Control general de todos los pagos (`AdminGuard`)
 - `/admin/gestion-citas` - Supervisión general de citas (`AdminGuard`)
 - `/admin/solicitudes` - Aspirantes de empleo (`AdminGuard`)
+- `/admin/notificaciones` - Envío de avisos y alertas globales (`AdminGuard`)
 
 ## Configuración
 

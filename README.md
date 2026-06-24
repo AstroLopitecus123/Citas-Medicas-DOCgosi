@@ -1,4 +1,8 @@
-# Citas Médicas DOCgosi
+# RETO SALUD
+
+<div align="center">
+  <img src="./assets/logo.png" alt="Logo RETO SALUD" width="300"/>
+</div>
 
 Sistema completo de gestión de citas médicas y teleconsultas desarrollado con **Angular** y **Spring Boot**, implementando arquitectura REST con autenticación JWT, integración de pagos con Stripe, videollamadas con Agora, y transcripción de voz (subtítulos) en tiempo real con Deepgram.
 

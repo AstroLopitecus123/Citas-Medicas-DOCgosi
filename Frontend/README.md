@@ -12,29 +12,9 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 
 ## Arquitectura del Frontend
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│                    ANGULAR APPLICATION                      │
-├─────────────────────────────────────────────────────────────┤
-│  Components Layer    │  @Component, Standalone, Directives  │
-│  (Presentación)                                             │
-├─────────────────────────────────────────────────────────────┤
-│  Services Layer      │  @Injectable, HTTP Client           │
-│  (Lógica de negocio)                                        │
-├─────────────────────────────────────────────────────────────┤
-│  Guards Layer        │  @Injectable, CanActivateFn         │
-│  (Protección de rutas)                                      │
-├─────────────────────────────────────────────────────────────┤
-│  Models Layer        │  Interfaces, TypeScript Types       │
-│  (Tipos de datos)                                           │
-├─────────────────────────────────────────────────────────────┤
-│  Routing Layer       │  Routes, Guards, Lazy Loading       │
-│  (Navegación)                                               │
-├─────────────────────────────────────────────────────────────┤
-│  External Services   │  Stripe.js, Agora SDK, Deepgram     │
-│  (Integraciones)                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+<div align="center">
+  <img alt="Arquitectura del Frontend" src="../assets/estructura_frontend.png" width="800">
+</div>
 
 ## Stack Tecnológico
 

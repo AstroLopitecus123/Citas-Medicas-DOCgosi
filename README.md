@@ -191,6 +191,16 @@ El frontend estará disponible en: `http://localhost:4200`
 2. Generar una API Key
 3. Configurar `GEMINI_API_KEY` en `application.properties`.
 
+### Google Cloud Console (Autenticación)
+1. Crear un proyecto en [Google Cloud Console](https://console.cloud.google.com/)
+2. Configurar la pantalla de consentimiento y crear credenciales OAuth 2.0 (Client ID)
+3. Configurar `google.client.id` en `application.properties`.
+
+### Twilio (WhatsApp/SMS)
+1. Crear una cuenta en [Twilio](https://www.twilio.com/)
+2. Obtener el Account SID y Auth Token desde la consola principal
+3. Configurar `twilio.account.sid` y `twilio.auth.token` en `application.properties`.
+
 ---
 
 ## Estructura del Proyecto

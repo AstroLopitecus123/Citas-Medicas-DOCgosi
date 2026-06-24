@@ -68,6 +68,20 @@ USE db_reto_salud;
 
 > **Nota:** Puedes crear todas las tablas ejecutando el script [`database_schema.sql`](database_schema.sql) incluido en este repositorio.
 
+#### 📊 Diccionario de Datos (Principales)
+
+| Tabla | Propósito | Columnas Clave | Relaciones |
+|---|---|---|---|
+| **`usuarios`** | Almacena a todos los usuarios del sistema (pacientes, doctores, admin). | `id`, `nombre`, `correo`, `contrasena`, `rol`, `estado` | FK: `pais_id` |
+| **`medicos`** | Información específica de los doctores (extiende usuarios). | `id`, `tarifa_consulta`, `link_reunion` | PK/FK: `id` -> `usuarios` |
+| **`citas`** | Registro de reservas médicas y su estado (confirmada, cancelada). | `id`, `fecha`, `estado`, `motivo` | FKs: `paciente_id`, `medico_id` |
+| **`disponibilidades`**| Horarios libres que el médico habilita para recibir citas. | `id`, `fecha`, `hora_inicio`, `hora_fin` | FK: `medico_id` |
+| **`historia_clinica`**| Notas, diagnósticos y tratamientos de una cita finalizada. | `id`, `diagnostico`, `tratamiento` | FKs: `cita_id`, `paciente_id` |
+| **`pagos`** | Transacciones procesadas vía Stripe o transferencias. | `id`, `monto`, `estado`, `metodo_pago` | FK: `cita_id` |
+| **`comprobantes`** | Recibos/Facturas generadas al completar un pago. | `id`, `numero`, `fecha`, `archivo_url` | FK: `pago_id` |
+
+*(Para ver la estructura completa de las 12 tablas con sus tipos de datos, revisa el archivo SQL)*.
+
 ### 2. Variables de Entorno
 Configurar las siguientes propiedades en `src/main/resources/application.properties`:
 

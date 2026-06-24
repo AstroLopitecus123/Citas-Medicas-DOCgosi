@@ -1,4 +1,12 @@
-# Backend - RETO SALUD (DOCgosi)
+# Backend - RETO SALUD
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../assets/RETO%20SALUD%20BACKEND-blanco.png">
+    <source media="(prefers-color-scheme: light)" srcset="../assets/RETO%20SALUD%20BACKEND.png">
+    <img alt="Logo RETO SALUD Backend" src="../assets/RETO%20SALUD%20BACKEND.png" width="400">
+  </picture>
+</div>
 
 Backend desarrollado con **Spring Boot 3** implementando arquitectura REST, autenticación JWT con roles, integración con pasarelas de pago (Stripe), videollamadas (Agora), transcripción (Deepgram), inteligencia artificial (Gemini) y servicios en la nube (Cloudinary, Gmail SMTP).
 

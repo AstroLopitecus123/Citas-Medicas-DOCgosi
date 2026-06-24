@@ -79,7 +79,7 @@ Configurado en `environments/environment.ts`:
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: 'https://backend-citas-production-4c29.up.railway.app'
+  apiUrl: 'https://api.tu-dominio.com/v1' // Reemplaza con la URL de tu backend en producción
 };
 ```
 
@@ -93,7 +93,7 @@ export const STRIPE_CONFIG = {
 ```
 
 ### Variables de Entorno
-El frontend se conecta al backend alojado en Railway por defecto en producción. Para desarrollo local, crear un archivo `environment.development.ts` apuntando a `http://localhost:8080/api/v1`.
+El frontend requiere conectarse al backend a través de la variable `apiUrl`. En producción, apunta a tu servidor en la nube (ej. Railway, AWS, Render). Para desarrollo local, crear o editar `environment.development.ts` apuntando a `http://localhost:8080/api/v1`.
 
 ### Servicios de Terceros
 - **Agora SDK**: Configurar App ID en el componente de teleconsulta.

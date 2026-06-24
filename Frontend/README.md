@@ -151,10 +151,21 @@ src/
 │   │   ├── usuario.service.ts
 │   │   └── voice-accessibility.service.ts
 │   │
-│   ├── config/               # Configuraciones globales (e.g., stripe.config.ts)
-│   ├── directives/           # Directivas personalizadas (e.g., narrator.directive.ts)
+│   ├── config/               # Configuraciones globales
+│   │   └── stripe.config.ts
+│   ├── directives/           # Directivas personalizadas
+│   │   └── narrator.directive.ts
 │   ├── app.routes.ts         # Definición de rutas y lazy loading
 │   └── app.config.ts         # Proveedores principales (Providers)
+│
+├── assets/                   # Recursos estáticos (Imágenes, iconos, etc.)
+├── environments/             # Variables de entorno
+│   ├── environment.ts        # Entorno de producción
+│   └── environment.development.ts # Entorno de desarrollo local
+│
+├── index.html                # Archivo HTML principal
+├── main.ts                   # Punto de entrada de la aplicación Angular
+└── styles.css                # Estilos globales de la aplicación
 ```
 
 ## Características Especiales de Accesibilidad ♿

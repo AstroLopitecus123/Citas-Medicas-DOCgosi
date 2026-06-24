@@ -66,6 +66,8 @@ CREATE DATABASE db_reto_salud;
 USE db_reto_salud;
 ```
 
+> **Nota:** Puedes crear todas las tablas ejecutando el script [`database_schema.sql`](database_schema.sql) incluido en este repositorio.
+
 ### 2. Variables de Entorno
 Configurar las siguientes propiedades en `src/main/resources/application.properties`:
 

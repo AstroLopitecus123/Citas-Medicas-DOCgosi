@@ -46,7 +46,7 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 - `/restablecer` - Restablecer contraseña con token
 - `/trabaja-con-nosotros` - Oportunidades de empleo
 
-### Rutas Protegidas (Paciente)
+### Rutas de Paciente
 - `/paciente/dashboard` - Panel de control del paciente (`PacienteGuard`)
 - `/mis-citas` - Gestión y detalle de citas (`AuthGuard`)
 - `/mi-perfil` - Perfil del usuario (`AuthGuard`)

@@ -29,6 +29,70 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 | **Pagos** | Stripe.js | 3.x | `StripeElements`, `PaymentIntent` |
 | **Mapas** | Leaflet | 1.x | `L.map`, `L.tileLayer` |
 
+## Rutas de la Aplicación
+
+### Rutas Públicas
+- `/` - Landing page (R.E.T.O Salud)
+- `/login` - Inicio de sesión
+- `/registrar` - Registro de usuario
+- `/recuperar` - Recuperación de contraseña
+- `/restablecer` - Restablecer contraseña con token
+- `/trabaja-con-nosotros` - Oportunidades de empleo
+
+### Rutas Protegidas (Paciente)
+- `/paciente/dashboard` - Panel de control del paciente (`PacienteGuard`)
+- `/mis-citas` - Gestión y detalle de citas (`AuthGuard`)
+- `/mi-perfil` - Perfil del usuario (`AuthGuard`)
+- `/historial-clinico` - Historial médico (`AuthGuard`)
+- `/teleconsulta/:id` - Sala de videollamada (`AuthGuard`)
+- `/checkout/:id` - Proceso de pago (`AuthGuard`)
+
+### Rutas de Médico
+- `/medico/dashboard` - Panel exclusivo para doctores (`MedicoGuard`)
+- `/medico/agenda` - Agenda de citas del médico (`MedicoGuard`)
+- `/medico/pagos` - Ingresos generados (`MedicoGuard`)
+- `/gestionar-disponibilidad/:id` - Horarios de atención (`MedicoGuard`)
+
+### Rutas de Recepción
+- `/recepcion/dashboard` - Panel para el área de recepción (`RecepcionGuard`)
+- `/recepcion/pagos` - Control de pagos en sucursal (`RecepcionGuard`)
+
+### Rutas de Administración
+- `/admin` - Panel principal de administración (`AdminGuard`)
+- `/usuarios` - Gestión de usuarios (`AdminGuard`)
+- `/medicos` - Gestión de personal médico (`AdminGuard`)
+- `/especialidades` - Catálogo de especialidades (`AdminGuard`)
+- `/admin/gestion-citas` - Supervisión general de citas (`AdminGuard`)
+- `/admin/solicitudes` - Aspirantes de empleo (`AdminGuard`)
+
+## Configuración
+
+### API Base URL
+Configurado en `environments/environment.ts`:
+
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'https://backend-citas-production-4c29.up.railway.app'
+};
+```
+
+### Stripe (Pasarela de Pagos)
+Clave pública configurada en `config/stripe.config.ts`:
+
+```typescript
+export const STRIPE_CONFIG = {
+  publishableKey: 'pk_test_tu_clave_publica_stripe...'
+};
+```
+
+### Variables de Entorno
+El frontend se conecta al backend alojado en Railway por defecto en producción. Para desarrollo local, crear un archivo `environment.development.ts` apuntando a `http://localhost:8080/api/v1`.
+
+### Servicios de Terceros
+- **Agora SDK**: Configurar App ID en el componente de teleconsulta.
+- **Deepgram API**: Configurar API Key en el servicio de accesibilidad de voz para la transcripción en vivo.
+
 ## Prerrequisitos
 
 - Node.js 18 o superior

@@ -79,7 +79,7 @@ Configurado en `environments/environment.ts`:
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: 'https://api.tu-dominio.com/v1' // Reemplaza con la URL de tu backend en producción
+  apiUrl: 'https://api.tu-dominio.com/v1'
 };
 ```
 

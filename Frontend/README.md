@@ -153,6 +153,7 @@ La aplicación se abrirá automáticamente y estará disponible en: `http://loca
 |:---:|---|---|
 | **Visión y Daltonismo** | Filtros especializados (Deuteranopia, Protanopia, Tritanopia, Escala de grises). Incluye un **Test Rápido (Ishihara)** interactivo para autoconfigurar el perfil ideal. | Adapta la paleta de colores para pacientes con diferentes tipos de daltonismo o debilidad visual. |
 | **Audio y Voz (IA)** | **Comandos de Voz** (Deepgram), **Narrador de Imágenes/Página**, **Sonidos del Sistema** y transcripción en vivo (subtítulos) durante teleconsultas. | Indispensable para personas con discapacidad visual, auditiva o motriz. |
+| **Asistente Virtual** | **Chatbot inteligente** conversacional integrado para resolver dudas, guiar en la navegación y brindar soporte 24/7. | Reduce tiempos de espera y proporciona asistencia inmediata y automatizada a los pacientes. |
 | **Zoom y Escala** | Control dinámico del tamaño de la interfaz gráfica y la tipografía (hasta 200%+). | Facilita la lectura para usuarios con vista cansada o baja visión. |
 | **Contraste** | **Modo Alto Contraste** para mejorar legibilidad de textos/bordes, y opciones para **personalizar colores** de fondo y texto. | Reduce la fatiga visual y adapta la interfaz a sensibilidades lumínicas específicas. |
 | **Navegación por Teclado** | **Modo Teclado Pro** con resaltado de foco ultra-visible. Soporte nativo para navegar con `Flechas`/`Tab` y confirmar con `Enter`. | Permite el uso fluido y rápido de la plataforma sin necesidad de un ratón. |

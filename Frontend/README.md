@@ -13,7 +13,7 @@ El frontend de **RETO SALUD** es una Single Page Application (SPA) desarrollada 
 ## Arquitectura del Frontend
 
 <div align="center">
-  <img alt="Arquitectura del Frontend" src="../assets/estructura_frontend.png" width="800">
+  <img alt="Arquitectura del Frontend" src="../assets/arquitectura_frontend.png" width="800">
 </div>
 
 ## Stack Tecnológico
@@ -67,7 +67,7 @@ La aplicación se abrirá automáticamente y estará disponible en: `http://loca
 ## Estructura del Proyecto
 
 <div align="center">
-  <img alt="Estructura de Directorios" src="../assets/arbol_directorios_frontend.png" width="800">
+  <img alt="Estructura de Directorios" src="../assets/estructura_frontend.png" width="800">
 </div>
 
 ## Características Especiales de Accesibilidad ♿

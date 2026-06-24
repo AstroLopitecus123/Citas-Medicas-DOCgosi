@@ -203,12 +203,14 @@ El frontend estará disponible en: `http://localhost:4200`
 ```text
 ├── Backend/
 │   ├── src/main/java/com/clinica/real/madrid/backend_citas/
+│   │   ├── config/          # Configuraciones de servicios externos
 │   │   ├── controller/      # Controladores REST API
+│   │   ├── dto/             # Objetos de Transferencia de Datos
+│   │   ├── exception/       # Manejo global de excepciones
 │   │   ├── model/           # Entidades JPA
 │   │   ├── repository/      # Repositorios Spring Data
 │   │   ├── security/        # Configuración JWT y Roles
-│   │   ├── service/         # Lógica de negocio (Citas, Pagos, etc.)
-│   │   └── utils/           # Utilidades y configuración
+│   │   └── service/         # Lógica de negocio (Citas, Pagos, etc.)
 │   ├── src/main/resources/
 │   │   └── application.properties # Variables de entorno
 │   └── pom.xml              # Dependencias Maven
@@ -216,10 +218,13 @@ El frontend estará disponible en: `http://localhost:4200`
 └── Frontend/
     ├── src/app/
     │   ├── components/      # Componentes Angular (Dashboard, Teleconsulta, etc.)
+    │   ├── config/          # Configuraciones específicas del frontend
+    │   ├── controller/      # Lógica de controladores frontend
+    │   ├── directives/      # Directivas personalizadas de Angular
+    │   ├── guards/          # Protección de rutas por Rol
     │   ├── models/          # Interfaces TypeScript
     │   ├── services/        # Servicios (Llamadas HTTP, WebSockets)
-    │   ├── guards/          # Protección de rutas por Rol
-    │   └── app.routes.ts    # Configuración de rutas
+    │   └── app.routes.ts    # Configuración principal de rutas
     ├── src/assets/          # Imágenes y recursos estáticos
     ├── src/environments/    # Variables de entorno frontend
     └── package.json         # Dependencias Node

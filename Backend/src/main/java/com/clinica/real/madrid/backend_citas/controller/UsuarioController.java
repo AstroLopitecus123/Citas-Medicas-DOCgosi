@@ -160,5 +160,16 @@ public class UsuarioController {
                     .body("Error al subir la imagen a Cloudinary: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{id}/fcm-token")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public ResponseEntity<Usuario> actualizarFcmToken(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+        String fcmToken = body.get("fcmToken");
+        Usuario usuarioActualizado = usuarioService.actualizarFcmToken(id, fcmToken);
+        usuarioActualizado.setContrasena(null);
+        return ResponseEntity.ok(usuarioActualizado);
+    }
 }
 

@@ -332,5 +332,13 @@ public class UsuarioService {
         usuario.setFotoUrl(url);
         return usuarioRepository.save(usuario);
     }
+
+    @Transactional
+    public Usuario actualizarFcmToken(Long id, String fcmToken) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        usuario.setFcmToken(fcmToken);
+        return usuarioRepository.save(usuario);
+    }
 }
 

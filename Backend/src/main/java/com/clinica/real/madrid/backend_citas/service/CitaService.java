@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class CitaService {
 
+    private static final java.util.concurrent.ExecutorService notifExecutor = java.util.concurrent.Executors.newFixedThreadPool(5);
+
     @Autowired
     private CitaRepository citaRepository;
 
@@ -459,6 +461,6 @@ public class CitaService {
             } catch (Exception e) {
                 System.err.println("⚠️ Error al enviar Push FCM: " + e.getMessage());
             }
-        });
+        }, notifExecutor);
     }
 }

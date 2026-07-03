@@ -34,7 +34,7 @@ import com.clinica.real.madrid.backend_citas.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "http://localhost:4200") 
+ 
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

@@ -393,44 +393,7 @@ public class CitaService {
                 msgStaff = String.format("Actualización en cita de %s: %s.", nombrePcte, accion);
             }
 
-            try {
-
-                SimpleMailMessage mailPaciente = new SimpleMailMessage();
-                mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
-                mailPaciente.setTo(cita.getPaciente().getCorreo());
-                mailPaciente.setSubject(asunto);
-                mailPaciente.setText(String.format("Hola %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombrePcte, msgPaciente));
-                mailSender.send(mailPaciente);
-            } catch (Exception e) {
-                System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
-            }
-
-            try {
-
-                SimpleMailMessage mailMedico = new SimpleMailMessage();
-                mailMedico.setFrom("clinicarealmadrid32@gmail.com");
-                mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
-                mailMedico.setSubject("🔔 Cambio en tu Agenda Médica");
-                mailMedico.setText(String.format("Hola Dr. %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombreDr, msgStaff));
-                mailSender.send(mailMedico);
-            } catch (Exception e) {
-                System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
-            }
-
-            try {
-                String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
-                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, pUser, cita.getId());
-                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, mUser, cita.getId());
-
-                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION", cita.getId());
-                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN", cita.getId());
-
-                System.out.println(" Notificaciones guardadas en DB para cita " + cita.getId());
-            } catch (Exception e) {
-                System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
-            }
-
-            // Enviar Push FCM al celular del paciente vía Firebase
+            // 1. Prioridad Máxima: Enviar Push FCM al celular del paciente vía Firebase
             try {
                 String fcmToken = pUser.getFcmToken();
                 if (fcmToken != null && !fcmToken.trim().isEmpty()) {
@@ -457,7 +420,6 @@ public class CitaService {
                         pushTitulo = "Solicitud Denegada ⚠️";
                         pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s no pudo ser aprobada.", fecha, hora);
                     } else {
-                        // Ignorar otras acciones intermedias para no saturar al usuario con push
                         pushTitulo = null;
                         pushMensaje = null;
                     }
@@ -469,6 +431,43 @@ public class CitaService {
                 }
             } catch (Exception e) {
                 System.err.println("⚠️ Error al enviar Push FCM: " + e.getMessage());
+            }
+
+            // 2. Guardar Notificaciones en Base de Datos
+            try {
+                String tituloNotif = "Aviso de Cita: " + accion.toUpperCase();
+                notificacionService.crearNotificacionParaUsuario(tituloNotif, msgPaciente, pUser, cita.getId());
+                notificacionService.crearNotificacionParaUsuario("Gestión de Agenda", msgStaff, mUser, cita.getId());
+
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "RECEPCION", cita.getId());
+                notificacionService.crearNotificacionParaRol("Aviso Staff", msgStaff, "ADMIN", cita.getId());
+
+                System.out.println(" Notificaciones guardadas en DB para cita " + cita.getId());
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo guardar la notificación en DB: " + e.getMessage());
+            }
+
+            // 3. Enviar Correos
+            try {
+                SimpleMailMessage mailPaciente = new SimpleMailMessage();
+                mailPaciente.setFrom("clinicarealmadrid32@gmail.com");
+                mailPaciente.setTo(cita.getPaciente().getCorreo());
+                mailPaciente.setSubject(asunto);
+                mailPaciente.setText(String.format("Hola %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombrePcte, msgPaciente));
+                mailSender.send(mailPaciente);
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo enviar el correo al paciente: " + e.getMessage());
+            }
+
+            try {
+                SimpleMailMessage mailMedico = new SimpleMailMessage();
+                mailMedico.setFrom("clinicarealmadrid32@gmail.com");
+                mailMedico.setTo(cita.getMedico().getUsuario().getCorreo());
+                mailMedico.setSubject("🔔 Cambio en tu Agenda Médica");
+                mailMedico.setText(String.format("Hola Dr. %s,\n\n%s\n\nSaludos,\nClínica Real Madrid", nombreDr, msgStaff));
+                mailSender.send(mailMedico);
+            } catch (Exception e) {
+                System.err.println("⚠️ No se pudo enviar el correo al médico: " + e.getMessage());
             }
         }, notifExecutor);
     }

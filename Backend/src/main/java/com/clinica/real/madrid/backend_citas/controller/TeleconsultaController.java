@@ -83,11 +83,12 @@ public class TeleconsultaController {
                     aId, aCert, canal, 0, io.agora.media.RtcTokenBuilder2.Role.ROLE_PUBLISHER, timestamp, timestamp);
                 
                 config.put("agoraToken", result);
-
                 // Notificar al paciente si el que entra es el MÉDICO
-                if ("MEDICO".equalsIgnoreCase(rol) && canal.startsWith("cita-")) {
+                System.out.println("DEBUG TELECONSULTA -> Petición de config: canal=" + canal + ", rol=" + rol);
+                if (rol != null && rol.toUpperCase().contains("MEDICO") && canal.startsWith("cita-")) {
                     try {
                         Long citaId = Long.parseLong(canal.substring(5)); // "cita-88" -> "88"
+                        System.out.println("DEBUG TELECONSULTA -> Disparando notificación para cita " + citaId);
                         citaService.notificarDoctorEnSala(citaId);
                     } catch (NumberFormatException e) {
                         System.err.println("Error al extraer ID de cita del canal: " + canal);

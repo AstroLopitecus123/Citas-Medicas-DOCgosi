@@ -145,6 +145,10 @@ public class CitaService {
 
     @Transactional
     public void cancelarCita(Long id) {
+        cancelarCitaInterno(id, true);
+    }
+
+    private void cancelarCitaInterno(Long id, boolean notificar) {
         int filas = citaRepository.actualizarEstado(id, EstadoCita.CANCELADA);
         if (filas == 0) {
             throw new RuntimeException("No se encontró la cita con ID " + id);
@@ -161,7 +165,9 @@ public class CitaService {
             disponibilidadRepository.save(disp);
         });
 
-        notificarCambioCita(cita, "cancelada");
+        if (notificar) {
+            notificarCambioCita(cita, "cancelada");
+        }
     }
 
     @Transactional
@@ -251,7 +257,7 @@ public class CitaService {
         Cita cita = citaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró la cita con ID " + id));
 
-        cancelarCita(id); 
+        cancelarCitaInterno(id, false);
 
         try {
             pagoService.reembolsarPago(id);

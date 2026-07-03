@@ -12,18 +12,14 @@ public class NotificationService {
 
     public String sendNotification(String token, String title, String body) {
         try {
-            Notification notification = Notification.builder()
-                    .setTitle(title)
-                    .setBody(body)
-                    .build();
-
             AndroidConfig androidConfig = AndroidConfig.builder()
                     .setPriority(AndroidConfig.Priority.HIGH)
                     .build();
 
             Message message = Message.builder()
                     .setToken(token)
-                    .setNotification(notification)
+                    .putData("title", title)
+                    .putData("body", body)
                     .setAndroidConfig(androidConfig)
                     .build();
 

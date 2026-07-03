@@ -30,6 +30,9 @@ public class CitaService {
     private DisponibilidadRepository disponibilidadRepository;
 
     @Autowired
+    private com.clinica.real.madrid.backend_citas.repository.DispositivoActivoRepository dispositivoActivoRepository;
+
+    @Autowired
     private HistorialRepository historialRepository;
 
     @Autowired
@@ -397,8 +400,8 @@ public class CitaService {
             try {
                 Boolean recibirPush = pUser.getRecibirNotificacionesPush();
                 if (recibirPush == null || recibirPush) {
-                    String fcmToken = pUser.getFcmToken();
-                    if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+                    java.util.List<com.clinica.real.madrid.backend_citas.model.DispositivoActivo> dispositivos = dispositivoActivoRepository.findByUsuarioIdOrderByUltimaConexionDesc(pUser.getId());
+                    if (dispositivos != null && !dispositivos.isEmpty()) {
                         String pushTitulo;
                         String pushMensaje;
                         String apellidoDr = cita.getMedico().getUsuario().getApellido();
@@ -427,9 +430,16 @@ public class CitaService {
                         }
 
                         if (pushTitulo != null) {
-                            notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
-                            System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo());
+                            for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
+                                String fcmToken = disp.getFcmToken();
+                                if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+                                    notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
+                                    System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
+                                }
+                            }
                         }
+                    } else {
+                        System.out.println("⚠️ Paciente " + pUser.getCorreo() + " no tiene dispositivos activos para Push FCM.");
                     }
                 } else {
                     System.out.println("🔇 Push FCM ignorado (El paciente apagó las notificaciones push)");

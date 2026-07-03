@@ -172,10 +172,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioActualizado);
     }
 
-    @DeleteMapping("/{id}/fcm-token")
-    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
-    public ResponseEntity<Void> borrarFcmToken(@PathVariable Long id) {
-        usuarioService.borrarFcmToken(id);
+    @DeleteMapping("/fcm-token")
+    public ResponseEntity<Void> borrarFcmToken(@RequestParam("token") String token) {
+        usuarioService.borrarFcmToken(token);
         return ResponseEntity.ok().build();
     }
 

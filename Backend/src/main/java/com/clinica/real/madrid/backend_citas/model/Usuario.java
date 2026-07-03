@@ -142,16 +142,9 @@ public class Usuario {
     public String getFotoUrl() { return fotoUrl; }
     public void setFotoUrl(String fotoUrl) { this.fotoUrl = fotoUrl; }
 
-    @Column(name = "fcm_token", length = 255)
-    private String fcmToken;
-
     @Column(name = "recibir_notificaciones_push", columnDefinition = "boolean default true")
     private Boolean recibirNotificacionesPush = true;
-
-    public String getFcmToken() { return fcmToken; }
-    public void setFcmToken(String fcmToken) { this.fcmToken = fcmToken; }
 
     public Boolean getRecibirNotificacionesPush() { return recibirNotificacionesPush; }
     public void setRecibirNotificacionesPush(Boolean recibirNotificacionesPush) { this.recibirNotificacionesPush = recibirNotificacionesPush; }
 }
-

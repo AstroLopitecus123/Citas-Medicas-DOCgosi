@@ -44,6 +44,9 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
+    private com.clinica.real.madrid.backend_citas.repository.DispositivoActivoRepository dispositivoActivoRepository;
+
+    @Autowired
     private PaisRepository paisRepository;
 
     @Autowired
@@ -337,25 +340,38 @@ public class UsuarioService {
     public Usuario actualizarFcmToken(Long id, String fcmToken) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-        usuario.setFcmToken(fcmToken);
-        return usuarioRepository.save(usuario);
+                
+        com.clinica.real.madrid.backend_citas.model.DispositivoActivo dispositivo = dispositivoActivoRepository.findByFcmToken(fcmToken)
+                .orElse(new com.clinica.real.madrid.backend_citas.model.DispositivoActivo(usuario, fcmToken));
+                
+        dispositivo.setUsuario(usuario);
+        dispositivo.setUltimaConexion(LocalDateTime.now());
+        dispositivoActivoRepository.save(dispositivo);
+        
+        java.util.List<com.clinica.real.madrid.backend_citas.model.DispositivoActivo> dispositivos = dispositivoActivoRepository.findByUsuarioIdOrderByUltimaConexionDesc(id);
+        if (dispositivos.size() > 5) {
+            for (int i = 5; i < dispositivos.size(); i++) {
+                dispositivoActivoRepository.delete(dispositivos.get(i));
+                System.out.println("🧹 Limpieza inteligente: Borrando dispositivo excedente para el usuario ID " + id);
+            }
+        }
+        return usuario;
     }
 
     @Transactional
-    public void borrarFcmToken(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-        usuario.setFcmToken(null);
-        usuarioRepository.save(usuario);
+    public void borrarFcmToken(String fcmToken) {
+        if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+            dispositivoActivoRepository.deleteByFcmToken(fcmToken);
+            System.out.println("🔒 Privacidad Médica: Token de dispositivo borrado por Logout voluntario.");
+        }
     }
 
     @Transactional
     public void borrarTokenMuerto(String fcmToken) {
-        usuarioRepository.findByFcmToken(fcmToken).ifPresent(usuario -> {
-            usuario.setFcmToken(null);
-            usuarioRepository.save(usuario);
-            System.out.println("🧹 Limpieza automática: Token FCM muerto borrado para el usuario ID " + usuario.getId());
-        });
+        if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+            dispositivoActivoRepository.deleteByFcmToken(fcmToken);
+            System.out.println("🧹 Limpieza automática: Token FCM muerto borrado.");
+        }
     }
 
     @Transactional

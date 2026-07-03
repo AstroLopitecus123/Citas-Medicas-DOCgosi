@@ -12,7 +12,7 @@ public class NotificationService {
 
     private final UsuarioService usuarioService;
 
-    public NotificationService(UsuarioService usuarioService) {
+    public NotificationService(@org.springframework.context.annotation.Lazy UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 

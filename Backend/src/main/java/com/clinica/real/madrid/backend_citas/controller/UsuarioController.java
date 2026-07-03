@@ -171,5 +171,24 @@ public class UsuarioController {
         usuarioActualizado.setContrasena(null);
         return ResponseEntity.ok(usuarioActualizado);
     }
+
+    @DeleteMapping("/{id}/fcm-token")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public ResponseEntity<Void> borrarFcmToken(@PathVariable Long id) {
+        usuarioService.borrarFcmToken(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/preferencias-push")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public ResponseEntity<Usuario> actualizarPreferenciasPush(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> body) {
+        Boolean recibir = body.get("recibirNotificacionesPush");
+        if (recibir == null) recibir = true;
+        Usuario usuarioActualizado = usuarioService.actualizarPreferenciasPush(id, recibir);
+        usuarioActualizado.setContrasena(null);
+        return ResponseEntity.ok(usuarioActualizado);
+    }
 }
 

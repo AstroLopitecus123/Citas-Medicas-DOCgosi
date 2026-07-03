@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationService {
 
+    private final UsuarioService usuarioService;
+
+    public NotificationService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
     public String sendNotification(String token, String title, String body) {
         try {
             AndroidConfig androidConfig = AndroidConfig.builder()
@@ -26,7 +32,11 @@ public class NotificationService {
             String response = FirebaseMessaging.getInstance().send(message);
             return "Mensaje enviado exitosamente: " + response;
         } catch (FirebaseMessagingException e) {
-            e.printStackTrace();
+            System.err.println("Error enviando mensaje a FCM: " + e.getMessagingErrorCode());
+            String errorCode = e.getMessagingErrorCode().name();
+            if (errorCode.equals("UNREGISTERED") || errorCode.equals("INVALID_ARGUMENT")) {
+                usuarioService.borrarTokenMuerto(token);
+            }
             return "Error enviando mensaje: " + e.getMessage();
         }
     }

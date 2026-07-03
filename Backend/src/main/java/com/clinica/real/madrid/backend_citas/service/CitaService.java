@@ -395,39 +395,44 @@ public class CitaService {
 
             // 1. Prioridad Máxima: Enviar Push FCM al celular del paciente vía Firebase
             try {
-                String fcmToken = pUser.getFcmToken();
-                if (fcmToken != null && !fcmToken.trim().isEmpty()) {
-                    String pushTitulo;
-                    String pushMensaje;
-                    String apellidoDr = cita.getMedico().getUsuario().getApellido();
+                Boolean recibirPush = pUser.getRecibirNotificacionesPush();
+                if (recibirPush == null || recibirPush) {
+                    String fcmToken = pUser.getFcmToken();
+                    if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+                        String pushTitulo;
+                        String pushMensaje;
+                        String apellidoDr = cita.getMedico().getUsuario().getApellido();
 
-                    if (accion.equals("confirmada")) {
-                        pushTitulo = "Cita Confirmada ✅";
-                        pushMensaje = String.format("Tu cita con el Dr. %s ha sido confirmada para el %s a las %s.", apellidoDr, fecha, hora);
-                    } else if (accion.equals("cancelada")) {
-                        pushTitulo = "Cita Cancelada ❌";
-                        pushMensaje = String.format("Lo sentimos, tu cita con el Dr. %s programada para el %s a las %s ha sido cancelada. Por favor contáctanos para más información.", apellidoDr, fecha, hora);
-                    } else if (accion.equals("reprogramación aprobada")) {
-                        pushTitulo = "Reprogramación Aceptada 🔄";
-                        pushMensaje = String.format("Tu cambio de horario fue aprobado. Tu nueva cita ha quedado agendada para el %s a las %s.", fecha, hora);
-                    } else if (accion.equals("solicitud de reprogramación rechazada")) {
-                        pushTitulo = "Reprogramación Rechazada ⚠️";
-                        pushMensaje = String.format("No pudimos aceptar el cambio de horario para tu cita del %s a las %s.", fecha, hora);
-                    } else if (accion.equals("cancelación aprobada y reembolso gestionado")) {
-                        pushTitulo = "Cancelación Exitosa ✔️";
-                        pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s ha sido procesada correctamente.", fecha, hora);
-                    } else if (accion.equals("solicitud de cancelación rechazada. Su cita sigue vigente.")) {
-                        pushTitulo = "Solicitud Denegada ⚠️";
-                        pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s no pudo ser aprobada.", fecha, hora);
-                    } else {
-                        pushTitulo = null;
-                        pushMensaje = null;
-                    }
+                        if (accion.equals("confirmada")) {
+                            pushTitulo = "Cita Confirmada ✅";
+                            pushMensaje = String.format("Tu cita con el Dr. %s ha sido confirmada para el %s a las %s.", apellidoDr, fecha, hora);
+                        } else if (accion.equals("cancelada")) {
+                            pushTitulo = "Cita Cancelada ❌";
+                            pushMensaje = String.format("Lo sentimos, tu cita con el Dr. %s programada para el %s a las %s ha sido cancelada. Por favor contáctanos para más información.", apellidoDr, fecha, hora);
+                        } else if (accion.equals("reprogramación aprobada")) {
+                            pushTitulo = "Reprogramación Aceptada 🔄";
+                            pushMensaje = String.format("Tu cambio de horario fue aprobado. Tu nueva cita ha quedado agendada para el %s a las %s.", fecha, hora);
+                        } else if (accion.equals("solicitud de reprogramación rechazada")) {
+                            pushTitulo = "Reprogramación Rechazada ⚠️";
+                            pushMensaje = String.format("No pudimos aceptar el cambio de horario para tu cita del %s a las %s.", fecha, hora);
+                        } else if (accion.equals("cancelación aprobada y reembolso gestionado")) {
+                            pushTitulo = "Cancelación Exitosa ✔️";
+                            pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s ha sido procesada correctamente.", fecha, hora);
+                        } else if (accion.equals("solicitud de cancelación rechazada. Su cita sigue vigente.")) {
+                            pushTitulo = "Solicitud Denegada ⚠️";
+                            pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s no pudo ser aprobada.", fecha, hora);
+                        } else {
+                            pushTitulo = null;
+                            pushMensaje = null;
+                        }
 
-                    if (pushTitulo != null) {
-                        notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
-                        System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo());
+                        if (pushTitulo != null) {
+                            notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
+                            System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo());
+                        }
                     }
+                } else {
+                    System.out.println("🔇 Push FCM ignorado (El paciente apagó las notificaciones push)");
                 }
             } catch (Exception e) {
                 System.err.println("⚠️ Error al enviar Push FCM: " + e.getMessage());

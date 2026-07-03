@@ -340,5 +340,30 @@ public class UsuarioService {
         usuario.setFcmToken(fcmToken);
         return usuarioRepository.save(usuario);
     }
+
+    @Transactional
+    public void borrarFcmToken(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        usuario.setFcmToken(null);
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void borrarTokenMuerto(String fcmToken) {
+        usuarioRepository.findByFcmToken(fcmToken).ifPresent(usuario -> {
+            usuario.setFcmToken(null);
+            usuarioRepository.save(usuario);
+            System.out.println("🧹 Limpieza automática: Token FCM muerto borrado para el usuario ID " + usuario.getId());
+        });
+    }
+
+    @Transactional
+    public Usuario actualizarPreferenciasPush(Long id, boolean recibir) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        usuario.setRecibirNotificacionesPush(recibir);
+        return usuarioRepository.save(usuario);
+    }
 }
 

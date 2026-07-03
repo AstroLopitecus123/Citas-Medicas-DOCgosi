@@ -16,7 +16,7 @@ public class NotificationService {
         this.usuarioService = usuarioService;
     }
 
-    public String sendNotification(String token, String title, String body) {
+    public String sendNotification(String token, String title, String body, String type) {
         try {
             AndroidConfig androidConfig = AndroidConfig.builder()
                     .setPriority(AndroidConfig.Priority.HIGH)
@@ -26,6 +26,7 @@ public class NotificationService {
                     .setToken(token)
                     .putData("title", title)
                     .putData("body", body)
+                    .putData("type", type != null ? type : "CITA")
                     .setAndroidConfig(androidConfig)
                     .build();
 

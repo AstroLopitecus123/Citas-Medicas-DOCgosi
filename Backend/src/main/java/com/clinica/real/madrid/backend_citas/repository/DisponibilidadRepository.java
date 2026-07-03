@@ -20,7 +20,7 @@ public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, 
 
     List<Disponibilidad> findByMedicoIdAndEstado(Long medicoId, Disponibilidad.EstadoDisponibilidad estado);
 
-    Optional<Disponibilidad> findByMedicoIdAndFechaAndHoraInicio(Long medicoId, LocalDate fecha, LocalTime horaInicio);
+    Optional<Disponibilidad> findFirstByMedicoIdAndFechaAndHoraInicio(Long medicoId, LocalDate fecha, LocalTime horaInicio);
 
     void deleteByMedicoIdAndFechaBetween(Long medicoId, LocalDate inicio, LocalDate fin);
 

@@ -75,7 +75,7 @@ public class CitaService {
             throw new RuntimeException("Solo se pueden abandonar reservas en estado PENDIENTE");
         }
 
-        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+        disponibilidadRepository.findFirstByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             cita.getFecha().toLocalDate(), 
             cita.getFecha().toLocalTime()
@@ -147,7 +147,7 @@ public class CitaService {
 
         Cita cita = citaRepository.findById(id).orElseThrow();
 
-        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+        disponibilidadRepository.findFirstByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             cita.getFecha().toLocalDate(), 
             cita.getFecha().toLocalTime()
@@ -197,7 +197,7 @@ public class CitaService {
 
         LocalDateTime nuevaFecha = cita.getFechaPropuesta();
 
-        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+        disponibilidadRepository.findFirstByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             cita.getFecha().toLocalDate(), 
             cita.getFecha().toLocalTime()
@@ -206,7 +206,7 @@ public class CitaService {
             disponibilidadRepository.save(disp);
         });
 
-        disponibilidadRepository.findByMedicoIdAndFechaAndHoraInicio(
+        disponibilidadRepository.findFirstByMedicoIdAndFechaAndHoraInicio(
             cita.getMedico().getId(), 
             nuevaFecha.toLocalDate(), 
             nuevaFecha.toLocalTime()

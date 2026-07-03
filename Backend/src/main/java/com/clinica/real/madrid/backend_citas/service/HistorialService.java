@@ -12,12 +12,14 @@ import java.util.Optional;
 @Service
 public class HistorialService {
 
-	private final HistorialRepository historialRepository;
+    private final HistorialRepository historialRepository;
     private final CitaRepository citaRepository;
+    private final CitaService citaService;
 
-    public HistorialService(HistorialRepository historialRepository, CitaRepository citaRepository) {
+    public HistorialService(HistorialRepository historialRepository, CitaRepository citaRepository, @org.springframework.context.annotation.Lazy CitaService citaService) {
         this.historialRepository = historialRepository;
         this.citaRepository = citaRepository;
+        this.citaService = citaService;
     }
 
     public Historial registrarHistorial(Long citaId, Historial historial) {
@@ -26,7 +28,9 @@ public class HistorialService {
 
         historial.setCita(cita);
 
-        return historialRepository.save(historial);
+        Historial guardado = historialRepository.save(historial);
+        citaService.notificarHistorialActualizado(guardado.getCita());
+        return guardado;
     }
 
     public Optional<Historial> obtenerPorId(Long id) {
@@ -49,7 +53,9 @@ public class HistorialService {
         existente.setReceta(datos.getReceta());
         existente.setNotas(datos.getNotas());
 
-        return historialRepository.save(existente);
+        Historial actualizado = historialRepository.save(existente);
+        citaService.notificarHistorialActualizado(actualizado.getCita());
+        return actualizado;
     }
 
     public void eliminarHistorial(Long id) {

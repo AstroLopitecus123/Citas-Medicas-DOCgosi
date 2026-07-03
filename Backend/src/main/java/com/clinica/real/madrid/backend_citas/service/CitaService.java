@@ -518,4 +518,32 @@ public class CitaService {
             }
         }, notifExecutor);
     }
+
+    public void notificarHistorialActualizado(com.clinica.real.madrid.backend_citas.model.Cita cita) {
+        if (cita == null) return;
+        java.util.concurrent.CompletableFuture.runAsync(() -> {
+            try {
+                com.clinica.real.madrid.backend_citas.model.Usuario pUser = cita.getPaciente();
+                Boolean recibirPush = pUser.getRecibirNotificacionesPush();
+                if (recibirPush == null || recibirPush) {
+                    java.util.List<com.clinica.real.madrid.backend_citas.model.DispositivoActivo> dispositivos = dispositivoActivoRepository.findByUsuarioIdOrderByUltimaConexionDesc(pUser.getId());
+                    if (dispositivos != null && !dispositivos.isEmpty()) {
+                        String pushTitulo = "Historial Médico Actualizado 📄";
+                        String pushMensaje = "El Dr. " + cita.getMedico().getUsuario().getApellido() + " ha guardado tu receta y diagnóstico. Entra a tu aplicación para revisarlo.";
+                        for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
+                            String fcmToken = disp.getFcmToken();
+                            if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
+                                System.out.println("✅ Push FCM Historial enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
+                            }
+                        }
+                    } else {
+                        System.out.println("⚠️ Paciente " + pUser.getCorreo() + " no tiene dispositivos activos para Push FCM Historial.");
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("⚠️ Error al enviar Push FCM Historial: " + e.getMessage());
+            }
+        }, notifExecutor);
+    }
 }

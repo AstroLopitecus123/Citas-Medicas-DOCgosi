@@ -85,7 +85,7 @@ export class TeleconsultaComponent implements OnInit, OnDestroy {
 
   obtenerConfiguracion() {
     const canalUID = `cita-${this.citaId}`;
-    this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config?canal=${canalUID}`).subscribe({
+    this.http.get<any>(`${this.apiUrl}/api/teleconsulta/config?canal=${canalUID}&rol=${this.rol}`).subscribe({
       next: (config) => {
         this.agoraAppId = config.agoraAppId;
         this.deepgramApiKey = config.deepgramApiKey;

@@ -486,4 +486,36 @@ public class CitaService {
             }
         }, notifExecutor);
     }
+
+    public void notificarDoctorEnSala(Long citaId) {
+        java.util.concurrent.CompletableFuture.runAsync(() -> {
+            try {
+                com.clinica.real.madrid.backend_citas.model.Cita cita = citaRepository.findById(citaId).orElse(null);
+                if (cita == null) return;
+                
+                com.clinica.real.madrid.backend_citas.model.Usuario pUser = cita.getPaciente();
+                Boolean recibirPush = pUser.getRecibirNotificacionesPush();
+                if (recibirPush == null || recibirPush) {
+                    java.util.List<com.clinica.real.madrid.backend_citas.model.DispositivoActivo> dispositivos = dispositivoActivoRepository.findByUsuarioIdOrderByUltimaConexionDesc(pUser.getId());
+                    if (dispositivos != null && !dispositivos.isEmpty()) {
+                        String pushTitulo = "¡El Doctor ya te espera! 👨‍⚕️";
+                        String pushMensaje = "El Dr. " + cita.getMedico().getUsuario().getApellido() + " acaba de entrar a la sala de videollamada de tu cita. ¡Conéctate ahora!";
+                        for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
+                            String fcmToken = disp.getFcmToken();
+                            if (fcmToken != null && !fcmToken.trim().isEmpty()) {
+                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
+                                System.out.println("✅ Push FCM Videollamada enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
+                            }
+                        }
+                    } else {
+                        System.out.println("⚠️ Paciente " + pUser.getCorreo() + " no tiene dispositivos activos para Push FCM Videollamada.");
+                    }
+                } else {
+                    System.out.println("🔇 Push FCM Videollamada ignorado (El paciente apagó las notificaciones push)");
+                }
+            } catch (Exception e) {
+                System.err.println("⚠️ Error al enviar Push FCM Videollamada: " + e.getMessage());
+            }
+        }, notifExecutor);
+    }
 }

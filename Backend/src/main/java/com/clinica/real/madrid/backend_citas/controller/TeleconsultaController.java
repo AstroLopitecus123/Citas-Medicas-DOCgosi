@@ -27,9 +27,13 @@ public class TeleconsultaController {
         return ResponseEntity.ok(System.getenv());
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.clinica.real.madrid.backend_citas.service.CitaService citaService;
+
     @GetMapping("/config")
     public ResponseEntity<Map<String, String>> getConfig(
-            @org.springframework.web.bind.annotation.RequestParam(value = "canal", required = false) String canal) {
+            @org.springframework.web.bind.annotation.RequestParam(value = "canal", required = false) String canal,
+            @org.springframework.web.bind.annotation.RequestParam(value = "rol", required = false) String rol) {
         Map<String, String> config = new HashMap<>();
 
         String dKey = deepgramApiKey;
@@ -79,6 +83,16 @@ public class TeleconsultaController {
                     aId, aCert, canal, 0, io.agora.media.RtcTokenBuilder2.Role.ROLE_PUBLISHER, timestamp, timestamp);
                 
                 config.put("agoraToken", result);
+
+                // Notificar al paciente si el que entra es el MÉDICO
+                if ("MEDICO".equalsIgnoreCase(rol) && canal.startsWith("cita-")) {
+                    try {
+                        Long citaId = Long.parseLong(canal.substring(5)); // "cita-88" -> "88"
+                        citaService.notificarDoctorEnSala(citaId);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al extraer ID de cita del canal: " + canal);
+                    }
+                }
             } catch (Exception e) {
                 config.put("agoraToken", "ERROR_GENERATING_TOKEN");
             }

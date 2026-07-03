@@ -433,7 +433,7 @@ public class CitaService {
                             for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
                                 String fcmToken = disp.getFcmToken();
                                 if (fcmToken != null && !fcmToken.trim().isEmpty()) {
-                                    notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "CITA");
+                                    notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "CITA", null);
                                     System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
                                 }
                             }
@@ -503,7 +503,7 @@ public class CitaService {
                         for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
                             String fcmToken = disp.getFcmToken();
                             if (fcmToken != null && !fcmToken.trim().isEmpty()) {
-                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "CITA");
+                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "VIDEOLLAMADA", String.valueOf(cita.getId()));
                                 System.out.println("✅ Push FCM Videollamada enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
                             }
                         }
@@ -533,7 +533,7 @@ public class CitaService {
                         for (com.clinica.real.madrid.backend_citas.model.DispositivoActivo disp : dispositivos) {
                             String fcmToken = disp.getFcmToken();
                             if (fcmToken != null && !fcmToken.trim().isEmpty()) {
-                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "HISTORIAL");
+                                notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje, "HISTORIAL", null);
                                 System.out.println("✅ Push FCM Historial enviado al paciente: " + pUser.getCorreo() + " (Dispositivo: " + disp.getId() + ")");
                             }
                         }

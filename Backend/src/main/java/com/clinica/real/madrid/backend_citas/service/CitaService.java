@@ -457,12 +457,15 @@ public class CitaService {
                         pushTitulo = "Solicitud Denegada ⚠️";
                         pushMensaje = String.format("Tu solicitud para cancelar la cita del %s a las %s no pudo ser aprobada.", fecha, hora);
                     } else {
-                        pushTitulo = "Actualización de Cita";
-                        pushMensaje = String.format("Tu cita del %s a las %s ha sido actualizada.", fecha, hora);
+                        // Ignorar otras acciones intermedias para no saturar al usuario con push
+                        pushTitulo = null;
+                        pushMensaje = null;
                     }
 
-                    notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
-                    System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo());
+                    if (pushTitulo != null) {
+                        notificationService.sendNotification(fcmToken, pushTitulo, pushMensaje);
+                        System.out.println("✅ Push FCM enviado al paciente: " + pUser.getCorreo());
+                    }
                 }
             } catch (Exception e) {
                 System.err.println("⚠️ Error al enviar Push FCM: " + e.getMessage());

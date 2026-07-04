@@ -199,7 +199,7 @@
 
           <div class="sede-list-item" *ngFor="let sede of sedes" (click)="centrarMapa(sede)">
             <div class="sede-image">
-              <img [src]="sede.img" [alt]="sede.nombre">
+              <img [src]="sede.img" [alt]="sede.nombre" width="400" height="400">
             </div>
             <div class="sede-info">
               <h4 class="sede-title">{{ sede.nombre }}</h4>

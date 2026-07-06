@@ -93,7 +93,7 @@
 }
 
 .apt-status.confirmed { background: rgba(16, 185, 129, 0.05); color: #098246; }
-.apt-status.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.apt-status.pending { background: rgba(245, 158, 11, 0.05); color: #b45309; }
 .apt-status.in-progress { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
 
 .btn-primary-action {

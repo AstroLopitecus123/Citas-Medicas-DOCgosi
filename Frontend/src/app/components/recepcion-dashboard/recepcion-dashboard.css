@@ -30,10 +30,10 @@
 
 .kpi-indigo .stat-icon { background: rgba(79, 70, 229, 0.1); color: #4f46e5; }
 .kpi-orange .stat-icon { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.1); color: #098246; }
+.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.05); color: #098246; }
 
 .stat-info h3 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #1e293b; }
-.stat-info p { margin: 0; color: #64748b; font-size: 0.9rem; font-weight: 600; }
+.stat-info p { margin: 0; color: #475569; font-size: 0.9rem; font-weight: 600; }
 
 .dashboard-grid {
   display: grid;

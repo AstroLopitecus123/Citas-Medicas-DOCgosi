@@ -48,7 +48,7 @@
 }
 
 .checkout-header p {
-  color: #64748b;
+  color: #475569;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -87,7 +87,7 @@
 }
 
 .resumen-row .label {
-  color: #64748b;
+  color: #475569;
 }
 
 .resumen-row .value {
@@ -148,7 +148,7 @@
 .opcion-info p {
   margin: 0;
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
 }
 
 .opcion-arrow {
@@ -163,7 +163,7 @@
 .btn-cancel {
   background: none;
   border: none;
-  color: #64748b;
+  color: #475569;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.95rem;
@@ -187,6 +187,6 @@
 }
 
 .loading-state p {
-  color: #64748b;
+  color: #475569;
   font-weight: 600;
 }

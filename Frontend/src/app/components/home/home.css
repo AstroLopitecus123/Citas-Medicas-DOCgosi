@@ -686,7 +686,7 @@
 .rank-badge.gold { background: linear-gradient(135deg, #0a7c4a, #098246); }
 .rank-badge.silver { background: linear-gradient(135deg, #1e293b, #334155); }
 .rank-badge.bronze { background: linear-gradient(135deg, #334155, #475569); }
-.rank-badge.rank4 { background: linear-gradient(135deg, #64748b, #cbd5e1); color: #1e293b; }
+.rank-badge.rank4 { background: linear-gradient(135deg, #475569, #cbd5e1); color: #1e293b; }
 
 .doc-pic { 
   width: 160px; height: 160px; margin: 15px auto 25px; border-radius: 50%; 
@@ -784,7 +784,7 @@
 .sedes-sidebar::-webkit-scrollbar { width: 6px; }
 .sedes-sidebar::-webkit-scrollbar-track { background: #f1f5f9; }
 .sedes-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-.sedes-sidebar::-webkit-scrollbar-thumb:hover { background: #64748b; }
+.sedes-sidebar::-webkit-scrollbar-thumb:hover { background: #475569; }
 
 /* CABECERA DEL SIDEBAR (BUSCADOR) */
 .sidebar-header {
@@ -1213,7 +1213,7 @@
 
 .footer-tagline {
   font-size: 1rem;
-  color: #64748b;
+  color: #475569;
   line-height: 1.5;
   margin: 0;
 }
@@ -1251,7 +1251,7 @@
   flex-wrap: wrap;
   gap: 20px;
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
 }
 
 .copyright {
@@ -1259,7 +1259,7 @@
 }
 
 .legal-links a {
-  color: #64748b;
+  color: #475569;
   text-decoration: none;
   transition: color 0.2s ease;
 }

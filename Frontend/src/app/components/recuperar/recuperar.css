@@ -129,12 +129,12 @@
 
 .feature-item span {
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
 }
 
 .hero-disclaimer {
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
   line-height: 1.5;
   border-top: 1px solid rgba(0,0,0,0.05);
   padding-top: 20px;
@@ -191,7 +191,7 @@
 
 .instructor-text {
   text-align: left;
-  color: #64748b;
+  color: #475569;
   font-size: 1rem;
   margin-bottom: 30px;
   line-height: 1.5;
@@ -276,7 +276,7 @@
 .crear-cuenta-wrapper {
   text-align: center;
   font-size: 1rem;
-  color: #64748b;
+  color: #475569;
   border-top: 1px dashed #e2e8f0;
   padding-top: 30px;
 }

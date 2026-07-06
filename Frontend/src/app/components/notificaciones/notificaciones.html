@@ -17,7 +17,7 @@
         </header>
 
         <div class="premium-card" style="padding: 15px 25px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center;" *ngIf="!modoDashboard">
-            <span style="font-weight: 600; color: #64748b;">Filtrar:</span>
+            <span style="font-weight: 600; color: #475569;">Filtrar:</span>
             <button class="filter-chip" [class.active]="filtro === 'TODAS'" (click)="filtro = 'TODAS'">
                 Todas ({{ notificaciones.length }})
             </button>
@@ -62,7 +62,7 @@
         </div>
         <div>
           <h3>{{ notificacionSeleccionada?.titulo }}</h3>
-          <p style="font-size: 0.8rem; margin:0; color: #64748b;">Detalle de la Notificación</p>
+          <p style="font-size: 0.8rem; margin:0; color: #475569;">Detalle de la Notificación</p>
         </div>
       </div>
       <button class="btn-close-glass" (click)="cerrarModal()">&times;</button>
@@ -70,7 +70,7 @@
 
     <div class="modal-body-glass">
       <p class="notif-message-full">{{ notificacionSeleccionada?.mensaje }}</p>
-      <small style="color: #64748b; display: block; margin-top: 15px;">
+      <small style="color: #475569; display: block; margin-top: 15px;">
         <i class="fa-solid fa-clock"></i> Recibida el {{ notificacionSeleccionada?.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
       </small>
     </div>

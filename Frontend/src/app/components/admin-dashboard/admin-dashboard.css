@@ -47,11 +47,11 @@
 }
 
 .module-body h3 { margin: 0 0 6px; font-size: 1.15rem; font-weight: 800; color: #0f172a; }
-.module-body p { margin: 0; font-size: 0.88rem; color: #64748b; line-height: 1.5; }
+.module-body p { margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5; }
 
 .module-stat { text-align: right; margin: 0 15px; }
 .stat-number { display: block; font-size: 2rem; font-weight: 900; color: #0f172a; line-height: 1; }
-.stat-label { font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
+.stat-label { font-size: 0.75rem; color: #475569; font-weight: 700; text-transform: uppercase; }
 
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
 .module-card:hover .module-arrow { color: #098246; transform: translateX(5px); }

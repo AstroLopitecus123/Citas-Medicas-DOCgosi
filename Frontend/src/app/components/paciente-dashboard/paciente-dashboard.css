@@ -35,7 +35,7 @@
 .kpi-info .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
 .stat-info h3 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1e293b; line-height: 1.1; }
-.stat-info p { margin: 2px 0 0; color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+.stat-info p { margin: 2px 0 0; color: #475569; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
 
 .dashboard-grid {
   display: grid;
@@ -70,7 +70,7 @@
 .action-btn i { font-size: 1.8rem; color: #0a7c4a; }
 .btn-content { display: flex; flex-direction: column; }
 .btn-content strong { font-size: 1.1rem; color: #1e293b; }
-.btn-content span { font-size: 0.85rem; color: #64748b; }
+.btn-content span { font-size: 0.85rem; color: #475569; }
 
 .action-btn:hover { background: #0a7c4a; transform: scale(1.02); }
 .action-btn:hover strong, .action-btn:hover span, .action-btn:hover i { color: white; }
@@ -143,7 +143,7 @@
     display: block;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #64748b;
+    color: #475569;
     margin-bottom: 5px;
 }
 
@@ -241,13 +241,13 @@
 
 .mini-content span {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #475569;
 }
 
 .empty-mini {
     text-align: center;
     padding: 20px;
-    color: #64748b;
+    color: #475569;
     font-size: 0.85rem;
 }
 

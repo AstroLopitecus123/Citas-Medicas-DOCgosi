@@ -27,7 +27,7 @@
 
 .drag-hint {
   font-size: 0.78rem;
-  color: #64748b;
+  color: #475569;
   text-align: center;
   margin: 0;
 }
@@ -47,13 +47,13 @@
 
 .zoom-icon-sm {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #475569;
   flex-shrink: 0;
 }
 
 .zoom-icon-lg {
   font-size: 1.1rem;
-  color: #64748b;
+  color: #475569;
   flex-shrink: 0;
 }
 

@@ -139,7 +139,7 @@
           <div class="avatar-wrapper-edit" style="position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #098246; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden;">
             <img *ngIf="ctrl.fotoUrlEditado; else defaultEditAvatar" [src]="ctrl.fotoUrlEditado" style="width: 100%; height: 100%; object-fit: cover;" alt="Vista previa de foto">
             <ng-template #defaultEditAvatar>
-              <i class="fa-solid fa-user-doctor" style="font-size: 3rem; color: #64748b;"></i>
+              <i class="fa-solid fa-user-doctor" style="font-size: 3rem; color: #475569;"></i>
             </ng-template>
             
             <label class="avatar-upload-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.6); color: white; text-align: center; padding: 4px 0; font-size: 0.8rem; cursor: pointer; transition: 0.2s;" title="Cambiar foto de perfil">
@@ -147,7 +147,7 @@
               <input type="file" (change)="ctrl.onFotoSelected($event)" accept="image/*" style="display: none;">
             </label>
           </div>
-          <span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">Presiona la cámara para cambiar foto</span>
+          <span style="font-size: 0.8rem; color: #475569; font-weight: 500;">Presiona la cámara para cambiar foto</span>
         </div>
 
         <!-- Campos de Datos -->

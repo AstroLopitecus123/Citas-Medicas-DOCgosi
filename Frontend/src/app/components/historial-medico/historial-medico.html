@@ -22,7 +22,7 @@
     <!-- Cargando -->
     <div *ngIf="cargando" class="loading-state-premium" style="text-align: center; padding: 40px;">
       <div class="spinner-premium" style="width: 45px; height: 45px; border: 4px solid #f3f3f3; border-top: 4px solid #1d4ed8; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
-      <p style="color: #64748b; font-weight: 600;">Recuperando expedientes médicos...</p>
+      <p style="color: #475569; font-weight: 600;">Recuperando expedientes médicos...</p>
     </div>
 
     <!-- Empty State sin registros -->
@@ -32,14 +32,14 @@
       </div>
       <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
         <h3 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">Aún no tienes registros médicos</h3>
-        <p style="color: #64748b; margin-bottom: 25px; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Tus diagnósticos aparecerán aquí una vez que completes tus consultas con nuestros especialistas.</p>
+        <p style="color: #475569; margin-bottom: 25px; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Tus diagnósticos aparecerán aquí una vez que completes tus consultas con nuestros especialistas.</p>
         <button class="btn-premium-action" routerLink="/mis-citas">
           <i class="fa-solid fa-calendar-check"></i> Ver mis citas agendadas
         </button>
       </ng-container>
       <ng-container *ngIf="usuario?.rol !== 'PACIENTE'">
         <h3 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">No hay historias clínicas registradas</h3>
-        <p style="color: #64748b; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Los expedientes aparecerán aquí una vez que los médicos registren los diagnósticos de los pacientes.</p>
+        <p style="color: #475569; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Los expedientes aparecerán aquí una vez que los médicos registren los diagnósticos de los pacientes.</p>
       </ng-container>
     </div>
 
@@ -57,7 +57,7 @@
         <i class="fa-solid fa-magnifying-glass-chart"></i>
       </div>
       <h3 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h3>
-      <p style="color: #64748b; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
+      <p style="color: #475569; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
     </div>
 
     <div *ngIf="!cargando && historiales.length > 0 && usuario?.rol === 'PACIENTE' && historialesFiltrados.length === 0" class="premium-card empty-state-dash" style="text-align: center; padding: 60px 40px; border-radius: 24px; background: white; box-shadow: 0 10px 35px rgba(0,0,0,0.02); border: 1.5px solid #f1f5f9;">
@@ -65,7 +65,7 @@
         <i class="fa-solid fa-magnifying-glass-chart"></i>
       </div>
       <h3 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h3>
-      <p style="color: #64748b; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
+      <p style="color: #475569; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
     </div>
 
 

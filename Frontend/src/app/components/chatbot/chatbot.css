@@ -174,7 +174,7 @@
 
 .qa-title {
   font-size: 0.8rem;
-  color: #64748b;
+  color: #475569;
   margin-bottom: 8px;
 }
 
@@ -204,7 +204,7 @@
 .chatbot-disclaimer {
   padding: 10px 15px;
   font-size: 0.75rem;
-  color: #64748b;
+  color: #475569;
   background: white;
   border-top: 1px solid #f1f5f9;
   text-align: justify;
@@ -261,7 +261,7 @@
 .chatbot-footer button {
   background: none;
   border: none;
-  color: #64748b;
+  color: #475569;
   font-size: 0.8rem;
   cursor: pointer;
   transition: 0.2s;

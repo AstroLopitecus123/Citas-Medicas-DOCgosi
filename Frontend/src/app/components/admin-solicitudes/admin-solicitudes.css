@@ -36,7 +36,7 @@
 }
 
 .header-content p {
-  color: #64748b;
+  color: #475569;
   margin: 5px 0 0 0;
 }
 
@@ -125,7 +125,7 @@
 .role-tag {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #64748b;
+  color: #475569;
   background: #f1f5f9;
   padding: 3px 10px;
   border-radius: 8px;
@@ -149,7 +149,7 @@
   font-size: 0.9rem;
 }
 
-.detail-item i { color: #64748b; width: 15px; }
+.detail-item i { color: #475569; width: 15px; }
 
 .detail-message {
   background: #f8fafc;
@@ -159,7 +159,7 @@
 }
 
 .detail-message strong { font-size: 0.8rem; color: #1e293b; display: block; margin-bottom: 5px; }
-.detail-message p { font-size: 0.85rem; color: #64748b; font-style: italic; margin: 0; }
+.detail-message p { font-size: 0.85rem; color: #475569; font-style: italic; margin: 0; }
 
 .card-footer {
   margin-top: 20px;

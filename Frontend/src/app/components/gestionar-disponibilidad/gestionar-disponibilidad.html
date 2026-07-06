@@ -13,10 +13,10 @@
 
         <div class="hours-counter-badge" [class.meets-requirement]="totalHorasSeleccionadas >= minimoHorasSemana"
              style="background: #fff; padding: 10px 18px; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center;">
-          <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 700;">Horas Semanales</span>
+          <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; font-weight: 700;">Horas Semanales</span>
           <div style="display: flex; align-items: baseline; gap: 4px;">
             <strong style="font-size: 1.2rem; color: #1e293b;">{{ totalHorasSeleccionadas }}</strong>
-            <span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">/ {{ minimoHorasSemana }}h</span>
+            <span style="font-size: 0.8rem; color: #475569; font-weight: 500;">/ {{ minimoHorasSemana }}h</span>
           </div>
         </div>
 
@@ -26,7 +26,7 @@
           </button>
           <div class="semana-indicator" style="display: flex; flex-direction: column; align-items: center; line-height: 1.1;">
             <strong style="font-size: 0.9rem; color: #1e293b;">Semana {{ semanaIndice + 1 }}</strong>
-            <span style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 800;">de 3</span>
+            <span style="font-size: 0.7rem; color: #475569; text-transform: uppercase; font-weight: 800;">de 3</span>
           </div>
           <button class="btn-icon" aria-label="Semana siguiente" (click)="siguienteSemana()" [disabled]="semanaIndice === 2" style="background: none; border: none; cursor: pointer; color: #475569;">
             <i class="fa-solid fa-chevron-right"></i>
@@ -96,7 +96,7 @@
            </div>
         </div>
 
-        <p style="margin-top: 25px; font-weight: 500; color: #64748b; font-size: 0.95rem; line-height: 1.5;">
+        <p style="margin-top: 25px; font-weight: 500; color: #475569; font-size: 0.95rem; line-height: 1.5;">
           La normativa institucional recomienda una carga diaria equilibrada. ¿Deseas autorizar y guardar esta configuración de todas formas?
         </p>
       </div>

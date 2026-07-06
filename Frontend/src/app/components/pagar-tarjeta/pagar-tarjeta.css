@@ -36,7 +36,7 @@
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader-card p { font-size: 1.1rem; font-weight: 700; color: #1a2a3a; margin: 0 0 6px; }
-.loader-card small { color: #64748b; font-size: 0.85rem; }
+.loader-card small { color: #475569; font-size: 0.85rem; }
 
 /* ========== SUCCESS ========== */
 .success-screen {
@@ -104,7 +104,7 @@
 }
 
 .success-card h2 { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
-.success-msg { color: #64748b; font-size: 0.95rem; margin-bottom: 30px; }
+.success-msg { color: #475569; font-size: 0.95rem; margin-bottom: 30px; }
 
 /* Receipt Style Detail */
 .purchase-receipt {
@@ -120,7 +120,7 @@
   font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #64748b;
+  color: #475569;
   letter-spacing: 1px;
 }
 .receipt-body { padding: 20px; }
@@ -130,7 +130,7 @@
   align-items: center;
   padding: 10px 0;
 }
-.item-label { font-size: 0.82rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.item-label { font-size: 0.82rem; color: #475569; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .item-label i { color: #098246; width: 14px; }
 .item-value { font-size: 0.85rem; color: #1e293b; font-weight: 700; text-align: right; }
 .receipt-divider { height: 1px; background: #e2e8f0; margin: 12px 0; border-top: 2px dashed #cbd5e1; }
@@ -155,7 +155,7 @@
 
 .btn-outline-success {
   background: white;
-  color: #64748b;
+  color: #475569;
   border: 1.5px solid #e2e8f0;
   padding: 14px;
   border-radius: 12px;
@@ -307,7 +307,7 @@
   gap: 12px;
 }
 .resumen-left i { color: #098246; font-size: 1.3rem; }
-.resumen-label { display: block; font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 700; }
+.resumen-label { display: block; font-size: 0.72rem; color: #475569; text-transform: uppercase; font-weight: 700; }
 .resumen-especialidad { font-size: 1rem; font-weight: 700; color: #1a2a3a; }
 .resumen-monto { font-size: 1.3rem; font-weight: 800; color: #098246; white-space: nowrap; }
 
@@ -402,7 +402,7 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #64748b;
+  color: #475569;
   font-size: 1rem;
 }
 
@@ -428,7 +428,7 @@
 
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-.txt-muted { color: #64748b; font-size: 0.85rem; cursor: help; }
+.txt-muted { color: #475569; font-size: 0.85rem; cursor: help; }
 .txt-visa { color: #1a1f71 !important; }
 .txt-mc { color: #e65100 !important; }
 
@@ -483,7 +483,7 @@
   justify-content: center;
   gap: 18px;
   font-size: 0.76rem;
-  color: #64748b;
+  color: #475569;
   font-weight: 600;
 }
 .security-badges span { display: flex; align-items: center; gap: 4px; }
@@ -508,7 +508,7 @@
 .btn-outline-green {
   background: transparent;
   border: 2px solid #e2e8f0;
-  color: #64748b;
+  color: #475569;
   padding: 12px 24px;
   border-radius: 30px;
   font-weight: 700;
@@ -551,7 +551,7 @@
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   background: #f8fafc;
-  color: #64748b;
+  color: #475569;
   font-size: 0.9rem;
   font-weight: 600;
 }

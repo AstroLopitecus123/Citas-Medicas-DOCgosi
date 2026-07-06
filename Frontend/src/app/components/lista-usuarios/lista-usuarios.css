@@ -13,7 +13,7 @@
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #64748b;
+  color: #475569;
   pointer-events: none;
 }
 
@@ -24,7 +24,7 @@
 
 /* CELDAS PERSONALIZADAS */
 .id-cell {
-  color: #64748b;
+  color: #475569;
   font-weight: 700;
   font-size: 0.85rem;
 }
@@ -42,7 +42,7 @@
 
 .user-email {
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
 }
 
 .contact-info {
@@ -64,7 +64,7 @@
 
 .dni-text {
   font-size: 0.8rem;
-  color: #64748b;
+  color: #475569;
 }
 
 .date-cell {

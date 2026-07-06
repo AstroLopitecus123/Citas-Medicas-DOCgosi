@@ -31,7 +31,7 @@
   align-items: center;
 }
 
-.label { color: #64748b; font-size: 0.95rem; }
+.label { color: #475569; font-size: 0.95rem; }
 .value { color: #1e293b; font-weight: 600; text-align: right; }
 .highlight { color: #0a7c4a; font-weight: 700; }
 
@@ -84,7 +84,7 @@
 }
 
 .status-text h2 { margin: 0; font-weight: 800; color: #1e293b; font-size: 1.5rem; }
-.status-text p { color: #64748b; font-size: 0.95rem; margin-top: 10px; line-height: 1.5; }
+.status-text p { color: #475569; font-size: 0.95rem; margin-top: 10px; line-height: 1.5; }
 
 .button-group {
   display: flex;

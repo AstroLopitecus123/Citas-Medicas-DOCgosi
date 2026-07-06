@@ -95,10 +95,10 @@
 }
 
 .feature-item strong { display: block; font-size: 1rem; color: #1e293b; }
-.feature-item span { font-size: 0.85rem; color: #64748b; }
+.feature-item span { font-size: 0.85rem; color: #475569; }
 
 .hero-disclaimer {
-  font-size: 0.85rem; color: #64748b;
+  font-size: 0.85rem; color: #475569;
   display: flex; gap: 10px;
   border-top: 1px solid rgba(0,0,0,0.05);
   padding-top: 20px;
@@ -125,7 +125,7 @@
 }
 
 .card-title { text-align: center; font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-bottom: 5px; }
-.instructor-text { text-align: center; color: #64748b; margin-bottom: 25px; }
+.instructor-text { text-align: center; color: #475569; margin-bottom: 25px; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
 
@@ -145,7 +145,7 @@
 .role-selector-compact { display: flex; gap: 10px; }
 .role-pill {
   flex: 1; padding: 10px; border: 1.5px solid #e2e8f0; border-radius: 12px;
-  text-align: center; cursor: pointer; font-weight: 700; color: #64748b;
+  text-align: center; cursor: pointer; font-weight: 700; color: #475569;
   transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 
@@ -163,7 +163,7 @@
 .btn-submit-premium:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(10, 124, 74, 0.3); }
 
 .back-footer { text-align: center; margin-top: 20px; }
-.back-footer a { color: #64748b; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.back-footer a { color: #475569; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
 .back-footer a:hover { color: #098246; }
 
 /* SUCCESS */

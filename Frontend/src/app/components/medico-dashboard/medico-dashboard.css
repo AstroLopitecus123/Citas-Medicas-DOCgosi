@@ -29,11 +29,11 @@
 }
 
 .kpi-blue .stat-icon { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
-.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.1); color: #098246; }
+.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.05); color: #098246; }
 .kpi-teal .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
 .stat-info h3 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #1e293b; }
-.stat-info p { margin: 0; color: #64748b; font-size: 0.9rem; font-weight: 600; }
+.stat-info p { margin: 0; color: #475569; font-size: 0.9rem; font-weight: 600; }
 
 .dashboard-split-view {
   display: grid;
@@ -49,7 +49,7 @@
 
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .view-all { color: #098246; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-.view-all:hover { color: #0d9488; text-decoration: underline; }
+.view-all:hover { color: #0f766e; text-decoration: underline; }
 
 .appointment-list { display: flex; flex-direction: column; gap: 15px; }
 .apt-item {
@@ -80,8 +80,8 @@
   min-width: 80px;
 }
 
-.apt-hour { font-size: 1.2rem; font-weight: 800; color: #098246; letter-spacing: -0.5px; }
-.apt-meridian { font-size: 0.75rem; font-weight: 700; color: #0d9488; text-transform: uppercase; }
+.apt-hour { font-size: 1.2rem; font-weight: 800; color: #065f37; letter-spacing: -0.5px; }
+.apt-meridian { font-size: 0.75rem; font-weight: 700; color: #0f766e; text-transform: uppercase; }
 
 .apt-status {
   padding: 6px 14px;
@@ -92,7 +92,7 @@
   letter-spacing: 0.5px;
 }
 
-.apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #098246; }
+.apt-status.confirmed { background: rgba(16, 185, 129, 0.05); color: #098246; }
 .apt-status.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .apt-status.in-progress { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
 
@@ -100,7 +100,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #14b8a6, #0d9488);
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
   color: white;
   border: none;
   display: flex;

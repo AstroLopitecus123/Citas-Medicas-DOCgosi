@@ -107,7 +107,7 @@
     align-items: center;
     gap: 10px;
     font-size: 0.8rem;
-    color: #64748b;
+    color: #475569;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -193,7 +193,7 @@
 .modal-header-glass p {
     margin: 0;
     font-size: 0.9rem;
-    color: #64748b;
+    color: #475569;
 }
 
 
@@ -272,7 +272,7 @@
     right: 15px;
     background: none;
     border: none;
-    color: #64748b;
+    color: #475569;
     cursor: pointer;
     padding: 5px;
 }

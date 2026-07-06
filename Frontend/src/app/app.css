@@ -251,7 +251,7 @@
 
 .welcome-text p {
   margin: 6px 0 0 !important;
-  color: #64748b !important;
+  color: #475569 !important;
   font-size: 1.05rem !important;
   font-weight: 500 !important;
 }
@@ -305,7 +305,7 @@
   left: 18px;
   top: 50%;
   transform: translateY(-50%);
-  color: #64748b;
+  color: #475569;
   font-size: 1rem;
 }
 
@@ -432,7 +432,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #64748b;
+  color: #475569;
   font-weight: 800;
   border-bottom: 1px solid #edf2f7;
 }
@@ -697,7 +697,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #64748b;
+  color: #475569;
   cursor: pointer;
   transition: all 0.2s ease;
   line-height: 1;
@@ -791,7 +791,7 @@
 
 .subtitle {
   margin: 8px 0 0;
-  color: #64748b;
+  color: #475569;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -845,12 +845,12 @@
 }
 
 .stat-info h3 { font-size: 1.6rem; font-weight: 900; margin: 0; color: #0f172a; line-height: 1; }
-.stat-info p { margin: 4px 0 0; color: #64748b; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.stat-info p { margin: 4px 0 0; color: #475569; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
 /* Paleta de Colores Dashboard (Todos Verdes/MÃ©dicos) */
 .kpi-primary .stat-icon { background: #e6fff4; color: #098246; }
 .kpi-success .stat-icon { background: #f0fdf4; color: #16a34a; }
-.kpi-info .stat-icon { background: #f0fdfa; color: #0d9488; }
+.kpi-info .stat-icon { background: #f0fdfa; color: #0f766e; }
 .kpi-warning .stat-icon { background: #fffcf0; color: #ca8a04; }
 
 /* Tarjetas Premium de Contenido */
@@ -895,7 +895,7 @@
 
 .action-btn i { font-size: 1.6rem; color: #098246; transition: 0.3s; }
 .action-btn strong { display: block; font-size: 1rem; color: #0f172a; }
-.action-btn span { font-size: 0.8rem; color: #64748b; }
+.action-btn span { font-size: 0.8rem; color: #475569; }
 
 .action-btn:hover {
   background: #098246;
@@ -983,7 +983,7 @@
   cursor: pointer !important;
   background: white !important;
   transition: all 0.2s !important;
-  color: #64748b !important;
+  color: #475569 !important;
   font-size: 0.85rem !important;
   font-weight: 700 !important;
   gap: 8px !important;
@@ -1063,7 +1063,7 @@
 .modal-header-glass p {
   margin: 4px 0 0 !important;
   font-size: 0.9rem !important;
-  color: #64748b !important;
+  color: #475569 !important;
   font-weight: 500 !important;
 }
 
@@ -1081,7 +1081,7 @@
   align-items: center !important;
   justify-content: center !important;
   transition: all 0.2s ease !important;
-  color: #64748b !important;
+  color: #475569 !important;
   font-size: 1.2rem !important;
 }
 
@@ -1160,7 +1160,7 @@
   justify-content: center !important;
   padding: 100px 40px !important;
   text-align: center !important;
-  color: #64748b !important;
+  color: #475569 !important;
   margin: 40px auto !important;
   max-width: 650px !important;
   background: white !important;
@@ -1186,7 +1186,7 @@
 
 .empty-state span {
   font-size: 1.1rem !important;
-  color: #64748b !important;
+  color: #475569 !important;
   max-width: 450px !important;
   line-height: 1.6 !important;
 }

@@ -44,7 +44,7 @@
 
             <!-- Filtros de tiempo: solo para el rol MÉDICO -->
             <div class="premium-card filters-bar-premium" *ngIf="ctrl.usuario.rol === 'MEDICO'" style="padding: 12px 20px;">
-                <span style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
                     <i class="fa-solid fa-calendar-days" style="margin-right:6px;"></i>Período:
                 </span>
                 <div class="status-tabs-modern">
@@ -192,12 +192,12 @@
                         <div class="apt-time-block">
                             <span class="apt-hour">{{ cita.fecha | date:'h:mm' }}</span>
                             <span class="apt-meridian">{{ cita.fecha | date:'a' }}</span>
-                            <span style="font-size: 0.7rem; font-weight: 700; color: #64748b; margin-top: 4px;">{{ cita.fecha | date:'dd/MM' }}</span>
+                            <span style="font-size: 0.7rem; font-weight: 700; color: #475569; margin-top: 4px;">{{ cita.fecha | date:'dd/MM' }}</span>
                         </div>
                         
                         <div class="apt-patient-info" style="flex: 1;">
                             <h4 style="margin: 0; font-weight: 700; color: #1e293b; font-size: 1.1rem;">{{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}</h4>
-                            <small style="color: #64748b; font-weight: 500;">
+                            <small style="color: #475569; font-weight: 500;">
                                 <i class="fa-solid fa-notes-medical" style="margin-right: 4px;"></i> 
                                 <span *ngIf="cita.estado === 'SOLICITUD_REPROGRAMACION'">Propone: {{ cita.fechaPropuesta | date:'dd/MM HH:mm' }}</span>
                                 <span *ngIf="cita.estado !== 'SOLICITUD_REPROGRAMACION'">{{ (cita.motivo && cita.motivo.length > 50) ? (cita.motivo.substring(0, 50) + '...') : (cita.motivo || 'Consulta general') }}</span>
@@ -242,7 +242,7 @@
                     <div class="empty-state" style="background: white; border-radius: 20px; border: 1px solid #e2e8f0; padding: 40px;">
                         <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
                         <p style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin: 0;">No se encontraron citas</p>
-                        <span style="color: #64748b; font-size: 0.95rem;">Ajusta tus filtros o busca otro paciente.</span>
+                        <span style="color: #475569; font-size: 0.95rem;">Ajusta tus filtros o busca otro paciente.</span>
                     </div>
                 </ng-template>
             </div>

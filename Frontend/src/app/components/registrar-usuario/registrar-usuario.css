@@ -135,7 +135,7 @@
 
 .feature-item span {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #475569;
 }
 
 /* ===== FORMULARIO (Derecha) ===== */
@@ -163,7 +163,7 @@
 .crear-cuenta-wrapper {
   text-align: center;
   font-size: 0.85rem;
-  color: #64748b;
+  color: #475569;
   border-top: 1px dashed #e2e8f0;
   padding-top: 15px;
   margin-top: 15px;
@@ -197,7 +197,7 @@
 
 .instructor-text {
   text-align: center;
-  color: #64748b;
+  color: #475569;
   font-size: 0.85rem;
   margin-bottom: 15px; /* Reducido */
 }
@@ -255,7 +255,7 @@
   position: relative;
   background: #f8fafc;
   padding: 0 15px;
-  color: #64748b;
+  color: #475569;
   font-size: 0.8rem;
   font-weight: 600;
   z-index: 2;
@@ -346,7 +346,7 @@
 .pw-chips span {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #64748b;
+  color: #475569;
   background: white;
   padding: 4px 10px;
   border-radius: 20px;
@@ -397,7 +397,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #64748b;
+  color: #475569;
   cursor: pointer;
   font-size: 1.1rem;
   display: flex;
@@ -487,7 +487,7 @@
 .promo-text p {
   margin: 0;
   font-size: 0.8rem;
-  color: #64748b;
+  color: #475569;
   line-height: 1.3;
 }
 
@@ -545,7 +545,7 @@
 .btn-back-step {
   background: none;
   border: none;
-  color: #64748b;
+  color: #475569;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -559,7 +559,7 @@
 
 .step-desc {
   text-align: center;
-  color: #64748b;
+  color: #475569;
   font-size: 0.9rem;
   line-height: 1.5;
   margin-bottom: 25px;
@@ -610,7 +610,7 @@
 
 .acc-card-btn span:last-child {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #475569;
   text-align: center;
 }
 

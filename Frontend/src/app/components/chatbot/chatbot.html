@@ -66,6 +66,7 @@
       [(ngModel)]="userInput" 
       (keyup.enter)="sendMessage()"
       [disabled]="isLoading"
+      aria-label="Escribe tu mensaje para el asistente"
     />
     <button aria-label="Enviar mensaje" (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
       <i class="fa-solid fa-paper-plane"></i>

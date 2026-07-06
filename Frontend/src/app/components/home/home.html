@@ -1,8 +1,9 @@
 <div class="home-container">
 
-  <section class="hero">
+  <section id="inicio" class="hero">
     <div class="hero-content">
       <div class="hero-text">
+        <h1 class="sr-only">Clínica R.E.T.O Salud</h1>
         <h2 class="mnemonic-title">R.E.T.O Salud</h2>
         <ul class="mnemonic-list">
           <li><span class="letter">R</span>apidez y experiencia</li>
@@ -20,7 +21,7 @@
         </div>
       </div>
       <div class="hero-image">
-        <img src="assets/images/LogoFull2.webp" width="677" height="369" alt="Logo R.E.T.O Salud" fetchpriority="high" appNarrator>
+        <img src="assets/images/LogoFull2.webp" width="677" height="369" alt="" fetchpriority="high" appNarrator>
       </div>
     </div>
     <button class="scroll-down-btn" (click)="scrollTo('about', $event)" aria-label="Ir a Quiénes Somos">
@@ -28,12 +29,12 @@
     </button>
   </section>
 
-  <section class="about">
+  <section id="about" class="about">
     <div class="section-container about-flex">
       <div class="about-images">
         <div class="img-collage">
-          <img src="assets/images/ServiceNurse.webp" width="350" height="450" class="img-1" alt="Enfermera" appNarrator altText="Enfermera profesional brindando cuidados domiciliarios">
-          <img src="assets/images/HomeDoctor.webp" width="350" height="320" class="img-2" alt="Equipo Medico" appNarrator altText="Equipo médico de R.E.T.O Salud colaborando para tu bienestar">
+          <img src="assets/images/ServiceNurse.webp" width="350" height="450" class="img-1" alt="" appNarrator altText="Enfermera profesional brindando cuidados domiciliarios">
+          <img src="assets/images/HomeDoctor.webp" width="350" height="320" class="img-2" alt="" appNarrator altText="Equipo médico de R.E.T.O Salud colaborando para tu bienestar">
           <div class="experience-badge tech-badge">
             <span class="years"><i class="fa-solid fa-laptop-medical"></i></span>
             <span class="txt">100% Digital</span>
@@ -68,7 +69,7 @@
     </svg>
   </div>
 
-  <section class="services">
+  <section id="servicios" class="services">
     <div class="section-container services-flex">
 
       <div class="services-content anim-slide-in-left">
@@ -91,7 +92,7 @@
             <div class="honeycomb-cell__wrapper">
 
               <div class="honeycomb-cell__front">
-                <img [src]="e.imagen" width="220" height="254" class="honeycomb-cell__image" [alt]="e.titulo">
+                <img [src]="e.imagen" width="220" height="254" class="honeycomb-cell__image" alt="">
                 <div class="honeycomb-cell__overlay"></div>
                 <h3 class="honeycomb-cell__title">{{ e.titulo }}</h3>
               </div>
@@ -138,7 +139,7 @@
     </svg>
   </div>
 
-  <section class="doctors">
+  <section id="doctores" class="doctors">
     <div class="section-container">
       <span class="sub-title" style="display:block; text-align:center; margin-bottom:8px;">Reconocimiento a la excelencia</span>
       <h2 class="section-title">Top Doctores del Mes</h2>
@@ -181,7 +182,7 @@
     </svg>
   </div>
 
-  <section class="sedes">
+  <section id="sedes" class="sedes">
     <div class="section-container">
       <div class="sedes-header">
         <h2 class="section-title">Nuestras Sedes</h2>
@@ -229,7 +230,7 @@
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-left">
-        <img src="assets/images/LogoFull2.webp" width="180" alt="Logo R.E.T.O Salud" class="footer-logo">
+        <img src="assets/images/LogoFull2.webp" width="180" alt="" class="footer-logo">
         <p class="footer-tagline">Tecnología y vocación al servicio de tu salud.</p>
       </div>
       

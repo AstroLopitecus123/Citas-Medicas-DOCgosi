@@ -164,7 +164,7 @@
             <i class="fa-solid fa-fill-drip"></i>
             <div class="picker-info">
               <label>Color Fondo</label>
-              <input type="color" [value]="customBg" (input)="actualizarColor('BG', $event)">
+              <input type="color" [value]="customBg" (input)="actualizarColor('BG', $event)" aria-label="Color de fondo">
             </div>
           </div>
 
@@ -172,7 +172,7 @@
             <i class="fa-solid fa-font"></i>
             <div class="picker-info">
               <label>Color Texto</label>
-              <input type="color" [value]="customText" (input)="actualizarColor('TEXT', $event)">
+              <input type="color" [value]="customText" (input)="actualizarColor('TEXT', $event)" aria-label="Color de texto">
             </div>
           </div>
         </div>

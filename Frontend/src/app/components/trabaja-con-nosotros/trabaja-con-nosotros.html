@@ -55,36 +55,36 @@
           <div class="form-section-compact">
             <div class="form-grid">
               <div class="input-group">
-                <label>Nombre</label>
-                <input type="text" [(ngModel)]="solicitud.nombre" name="nombre" placeholder="Ej: Juan" required>
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" [(ngModel)]="solicitud.nombre" name="nombre" placeholder="Ej: Juan" required>
               </div>
               <div class="input-group">
-                <label>Apellido</label>
-                <input type="text" [(ngModel)]="solicitud.apellido" name="apellido" placeholder="Ej: Pérez" required>
+                <label for="apellido">Apellido</label>
+                <input id="apellido" type="text" [(ngModel)]="solicitud.apellido" name="apellido" placeholder="Ej: Pérez" required>
               </div>
             </div>
 
             <div class="form-grid">
               <div class="input-group">
-                <label>Correo Electrónico</label>
-                <input type="email" [(ngModel)]="solicitud.correo" name="correo" placeholder="juan.perez@gmail.com" required>
+                <label for="correo">Correo Electrónico</label>
+                <input id="correo" type="email" [(ngModel)]="solicitud.correo" name="correo" placeholder="juan.perez@gmail.com" required>
               </div>
               <div class="input-group">
-                <label>DNI / ID</label>
-                <input type="text" inputmode="numeric" [(ngModel)]="solicitud.dni" name="dni" 
+                <label for="dni">DNI / ID</label>
+                <input id="dni" type="text" inputmode="numeric" [(ngModel)]="solicitud.dni" name="dni" 
                        placeholder="Solo números" (keypress)="soloNumeros($event)" required>
               </div>
             </div>
 
             <div class="input-group">
-              <label>Teléfono</label>
-              <input type="text" inputmode="numeric" [(ngModel)]="solicitud.telefono" name="telefono" 
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" type="text" inputmode="numeric" [(ngModel)]="solicitud.telefono" name="telefono" 
                      placeholder="9 dígitos" (keypress)="soloNumeros($event)" required>
             </div>
 
             <div class="input-group">
-              <label>Puesto Solicitado</label>
-              <div class="role-selector-compact">
+              <div class="pseudo-label" style="display: block; font-size: 0.85rem; font-weight: 700; color: #475569; margin-bottom: 8px;">Puesto Solicitado</div>
+              <div class="role-selector-compact" aria-label="Selecciona tu puesto solicitado">
                 <div class="role-pill" [class.active]="solicitud.puesto === 'MEDICO'" (click)="solicitud.puesto = 'MEDICO'">
                   <i class="fa-solid fa-user-doctor"></i> Médico
                 </div>
@@ -95,8 +95,8 @@
             </div>
 
             <div class="input-group">
-              <label>Mensaje breve</label>
-              <textarea [(ngModel)]="solicitud.mensaje" name="mensaje" rows="2" placeholder="Experiencia relevante..."></textarea>
+              <label for="mensaje">Mensaje breve</label>
+              <textarea id="mensaje" [(ngModel)]="solicitud.mensaje" name="mensaje" rows="2" placeholder="Experiencia relevante..."></textarea>
             </div>
           </div>
 

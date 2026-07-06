@@ -255,7 +255,7 @@
   position: relative;
   background: #f8fafc;
   padding: 0 15px;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.8rem;
   font-weight: 600;
   z-index: 2;
@@ -263,7 +263,7 @@
 
 .back-link a {
   text-decoration: none;
-  color: #0fbf6a;
+  color: #0a7c4a;
   font-weight: 700;
   font-size: 0.85rem;
   display: flex;

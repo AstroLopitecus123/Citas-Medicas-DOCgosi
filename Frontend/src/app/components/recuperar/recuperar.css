@@ -171,7 +171,7 @@
 .back-link { margin-bottom: 25px; }
 .back-link a {
   text-decoration: none;
-  color: #0fbf6a;
+  color: #0a7c4a;
   font-weight: 700;
   font-size: 0.9rem;
   display: flex;
@@ -179,7 +179,7 @@
   gap: 8px;
   transition: 0.3s;
 }
-.back-link a:hover { transform: translateX(-5px); color: #0a7c4a; }
+.back-link a:hover { transform: translateX(-5px); color: #086039; }
 
 .card-title {
   text-align: left;

@@ -149,7 +149,7 @@
   transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 
-.role-pill.active { border-color: #0fbf6a; background: #f0fdf4; color: #0fbf6a; } /* CAMBIADO A VERDE */
+.role-pill.active { border-color: #0fbf6a; background: #f0fdf4; color: #0a7c4a; } /* CAMBIADO A VERDE OSCURO */
 
 .btn-submit-premium {
   width: 100%; padding: 16px;

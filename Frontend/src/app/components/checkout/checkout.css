@@ -31,7 +31,7 @@
   width: 70px;
   height: 70px;
   background: #f4fdf7;
-  color: #065f37;
+  color: #098246;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
 }
 
 .resumen-row .highlight {
-  color: #065f37;
+  color: #098246;
   font-weight: 800;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .opcion-card:hover {
-  border-color: #065f37;
+  border-color: #098246;
   box-shadow: 0 8px 20px rgba(15, 191, 106, 0.1);
   transform: translateY(-2px);
 }
@@ -132,7 +132,7 @@
 }
 
 .text-primary { color: #6366f1; } /* Stripe blurple ish */
-.text-success { color: #065f37; }
+.text-success { color: #098246; }
 
 .opcion-info {
   flex-grow: 1;
@@ -157,7 +157,7 @@
 }
 
 .opcion-card:hover .opcion-arrow {
-  color: #065f37;
+  color: #098246;
 }
 
 .btn-cancel {
@@ -178,7 +178,7 @@
 .loading-state {
   text-align: center;
   padding: 50px;
-  color: #065f37;
+  color: #098246;
 }
 
 .loading-state i {

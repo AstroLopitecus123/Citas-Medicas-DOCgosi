@@ -1,6 +1,6 @@
 <div class="admin-layout" *ngIf="!cargando; else loader">
 
-    <header class="premium-welcome-banner" style="border-left: 6px solid #065f37;">
+    <header class="premium-welcome-banner" style="border-left: 6px solid #098246;">
       <div class="welcome-icon-box">
         <i class="fa-solid fa-user-gear"></i>
       </div>
@@ -256,7 +256,7 @@
     <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
         <div class="modal-header-glass">
             <div class="header-info">
-                <div class="header-icon-box" style="background: rgba(15,191,106,0.1); color: #065f37;">
+                <div class="header-icon-box" style="background: rgba(15,191,106,0.1); color: #098246;">
                     <i class="fa-solid fa-crop-simple"></i>
                 </div>
                 <div>
@@ -273,7 +273,7 @@
               [imageFile]="selectedImageFile"
               (cancelar)="cancelarRecorte()"
             ></app-avatar-cropper>
-            <div *ngIf="subiendoFoto" style="color:#065f37; font-weight:600;">
+            <div *ngIf="subiendoFoto" style="color:#098246; font-weight:600;">
                 <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
             </div>
         </div>

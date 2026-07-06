@@ -65,7 +65,7 @@
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-left: 8px solid #065f37; 
+  border-left: 8px solid #098246; 
   padding: 45px 55px; 
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
   margin-left: 320px; /* Ajustado para que no empuje tanto al otro panel */
@@ -121,7 +121,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
-  color: #065f37;
+  color: #098246;
   box-shadow: 0 8px 15px rgba(10, 124, 74, 0.08);
   flex-shrink: 0;
 }
@@ -183,8 +183,8 @@
 }
 
 .crear-cuenta-link:hover {
-  color: #065f37;
-  border-bottom-color: #065f37;
+  color: #098246;
+  border-bottom-color: #098246;
 }
 
 .card-title {
@@ -306,7 +306,7 @@
 }
 
 .input-group input:focus {
-  border-color: #065f37;
+  border-color: #098246;
   background: #ffffff;
   outline: none;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
@@ -357,13 +357,13 @@
 .pw-chips span.valid {
   color: #0a7c4a;
   background: #f0fff4;
-  border-color: #065f37;
+  border-color: #098246;
 }
 
 /* BOTONES */
 .btn-submit {
   width: 100%;
-  background: linear-gradient(135deg, #0a7c4a 0%, #065f37 100%);
+  background: linear-gradient(135deg, #0a7c4a 0%, #098246 100%);
   color: white;
   font-weight: 700;
   padding: 12px; /* Reducido */
@@ -409,7 +409,7 @@
 }
 
 .eye-btn:hover {
-  color: #065f37;
+  color: #098246;
 }
 
 /* MENSAJES */
@@ -468,7 +468,7 @@
 
 .accessibility-promo-card.activated {
   background: #f0fdf4;
-  border: 2px solid #065f37;
+  border: 2px solid #098246;
   border-style: solid;
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.1);
 }
@@ -505,14 +505,14 @@
 }
 
 .btn-config-visual:hover {
-  border-color: #065f37;
-  color: #065f37;
+  border-color: #098246;
+  color: #098246;
   box-shadow: 0 4px 12px rgba(15, 191, 106, 0.1);
 }
 
 .accessibility-promo-card.activated .btn-config-visual {
-  background: #065f37;
-  border-color: #065f37;
+  background: #098246;
+  border-color: #098246;
   color: white;
 }
 
@@ -555,7 +555,7 @@
   transition: 0.2s;
 }
 
-.btn-back-step:hover { color: #065f37; }
+.btn-back-step:hover { color: #098246; }
 
 .step-desc {
   text-align: center;
@@ -586,14 +586,14 @@
 }
 
 .acc-card-btn:hover {
-  border-color: #065f37;
+  border-color: #098246;
   transform: translateY(-3px);
   background: white;
   box-shadow: 0 10px 20px rgba(15, 191, 106, 0.1);
 }
 
 .acc-card-btn.active {
-  border-color: #065f37;
+  border-color: #098246;
   background: #f0fdf4;
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.15);
 }

@@ -65,7 +65,7 @@
   -webkit-backdrop-filter: blur(20px) saturate(200%);
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-left: 8px solid #065f37;
+  border-left: 8px solid #098246;
   padding: 45px 55px;
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
   margin-left: 320px; 
@@ -116,7 +116,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: #065f37;
+  color: #098246;
   box-shadow: 0 8px 15px rgba(10, 124, 74, 0.08);
   flex-shrink: 0;
 }
@@ -143,8 +143,8 @@
   gap: 8px;
 }
 
-.hero-disclaimer i { color: #065f37; margin-top: 2px; }
-.hero-disclaimer a { color: #065f37; font-weight: 700; text-decoration: none; }
+.hero-disclaimer i { color: #098246; margin-top: 2px; }
+.hero-disclaimer a { color: #098246; font-weight: 700; text-decoration: none; }
 
 /* ===== FORMULARIO (Derecha) ===== */
 .login-form-wrapper {
@@ -234,7 +234,7 @@
 }
 
 .input-group input:focus {
-  border-color: #065f37;
+  border-color: #098246;
   background: #ffffff;
   outline: none;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
@@ -268,12 +268,12 @@
   transition: 0.2s;
 }
 
-.eye-btn:hover { color: #065f37; }
+.eye-btn:hover { color: #098246; }
 
 /* BOTONES */
 .btn-submit {
   width: 100%;
-  background: linear-gradient(135deg, #0a7c4a 0%, #065f37 100%);
+  background: linear-gradient(135deg, #0a7c4a 0%, #098246 100%);
   color: white;
   font-weight: 700;
   padding: 16px;
@@ -325,7 +325,7 @@
   cursor: pointer;
 }
 
-.pill-btn:hover { border-color: #065f37; color: #065f37; background: #f0fdf4; }
+.pill-btn:hover { border-color: #098246; color: #098246; background: #f0fdf4; }
 
 .crear-cuenta-wrapper {
   text-align: center;
@@ -344,7 +344,7 @@
   border-bottom: 2px solid rgba(15, 191, 106, 0.2);
 }
 
-.crear-cuenta-link:hover { color: #065f37; border-bottom-color: #065f37; }
+.crear-cuenta-link:hover { color: #098246; border-bottom-color: #098246; }
 
 /* MENSAJES */
 .msg-general {

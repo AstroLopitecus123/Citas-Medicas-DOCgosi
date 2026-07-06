@@ -54,7 +54,7 @@
 }
 
 .contact-info i {
-  color: #065f37;
+  color: #098246;
 }
 
 .meta-info {
@@ -125,8 +125,8 @@
 
 .btn-page:hover:not(:disabled) {
   background: #f8fafc;
-  color: #065f37;
-  border-color: #065f37;
+  color: #098246;
+  border-color: #098246;
 }
 
 .btn-page:disabled {
@@ -156,7 +156,7 @@
 }
 
 .btn-num.active {
-  background: #065f37;
+  background: #098246;
   color: white;
   box-shadow: 0 4px 12px rgba(10, 124, 74, 0.3);
 }

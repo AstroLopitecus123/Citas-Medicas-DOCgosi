@@ -21,7 +21,7 @@
 }
 
 .txt-primary { color: #1a2a3a; }
-.txt-success { color: #065f37; }
+.txt-success { color: #098246; }
 .bg-gradient-success {
   background: linear-gradient(135deg, #095a34 0%, #0a7c4a 100%);
   border: none;
@@ -38,7 +38,7 @@
   margin-right: 6px;
 }
 
-.status-completed { background: #065f37; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+.status-completed { background: #098246; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
 .status-pending { background: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.4); }
 .status-voided { background: #b91c1c; box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
 

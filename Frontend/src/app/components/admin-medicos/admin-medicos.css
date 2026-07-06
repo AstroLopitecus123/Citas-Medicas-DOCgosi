@@ -25,7 +25,7 @@
 }
 
 .card-header-modern h3 i {
-    color: #065f37;
+    color: #098246;
 }
 
 .error-pill {
@@ -84,7 +84,7 @@
 }
 
 .btn-cropper-save {
-  background: #065f37;
+  background: #098246;
   color: white;
   border: none;
   padding: 12px 25px;
@@ -151,7 +151,7 @@
 
 .doc-preview-card span {
     font-size: 0.85rem;
-    color: #065f37;
+    color: #098246;
     font-weight: 700;
     text-transform: uppercase;
 }

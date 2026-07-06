@@ -53,7 +53,7 @@
 }
 
 .reto-text {
-  color: #065f37;
+  color: #098246;
   font-weight: 900;
   font-size: 1.4rem;
   letter-spacing: -0.5px;
@@ -86,7 +86,7 @@
 }
 
 .nav-links a:hover {
-  color: #065f37;
+  color: #098246;
 }
 
 .nav-links i {
@@ -211,7 +211,7 @@
   width: 70px !important;
   height: 70px !important;
   border-radius: 20px !important;
-  background: linear-gradient(135deg, #065f37 0%, #094a2b 100%) !important;
+  background: linear-gradient(135deg, #098246 0%, #094a2b 100%) !important;
   color: white !important;
   display: flex !important;
   align-items: center !important;
@@ -232,7 +232,7 @@
   display: inline-block !important;
   font-size: 0.75rem !important;
   font-weight: 800 !important;
-  color: #065f37 !important;
+  color: #098246 !important;
   background: rgba(15, 191, 106, 0.1) !important;
   padding: 4px 12px !important;
   border-radius: 8px !important;
@@ -322,7 +322,7 @@
 }
 
 .search-box-modern input:focus {
-  border-color: #065f37;
+  border-color: #098246;
   background: white;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
   outline: none;
@@ -332,14 +332,14 @@
 .form-control-text.premium-select {
   appearance: none !important;
   background-color: #f8fafc !important;
-  /* Icono flecha color #065f37 */
+  /* Icono flecha color #098246 */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230fbf6a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 16px center !important;
   background-size: 18px !important;
   padding: 14px 45px 14px 20px !important;
   cursor: pointer !important;
-  border: 1px solid #065f37 !important;
+  border: 1px solid #098246 !important;
   border-radius: 12px !important;
   font-weight: 700 !important;
   color: #0f4a2b !important;
@@ -347,7 +347,7 @@
 }
 
 .form-control-text.premium-select:focus {
-  border-color: #065f37 !important;
+  border-color: #098246 !important;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.25) !important;
   background-color: #ffffff !important;
 }
@@ -373,7 +373,7 @@
 }
 
 .doc-preview-card span {
-  color: #065f37 !important;
+  color: #098246 !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   font-size: 0.75rem !important;
@@ -462,7 +462,7 @@
   display: inline-block;
 }
 
-.badge-success { background: rgba(15, 191, 106, 0.15); color: #065f37; }
+.badge-success { background: rgba(15, 191, 106, 0.15); color: #098246; }
 .badge-danger { background: rgba(245, 101, 101, 0.15); color: #c53030; }
 .badge-info { background: rgba(66, 153, 225, 0.15); color: #1e4e8c; }
 
@@ -493,7 +493,7 @@
 
 .form-control:focus {
   outline: none;
-  border-color: #065f37;
+  border-color: #098246;
   background: white;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
 }
@@ -511,7 +511,7 @@
   gap: 8px;
 }
 
-.btn-add { background: #065f37; color: white; }
+.btn-add { background: #098246; color: white; }
 .btn-add:hover { background: #0a7c4a; transform: translateY(-2px); }
 
 .btn-icon {
@@ -783,7 +783,7 @@
 }
 
 .header-main h2 i {
-  color: #065f37;
+  color: #098246;
   background: rgba(15, 191, 106, 0.1);
   padding: 12px;
   border-radius: 14px;
@@ -810,7 +810,7 @@
   border: 1px solid rgba(0,0,0,0.02);
 }
 
-.date-badge i { color: #065f37; }
+.date-badge i { color: #098246; }
 
 /* Grid de EstadÃ­sticas (KPI Cards) */
 .stats-grid {
@@ -848,7 +848,7 @@
 .stat-info p { margin: 4px 0 0; color: #64748b; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
 /* Paleta de Colores Dashboard (Todos Verdes/MÃ©dicos) */
-.kpi-primary .stat-icon { background: #e6fff4; color: #065f37; }
+.kpi-primary .stat-icon { background: #e6fff4; color: #098246; }
 .kpi-success .stat-icon { background: #f0fdf4; color: #16a34a; }
 .kpi-info .stat-icon { background: #f0fdfa; color: #0d9488; }
 .kpi-warning .stat-icon { background: #fffcf0; color: #ca8a04; }
@@ -893,13 +893,13 @@
   text-align: left;
 }
 
-.action-btn i { font-size: 1.6rem; color: #065f37; transition: 0.3s; }
+.action-btn i { font-size: 1.6rem; color: #098246; transition: 0.3s; }
 .action-btn strong { display: block; font-size: 1rem; color: #0f172a; }
 .action-btn span { font-size: 0.8rem; color: #64748b; }
 
 .action-btn:hover {
-  background: #065f37;
-  border-color: #065f37;
+  background: #098246;
+  border-color: #098246;
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.2);
 }
@@ -921,7 +921,7 @@
 
 /* BOTONES DE ACCIÃ“N PRINCIPAL (GRADIENTES) */
 .btn-premium-action, .btn-action.btn-add {
-  background: linear-gradient(135deg, #065f37 0%, #0a7c4a 100%) !important;
+  background: linear-gradient(135deg, #098246 0%, #0a7c4a 100%) !important;
   color: white !important;
   padding: 14px 28px !important;
   border-radius: 16px !important;
@@ -958,10 +958,10 @@
   width: 100% !important;
 }
 
-.quick-btn i, .action-btn i { font-size: 1.6rem !important; color: #065f37 !important; transition: 0.3s !important; }
+.quick-btn i, .action-btn i { font-size: 1.6rem !important; color: #098246 !important; transition: 0.3s !important; }
 .quick-btn:hover, .action-btn:hover {
-  background: #065f37 !important;
-  border-color: #065f37 !important;
+  background: #098246 !important;
+  border-color: #098246 !important;
   transform: translateY(-3px) !important;
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.2) !important;
   color: white !important;
@@ -1043,7 +1043,7 @@
   width: 52px !important;
   height: 52px !important;
   background: rgba(15, 191, 106, 0.1) !important;
-  color: #065f37 !important;
+  color: #098246 !important;
   border-radius: 14px !important;
   display: flex !important;
   align-items: center !important;
@@ -1105,7 +1105,7 @@
 }
 
 .btn-cancel-glass { background: #e2e8f0 !important; color: #475569 !important; border-radius: 12px !important; padding: 12px 24px !important; border: none !important; cursor: pointer !important; font-weight: 700 !important; }
-.btn-confirm-glass { background: #065f37 !important; color: white !important; border-radius: 12px !important; padding: 12px 24px !important; border: none !important; cursor: pointer !important; font-weight: 700 !important; }
+.btn-confirm-glass { background: #098246 !important; color: white !important; border-radius: 12px !important; padding: 12px 24px !important; border: none !important; cursor: pointer !important; font-weight: 700 !important; }
 
 /* BADGES MODERNOS (SINCRO) */
 .badge-modern { padding: 6px 14px !important; border-radius: 8px !important; font-size: 0.75rem !important; font-weight: 800 !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; }
@@ -1132,7 +1132,7 @@
   justify-content: center;
   gap: 6px;
   background: rgba(15, 191, 106, 0.15) !important;
-  color: #065f37 !important;
+  color: #098246 !important;
   font-weight: 800 !important;
   font-size: 1.1rem;
   padding: 6px 14px;
@@ -1142,11 +1142,11 @@
 
 .kpi-primary h3.money-highlight-kpi {
   font-size: 2.2rem !important;
-  color: #065f37 !important;
+  color: #098246 !important;
   text-shadow: 0 4px 15px rgba(15, 191, 106, 0.25);
   margin-bottom: 5px;
   /* Efecto gradiente de texto para darle ese toque top */
-  background: linear-gradient(135deg, #065f37 0%, #064023 100%);
+  background: linear-gradient(135deg, #098246 0%, #064023 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -1237,7 +1237,7 @@
 
 /* BOTON PREMIUM PARA NOTIFICACIONES */
 .btn-premium-notif {
-    background: linear-gradient(135deg, #065f37 0%, #0a7c4a 100%);
+    background: linear-gradient(135deg, #098246 0%, #0a7c4a 100%);
     color: white;
     border: none;
     border-radius: 14px;
@@ -1273,7 +1273,7 @@
 }
 
 .section-title-dash i {
-  color: #065f37;
+  color: #098246;
   font-size: 1.25rem;
   background: rgba(15, 191, 106, 0.1);
   width: 42px;
@@ -1298,7 +1298,7 @@
 .page-loader {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #094a2b 0%, #065f37 100%);
+  background: linear-gradient(135deg, #094a2b 0%, #098246 100%);
   z-index: 9999999;
   display: flex;
   align-items: center;

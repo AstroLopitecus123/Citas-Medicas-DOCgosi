@@ -33,7 +33,7 @@
 
 .profile-header {
   padding: 40px 30px 30px;
-  background: linear-gradient(135deg, #094a2b 0%, #065f37 100%);
+  background: linear-gradient(135deg, #094a2b 0%, #098246 100%);
   color: white;
   text-align: center;
 }
@@ -44,13 +44,13 @@
 
 .profile-details { padding: 30px; }
 .info-item { display: flex; gap: 15px; margin-bottom: 20px; }
-.info-item i { color: #065f37; font-size: 1.2rem; margin-top: 5px; }
+.info-item i { color: #098246; font-size: 1.2rem; margin-top: 5px; }
 .info-item label { display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
 .info-item span { font-size: 0.95rem; color: #1e293b; font-weight: 600; }
 
 .profile-actions { padding: 0 30px 30px; }
 .btn-outline { background: transparent; border: 1px solid #e2e8f0; color: #475569; width: 100%; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-outline:hover { border-color: #065f37; color: #094a2b; background: #f4fdf7; }
+.btn-outline:hover { border-color: #098246; color: #094a2b; background: #f4fdf7; }
 
 /* MAIN CONTENT */
 .welcome-banner {
@@ -93,7 +93,7 @@
 
 .status-tabs-modern button.active-tab {
   background: white;
-  color: #065f37;
+  color: #098246;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -139,21 +139,21 @@
 .modal-header-glass > div:nth-child(2) { flex: 1; text-align: left; }
 .modal-header-glass h3 { margin: 0; font-size: 1.35rem; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
 .modal-header-glass p { margin: 2px 0 0; font-size: 0.9rem; color: #64748b; font-weight: 500; }
-.header-icon-box { width: 48px; height: 48px; background: rgba(15, 191, 106, 0.1); color: #065f37; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: inset 0 0 0 1px rgba(15, 191, 106, 0.1); }
+.header-icon-box { width: 48px; height: 48px; background: rgba(15, 191, 106, 0.1); color: #098246; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: inset 0 0 0 1px rgba(15, 191, 106, 0.1); }
 
 
 .modal-body-glass { padding: 25px; max-height: 65vh; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; }
 .selection-grid-modern { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 25px; background: #f8fafc; padding: 22px; border-radius: 18px; align-items: end; border: 1px solid #eef2f6; }
 
 .form-group-modern label { display: block; margin-bottom: 10px; font-weight: 700; color: #475569; font-size: 0.85rem; }
-.form-group-modern label i { color: #065f37; margin-right: 6px; }
+.form-group-modern label i { color: #098246; margin-right: 6px; }
 
 .form-control, .form-control-text {
     width: 100%; padding: 12px 18px; border-radius: 14px; border: 2px solid #f1f5f9;
     background: #f8fafc; color: #1e293b; font-size: 0.95rem; transition: all 0.3s ease;
     box-sizing: border-box; /*  Evita choque con bordes */
 }
-.form-control:focus { border-color: #065f37; background: white; box-shadow: 0 0 0 5px rgba(15, 191, 106, 0.1); outline: none; }
+.form-control:focus { border-color: #098246; background: white; box-shadow: 0 0 0 5px rgba(15, 191, 106, 0.1); outline: none; }
 
 /* SCHEDULE TABLE */
 .schedule-grid-container { overflow-x: auto; background: white; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1); }
@@ -169,8 +169,8 @@
 .slot-radio { cursor: pointer; position: relative; display: flex; justify-content: center; align-items: center; height: 100%; }
 .slot-radio input { position: absolute; opacity: 0; }
 .radio-custom { height: 24px; width: 24px; background-color: #fff; border: 3px solid #e2e8f0; border-radius: 50%; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-.slot-radio:hover .radio-custom { border-color: #065f37; transform: scale(1.1); }
-.slot-radio input:checked ~ .radio-custom { background-color: #065f37; border-color: #0d9488; }
+.slot-radio:hover .radio-custom { border-color: #098246; transform: scale(1.1); }
+.slot-radio input:checked ~ .radio-custom { background-color: #098246; border-color: #0d9488; }
 .slot-radio input:checked ~ .radio-custom:after { content: ""; width: 6px; height: 10px; border: solid white; border-width: 0 3px 3px 0; transform: rotate(45deg); margin-bottom: 2px; }
 
 .slot-occupied { background: #fffcfc; }
@@ -180,11 +180,11 @@
 .semana-nav { display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px 0 25px; }
 .semana-label { font-size: 0.95rem; font-weight: 800; color: #1e293b; background: #f8fafc; padding: 8px 18px; border-radius: 30px; border: 1px solid #e2e8f0; min-width: 140px; text-align: center; }
 .btn-nav-step { background: white; border: 1px solid #e2e8f0; padding: 8px 14px; border-radius: 10px; color: #64748b; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
-.btn-nav-step:hover:not([disabled]) { border-color: #065f37; color: #065f37; background: #f0fdf4; }
+.btn-nav-step:hover:not([disabled]) { border-color: #098246; color: #098246; background: #f0fdf4; }
 .btn-nav-step[disabled] { opacity: 0.4; cursor: not-allowed; }
 
 .modal-footer-glass { padding: 22px 28px; background: #ffffff; display: flex; justify-content: flex-end; gap: 15px; border-top: 1px solid #f1f5f9; }
-.btn-confirm-glass { min-width: 200px; background: linear-gradient(135deg, #065f37 0%, #0a7c4a 100%); color: white; font-weight: 800; padding: 14px 28px; border-radius: 14px; border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 14px rgba(15, 191, 106, 0.4), inset 0 -2px 0 rgba(0,0,0,0.1); font-size: 0.95rem; }
+.btn-confirm-glass { min-width: 200px; background: linear-gradient(135deg, #098246 0%, #0a7c4a 100%); color: white; font-weight: 800; padding: 14px 28px; border-radius: 14px; border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 14px rgba(15, 191, 106, 0.4), inset 0 -2px 0 rgba(0,0,0,0.1); font-size: 0.95rem; }
 .btn-confirm-glass:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15, 191, 106, 0.5); filter: brightness(1.1); }
 .btn-confirm-glass:active { transform: translateY(0); }
 .btn-cancel-glass { min-width: 120px; background: #f8fafc; color: #64748b; font-weight: 700; padding: 14px 28px; border-radius: 14px; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
@@ -205,7 +205,7 @@
 
 .time-txt {
     font-size: 0.82rem;
-    color: #065f37;
+    color: #098246;
     font-weight: 700;
 }
 
@@ -312,7 +312,7 @@
 }
 
 .btn-aprobar-premium {
-    background: linear-gradient(135deg, #065f37 0%, #059669 100%) !important;
+    background: linear-gradient(135deg, #098246 0%, #059669 100%) !important;
     color: white !important;
     flex: 2;
 }
@@ -350,7 +350,7 @@
   padding: 16px 20px;
   background: white;
   border: 1px solid #e2e8f0;
-  border-left: 4px solid #065f37;
+  border-left: 4px solid #098246;
   border-radius: 12px;
   gap: 20px;
   transition: all 0.3s;
@@ -372,7 +372,7 @@
   min-width: 80px;
 }
 
-.apt-hour { font-size: 1.2rem; font-weight: 800; color: #065f37; letter-spacing: -0.5px; }
+.apt-hour { font-size: 1.2rem; font-weight: 800; color: #098246; letter-spacing: -0.5px; }
 .apt-meridian { font-size: 0.75rem; font-weight: 700; color: #0d9488; text-transform: uppercase; }
 
 .apt-status {
@@ -384,7 +384,7 @@
   letter-spacing: 0.5px;
 }
 
-.apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #065f37; }
+.apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #098246; }
 .apt-status.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .apt-status.canceled { background: rgba(239, 68, 68, 0.1); color: #b91c1c; }
 .apt-status.in-progress { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }

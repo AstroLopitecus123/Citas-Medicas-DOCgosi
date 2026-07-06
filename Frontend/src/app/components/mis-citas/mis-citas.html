@@ -1,7 +1,7 @@
 <div class="dashboard-page-content">
     <div class="mis-citas-full" *ngIf="ctrl.usuario; else sinUsuario">
 
-        <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+        <header class="premium-welcome-banner" style="border-left: 6px solid #065f37;">
             <div class="welcome-icon-box">
                 <i class="fa-solid fa-calendar-check"></i>
             </div>
@@ -16,7 +16,7 @@
             </div>
             <div class="header-actions">
                 <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-regular fa-clock" style="color: #0fbf6a;"></i>
+                    <i class="fa-regular fa-clock" style="color: #065f37;"></i>
                     {{ ctrl.fechaActual | date:'shortTime' }}
                 </span>
                 <button class="btn-premium-action" *ngIf="ctrl.usuario.rol !== 'MEDICO'" (click)="ctrl.abrirModalCita()">
@@ -30,7 +30,7 @@
             <div class="premium-card filters-bar-premium">
                 <div class="search-box-modern">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" [(ngModel)]="ctrl.textoBusqueda" [placeholder]="ctrl.usuario.rol === 'MEDICO' ? 'Buscar por paciente, fecha (dd/mm/aaaa)...' : 'Buscar por paciente, médico o especialidad...'">
+                    <input type="text" [(ngModel)]="ctrl.textoBusqueda" aria-label="Buscar cita" [placeholder]="ctrl.usuario.rol === 'MEDICO' ? 'Buscar por paciente, fecha (dd/mm/aaaa)...' : 'Buscar por paciente, médico o especialidad...'">
                 </div>
 
                 <div class="status-tabs-modern">
@@ -44,7 +44,7 @@
 
             <!-- Filtros de tiempo: solo para el rol MÉDICO -->
             <div class="premium-card filters-bar-premium" *ngIf="ctrl.usuario.rol === 'MEDICO'" style="padding: 12px 20px;">
-                <span style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
+                <span style="font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
                     <i class="fa-solid fa-calendar-days" style="margin-right:6px;"></i>Período:
                 </span>
                 <div class="status-tabs-modern">
@@ -80,7 +80,7 @@
                                 </td>
                                 <td *ngIf="ctrl.usuario.rol === 'ADMIN' || ctrl.usuario.rol === 'RECEPCION'">
                                     <div class="user-info-stack">
-                                        <strong style="color: #0fbf6a;">{{ cita?.paciente?.nombre }} {{ cita?.paciente?.apellido }}</strong>
+                                        <strong style="color: #065f37;">{{ cita?.paciente?.nombre }} {{ cita?.paciente?.apellido }}</strong>
                                         <span class="sub-txt">ID: {{ cita?.paciente?.id }}</span>
                                     </div>
                                 </td>
@@ -124,7 +124,7 @@
                                                 *ngIf="cita.estado === 'CONFIRMADA'"
                                                 routerLink="/teleconsulta/{{cita.id}}" 
                                                 title="Ingresar a Sala Virtual"
-                                                style="background: rgba(15, 191, 106, 0.2); color: #0fbf6a;">
+                                                style="background: rgba(15, 191, 106, 0.2); color: #065f37;">
                                             <i class="fa-solid fa-video"></i>
                                         </button>
 
@@ -359,7 +359,7 @@
         <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
             <div class="modal-header-glass warning-header">
                 <div class="header-info">
-                    <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                    <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #dc2626;">
                         <i class="fa-solid fa-calendar-xmark"></i>
                     </div>
                     <div>

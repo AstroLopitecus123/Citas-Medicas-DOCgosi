@@ -1,7 +1,7 @@
 <div class="admin-layout">
 
-  <header class="premium-welcome-banner" style="border-left: 6px solid #f59e0b;">
-    <div class="welcome-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #d97706;">
+    <div class="welcome-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #d97706;">
       <i class="fa-solid fa-bell"></i>
     </div>
     <div class="welcome-text">
@@ -51,8 +51,8 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
           <strong style="font-size: 0.95rem; color: #1e293b;">{{ notif.titulo }}</strong>
           <div style="display:flex; gap:10px; align-items:center;">
-            <span *ngIf="!notif.leida" style="width:10px; height:10px; background:#f59e0b; border-radius:50%; display:inline-block;"></span>
-            <span style="font-size:0.8rem; color:#94a3b8;">{{ notif.fechaCreacion | date:'d MMM, HH:mm' }}</span>
+            <span *ngIf="!notif.leida" style="width:10px; height:10px; background:#d97706; border-radius:50%; display:inline-block;"></span>
+            <span style="font-size:0.8rem; color:#64748b;">{{ notif.fechaCreacion | date:'d MMM, HH:mm' }}</span>
           </div>
         </div>
         <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.5;">{{ notif.mensaje }}</p>
@@ -66,7 +66,7 @@
 
   </div>
 
-  <div *ngIf="loading" style="text-align:center; padding: 60px 0; color: #94a3b8;">
+  <div *ngIf="loading" style="text-align:center; padding: 60px 0; color: #64748b;">
     <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem;"></i>
   </div>
 

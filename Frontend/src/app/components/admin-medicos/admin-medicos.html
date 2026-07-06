@@ -1,6 +1,6 @@
 <div class="admin-layout">
 
-  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #065f37;">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-user-doctor"></i>
     </div>
@@ -11,7 +11,7 @@
     </div>
     <div class="header-actions">
         <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-users-gear" style="color: #0fbf6a;"></i>
+            <i class="fa-solid fa-users-gear" style="color: #065f37;"></i>
             {{ ctrl.medicos.length }} Médicos Activos
         </span>
     </div>
@@ -122,7 +122,7 @@
     <div class="glass-modal modal-medium animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
         <div class="header-info">
-          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
+          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #065f37;">
             <i class="fa-solid fa-user-pen"></i>
           </div>
           <div>
@@ -136,10 +136,10 @@
       <div class="modal-body-glass">
         <!-- Foto de Perfil -->
         <div class="edit-avatar-section mb-4" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 25px;">
-          <div class="avatar-wrapper-edit" style="position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0fbf6a; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden;">
+          <div class="avatar-wrapper-edit" style="position: relative; width: 100px; height: 100px; border-radius: 50%; border: 3px solid #065f37; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; background: #f8fafc; overflow: hidden;">
             <img *ngIf="ctrl.fotoUrlEditado; else defaultEditAvatar" [src]="ctrl.fotoUrlEditado" style="width: 100%; height: 100%; object-fit: cover;" alt="Vista previa de foto">
             <ng-template #defaultEditAvatar>
-              <i class="fa-solid fa-user-doctor" style="font-size: 3rem; color: #94a3b8;"></i>
+              <i class="fa-solid fa-user-doctor" style="font-size: 3rem; color: #64748b;"></i>
             </ng-template>
             
             <label class="avatar-upload-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.6); color: white; text-align: center; padding: 4px 0; font-size: 0.8rem; cursor: pointer; transition: 0.2s;" title="Cambiar foto de perfil">
@@ -177,7 +177,7 @@
 
       <div class="modal-footer-glass">
         <button class="btn-cancel-glass" (click)="ctrl.cerrarModalEditarPerfil()">Cancelar</button>
-        <button class="btn-confirm-glass" (click)="ctrl.guardarPerfilEditado()" style="background: linear-gradient(135deg, #0fbf6a 0%, #0a7c4a 100%) !important;">
+        <button class="btn-confirm-glass" (click)="ctrl.guardarPerfilEditado()" style="background: linear-gradient(135deg, #065f37 0%, #0a7c4a 100%) !important;">
           <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
         </button>
       </div>
@@ -189,7 +189,7 @@
     <div class="glass-modal premium-card animation-pop-in" style="max-width: 480px;" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
         <div class="header-info">
-          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #0fbf6a;">
+          <div class="header-icon-box" style="background: rgba(15, 191, 106, 0.1); color: #065f37;">
             <i class="fa-solid fa-crop-simple"></i>
           </div>
           <div>
@@ -206,7 +206,7 @@
           [imageFile]="ctrl.selectedImageFile"
           (cancelar)="ctrl.cancelarRecorte()"
         ></app-avatar-cropper>
-        <div *ngIf="ctrl.subiendoFoto" style="color:#0fbf6a; font-weight:600;">
+        <div *ngIf="ctrl.subiendoFoto" style="color:#065f37; font-weight:600;">
           <i class="fa-solid fa-circle-notch fa-spin"></i> Subiendo foto...
         </div>
       </div>

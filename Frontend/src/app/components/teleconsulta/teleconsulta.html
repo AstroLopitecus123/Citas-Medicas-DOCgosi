@@ -93,7 +93,7 @@
           </button>
           
           <div class="device-menu-container" *ngIf="showMicMenu" style="left: 0; bottom: 60px;">
-            <div style="padding: 10px 20px; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Micrófonos</div>
+            <div style="padding: 10px 20px; font-size: 0.8rem; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Micrófonos</div>
             <button class="device-menu-item" *ngFor="let mic of microphones" (click)="changeAudioDevice(mic.deviceId)" [class.active]="selectedMicId === mic.deviceId">
                <i class="fa-solid fa-check" [style.visibility]="selectedMicId === mic.deviceId ? 'visible' : 'hidden'"></i> {{ mic.label || 'Micrófono predeterminado' }}
             </button>
@@ -106,7 +106,7 @@
           </button>
 
           <div class="device-menu-container" *ngIf="showCamMenu" style="left: 0; bottom: 60px;">
-            <div style="padding: 10px 20px; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Cámaras</div>
+            <div style="padding: 10px 20px; font-size: 0.8rem; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #3c4043; margin-bottom: 5px;">Cámaras</div>
             <button class="device-menu-item" *ngFor="let cam of cameras" (click)="changeVideoDevice(cam.deviceId)" [class.active]="selectedCamId === cam.deviceId">
                <i class="fa-solid fa-check" [style.visibility]="selectedCamId === cam.deviceId ? 'visible' : 'hidden'"></i> {{ cam.label || 'Cámara predeterminada' }}
             </button>
@@ -117,7 +117,7 @@
             <i class="fa-solid fa-comment-dots"></i>
         </button>
 
-        <button class="btn-control danger" style="background: #ef4444; color: white; width: 60px; height: 60px;" (click)="salirDeSala()" title="Finalizar Consulta">
+        <button class="btn-control danger" style="background: #dc2626; color: white; width: 60px; height: 60px;" (click)="salirDeSala()" title="Finalizar Consulta">
             <i class="fa-solid fa-phone-slash"></i>
         </button>
 

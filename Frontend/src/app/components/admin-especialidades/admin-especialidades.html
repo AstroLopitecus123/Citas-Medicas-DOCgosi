@@ -1,6 +1,6 @@
 <div class="admin-layout">
 
-  <header class="premium-welcome-banner" style="border-left: 6px solid #0fbf6a;">
+  <header class="premium-welcome-banner" style="border-left: 6px solid #065f37;">
     <div class="welcome-icon-box">
       <i class="fa-solid fa-briefcase-medical"></i>
     </div>
@@ -96,14 +96,14 @@
             <input *ngIf="ctrl.editando"
               type="text"
               class="form-control-text"
-              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Ej: Cardiología"
               [(ngModel)]="ctrl.editando.nombre"
             />
             <input *ngIf="!ctrl.editando"
               type="text"
               class="form-control-text"
-              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Ej: Cardiología"
               [(ngModel)]="ctrl.nueva.nombre"
             />
@@ -115,7 +115,7 @@
               type="number"
               min="0" step="0.01"
               class="form-control-text"
-              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Ej: 50.00"
               [(ngModel)]="ctrl.editando.precioBase"
             />
@@ -123,7 +123,7 @@
               type="number"
               min="0" step="0.01"
               class="form-control-text"
-              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="font-weight: 700; color: #0f4a2b; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Ej: 50.00"
               [(ngModel)]="ctrl.nueva.precioBase"
             />
@@ -133,13 +133,13 @@
             <label><i class="fa-solid fa-align-left"></i> Descripción detallada</label>
             <textarea *ngIf="ctrl.editando"
               class="form-control-text tall-area"
-              style="line-height: 1.6; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="line-height: 1.6; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Describa el alcance de la especialidad..."
               [(ngModel)]="ctrl.editando.descripcion"
             ></textarea>
             <textarea *ngIf="!ctrl.editando"
               class="form-control-text tall-area"
-              style="line-height: 1.6; border-radius: 12px; border: 1px solid #0fbf6a; padding: 12px 15px;"
+              style="line-height: 1.6; border-radius: 12px; border: 1px solid #065f37; padding: 12px 15px;"
               placeholder="Describa el alcance de la especialidad..."
               [(ngModel)]="ctrl.nueva.descripcion"
             ></textarea>
@@ -160,7 +160,7 @@
     <div class="glass-modal modal-small animation-pop-in" (click)="$event.stopPropagation()">
       <div class="modal-header-glass">
         <div class="header-info">
-          <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+          <div class="header-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #dc2626;">
             <i class="fa-solid fa-trash-can"></i>
           </div>
           <div>
@@ -183,7 +183,7 @@
 
       <div class="modal-footer-glass">
         <button class="btn-cancel-glass" (click)="ctrl.cerrarModalConfirmar()">Cancelar</button>
-        <button class="btn-confirm-glass" style="background: #ef4444 !important;" (click)="ctrl.confirmarEliminacionFinal()">
+        <button class="btn-confirm-glass" style="background: #dc2626 !important;" (click)="ctrl.confirmarEliminacionFinal()">
           <i class="fa-solid fa-trash"></i> Eliminar Especialidad
         </button>
       </div>

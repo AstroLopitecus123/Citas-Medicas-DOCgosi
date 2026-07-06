@@ -30,13 +30,13 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
   // PÁGINAS PÚBLICAS (sin login)
   // ─────────────────────────────────────────────────
 
-  it('Landing Page — 0 violaciones de accesibilidad', () => {
+  it('Página de Inicio — 0 violaciones de accesibilidad', () => {
     cy.visit('/');
     cy.injectAxe();
     cy.checkA11y(null, A11Y_RULES);
   });
 
-  it('Página de Login — 0 violaciones de accesibilidad', () => {
+  it('Página de Iniciar Sesión — 0 violaciones de accesibilidad', () => {
     cy.visit('/login');
     cy.injectAxe();
     cy.checkA11y(null, A11Y_RULES);
@@ -46,7 +46,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
   // DASHBOARD DEL PACIENTE (requiere login)
   // ─────────────────────────────────────────────────
 
-  it('Dashboard — Mi Panel (pantalla principal)', () => {
+  it('Dashboard — Mi Panel', () => {
     loginComoPaciente();
     cy.visit('/paciente/dashboard');
     cy.wait(2000);

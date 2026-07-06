@@ -48,7 +48,7 @@
               </div>
             </td>
             <td class="desc-cell">{{ esp.descripcion || '-' }}</td>
-            <td style="font-weight: 600; color: #0fbf6a;">S/{{ esp.precioBase || 0 | number:'1.2-2' }}</td>
+            <td style="font-weight: 700; color: #065f37;">S/{{ esp.precioBase || 0 | number:'1.2-2' }}</td>
             <td>
               <span [class]="'badge-modern ' + (esp.estado === 'ACTIVA' ? 'success' : 'danger')">
                 {{ esp.estado }}

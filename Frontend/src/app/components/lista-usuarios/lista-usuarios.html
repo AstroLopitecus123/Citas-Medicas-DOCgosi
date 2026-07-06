@@ -111,7 +111,7 @@
     </div>
 
     <div class="modern-pagination">
-      <button class="btn-page prev" (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1">
+      <button class="btn-page prev" (click)="ctrl.anteriorPagina()" [disabled]="ctrl.paginaActual === 1" aria-label="Página anterior">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
 
@@ -124,7 +124,7 @@
         </ng-container>
       </div>
 
-      <button class="btn-page next" (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas">
+      <button class="btn-page next" (click)="ctrl.siguientePagina()" [disabled]="ctrl.paginaActual === ctrl.totalPaginas" aria-label="Página siguiente">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>

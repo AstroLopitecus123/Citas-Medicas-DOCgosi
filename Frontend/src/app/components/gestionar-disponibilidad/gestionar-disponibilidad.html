@@ -63,11 +63,11 @@
     </div>
   </div>
 
-  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="background: rgba(239, 68, 68, 0.1); color: #dc2626; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
+  <div *ngIf="horasFaltantes() > 0" class="premium-alert-danger" style="background: rgba(239, 68, 68, 0.05); color: #b91c1c; padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; align-items: center; gap: 15px; font-weight: 500;">
     <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem;"></i>
     <div>
       <span style="display: block;">Faltan <strong>{{ horasFaltantes() }} hora(s)</strong> para alcanzar el mínimo mandatorio de {{ minimoHorasSemana }}h.</span>
-      <small style="opacity: 0.8; font-size: 0.8rem;">Nota: La carga diaria de {{ minimoHorasDia }}h es una recomendación institucional, pero las {{ minimoHorasSemana }}h totales son obligatorias para guardar.</small>
+      <small style="font-size: 0.8rem;">Nota: La carga diaria de {{ minimoHorasDia }}h es una recomendación institucional, pero las {{ minimoHorasSemana }}h totales son obligatorias para guardar.</small>
     </div>
   </div>
 

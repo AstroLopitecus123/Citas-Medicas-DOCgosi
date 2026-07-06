@@ -175,7 +175,7 @@
   <router-outlet (activate)="onRouteChange($event)"></router-outlet>
 </main>
 
-<div class="glass-overlay" *ngIf="mostrarModal" (click)="cancelarCerrarSesion()">
+<div class="glass-overlay" role="dialog" aria-modal="true" *ngIf="mostrarModal" (click)="cancelarCerrarSesion()">
   <div class="glass-modal animation-pop-in" (click)="$event.stopPropagation()">
     <div class="modal-header-glass">
       <div class="header-icon-title">
@@ -206,7 +206,7 @@
   </div>
 </div>
 
-<div class="glass-overlay" *ngIf="mostrarModalInactividad">
+<div class="glass-overlay" role="dialog" aria-modal="true" *ngIf="mostrarModalInactividad">
   <div class="glass-modal animation-pop-in" (click)="$event.stopPropagation()">
     <div class="modal-header-glass">
       <div class="header-icon-title">
@@ -240,8 +240,8 @@
   </div>
 </div>
 
-<app-chatbot *ngIf="!isTeleconsultaRoute"></app-chatbot>
-
-<app-accesibilidad></app-accesibilidad>
-
-<app-toast></app-toast>
+<div role="complementary">
+  <app-chatbot *ngIf="!isTeleconsultaRoute"></app-chatbot>
+  <app-accesibilidad></app-accesibilidad>
+  <app-toast></app-toast>
+</div>

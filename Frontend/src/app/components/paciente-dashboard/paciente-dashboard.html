@@ -22,21 +22,21 @@
     <div class="stat-card kpi-primary">
       <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
       <div class="stat-info">
-        <h3>{{ stats.totalCitas }}</h3>
+        <h2>{{ stats.totalCitas }}</h2>
         <p>Citas Agendadas</p>
       </div>
     </div>
     <div class="stat-card kpi-success">
       <div class="stat-icon"><i class="fa-solid fa-file-medical"></i></div>
       <div class="stat-info">
-        <h3>{{ stats.historiasClinicas }}</h3>
+        <h2>{{ stats.historiasClinicas }}</h2>
         <p>Historias Clínicas</p>
       </div>
     </div>
     <div class="stat-card kpi-info">
       <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
       <div class="stat-info">
-        <h3>Pendiente</h3>
+        <h2>Pendiente</h2>
         <p>Próximo Triaje</p>
       </div>
     </div>
@@ -53,7 +53,7 @@
   <div class="dashboard-grid">
 
     <div class="premium-card">
-      <h3 class="card-title">Acciones del Paciente</h3>
+      <h2 class="card-title">Acciones del Paciente</h2>
       <div class="quick-actions">
         <button class="action-btn" [routerLink]="['/mis-citas']" [queryParams]="{accion: 'nueva-cita'}">
           <i class="fa-solid fa-calendar-plus"></i>
@@ -80,10 +80,10 @@
     </div>
 
     <div class="premium-card help-panel" [ngClass]="{'has-data': ultimaHistoria}">
-      <h3 class="card-title">
+      <h2 class="card-title">
         <i class="fa-solid fa-file-waveform"></i> 
         {{ ultimaHistoria ? 'Última Consulta' : 'Recomendaciones' }}
-      </h3>
+      </h2>
 
       <div class="info-content" *ngIf="ultimaHistoria">
         <div class="last-visit-box">

@@ -24,7 +24,7 @@
       <div class="stat-card kpi-info">
         <div class="stat-icon"><i class="fa-solid fa-receipt"></i></div>
         <div class="stat-info">
-          <h3>{{ totalTransacciones }}</h3>
+          <h2>{{ totalTransacciones }}</h2>
           <p>Total Transacciones</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="stat-card kpi-success">
         <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
         <div class="stat-info">
-          <h3>{{ pagosCompletados }}</h3>
+          <h2>{{ pagosCompletados }}</h2>
           <p>Pagos Confirmados</p>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="stat-card kpi-primary" *ngIf="usuario.rol !== 'PACIENTE'">
         <div class="stat-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
         <div class="stat-info">
-          <h3 class="money-highlight-kpi">S/. {{ totalIngresos | number:'1.2-2' }}</h3>
+          <h2 class="money-highlight-kpi">S/. {{ totalIngresos | number:'1.2-2' }}</h2>
           <p>{{ usuario.rol === 'MEDICO' ? 'Liquidación Total' : 'Ingresos Recaudados' }}</p>
         </div>
       </div>
@@ -48,7 +48,7 @@
       <div class="stat-card kpi-warning">
           <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
           <div class="stat-info">
-            <h3>{{ pagosPendientes }}</h3>
+            <h2>{{ pagosPendientes }}</h2>
             <p>Pendientes</p>
           </div>
         </div>
@@ -57,7 +57,7 @@
     <section class="main-content">
       <div class="premium-card">
         <div class="card-header-flex">
-          <h3><i class="fa-solid fa-list-ul"></i> Historial de Transacciones</h3>
+          <h2><i class="fa-solid fa-list-ul"></i> Historial de Transacciones</h2>
         </div>
 
         <div *ngIf="cargando" class="text-center p-5">
@@ -156,7 +156,7 @@
             <i class="fa-solid fa-ban"></i>
           </div>
           <div>
-            <h3>Anular Transacción</h3>
+            <h2>Anular Transacción</h2>
             <p>Confirma la invalidación del pago.</p>
           </div>
         </div>

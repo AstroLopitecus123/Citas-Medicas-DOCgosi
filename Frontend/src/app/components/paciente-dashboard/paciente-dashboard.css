@@ -34,7 +34,7 @@
 .kpi-success .stat-icon { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
 .kpi-info .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
-.stat-info h3 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1e293b; line-height: 1.1; }
+.stat-info h2 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1e293b; line-height: 1.1; }
 .stat-info p { margin: 2px 0 0; color: #475569; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
 
 .dashboard-grid {

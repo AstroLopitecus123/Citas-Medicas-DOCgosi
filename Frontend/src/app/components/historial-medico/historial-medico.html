@@ -31,14 +31,14 @@
         <i class="fa-solid fa-folder-open"></i>
       </div>
       <ng-container *ngIf="usuario?.rol === 'PACIENTE'">
-        <h3 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">Aún no tienes registros médicos</h3>
+        <h2 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">Aún no tienes registros médicos</h2>
         <p style="color: #475569; margin-bottom: 25px; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Tus diagnósticos aparecerán aquí una vez que completes tus consultas con nuestros especialistas.</p>
         <button class="btn-premium-action" routerLink="/mis-citas">
           <i class="fa-solid fa-calendar-check"></i> Ver mis citas agendadas
         </button>
       </ng-container>
       <ng-container *ngIf="usuario?.rol !== 'PACIENTE'">
-        <h3 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">No hay historias clínicas registradas</h3>
+        <h2 style="font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">No hay historias clínicas registradas</h2>
         <p style="color: #475569; max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.6;">Los expedientes aparecerán aquí una vez que los médicos registren los diagnósticos de los pacientes.</p>
       </ng-container>
     </div>
@@ -56,7 +56,7 @@
       <div class="empty-icon-box" style="font-size: 3.5rem; color: #cbd5e1; margin-bottom: 15px;">
         <i class="fa-solid fa-magnifying-glass-chart"></i>
       </div>
-      <h3 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h3>
+      <h2 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h2>
       <p style="color: #475569; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
     </div>
 
@@ -64,7 +64,7 @@
       <div class="empty-icon-box" style="font-size: 3.5rem; color: #cbd5e1; margin-bottom: 15px;">
         <i class="fa-solid fa-magnifying-glass-chart"></i>
       </div>
-      <h3 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h3>
+      <h2 style="font-size: 1.3rem; color: #1e293b; font-weight: 800; margin-bottom: 8px;">No se encontraron historias clínicas</h2>
       <p style="color: #475569; line-height: 1.6;">No encontramos registros que coincidan con tu búsqueda.</p>
     </div>
 
@@ -166,7 +166,7 @@
               <i *ngIf="!usuario?.fotoUrl" class="fa-solid fa-user"></i>
             </div>
             <div class="paciente-text">
-              <h3>{{ usuario?.nombre }} {{ usuario?.apellido }}</h3>
+              <h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
               <div class="consultas-badge">
                 <i class="fa-solid fa-stethoscope"></i>
                 {{ historialesFiltrados.length }} {{ historialesFiltrados.length === 1 ? 'consulta registrada' : 'consultas registradas' }}

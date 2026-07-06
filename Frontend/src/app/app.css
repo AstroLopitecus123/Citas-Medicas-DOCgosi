@@ -714,7 +714,7 @@
   color: #b91c1c;
 }
 
-.modal-header-glass h3 {
+.modal-header-glass h2 {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 800;
@@ -844,7 +844,7 @@
   flex-shrink: 0;
 }
 
-.stat-info h3 { font-size: 1.6rem; font-weight: 900; margin: 0; color: #0f172a; line-height: 1; }
+.stat-info h2 { font-size: 1.6rem; font-weight: 900; margin: 0; color: #0f172a; line-height: 1; }
 .stat-info p { margin: 4px 0 0; color: #475569; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
 /* Paleta de Colores Dashboard (Todos Verdes/MÃ©dicos) */
@@ -1052,7 +1052,7 @@
   flex-shrink: 0 !important;
 }
 
-.modal-header-glass h3 {
+.modal-header-glass h2 {
   margin: 0 !important;
   font-size: 1.25rem !important;
   font-weight: 800 !important;
@@ -1132,7 +1132,7 @@
   justify-content: center;
   gap: 6px;
   background: rgba(15, 191, 106, 0.15) !important;
-  color: #098246 !important;
+  color: #065f37 !important;
   font-weight: 800 !important;
   font-size: 1.1rem;
   padding: 6px 14px;
@@ -1140,7 +1140,7 @@
   border: 1px solid rgba(15, 191, 106, 0.4) !important;
 }
 
-.kpi-primary h3.money-highlight-kpi {
+.kpi-primary h2.money-highlight-kpi {
   font-size: 2.2rem !important;
   color: #098246 !important;
   text-shadow: 0 4px 15px rgba(15, 191, 106, 0.25);

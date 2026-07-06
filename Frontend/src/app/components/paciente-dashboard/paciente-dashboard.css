@@ -31,7 +31,7 @@
 
 /* Colors for Patient Dashboard */
 .kpi-primary .stat-icon { background: rgba(10, 124, 74, 0.1); color: #0a7c4a; }
-.kpi-success .stat-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.kpi-success .stat-icon { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; }
 .kpi-info .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
 .stat-info h3 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1e293b; line-height: 1.1; }
@@ -103,7 +103,7 @@
 
 /* ÚLTIMA CONSULTA STYLES */
 .help-panel.has-data {
-    border-left: 5px solid #3b82f6;
+    border-left: 5px solid #1d4ed8;
 }
 
 .last-visit-box {
@@ -123,7 +123,7 @@
 .visit-date {
     font-size: 0.8rem;
     font-weight: 800;
-    color: #3b82f6;
+    color: #1d4ed8;
     background: rgba(59, 130, 246, 0.1);
     padding: 2px 8px;
     border-radius: 6px;
@@ -159,17 +159,17 @@
     padding: 10px;
     border: none;
     background: white;
-    color: #3b82f6;
+    color: #1d4ed8;
     font-weight: 700;
     font-size: 0.85rem;
-    border: 1px solid #3b82f6;
+    border: 1px solid #1d4ed8;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .view-more-btn:hover {
-    background: #3b82f6;
+    background: #1d4ed8;
     color: white;
 }
 
@@ -182,7 +182,7 @@
 
 .view-all-link {
     font-size: 0.85rem;
-    color: #3b82f6;
+    color: #1d4ed8;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s;

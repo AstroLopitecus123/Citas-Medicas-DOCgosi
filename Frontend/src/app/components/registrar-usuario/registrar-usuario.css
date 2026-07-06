@@ -482,7 +482,7 @@
   gap: 8px;
 }
 
-.promo-text h4 i { color: #3b82f6; }
+.promo-text h4 i { color: #1d4ed8; }
 
 .promo-text p {
   margin: 0;
@@ -616,7 +616,7 @@
 
 .test-reminder-box {
   background: #eff6ff;
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid #1d4ed8;
   padding: 12px 16px;
   border-radius: 8px;
   display: flex;
@@ -625,7 +625,7 @@
   margin-top: 10px;
 }
 
-.test-reminder-box i { color: #3b82f6; margin-top: 3px; }
+.test-reminder-box i { color: #1d4ed8; margin-top: 3px; }
 
 .test-reminder-box p {
   margin: 0;

@@ -630,7 +630,7 @@
   width: 100%;
   padding: 0 20px;
 }
-.doctors-subtitle { text-align: center; color: #475569; max-width: 600px; margin: 0 auto 50px; font-size: 1.15rem; line-height: 1.7; }
+.doctors-subtitle { text-align: center; color: #1e293b; max-width: 600px; margin: 0 auto 50px; font-size: 1.15rem; line-height: 1.7; }
 .doctors-grid { 
   display: grid; 
   grid-template-columns: repeat(4, 1fr); 
@@ -1104,7 +1104,7 @@
 
 ::ng-deep .popup-content p {
   font-size: 0.95rem;
-  color: #475569;
+  color: #1e293b;
   margin-bottom: 20px;
   display: flex;
   align-items: center;

@@ -59,14 +59,14 @@
 
 .notif-time {
     font-size: 0.75rem;
-    color: #475569;
+    color: #334155;
     font-weight: 500;
 }
 
 .notif-message {
     margin: 0;
     font-size: 0.9rem;
-    color: #475569;
+    color: #334155;
     line-height: 1.5;
 }
 

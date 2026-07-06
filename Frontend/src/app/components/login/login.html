@@ -79,7 +79,7 @@
               placeholder="••••••••"
               required
             />
-            <button type="button" class="eye-btn" (click)="ctrl.togglePassword()">
+            <button type="button" class="eye-btn" (click)="ctrl.togglePassword()" aria-label="Mostrar u ocultar contraseña">
               <i class="fa-solid" [class.fa-eye]="!ctrl.mostrarContrasena" [class.fa-eye-slash]="ctrl.mostrarContrasena"></i>
             </button>
           </div>

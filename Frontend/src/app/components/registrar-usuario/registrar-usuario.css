@@ -473,16 +473,16 @@
   box-shadow: 0 10px 25px rgba(15, 191, 106, 0.1);
 }
 
-.promo-text h4 {
-  margin: 0 0 2px 0;
+.promo-text h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.05rem;
   color: #1e293b;
-  font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.promo-text h4 i { color: #1d4ed8; }
+.promo-text h2 i { color: #1d4ed8; }
 
 .promo-text p {
   margin: 0;

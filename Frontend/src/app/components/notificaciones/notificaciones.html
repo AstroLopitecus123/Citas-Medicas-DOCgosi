@@ -42,7 +42,7 @@
                     </div>
                     <div class="notif-content">
                         <div class="notif-header">
-                            <h4 class="notif-title">{{ notif.titulo }}</h4>
+                            <h2 class="notif-title">{{ notif.titulo }}</h2>
                             <span class="notif-time">{{ notif.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</span>
                         </div>
                         <p class="notif-message">{{ notif.mensaje }}</p>
@@ -61,7 +61,7 @@
           <i class="fa-solid" [ngClass]="getIconClass(notificacionSeleccionada?.titulo || '')"></i>
         </div>
         <div>
-          <h3>{{ notificacionSeleccionada?.titulo }}</h3>
+          <h2>{{ notificacionSeleccionada?.titulo }}</h2>
           <p style="font-size: 0.8rem; margin:0; color: #475569;">Detalle de la Notificación</p>
         </div>
       </div>

@@ -46,7 +46,7 @@
   flex-shrink: 0;
 }
 
-.module-body h3 { margin: 0 0 6px; font-size: 1.15rem; font-weight: 800; color: #0f172a; }
+.module-body h2 { margin: 0 0 6px; font-size: 1.15rem; font-weight: 800; color: #0f172a; }
 .module-body p { margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5; }
 
 .module-stat { text-align: right; margin: 0 15px; }

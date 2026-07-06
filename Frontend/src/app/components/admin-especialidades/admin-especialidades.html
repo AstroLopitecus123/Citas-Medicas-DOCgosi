@@ -18,7 +18,7 @@
 
   <div class="premium-card table-card animation-slide-up">
     <div class="card-header-modern">
-      <h3><i class="fa-solid fa-list-ul"></i> Listado de Especialidades</h3>
+      <h2><i class="fa-solid fa-list-ul"></i> Listado de Especialidades</h2>
       <div class="header-filters">
         <span *ngIf="ctrl.mensaje" class="inline-msg success">{{ ctrl.mensaje }}</span>
         <span *ngIf="ctrl.error" class="inline-msg error">{{ ctrl.error }}</span>
@@ -82,7 +82,7 @@
             <i class="fa-solid" [ngClass]="ctrl.modoEdicion ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
           </div>
           <div>
-            <h3>{{ ctrl.modoEdicion ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h3>
+            <h2>{{ ctrl.modoEdicion ? 'Editar Especialidad' : 'Nueva Especialidad' }}</h2>
             <p>Completa la información técnica de la rama médica.</p>
           </div>
         </div>
@@ -164,7 +164,7 @@
             <i class="fa-solid fa-trash-can"></i>
           </div>
           <div>
-            <h3>¿Eliminar Especialidad?</h3>
+            <h2>¿Eliminar Especialidad?</h2>
             <p>Confirma que deseas remover esta rama médica.</p>
           </div>
         </div>

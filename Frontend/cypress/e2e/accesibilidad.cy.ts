@@ -81,7 +81,8 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
   it('Dashboard — Mi Perfil', () => {
     loginComoPaciente();
     cy.visit('/mi-perfil');
-    cy.wait(1500);
+    // Esperamos a que el componente termine de cargar (el h1 aparece tras el *ngIf)
+    cy.get('h1', { timeout: 10000 }).should('be.visible');
     cy.injectAxe();
     cy.checkA11y(null, A11Y_RULES);
   });

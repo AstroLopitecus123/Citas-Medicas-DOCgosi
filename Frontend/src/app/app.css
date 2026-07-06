@@ -305,7 +305,7 @@
   left: 18px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: #64748b;
   font-size: 1rem;
 }
 
@@ -462,9 +462,9 @@
   display: inline-block;
 }
 
-.badge-success { background: rgba(15, 191, 106, 0.15); color: #0a7c4a; }
+.badge-success { background: rgba(15, 191, 106, 0.15); color: #065f37; }
 .badge-danger { background: rgba(245, 101, 101, 0.15); color: #c53030; }
-.badge-info { background: rgba(66, 153, 225, 0.15); color: #2b6cb0; }
+.badge-info { background: rgba(66, 153, 225, 0.15); color: #1e4e8c; }
 
 /* CONTROLES DE FORMULARIO (INPUTS/SELECTS) */
 .form-group-modern {
@@ -697,7 +697,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #94a3b8;
+  color: #64748b;
   cursor: pointer;
   transition: all 0.2s ease;
   line-height: 1;
@@ -845,7 +845,7 @@
 }
 
 .stat-info h3 { font-size: 1.6rem; font-weight: 900; margin: 0; color: #0f172a; line-height: 1; }
-.stat-info p { margin: 4px 0 0; color: #94a3b8; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.stat-info p { margin: 4px 0 0; color: #64748b; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
 /* Paleta de Colores Dashboard (Todos Verdes/MÃ©dicos) */
 .kpi-primary .stat-icon { background: #e6fff4; color: #0fbf6a; }
@@ -1160,7 +1160,7 @@
   justify-content: center !important;
   padding: 100px 40px !important;
   text-align: center !important;
-  color: #94a3b8 !important;
+  color: #64748b !important;
   margin: 40px auto !important;
   max-width: 650px !important;
   background: white !important;

@@ -51,7 +51,7 @@
 
 .module-stat { text-align: right; margin: 0 15px; }
 .stat-number { display: block; font-size: 2rem; font-weight: 900; color: #0f172a; line-height: 1; }
-.stat-label { font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+.stat-label { font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
 
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
 .module-card:hover .module-arrow { color: #0fbf6a; transform: translateX(5px); }

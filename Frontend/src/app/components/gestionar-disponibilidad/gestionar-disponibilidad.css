@@ -20,7 +20,7 @@
 }
 
 .semana-indicator strong { color: #1a293b; font-size: 1rem; }
-.semana-indicator span { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; }
+.semana-indicator span { color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; }
 
 /* ALERTAS */
 .premium-alert-danger {
@@ -44,7 +44,7 @@
 
 .dia-stack { display: flex; flex-direction: column; }
 .dia-nombre { color: #1a293b; font-weight: 800; font-size: 0.9rem; }
-.dia-fecha { color: #94a3b8; font-size: 0.75rem; font-weight: 600; }
+.dia-fecha { color: #64748b; font-size: 0.75rem; font-weight: 600; }
 
 .time-label {
   font-weight: 800;
@@ -121,7 +121,7 @@
 .loading-state {
   text-align: center;
   padding: 100px;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .loading-state i { font-size: 3rem; margin-bottom: 20px; }

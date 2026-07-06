@@ -35,7 +35,7 @@
 .kpi-info .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
 .stat-info h3 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1e293b; line-height: 1.1; }
-.stat-info p { margin: 2px 0 0; color: #94a3b8; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+.stat-info p { margin: 2px 0 0; color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
 
 .dashboard-grid {
   display: grid;
@@ -143,7 +143,7 @@
     display: block;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: #64748b;
     margin-bottom: 5px;
 }
 
@@ -241,13 +241,13 @@
 
 .mini-content span {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
 }
 
 .empty-mini {
     text-align: center;
     padding: 20px;
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.85rem;
 }
 

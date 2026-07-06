@@ -47,7 +47,7 @@
     <div class="filters-bar-premium" *ngIf="!cargando && historiales.length > 0">
       <div class="search-box-modern" style="max-width: 100%;">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" [(ngModel)]="filtroBusqueda" (ngModelChange)="filtrarHistoriales()" placeholder="Buscar por paciente, médico, especialidad o diagnóstico...">
+        <input type="text" [(ngModel)]="filtroBusqueda" (ngModelChange)="filtrarHistoriales()" placeholder="Buscar por paciente, médico, especialidad o diagnóstico..." aria-label="Buscar historial médico">
       </div>
     </div>
 

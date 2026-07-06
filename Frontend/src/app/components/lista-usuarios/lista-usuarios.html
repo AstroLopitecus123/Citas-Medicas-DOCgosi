@@ -17,7 +17,7 @@
   <div class="filters-bar-premium">
     <div class="search-box-modern" style="max-width: 100%;">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Buscar por Nombre, Rol o País..." [(ngModel)]="ctrl.filtro" (input)="ctrl.filtrarUsuarios()" />
+      <input type="text" placeholder="Buscar por Nombre, Rol o País..." [(ngModel)]="ctrl.filtro" (input)="ctrl.filtrarUsuarios()" aria-label="Buscar usuarios" />
     </div>
   </div>
 
@@ -86,14 +86,15 @@
 
               <td>
                 <div class="actions-flex justify-center">
-                  <button class="btn-table-action btn-edit" (click)="ctrl.abrirModalRol(usuario!)" title="Editar Rol">
+                  <button class="btn-table-action btn-edit" (click)="ctrl.abrirModalRol(usuario!)" title="Editar Rol" aria-label="Editar Rol">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button class="btn-table-action btn-status" (click)="ctrl.toggleEstado(usuario!)" 
-                          [title]="usuario!.estado === 'ACTIVADO' ? 'Desactivar' : 'Activar'">
+                          [title]="usuario!.estado === 'ACTIVADO' ? 'Desactivar' : 'Activar'"
+                          [attr.aria-label]="usuario!.estado === 'ACTIVADO' ? 'Desactivar' : 'Activar'">
                     <i class="fa-solid" [class.fa-eye-slash]="usuario!.estado === 'ACTIVADO'" [class.fa-eye]="usuario!.estado !== 'ACTIVADO'"></i>
                   </button>
-                  <button class="btn-table-action btn-delete" (click)="ctrl.eliminarUsuario(usuario!)" title="Eliminar">
+                  <button class="btn-table-action btn-delete" (click)="ctrl.eliminarUsuario(usuario!)" title="Eliminar" aria-label="Eliminar usuario">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>

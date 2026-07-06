@@ -41,7 +41,7 @@
 /* TABLA REFINADA */
 .id-cell {
   font-weight: 700;
-  color: #94a3b8;
+  color: #64748b;
   width: 70px;
   padding-left: 35px !important;
 }
@@ -66,7 +66,7 @@
 
 .sub-txt {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .badge-modern {

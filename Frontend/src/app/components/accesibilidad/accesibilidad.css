@@ -321,7 +321,7 @@
 .section-divider span {
   font-size: 0.65rem;
   font-weight: 800;
-  color: #94a3b8;
+  color: #64748b;
   letter-spacing: 1px;
 }
 
@@ -723,7 +723,7 @@
 .btn-test-cancel {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -731,7 +731,7 @@
 .step-counter {
   display: block;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 800;
   margin-bottom: 5px;
 }
@@ -881,7 +881,7 @@
 .btn-test-cancel {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;

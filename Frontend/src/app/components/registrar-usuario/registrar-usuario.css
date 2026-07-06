@@ -346,7 +346,7 @@
 .pw-chips span {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: #64748b;
   background: white;
   padding: 4px 10px;
   border-radius: 20px;
@@ -397,7 +397,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   cursor: pointer;
   font-size: 1.1rem;
   display: flex;

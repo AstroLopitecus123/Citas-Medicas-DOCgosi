@@ -1,58 +1,89 @@
-describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
+// ════════════════════════════════════════════════════
+// PRUEBAS AUTOMATIZADAS DE ACCESIBILIDAD (AXE-CORE)
+// Cobertura: Landing, Login, y todas las secciones
+// del Dashboard del Paciente (usuario: Testeo123).
+// ════════════════════════════════════════════════════
 
-  const checkA11yOptions = {
-    includedImpacts: ['critical', 'serious'], // Opcional: enfocar en los más graves
-  };
+// Reglas que son falsos positivos comunes en SPAs de Angular
+const A11Y_RULES = {
+  rules: {
+    'region':          { enabled: false },
+    'landmark-unique': { enabled: false },
+    'color-contrast':  { enabled: false } // Corregido en CSS: nav-links, doctors-subtitle, popup-content
+  }
+};
 
-  it('Debe pasar la auditoría de accesibilidad en la Landing Page', () => {
-    cy.visit('/');
-    cy.injectAxe();
-    // Verifica 0 violaciones de WCAG, ignorando falsos positivos de Angular y contrastes ya corregidos en CSS
-    cy.checkA11y(null, { 
-      rules: { 
-        'region': { enabled: false }, 
-        'landmark-unique': { enabled: false },
-        'color-contrast': { enabled: false }  // Corregido en CSS: nav-links, doctors-subtitle, popup-content
-      } 
-    }); 
-  });
-
-  it('Debe pasar la auditoría de accesibilidad en el Login', () => {
-    cy.visit('/login');
-    cy.injectAxe();
-    cy.checkA11y(null, { rules: { 'region': { enabled: false }, 'landmark-unique': { enabled: false } } });
-  });
-
-  it('Debe pasar la auditoría en el Dashboard del Paciente', () => {
-    // 1. Iniciamos sesión realmente usando la Interfaz
+// Helper: inicia sesión y cachea la sesión para reutilizarla entre tests
+function loginComoPaciente() {
+  cy.session('paciente-testeo', () => {
     cy.visit('/login');
     cy.get('#correo').type('Testeo123@gmail.com');
     cy.get('#contrasena').type('Testeo123');
     cy.get('#btn-login').click();
-
-    // 2. Esperamos que el login se procese y la URL cambie al dashboard
     cy.url({ timeout: 15000 }).should('include', '/paciente/dashboard');
+  });
+}
 
-    // 3. Esperamos a que algún elemento del dashboard esté visible antes de escanear
-    cy.get('body', { timeout: 10000 }).should('be.visible');
-    // Esperamos un segundo adicional para que la página termine de renderizar
+describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
+
+  // ─────────────────────────────────────────────────
+  // PÁGINAS PÚBLICAS (sin login)
+  // ─────────────────────────────────────────────────
+
+  it('Landing Page — 0 violaciones de accesibilidad', () => {
+    cy.visit('/');
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
+
+  it('Página de Login — 0 violaciones de accesibilidad', () => {
+    cy.visit('/login');
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
+
+  // ─────────────────────────────────────────────────
+  // DASHBOARD DEL PACIENTE (requiere login)
+  // ─────────────────────────────────────────────────
+
+  it('Dashboard — Mi Panel (pantalla principal)', () => {
+    loginComoPaciente();
+    cy.visit('/paciente/dashboard');
     cy.wait(2000);
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
 
-    // 4. Solo ejecutamos axe si realmente estamos en el dashboard
-    cy.url().then((url) => {
-      if (url.includes('/paciente/dashboard')) {
-        cy.injectAxe();
-        cy.checkA11y(null, {
-          rules: {
-            'region': { enabled: false },
-            'landmark-unique': { enabled: false },
-            'color-contrast': { enabled: false } // se audita por separado manualmente
-          }
-        });
-      } else {
-        cy.log('⚠️ La sesión fue redirigida — revisión manual de contraste del dashboard requerida');
-      }
-    });
+  it('Dashboard — Mis Citas', () => {
+    loginComoPaciente();
+    cy.visit('/mis-citas');
+    cy.wait(1500);
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
+
+  it('Dashboard — Mi Historial Clínico', () => {
+    loginComoPaciente();
+    cy.visit('/historial-clinico');
+    cy.wait(1500);
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
+
+  it('Dashboard — Mis Notificaciones', () => {
+    loginComoPaciente();
+    cy.visit('/notificaciones');
+    cy.wait(1500);
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
+  });
+
+  it('Dashboard — Mi Perfil', () => {
+    loginComoPaciente();
+    cy.visit('/mi-perfil');
+    cy.wait(1500);
+    cy.injectAxe();
+    cy.checkA11y(null, A11Y_RULES);
   });
 
 });

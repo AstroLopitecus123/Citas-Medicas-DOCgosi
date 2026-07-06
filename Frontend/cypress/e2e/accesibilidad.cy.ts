@@ -4,17 +4,20 @@
 // del Dashboard del Paciente (usuario: Testeo123).
 // ════════════════════════════════════════════════════
 
-// Reglas que son falsos positivos comunes en SPAs de Angular
-const A11Y_RULES = {
+/// <reference types="cypress" />
+/// <reference types="cypress-axe" />
+
+// Opciones de axe: reglas que son falsos positivos en Angular SPAs
+const A11Y_OPTIONS: Parameters<typeof cy.checkA11y>[1] = {
   rules: {
     'region':          { enabled: false },
     'landmark-unique': { enabled: false },
-    'color-contrast':  { enabled: false } // Corregido en CSS: nav-links, doctors-subtitle, popup-content
+    'color-contrast':  { enabled: false }, // Corregido en CSS
   }
 };
 
-// Helper: inicia sesión y cachea la sesión para reutilizarla entre tests
-function loginComoPaciente() {
+/** Inicia sesión y cachea la sesión para reutilizarla en cada test */
+function loginComoPaciente(): void {
   cy.session('paciente-testeo', () => {
     cy.visit('/login');
     cy.get('#correo').type('Testeo123@gmail.com');
@@ -33,13 +36,13 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
   it('Página de Inicio — 0 violaciones de accesibilidad', () => {
     cy.visit('/');
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   it('Página de Iniciar Sesión — 0 violaciones de accesibilidad', () => {
     cy.visit('/login');
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   // ─────────────────────────────────────────────────
@@ -51,7 +54,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
     cy.visit('/paciente/dashboard');
     cy.wait(2000);
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   it('Dashboard — Mis Citas', () => {
@@ -59,7 +62,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
     cy.visit('/mis-citas');
     cy.wait(1500);
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   it('Dashboard — Mi Historial Clínico', () => {
@@ -67,7 +70,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
     cy.visit('/historial-clinico');
     cy.wait(1500);
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   it('Dashboard — Mis Notificaciones', () => {
@@ -75,7 +78,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
     cy.visit('/notificaciones');
     cy.wait(1500);
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
   it('Dashboard — Mi Perfil', () => {
@@ -84,7 +87,7 @@ describe('Pruebas de Accesibilidad Automatizadas (AXE)', () => {
     // Esperamos a que el componente termine de cargar (el h1 aparece tras el *ngIf)
     cy.get('h1', { timeout: 10000 }).should('be.visible');
     cy.injectAxe();
-    cy.checkA11y(null, A11Y_RULES);
+    cy.checkA11y(null, A11Y_OPTIONS);
   });
 
 });

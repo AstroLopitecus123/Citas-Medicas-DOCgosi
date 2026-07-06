@@ -137,7 +137,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
         popupAnchor: [0, -42]
       });
 
-      const marker = L.marker([sede.lat, sede.lng], { icon: customIcon }).addTo(this.map);
+      const marker = L.marker([sede.lat, sede.lng], { 
+        icon: customIcon, 
+        alt: sede.nombre,
+        title: sede.nombre 
+      }).addTo(this.map);
 
       this.markers.push({ sede, marker });
 

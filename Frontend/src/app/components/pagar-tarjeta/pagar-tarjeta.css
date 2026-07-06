@@ -29,7 +29,7 @@
 .spinner {
   width: 52px; height: 52px;
   border: 5px solid #e2e8f0;
-  border-top-color: #0fbf6a;
+  border-top-color: #065f37;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto 20px;
@@ -72,7 +72,7 @@
 .success-circle {
   position: absolute;
   inset: 0;
-  background: #10b981;
+  background: #065f37;
   border-radius: 50%;
   transform: scale(0);
   animation: 
@@ -131,17 +131,17 @@
   padding: 10px 0;
 }
 .item-label { font-size: 0.82rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-.item-label i { color: #10b981; width: 14px; }
+.item-label i { color: #065f37; width: 14px; }
 .item-value { font-size: 0.85rem; color: #1e293b; font-weight: 700; text-align: right; }
 .receipt-divider { height: 1px; background: #e2e8f0; margin: 12px 0; border-top: 2px dashed #cbd5e1; }
 .receipt-item.total { padding-top: 5px; }
 .receipt-item.total .item-label { color: #1e293b; font-size: 0.9rem; font-weight: 800; }
-.receipt-item.total .item-value { color: #10b981; font-size: 1.1rem; font-weight: 800; }
+.receipt-item.total .item-value { color: #065f37; font-size: 1.1rem; font-weight: 800; }
 
 .success-actions { display: flex; flex-direction: column; gap: 12px; }
 
 .btn-primary-success {
-  background: #10b981;
+  background: #065f37;
   color: white;
   border: none;
   padding: 14px;
@@ -306,10 +306,10 @@
   align-items: center;
   gap: 12px;
 }
-.resumen-left i { color: #0fbf6a; font-size: 1.3rem; }
+.resumen-left i { color: #065f37; font-size: 1.3rem; }
 .resumen-label { display: block; font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 700; }
 .resumen-especialidad { font-size: 1rem; font-weight: 700; color: #1a2a3a; }
-.resumen-monto { font-size: 1.3rem; font-weight: 800; color: #0fbf6a; white-space: nowrap; }
+.resumen-monto { font-size: 1.3rem; font-weight: 800; color: #065f37; white-space: nowrap; }
 
 /* ========== CARD PREVIEW ========== */
 .card-preview {
@@ -421,7 +421,7 @@
 .form-input.with-icon { padding-left: 42px; }
 .form-input:focus {
   outline: none;
-  border-color: #0fbf6a;
+  border-color: #065f37;
   background: white;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.1);
 }
@@ -457,7 +457,7 @@
 .btn-pagar {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #095a34 0%, #0fbf6a 100%);
+  background: linear-gradient(135deg, #095a34 0%, #065f37 100%);
   color: white;
   border: none;
   border-radius: 14px;
@@ -490,7 +490,7 @@
 
 /* Reusable buttons */
 .btn-primary {
-  background: linear-gradient(135deg, #095a34, #0fbf6a);
+  background: linear-gradient(135deg, #095a34, #065f37);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -516,7 +516,7 @@
   cursor: pointer;
   transition: 0.3s;
 }
-.btn-outline-green:hover { border-color: #0fbf6a; color: #0a7c4a; }
+.btn-outline-green:hover { border-color: #065f37; color: #0a7c4a; }
 
 /* ========== STRIPE CARD ELEMENT ========== */
 .stripe-element-container {
@@ -531,7 +531,7 @@
 
 .stripe-element-container.element-visible {
   display: block;
-  border-color: #0fbf6a;
+  border-color: #065f37;
   background: white;
   box-shadow: 0 0 0 4px rgba(15, 191, 106, 0.08);
   animation: fadeIn 0.4s ease;
@@ -560,7 +560,7 @@
   width: 20px;
   height: 20px;
   border: 3px solid #e2e8f0;
-  border-top-color: #0fbf6a;
+  border-top-color: #065f37;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   flex-shrink: 0;

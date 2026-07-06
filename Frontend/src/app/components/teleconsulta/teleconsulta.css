@@ -18,12 +18,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  border-bottom: 3px solid #0fbf6a; /* Verde y un poco más ancha */
+  border-bottom: 3px solid #065f37; /* Verde y un poco más ancha */
 }
 
 footer.teleconsulta-header {
   border-bottom: none;
-  border-top: 3px solid #0fbf6a;
+  border-top: 3px solid #065f37;
 }
 
 .brand-title {
@@ -38,7 +38,7 @@ footer.teleconsulta-header {
 .teleconsulta-logo {
   width: 24px;
   height: 24px;
-  background-color: #0fbf6a; /* Color verde deseado */
+  background-color: #065f37; /* Color verde deseado */
   -webkit-mask-image: url('../../../assets/images/LogoSOLO2.png');
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
@@ -74,7 +74,7 @@ footer.teleconsulta-header {
 }
 
 .badge-role {
-  background: #0fbf6a;
+  background: #065f37;
   color: white;
   border: none;
   padding: 4px 12px;
@@ -101,7 +101,7 @@ footer.teleconsulta-header {
 .btn-control:hover { background: #5f6368; }
 .btn-control.danger { background: #ea4335; color: white; }
 .btn-control.danger:hover { background: #d93025; }
-.btn-control.active-sub { background: #0fbf6a; color: white; }
+.btn-control.active-sub { background: #065f37; color: white; }
 .btn-control.active-sub:hover { background: #0b9e57; }
 
 .main-content {
@@ -185,7 +185,7 @@ footer.teleconsulta-header {
 }
 
 .video-box.speaking {
-  border-color: #0fbf6a; /* Green */
+  border-color: #065f37; /* Green */
   box-shadow: 0 0 15px rgba(15, 191, 106, 0.4);
 }
 
@@ -224,7 +224,7 @@ footer.teleconsulta-header {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #ef4444;
+  background: #b91c1c;
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -289,7 +289,7 @@ footer.teleconsulta-header {
   font-size: 1.2rem;
   transition: color 0.3s;
 }
-.chat-close-btn:hover { color: #ef4444; }
+.chat-close-btn:hover { color: #b91c1c; }
 
 .chat-messages {
   flex: 1;
@@ -354,10 +354,10 @@ footer.teleconsulta-header {
   outline: none;
   font-size: 0.95rem;
 }
-.chat-input-area input:focus { border-color: #0fbf6a; }
+.chat-input-area input:focus { border-color: #065f37; }
 
 .chat-input-area button {
-  background: #0fbf6a;
+  background: #065f37;
   color: white;
   border: none;
   width: 45px;
@@ -381,7 +381,7 @@ footer.teleconsulta-header {
   align-items: center;
   gap: 15px;
 }
-.loader-video i { font-size: 3rem; color: #0fbf6a; }
+.loader-video i { font-size: 3rem; color: #065f37; }
 
 @media (max-width: 768px) {
   .chat-sidebar { position: absolute; right: 0; height: 100%; z-index: 900; }
@@ -481,5 +481,5 @@ footer.teleconsulta-header {
 }
 
 .device-menu-item.active {
-  color: #0fbf6a;
+  color: #065f37;
 }

@@ -5,7 +5,7 @@
   right: 30px;
   width: 60px;
   height: 60px;
-  background: #0fbf6a;
+  background: #065f37;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -122,7 +122,7 @@
 .avatar {
   width: 30px;
   height: 30px;
-  background: #0fbf6a;
+  background: #065f37;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -196,7 +196,7 @@
 }
 
 .qa-grid button:hover {
-  border-color: #0fbf6a;
+  border-color: #065f37;
   background: #f0fff4;
 }
 
@@ -230,7 +230,7 @@
   transition: 0.2s;
 }
 
-.chatbot-input input:focus { border-color: #0fbf6a; }
+.chatbot-input input:focus { border-color: #065f37; }
 
 .chatbot-input button {
   background: #0a7c4a;

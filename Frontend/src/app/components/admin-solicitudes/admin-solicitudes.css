@@ -22,7 +22,7 @@
 
 .header-icon {
   font-size: 2.5rem;
-  color: #0fbf6a;
+  color: #065f37;
   background: #f0fdf4;
   padding: 15px;
   border-radius: 20px;
@@ -184,7 +184,7 @@
 .btn-action.reject { background: #fee2e2; color: #dc2626; }
 .btn-action.reject:hover { background: #fecaca; }
 
-.btn-action.approve { background: #0fbf6a; color: white; }
+.btn-action.approve { background: #065f37; color: white; }
 .btn-action.approve:hover { background: #0a7c4a; box-shadow: 0 10px 20px rgba(15, 191, 106, 0.2); }
 
 /* ESTADOS */

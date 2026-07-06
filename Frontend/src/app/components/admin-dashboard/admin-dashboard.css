@@ -33,7 +33,7 @@
 }
 
 .card-teal .module-icon-wrap { background: #f0fdfa; color: #14b8a6; }
-.card-green .module-icon-wrap { background: #e6fff4; color: #0fbf6a; }
+.card-green .module-icon-wrap { background: #e6fff4; color: #065f37; }
 
 .module-icon-wrap {
   width: 65px;
@@ -54,7 +54,7 @@
 .stat-label { font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
 
 .module-arrow { color: #cbd5e1; font-size: 1.2rem; transition: 0.2s; }
-.module-card:hover .module-arrow { color: #0fbf6a; transform: translateX(5px); }
+.module-card:hover .module-arrow { color: #065f37; transform: translateX(5px); }
 
 .quick-grid {
   display: grid;
@@ -79,10 +79,10 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.02);
 }
 
-.quick-btn i { color: #0fbf6a; font-size: 1.2rem; }
+.quick-btn i { color: #065f37; font-size: 1.2rem; }
 
 .quick-btn:hover {
-  border-color: #0fbf6a;
+  border-color: #065f37;
   background: linear-gradient(135deg, #f0fff4, #e6fff4);
   color: #064e3b;
   transform: translateY(-3px);

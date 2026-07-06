@@ -61,7 +61,7 @@
 .section-underline {
   width: 80px;
   height: 5px;
-  background: #0fbf6a;
+  background: #065f37;
   margin: 0 auto 60px;
   border-radius: 10px;
 }
@@ -103,7 +103,7 @@
 
 .mnemonic-title {
   font-size: 1.3rem;
-  color: #0fbf6a;
+  color: #065f37;
   font-weight: 700;
   letter-spacing: 3px;
   margin-bottom: 15px;
@@ -125,7 +125,7 @@
 }
 
 .mnemonic-list .letter {
-  color: #0fbf6a;
+  color: #065f37;
   font-size: 3rem;
   margin-right: 8px;
 }
@@ -144,7 +144,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  background: linear-gradient(135deg, #0a7c4a, #065f37);
   color: white;
   padding: 16px 40px;
   border-radius: 35px;
@@ -160,7 +160,7 @@
 }
 
 .btn-secondary {
-  border: 2px solid #0fbf6a;
+  border: 2px solid #065f37;
   color: #0a7c4a;
   padding: 16px 40px;
   border-radius: 35px;
@@ -264,7 +264,7 @@
   top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  background: linear-gradient(135deg, #0a7c4a, #065f37);
   color: white;
   padding: 25px;
   border-radius: 25px;
@@ -296,7 +296,7 @@
 }
 
 .tech-badge .years i {
-  color: #0fbf6a;
+  color: #065f37;
   font-size: 2.8rem;
 }
 
@@ -498,7 +498,7 @@
 
 /* TRASERA */
 .honeycomb-cell__back {
-  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  background: linear-gradient(135deg, #0a7c4a, #065f37);
   color: #fff;
   transform: rotateY(180deg);
   display: flex;
@@ -591,7 +591,7 @@
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 50%;
-  color: #0fbf6a;
+  color: #065f37;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
@@ -683,7 +683,7 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.rank-badge.gold { background: linear-gradient(135deg, #0a7c4a, #0fbf6a); }
+.rank-badge.gold { background: linear-gradient(135deg, #0a7c4a, #065f37); }
 .rank-badge.silver { background: linear-gradient(135deg, #1e293b, #334155); }
 .rank-badge.bronze { background: linear-gradient(135deg, #334155, #475569); }
 .rank-badge.rank4 { background: linear-gradient(135deg, #64748b, #cbd5e1); color: #1e293b; }
@@ -694,7 +694,7 @@
   transition: 0.3s;
 }
 
-.doctor-card:hover .doc-pic { border-color: #0fbf6a; }
+.doctor-card:hover .doc-pic { border-color: #065f37; }
 .doc-pic img { width: 100%; height: 100%; object-fit: cover; }
 
 .doc-info h4 { font-size: 1.3rem; color: #1a2a3a; margin-bottom: 6px; font-weight: 800; }
@@ -713,7 +713,7 @@
   font-weight: 700;
 }
 
-.citas-badge i { color: #0fbf6a; }
+.citas-badge i { color: #065f37; }
 
 
 /* ═══════════════════════════════════════════════════
@@ -825,7 +825,7 @@
 
 .search-box input:focus {
   outline: none;
-  border-color: #0fbf6a;
+  border-color: #065f37;
 }
 
 .search-box i {
@@ -990,7 +990,7 @@
 }
 
 .overlay-card i {
-  color: #0fbf6a;
+  color: #065f37;
   font-size: 1.2rem;
   animation: pulse 2s infinite;
 }
@@ -1008,7 +1008,7 @@
 .marker-pin {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  background: linear-gradient(135deg, #0a7c4a, #065f37);
   color: white;
   border-radius: 50% 50% 50% 0;
   display: flex;
@@ -1112,7 +1112,7 @@
 }
 
 ::ng-deep .popup-content p i {
-  color: #0fbf6a;
+  color: #065f37;
 }
 
 ::ng-deep .popup-features {
@@ -1124,7 +1124,7 @@
 ::ng-deep .popup-features span {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #0fbf6a;
+  color: #065f37;
   background: rgba(15, 191, 106, 0.1);
   padding: 6px 12px;
   border-radius: 10px;
@@ -1135,7 +1135,7 @@
 
 ::ng-deep .popup-btn-premium {
   width: 100%;
-  background: linear-gradient(135deg, #0a7c4a, #0fbf6a);
+  background: linear-gradient(135deg, #0a7c4a, #065f37);
   color: white;
   border: none;
   padding: 14px;
@@ -1238,7 +1238,7 @@
 }
 
 .footer-column a:hover {
-  color: #0fbf6a;
+  color: #065f37;
   text-decoration: underline;
 }
 

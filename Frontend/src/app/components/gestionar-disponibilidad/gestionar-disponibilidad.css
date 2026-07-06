@@ -48,7 +48,7 @@
 
 .time-label {
   font-weight: 800;
-  color: #0fbf6a;
+  color: #065f37;
   background: #f8fafc !important;
   font-size: 0.8rem;
   white-space: nowrap;
@@ -88,7 +88,7 @@
 }
 
 .modern-checkbox:hover input ~ .checkmark { background-color: #e2e8f0; }
-.modern-checkbox input:checked ~ .checkmark { background-color: #0fbf6a; }
+.modern-checkbox input:checked ~ .checkmark { background-color: #065f37; }
 
 .checkmark:after {
   content: "";

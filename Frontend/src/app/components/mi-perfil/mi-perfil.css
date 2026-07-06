@@ -13,7 +13,7 @@
 }
 
 .profile-banner {
-    background: linear-gradient(135deg, #094a2b 0%, #0fbf6a 100%);
+    background: linear-gradient(135deg, #094a2b 0%, #065f37 100%);
     padding: 30px;
     display: flex;
     align-items: center;
@@ -56,7 +56,7 @@
     bottom: -5px;
     right: -5px;
     background: #1e293b;
-    color: #0fbf6a;
+    color: #065f37;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -117,7 +117,7 @@
 .info-group .info-label svg {
     width: 16px;
     height: 16px;
-    color: #0fbf6a;
+    color: #065f37;
 }
 
 .info-group p {
@@ -171,7 +171,7 @@
     width: 48px;
     height: 48px;
     background: rgba(15, 191, 106, 0.1);
-    color: #0fbf6a;
+    color: #065f37;
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -228,7 +228,7 @@
 }
 
 .btn-cropper-save {
-    background: #0fbf6a;
+    background: #065f37;
     color: white;
     border: none;
     padding: 12px 25px;
@@ -278,7 +278,7 @@
 }
 
 .eye-toggle:hover {
-    color: #0fbf6a;
+    color: #065f37;
 }
 
 .divider-glass {
@@ -317,9 +317,9 @@
 }
 
 .glass-btn.primary {
-    background: #0fbf6a;
+    background: #065f37;
     color: white;
-    border-color: #0fbf6a;
+    border-color: #065f37;
     box-shadow: 0 4px 12px rgba(15, 191, 106, 0.2);
 }
 
@@ -417,7 +417,7 @@
     bottom: -5px;
     right: -5px;
     background: #1e293b;
-    color: #0fbf6a;
+    color: #065f37;
     width: 32px;
     height: 32px;
     border-radius: 50%;

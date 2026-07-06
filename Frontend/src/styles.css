@@ -24,7 +24,7 @@ input, select, textarea {
   background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0fbf6a;
+  background: #065f37;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -156,8 +156,8 @@ body.focus-pro *:focus-visible {
   height: 42px;
   border-radius: 50%;
   background: white;
-  color: #0fbf6a;
-  border: 3px solid #0fbf6a;
+  color: #065f37;
+  border: 3px solid #065f37;
   display: flex;
   align-items: center;
   justify-content: center;

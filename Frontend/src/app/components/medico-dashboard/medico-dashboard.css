@@ -29,7 +29,7 @@
 }
 
 .kpi-blue .stat-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.kpi-green .stat-icon { background: rgba(16, 185, 129, 0.1); color: #065f37; }
 .kpi-teal .stat-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
 
 .stat-info h3 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #1e293b; }
@@ -48,7 +48,7 @@
 .border-bottom { padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.view-all { color: #0fbf6a; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.view-all { color: #065f37; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
 .view-all:hover { color: #0d9488; text-decoration: underline; }
 
 .appointment-list { display: flex; flex-direction: column; gap: 15px; }
@@ -58,7 +58,7 @@
   padding: 16px 20px;
   background: white;
   border: 1px solid #e2e8f0;
-  border-left: 4px solid #0fbf6a;
+  border-left: 4px solid #065f37;
   border-radius: 12px;
   gap: 20px;
   transition: all 0.3s;
@@ -80,7 +80,7 @@
   min-width: 80px;
 }
 
-.apt-hour { font-size: 1.2rem; font-weight: 800; color: #0fbf6a; letter-spacing: -0.5px; }
+.apt-hour { font-size: 1.2rem; font-weight: 800; color: #065f37; letter-spacing: -0.5px; }
 .apt-meridian { font-size: 0.75rem; font-weight: 700; color: #0d9488; text-transform: uppercase; }
 
 .apt-status {
@@ -92,7 +92,7 @@
   letter-spacing: 0.5px;
 }
 
-.apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.apt-status.confirmed { background: rgba(16, 185, 129, 0.1); color: #065f37; }
 .apt-status.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .apt-status.in-progress { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
 

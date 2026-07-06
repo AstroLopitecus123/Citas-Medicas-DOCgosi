@@ -59,7 +59,7 @@
 
 .zoom-slider {
   flex: 1;
-  accent-color: #0fbf6a;
+  accent-color: #065f37;
   cursor: pointer;
   height: 4px;
 }
@@ -94,7 +94,7 @@
 }
 
 .btn-confirm-crop {
-  background: linear-gradient(135deg, #0fbf6a, #0d9f58);
+  background: linear-gradient(135deg, #065f37, #0d9f58);
   color: #fff;
   box-shadow: 0 3px 12px rgba(15, 191, 106, 0.35);
 }

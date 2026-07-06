@@ -1,12 +1,12 @@
 <div class="admin-layout">
   <div class="mis-pagos-full" *ngIf="usuario; else sinUsuario">
 
-    <header class="premium-welcome-banner" style="border-left: 6px solid #00c0a3;">
-      <div class="welcome-icon-box" style="background: linear-gradient(135deg, #00c0a3 0%, #007664 100%);">
+    <header class="premium-welcome-banner" style="border-left: 6px solid #007664;">
+      <div class="welcome-icon-box" style="background: linear-gradient(135deg, #007664 0%, #007664 100%);">
         <i class="fa-solid fa-file-invoice-dollar"></i>
       </div>
       <div class="welcome-text">
-         <div class="badge-role" style="color: #00c0a3; background: rgba(0, 192, 163, 0.1);">
+         <div class="badge-role" style="color: #007664; background: rgba(0, 192, 163, 0.1);">
            {{ usuario.rol === 'MEDICO' ? 'MIS HONORARIOS' : 'FINANZAS' }}
          </div>
          <h1>{{ usuario.rol === 'MEDICO' ? 'Liquidación Médica' : 'Gestión Financiera' }}</h1>
@@ -14,7 +14,7 @@
       </div>
       <div class="header-actions">
           <span class="date-badge" style="background: #f1f5f9; padding: 10px 18px; border-radius: 30px; font-weight: 700; color: #475569; display: inline-flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-calendar" style="color: #00c0a3;"></i>
+              <i class="fa-solid fa-calendar" style="color: #007664;"></i>
               {{ today | date:'EEEE, d MMMM' }}
           </span>
       </div>

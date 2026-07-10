@@ -121,7 +121,7 @@
                                         </button>
 
                                         <button class="btn-table-action btn-confirm" 
-                                                *ngIf="cita.estado === 'CONFIRMADA'"
+                                                *ngIf="cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA'"
                                                 routerLink="/teleconsulta/{{cita.id}}" 
                                                 title="Ingresar a Sala Virtual"
                                                 style="background: rgba(15, 191, 106, 0.2); color: #098246;">

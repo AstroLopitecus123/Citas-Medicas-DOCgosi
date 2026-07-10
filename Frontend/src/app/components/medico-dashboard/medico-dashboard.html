@@ -71,17 +71,17 @@
 
               <div class="apt-status" 
                    [ngClass]="{
-                     'confirmed': cita.estado === 'CONFIRMADA', 
+                     'confirmed': cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA', 
                      'pending': cita.estado === 'PENDIENTE'
                    }">
-                {{ cita.estado }}
+                {{ cita.estado.replace('_', ' ') }}
               </div>
 
               <button class="btn-secondary-action" [routerLink]="['/historial-clinico', cita.paciente.id]" title="Ver Historial Clínico">
                 <i class="fa-solid fa-file-medical"></i>
               </button>
 
-              <button class="btn-primary-action" *ngIf="cita.estado === 'CONFIRMADA'" routerLink="/teleconsulta/{{cita.id}}" title="Entrar a Videollamada">
+              <button class="btn-primary-action" *ngIf="cita.estado === 'CONFIRMADA' || cita.estado === 'REPROGRAMACION_ACEPTADA'" routerLink="/teleconsulta/{{cita.id}}" title="Entrar a Videollamada">
                 <i class="fa-solid fa-video"></i>
               </button>
             </div>

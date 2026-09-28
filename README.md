@@ -349,7 +349,3 @@ El sistema incluye la configuración y relaciones de todas las entidades necesar
 Este proyecto está en desarrollo y creación continua.
 
 ---
-
-## Contacto
-
-Para preguntas o soporte, contacta al equipo de desarrollo.

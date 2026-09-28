@@ -346,6 +346,6 @@ El sistema incluye la configuración y relaciones de todas las entidades necesar
 
 ## Licencia
 
-Este proyecto está en desarrollo y creación continua.
+Este proyecto está en desarrollo y creación continua
 
 ---

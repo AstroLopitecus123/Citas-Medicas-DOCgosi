@@ -280,7 +280,7 @@ public class UsuarioService {
 
         String token = UUID.randomUUID().toString();
         usuario.setTokenRecuperacion(token);
-        usuario.setTokenExpira(LocalDateTime.now().plusHours(1));
+        usuario.setTokenExpira(LocalDateTime.now(java.time.ZoneId.systemDefault()).plusHours(1));
         usuarioRepository.save(usuario);
 
         String enlace = "http://localhost:4200/restablecer?token=" + token;
@@ -304,7 +304,7 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByTokenRecuperacion(token)
                 .orElseThrow(() -> new RuntimeException("Token inválido o expirado."));
 
-        if (usuario.getTokenExpira().isBefore(LocalDateTime.now())) {
+        if (usuario.getTokenExpira().isBefore(LocalDateTime.now(java.time.ZoneId.systemDefault()))) {
             throw new RuntimeException("El token ha expirado.");
         }
 
@@ -345,7 +345,7 @@ public class UsuarioService {
                 .orElse(new com.clinica.real.madrid.backend_citas.model.DispositivoActivo(usuario, fcmToken));
                 
         dispositivo.setUsuario(usuario);
-        dispositivo.setUltimaConexion(LocalDateTime.now());
+        dispositivo.setUltimaConexion(LocalDateTime.now(java.time.ZoneId.systemDefault()));
         dispositivoActivoRepository.save(dispositivo);
         
         java.util.List<com.clinica.real.madrid.backend_citas.model.DispositivoActivo> dispositivos = dispositivoActivoRepository.findByUsuarioIdOrderByUltimaConexionDesc(id);

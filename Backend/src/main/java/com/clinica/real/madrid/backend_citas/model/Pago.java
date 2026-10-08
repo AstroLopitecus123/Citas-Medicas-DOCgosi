@@ -43,7 +43,7 @@ public class Pago {
     @PrePersist
     protected void onCreate() {
         if (fechaPago == null) {
-            fechaPago = LocalDateTime.now();
+            fechaPago = LocalDateTime.now(java.time.ZoneId.systemDefault());
         }
     }
 

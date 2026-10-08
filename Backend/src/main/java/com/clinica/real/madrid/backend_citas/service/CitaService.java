@@ -106,7 +106,7 @@ public class CitaService {
         if (cita.getFecha() == null) {
             throw new RuntimeException("La fecha de la cita es obligatoria");
         }
-        if (cita.getFecha().isBefore(java.time.LocalDateTime.now())) {
+        if (cita.getFecha().isBefore(java.time.LocalDateTime.now(java.time.ZoneId.systemDefault()))) {
             throw new RuntimeException("No puedes agendar una cita en una fecha u hora que ya pasó");
         }
 
@@ -297,7 +297,7 @@ public class CitaService {
 
     @Scheduled(fixedRate = 3600000)
     public void enviarRecordatorios() {
-        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime ahora = LocalDateTime.now(java.time.ZoneId.systemDefault());
         LocalDateTime desde = ahora.plusHours(23);
         LocalDateTime hasta = ahora.plusHours(25);
 

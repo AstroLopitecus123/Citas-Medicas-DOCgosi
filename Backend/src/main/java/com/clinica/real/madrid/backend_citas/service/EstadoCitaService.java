@@ -37,6 +37,8 @@ public class EstadoCitaService {
                     throw new BadRequestException("Cambio de estado inválido desde REPROGRAMADA");
                 }
                 break;
+            default:
+                break;
         }
     }
 }

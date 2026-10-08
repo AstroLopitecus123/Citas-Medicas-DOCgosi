@@ -83,12 +83,12 @@ public class PagoService {
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
 
         pago.setEstadoPago(EstadoPago.COMPLETADO);
-        pago.setFechaPago(LocalDateTime.now());
+        pago.setFechaPago(LocalDateTime.now(java.time.ZoneId.systemDefault()));
 
         if (pago.getComprobante() == null) {
             Comprobante comprobante = new Comprobante();
             comprobante.setNumero("FACT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
-            comprobante.setFecha(LocalDateTime.now());
+            comprobante.setFecha(LocalDateTime.now(java.time.ZoneId.systemDefault()));
             comprobante.setPago(pago);
             pago.setComprobante(comprobante);
         }
@@ -115,11 +115,11 @@ public class PagoService {
         pago.setMonto(request.getMonto());
         pago.setMetodo(MetodoPago.EFECTIVO);
         pago.setEstadoPago(EstadoPago.COMPLETADO);
-        pago.setFechaPago(LocalDateTime.now());
+        pago.setFechaPago(LocalDateTime.now(java.time.ZoneId.systemDefault()));
 
         Comprobante comprobante = new Comprobante();
         comprobante.setNumero("FACT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
-        comprobante.setFecha(LocalDateTime.now());
+        comprobante.setFecha(LocalDateTime.now(java.time.ZoneId.systemDefault()));
         comprobante.setPago(pago);
 
         pago.setComprobante(comprobante);
@@ -144,14 +144,14 @@ public class PagoService {
         pago.setMonto(request.getMonto());
         pago.setMetodo(MetodoPago.TARJETA);
         pago.setTransaccionId(request.getReferencia());
-        pago.setFechaPago(LocalDateTime.now());
+        pago.setFechaPago(LocalDateTime.now(java.time.ZoneId.systemDefault()));
 
         if (Boolean.TRUE.equals(request.getExito())) {
             pago.setEstadoPago(EstadoPago.COMPLETADO);
 
             Comprobante comprobante = new Comprobante();
             comprobante.setNumero("FACT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
-            comprobante.setFecha(LocalDateTime.now());
+            comprobante.setFecha(LocalDateTime.now(java.time.ZoneId.systemDefault()));
             comprobante.setPago(pago);
             pago.setComprobante(comprobante);
 

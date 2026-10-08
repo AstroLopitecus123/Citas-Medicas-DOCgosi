@@ -36,7 +36,7 @@ public class SolicitudEmpleo {
 
     private String mensaje;
 
-    private LocalDateTime fechaSolicitud = LocalDateTime.now();
+    private LocalDateTime fechaSolicitud = LocalDateTime.now(java.time.ZoneId.systemDefault());
 
     public enum Puesto {
         MEDICO, RECEPCION

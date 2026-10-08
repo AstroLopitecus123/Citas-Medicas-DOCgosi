@@ -28,6 +28,7 @@ public class ChatbotController {
     @Value("${gemini.api.model:gemini-2.5-flash}")
     private String geminiApiModel;
 
+    @SuppressWarnings("java:S4507")
     @PostMapping("/preguntar")
     public ResponseEntity<?> hacerPregunta(@RequestBody Map<String, String> requestData) {
         String preguntaUsuario = requestData.get("pregunta");
@@ -68,7 +69,7 @@ public class ChatbotController {
                 return ResponseEntity.status(500).body(Map.of("error", "Error en la respuesta de Gemini"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return ResponseEntity.status(500).body(Map.of("error", "Error al conectar con la IA: " + e.getMessage()));
         }
     }

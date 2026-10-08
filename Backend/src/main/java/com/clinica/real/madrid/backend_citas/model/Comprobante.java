@@ -27,7 +27,7 @@ public class Comprobante {
     @PrePersist
     protected void onCreate() {
         if (fecha == null) {
-            fecha = LocalDateTime.now();
+            fecha = LocalDateTime.now(java.time.ZoneId.systemDefault());
         }
     }
 

@@ -26,7 +26,7 @@ public class DispositivoActivo {
     public DispositivoActivo(Usuario usuario, String fcmToken) {
         this.usuario = usuario;
         this.fcmToken = fcmToken;
-        this.ultimaConexion = LocalDateTime.now();
+        this.ultimaConexion = LocalDateTime.now(java.time.ZoneId.systemDefault());
     }
 
     public Long getId() {

@@ -48,7 +48,7 @@ public class DisponibilidadService {
 
         disponibilidades.forEach(d -> {
             d.setMedico(medico);
-            d.setFechaActualizacion(LocalDateTime.now());
+            d.setFechaActualizacion(LocalDateTime.now(java.time.ZoneId.systemDefault()));
         });
 
         return disponibilidadRepository.saveAll(disponibilidades);

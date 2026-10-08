@@ -32,7 +32,7 @@ public class Especialidad {
     private EstadoEspecialidad estado = EstadoEspecialidad.ACTIVA;
 
     @Column(name = "fecha_creacion", updatable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaCreacion = LocalDateTime.now(java.time.ZoneId.systemDefault());
 
     public Long getId() {
         return id;

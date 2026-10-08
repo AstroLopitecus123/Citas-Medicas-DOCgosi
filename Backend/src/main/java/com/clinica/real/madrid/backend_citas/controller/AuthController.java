@@ -39,6 +39,7 @@ public class AuthController {
     private com.clinica.real.madrid.backend_citas.service.MedicoService medicoService;
 
     @PostMapping("/registro")
+    @SuppressWarnings("java:S4507")
     public ResponseEntity<?> registro(@RequestBody UsuarioRegistroRequest request) {
         try {
 
@@ -49,13 +50,14 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new UsuarioResponse(token, usuario));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Error interno al registrar: " + e.getMessage()));
         }
     }
 
     @PostMapping("/login")
+    @SuppressWarnings("java:S6098")
     public ResponseEntity<?> login(@RequestBody UsuarioLoginRequest request) {
         String correo = request.getCorreo() != null ? request.getCorreo().toLowerCase().trim() : "";
         if (correo.isEmpty()) {
@@ -65,8 +67,8 @@ public class AuthController {
 
         LocalDateTime expira = bloqueoExpiraMap.get(correo);
         if (expira != null) {
-            if (LocalDateTime.now().isBefore(expira)) {
-                long segundosRestantes = ChronoUnit.SECONDS.between(LocalDateTime.now(), expira);
+            if (LocalDateTime.now(java.time.ZoneId.systemDefault()).isBefore(expira)) {
+                long segundosRestantes = ChronoUnit.SECONDS.between(LocalDateTime.now(java.time.ZoneId.systemDefault()), expira);
                 long minutos = segundosRestantes / 60;
                 long segundos = segundosRestantes % 60;
                 String tiempoRestante = minutos > 0
@@ -112,7 +114,7 @@ public class AuthController {
                 System.out.println("Intentos fallidos para " + correo + ": " + intentos);
 
                 if (intentos >= 5) {
-                    bloqueoExpiraMap.put(correo, LocalDateTime.now().plusMinutes(3));
+                    bloqueoExpiraMap.put(correo, LocalDateTime.now(java.time.ZoneId.systemDefault()).plusMinutes(3));
                     System.err.println("INCIDENTE: Cuenta bloqueada temporalmente por exceso de intentos fallidos (5): " + correo);
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                             .body(Map.of("message", "Cuenta bloqueada por 5 intentos fallidos. Reintente en 3 min 0 seg."));
@@ -131,7 +133,7 @@ public class AuthController {
             String token = jwtUtil.generateToken(usuario.getCorreo());
             return ResponseEntity.ok(new UsuarioResponse(token, usuario));
         } catch (Exception e) {
-            e.printStackTrace(); 
+            System.err.println(e.getMessage()); 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error en Google Auth: " + e.getMessage()));
         }

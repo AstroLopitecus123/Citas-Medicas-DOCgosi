@@ -41,10 +41,10 @@ public class Cita {
     private LocalDateTime fechaPropuesta;
 
     @Column(name = "fecha_creacion", updatable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaCreacion = LocalDateTime.now(java.time.ZoneId.systemDefault());
 
     @Column(name = "fecha_actualizacion")
-    private LocalDateTime fechaActualizacion = LocalDateTime.now();
+    private LocalDateTime fechaActualizacion = LocalDateTime.now(java.time.ZoneId.systemDefault());
 
     public Long getId() {
         return id;

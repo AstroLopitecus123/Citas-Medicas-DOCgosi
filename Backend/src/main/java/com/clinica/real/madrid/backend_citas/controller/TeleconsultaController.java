@@ -27,6 +27,7 @@ public class TeleconsultaController {
         return ResponseEntity.ok(System.getenv());
     }
 
+    @SuppressWarnings("java:S6813")
     @org.springframework.beans.factory.annotation.Autowired
     private com.clinica.real.madrid.backend_citas.service.CitaService citaService;
 

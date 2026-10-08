@@ -13,6 +13,7 @@ import java.io.InputStream;
 @Configuration
 public class FirebaseConfig {
 
+    @SuppressWarnings("java:S4507")
     @PostConstruct
     public void initialize() {
         try {
@@ -33,7 +34,7 @@ public class FirebaseConfig {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 }

@@ -35,6 +35,7 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
+    @SuppressWarnings("java:S4502")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

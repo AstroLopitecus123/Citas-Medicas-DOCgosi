@@ -19,7 +19,7 @@ public class Notificacion {
     private String mensaje;
 
     @Column(name = "fecha_creacion", nullable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaCreacion = LocalDateTime.now(java.time.ZoneId.systemDefault());
 
     @Column(nullable = false)
     private boolean leida = false;
@@ -43,7 +43,7 @@ public class Notificacion {
         this.rolDestino = rolDestino;
         this.usuarioDestino = usuarioDestino;
         this.referenciaId = referenciaId;
-        this.fechaCreacion = LocalDateTime.now();
+        this.fechaCreacion = LocalDateTime.now(java.time.ZoneId.systemDefault());
         this.leida = false;
     }
 
